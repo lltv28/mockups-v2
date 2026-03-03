@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Done-For-You AI Product | Kodara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #ffffff;
+    --off-white: #fdfdfd;
+    --black: #000000;
+    --navy: #0d1f2e;
+    --deep-blue: #071f2f;
+    --brand: #106844;
+    --brand-light: #16a46c;
+    --brand-mid: #127d53;
+    --blue-accent: #148aff;
+    --gray-dark: #4d5663;
+    --gray-text: #6b7280;
+    --border-light: #EBEBEB;
+
+    --shadow-sm: 0px 0px 18px -4px rgba(0,0,0,0.18);
+    --shadow-md: 0px 0px 39px -8px rgba(0,0,0,0.15);
+    --shadow-lg: 0px 4px 33px 9px rgba(0,0,0,0.24);
+  }
+
+  html {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 24px;
+    line-height: 150%;
+    color: var(--deep-blue);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 30px;
+  }
+
+  .text-center { text-align: center; }
+
+  /* ── Typography ─────────────────────────────────────── */
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3.5rem;
+    line-height: 105%;
+    letter-spacing: -0.05rem;
+    font-weight: 400;
+    color: var(--black);
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.5rem;
+    line-height: 115%;
+    letter-spacing: -0.05rem;
+    font-weight: 400;
+    color: var(--black);
+  }
+
+  h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    line-height: 125%;
+    font-weight: 400;
+    color: var(--black);
+  }
+
+  p {
+    font-size: 0.833rem;
+    line-height: 165%;
+  }
+
+  strong { font-weight: 600; }
+
+  /* ── CTA Button ─────────────────────────────────────── */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%);
+    border: none;
+    border-radius: 28px;
+    padding: 20px 48px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--white);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cta-btn:hover {
+    background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand-mid) 48%, var(--brand) 100%);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .cta-btn:active { transform: translateY(0); }
+  .cta-btn svg { width: 20px; height: 20px; }
+
+  .cta-sub {
+    font-size: 0.6rem;
+    color: var(--gray-text);
+    margin-top: 14px;
+  }
+
+  /* ── Hero ────────────────────────────────────────────── */
+  .hero {
+    background: var(--white);
+    padding: 70px 0 80px;
+    text-align: center;
+    animation: fadeIn 1.2s ease 0.3s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .hero-pre {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--brand);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    margin-bottom: 24px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 155%;
+    color: var(--gray-dark);
+    max-width: 640px;
+    margin: 0 auto 32px;
+  }
+
+  .hero-guarantee {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(16,104,68,0.06);
+    border: 1px solid rgba(16,104,68,0.15);
+    border-radius: 999px;
+    padding: 12px 28px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 44px;
+  }
+
+  .hero-guarantee svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .video-wrapper {
+    max-width: 860px;
+    margin: 0 auto 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--navy);
+    aspect-ratio: 16 / 9;
+  }
+
+  .video-wrapper iframe,
+  .video-wrapper .video-placeholder {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.65rem;
+  }
+
+  .video-placeholder svg { width: 56px; height: 56px; opacity: 0.35; }
+
+  /* ── Testimonials ───────────────────────────────────── */
+  .testimonials {
+    background: var(--off-white);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    padding: 72px 0;
+  }
+
+  .testimonials h2 {
+    margin-bottom: 48px;
+  }
+
+  .testimonial-stack {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 48px;
+  }
+
+  .testimonial-card {
+    text-align: center;
+    flex: 1;
+  }
+
+  .testimonial-card .photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 999px;
+    background: var(--border-light);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--gray-text);
+  }
+
+  .testimonial-card .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .testimonial-card .photo svg {
+    width: 36px;
+    height: 36px;
+    opacity: 0.3;
+  }
+
+  .testimonial-card .name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+
+  .testimonial-card .role {
+    font-size: 0.62rem;
+    color: var(--gray-text);
+    margin-bottom: 14px;
+  }
+
+  .testimonial-card .result {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    line-height: 140%;
+    color: var(--brand);
+    font-style: italic;
+  }
+
+  /* ── How It Works (3 steps) ───────────────────────── */
+  .how-it-works {
+    background: var(--off-white);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    padding: 64px 0;
+  }
+
+  .steps-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* connector line behind steps */
+  .steps-row::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: calc(16.66% + 12px);
+    right: calc(16.66% + 12px);
+    height: 2px;
+    background: var(--border-light);
+  }
+
+  .step-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+
+  .step-number {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    background: var(--white);
+    border: 2px solid var(--brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--brand);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-item h4 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+
+  .step-item p {
+    font-size: 0.62rem;
+    line-height: 160%;
+    color: var(--gray-dark);
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  /* ── Demos ──────────────────────────────────────────── */
+  .demos {
+    padding: 72px 0 0;
+    background: var(--white);
+  }
+
+  .demos h2 {
+    margin-bottom: 56px;
+  }
+
+  .demo-row {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 64px 0;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .demo-row:last-child {
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .demo-row.flip {
+    flex-direction: row-reverse;
+  }
+
+  .demo-visual {
+    flex: 1.15;
+    min-width: 0;
+  }
+
+  .demo-loop {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid #d4d4d4;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    color: rgba(255,255,255,0.25);
+    font-size: 0.55rem;
+    font-weight: 500;
+    isolation: isolate;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+
+  .demo-loop svg {
+    width: 40px;
+    height: 40px;
+    opacity: 0.3;
+  }
+
+  /* For actual video/gif embeds */
+  .demo-loop video,
+  .demo-loop img {
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    margin: -2px;
+    object-fit: cover;
+    display: block;
+    background: #ffffff;
+  }
+
+  .demo-caption {
+    font-size: 0.58rem;
+    color: var(--gray-text);
+    margin-top: 14px;
+    text-align: center;
+    line-height: 150%;
+  }
+
+  .demo-text {
+    flex: 0.85;
+  }
+
+  .demo-text h3 {
+    margin-bottom: 16px;
+  }
+
+  .demo-text p {
+    font-size: 0.8rem;
+    line-height: 175%;
+    color: var(--gray-dark);
+  }
+
+  .demo-text p strong {
+    color: var(--deep-blue);
+  }
+
+  /* ── Final CTA ──────────────────────────────────────── */
+  .final-cta {
+    background: var(--off-white);
+    border-top: 1px solid var(--border-light);
+    padding: 80px 0;
+    text-align: center;
+  }
+
+  .final-cta h2 {
+    color: var(--black);
+    margin-bottom: 16px;
+  }
+
+  .final-cta p {
+    color: var(--gray-dark);
+    max-width: 480px;
+    margin: 0 auto 36px;
+    font-size: 0.85rem;
+  }
+
+  .final-cta .cta-sub {
+    color: var(--gray-text);
+  }
+
+  /* ── Footer ─────────────────────────────────────────── */
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    background: var(--white);
+    border-top: 1px solid var(--border-light);
+  }
+
+  footer p {
+    font-size: 0.48rem;
+    color: var(--gray-text);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 175%;
+  }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 770px) {
+    html { font-size: 17px; }
+
+    h1 { font-size: 2rem; line-height: 115%; letter-spacing: 0; }
+    h2 { font-size: 1.6rem; line-height: 120%; letter-spacing: 0; }
+    h3 { font-size: 1.3rem; }
+
+    .hero { padding: 48px 0 56px; }
+    .container { padding: 0 20px; }
+
+    .testimonial-stack { flex-direction: column; gap: 40px; }
+    .testimonial-card .photo { width: 100px; height: 100px; }
+
+    .demo-row, .demo-row.flip { flex-direction: column; gap: 32px; }
+    .demo-row { padding: 40px 0; }
+
+    .cta-btn { padding: 18px 36px; font-size: 1rem; }
+    .video-wrapper { border-radius: 12px; }
+
+    .testimonials, .demos, .final-cta { padding: 48px 0; }
+
+    .steps-row { flex-direction: column; align-items: center; gap: 32px; }
+    .steps-row::before { display: none; }
+    .how-it-works { padding: 48px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-pre">by Kodara</p>
+
+    <h1>We'll Turn Your Expertise Into an Automated AI Product You Can Sell to Your Audience</h1>
+
+    <p class="hero-sub">You only pay us after you see the results.</p>
+
+    <div class="hero-guarantee">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+      50 High-Ticket Clients Guaranteed &mdash; Or You Don't Pay
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-placeholder">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z"/></svg>
+        VSL Video Embed
+      </div>
+    </div>
+
+    <a href="#schedule" class="cta-btn">
+      Schedule Your Demo
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+    </a>
+    <p class="cta-sub">See if you qualify &mdash; limited spots available</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HOW IT WORKS — 3 STEPS
+     ══════════════════════════════════════════════════════ -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="steps-row">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <h4>We Learn Your Expertise</h4>
+        <p>We extract what you know &mdash; from your courses, calls, and content &mdash; and train your AI to think like you.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <h4>We Build Your AI Product</h4>
+        <p>Your dedicated engineer builds a fully branded AI app your clients can use 24/7. You just answer a few questions.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <h4>You Sell It &amp; Keep 100%</h4>
+        <p>We set up the sales funnel. You sell your AI for $300&ndash;$3,000. You keep every dollar. We don't take a cut.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     DEMOS — FIRST 3
+     ══════════════════════════════════════════════════════ -->
+<section class="demos">
+  <div class="container">
+    <h2 class="text-center">See What Your AI Product Actually Does</h2>
+
+    <!-- Demo 1: Personal Trainer — loop left, text right -->
+    <div class="demo-row">
+      <div class="demo-visual">
+        <div class="demo-loop">
+          <video src="testdemo1.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <p class="demo-caption">Client photographs their meal. AI breaks down calories and macros instantly.</p>
+      </div>
+      <div class="demo-text">
+        <h3>Personal Trainer AI</h3>
+        <p>Your client snaps a photo of their meal. Your AI calculates the calories, tracks their macros, and adjusts their program &mdash; all in real time.</p>
+        <p style="margin-top: 12px;"><strong>Works for hundreds of clients at once. No manual plans. No back-and-forth.</strong></p>
+      </div>
+    </div>
+
+    <!-- Demo 2: Coach / Consultant — text left, loop right -->
+    <div class="demo-row">
+      <div class="demo-visual">
+        <div class="demo-loop">
+          <video src="306090coachingdemo.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <p class="demo-caption">Client asks a question at 11pm. Your AI answers immediately &mdash; in your voice.</p>
+      </div>
+      <div class="demo-text">
+        <h3>Coach / Consultant AI</h3>
+        <p>Your AI asks the right questions, builds a custom action plan, and answers client questions around the clock. No calls. No scheduling.</p>
+        <p style="margin-top: 12px;"><strong>Help an unlimited number of people without being on a single call.</strong></p>
+      </div>
+    </div>
+
+    <!-- Demo 3: Agency / Services — loop left, text right -->
+    <div class="demo-row">
+      <div class="demo-visual">
+        <div class="demo-loop">
+          <video src="fbadsdemo.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <p class="demo-caption">AI monitors campaigns and flags underperformers before the client even notices.</p>
+      </div>
+      <div class="demo-text">
+        <h3>Agency / Services AI</h3>
+        <p>Your AI analyzes client campaigns in real time, spots problems, and gives specific recommendations &mdash; exactly like you would.</p>
+        <p style="margin-top: 12px;"><strong>No more pulling reports by hand. No more data calls. Unlimited clients.</strong></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     TESTIMONIALS
+     ══════════════════════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="container">
+    <h2 class="text-center">Real People. Real Results.</h2>
+
+    <div class="testimonial-stack">
+
+      <div class="testimonial-card">
+        <div class="photo">
+          <!-- Replace with: <img src="lucas.jpg" alt="Lucas"> -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
+        </div>
+        <div class="name">Lucas</div>
+        <div class="role">Marketing Agency Owner</div>
+        <p class="result">$1.5M+ in revenue &mdash; no sales calls, no coaching, no support.</p>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="photo">
+          <!-- Replace with: <img src="scotty.jpg" alt="Scotty"> -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
+        </div>
+        <div class="name">Scotty</div>
+        <div class="role">Business Funding Consultant</div>
+        <p class="result">17 high-ticket clients before his AI was even finished being built.</p>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="photo">
+          <!-- Replace with: <img src="leanne.jpg" alt="Leanne Ellington"> -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
+        </div>
+        <div class="name">Leanne Ellington</div>
+        <div class="role">Women's Body Image Coach</div>
+        <p class="result">Now working with school districts across America &mdash; helping thousands without being involved in delivery.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     DEMOS — LAST 3
+     ══════════════════════════════════════════════════════ -->
+<section class="demos" style="padding-top: 0;">
+  <div class="container">
+
+    <!-- Demo 4: Sales Coach — text left, loop right -->
+    <div class="demo-row">
+      <div class="demo-visual">
+        <div class="demo-loop">
+          <video src="salesdemo1.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <p class="demo-caption">AI scores a sales call recording and pinpoints exactly where the rep lost the deal.</p>
+      </div>
+      <div class="demo-text">
+        <h3>Sales Coach AI</h3>
+        <p>Your client uploads a call recording. Your AI scores their performance, highlights weak spots, and tells them exactly what to say next time.</p>
+        <p style="margin-top: 12px;"><strong>Every rep gets a personal coach. You never listen to another call recording.</strong></p>
+      </div>
+    </div>
+
+    <!-- Demo 5: Real Estate — loop left, text right -->
+    <div class="demo-row">
+      <div class="demo-visual">
+        <div class="demo-loop">
+          <video src="realestatedemo1.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <p class="demo-caption">Agent enters an address. AI pulls comps and generates a full CMA report in seconds.</p>
+      </div>
+      <div class="demo-text">
+        <h3>Real Estate AI</h3>
+        <p>Your client enters a property address. Your AI pulls comparable sales, analyzes the market, and generates a professional CMA report &mdash; instantly.</p>
+        <p style="margin-top: 12px;"><strong>What used to take hours now takes seconds. Your agents look like experts every time.</strong></p>
+      </div>
+    </div>
+
+    <!-- Demo 6: Financial Coach — text left, loop right -->
+    <div class="demo-row">
+      <div class="demo-visual">
+        <div class="demo-loop">
+          <video src="financedemo1.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <p class="demo-caption">Client connects their accounts. AI builds a spending dashboard and personalized budget plan.</p>
+      </div>
+      <div class="demo-text">
+        <h3>Financial Coach AI</h3>
+        <p>Your client connects their accounts. Your AI tracks spending, flags problems, and builds a personalized budget &mdash; exactly the way you'd do it on a call.</p>
+        <p style="margin-top: 12px;"><strong>Clients get daily coaching on their money. You don't lift a finger.</strong></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     FINAL CTA
+     ══════════════════════════════════════════════════════ -->
+<section class="final-cta" id="schedule">
+  <div class="container">
+    <h2>See What This Looks Like<br>For Your Business</h2>
+    <p>Schedule a quick call. We'll show you exactly what your AI product could look like &mdash; built around your expertise.</p>
+
+    <a href="#schedule" class="cta-btn" style="padding: 22px 56px; font-size: 1.2rem;">
+      Schedule Your Demo
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+    </a>
+    <p class="cta-sub">No obligation. No pressure. Limited spots.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <p>Results vary. The examples shared are from real clients but individual results depend on many factors including your expertise, market, and effort. We cannot guarantee specific income or results. This page is for informational purposes only and does not constitute a guarantee of earnings.</p>
+  </div>
+</footer>
+
+</body>
+</html>
