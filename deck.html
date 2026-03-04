@@ -799,13 +799,130 @@
 
   /* ── Responsive ───────────────────────────────────────── */
   @media (max-width: 900px) {
-    :root { --page-w: 100%; }
-    .page { padding: 40px 32px; border-radius: 0; }
-    .stats-row { flex-direction: column; align-items: center; }
-    .case-grid, .example-grid, .tier-grid { grid-template-columns: 1fr; }
-    .ascension { flex-direction: column; }
-    .ascension-arrow { transform: rotate(90deg); }
-    .section-num { font-size: 56px; }
+    :root { --page-w: 100%; --page-h: auto; }
+
+    body { gap: 20px; padding: 0; }
+
+    .page {
+      padding: 36px 24px 56px;
+      border-radius: 0;
+      min-height: auto;
+      box-shadow: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    /* ── Typography scale ── */
+    h1 { font-size: 32px; line-height: 38px; letter-spacing: -0.8px; }
+    h2 { font-size: 24px; line-height: 32px; letter-spacing: -0.3px; }
+    h3 { font-size: 19px; line-height: 26px; }
+    h4 { font-size: 16px; line-height: 22px; }
+    p, li { font-size: 15px; line-height: 24px; }
+
+    .section-num { font-size: 44px; right: 24px; top: 28px; }
+    .section-label { font-size: 11px; padding: 5px 12px; }
+
+    /* ── Page footer ── */
+    .page-number { right: 24px; bottom: 20px; }
+    .page-footer-brand { left: 24px; bottom: 20px; font-size: 11px; }
+
+    /* ── Cover ── */
+    .cover { padding: 48px 24px; }
+    .cover-logo { width: 68px; height: 68px; margin-bottom: 24px; }
+    .cover .byline { font-size: 17px; line-height: 24px; }
+    .cover .subtitle { font-size: 16px; line-height: 24px; margin-bottom: 36px; }
+    .cover::before { width: 400px; height: 400px; }
+
+    /* ── Stats ── */
+    .stats-row { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 36px; }
+    .stat-card { min-width: 0; padding: 20px 24px; }
+    .stat-value { font-size: 28px; line-height: 34px; }
+
+    .confidential-badge { padding: 10px 18px; font-size: 11px; }
+
+    /* ── Cards ── */
+    .glass-card, .glass-card-solid, .brand-card { padding: 20px; }
+    .guarantee-box { padding: 24px 20px; }
+    .guarantee-box p { font-size: 15px; line-height: 24px; }
+
+    /* ── Grids → single column ── */
+    .case-grid,
+    .example-grid,
+    .tier-grid { grid-template-columns: 1fr; }
+
+    /* ── Problem/Solution two-column → stack on mobile ── */
+    .compare-row {
+      flex-direction: column !important;
+    }
+
+    /* ── Brand card header (page 3 Lucas result) ── */
+    .brand-card-header {
+      flex-direction: column !important;
+      gap: 8px;
+    }
+    .brand-card-stat {
+      text-align: left !important;
+    }
+
+    /* ── Ascension diagram ── */
+    .ascension { flex-direction: column; gap: 0; }
+    .ascension-step { max-width: 100%; }
+    .ascension-arrow { transform: rotate(90deg); width: auto; padding: 4px 0; }
+
+    /* ── Process steps ── */
+    .process-steps { gap: 22px; }
+    .process-step { gap: 14px; }
+    .process-step::after { left: 20px; top: 46px; bottom: -22px; }
+    .step-content p { font-size: 14px; line-height: 22px; }
+
+    /* ── Table (page 8) ── */
+    .table-wrap {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 12px !important;
+    }
+    table { min-width: 580px; }
+    table th, table td { padding: 12px 14px !important; font-size: 13px !important; }
+
+    /* ── Quote block ── */
+    .quote-block { padding: 14px 18px; margin: 18px 0; }
+    .quote-block p { font-size: 15px; line-height: 24px; }
+
+    /* ── Pricing ── */
+    .tier-price { font-size: 24px; }
+
+    /* ── Industry pills ── */
+    .industry-pills { gap: 8px; }
+    .industry-pill { padding: 6px 14px; font-size: 13px; }
+
+    /* ── Spacers shrink on mobile ── */
+    .spacer-48 { height: 32px; }
+    .spacer-40 { height: 28px; }
+    .spacer-32 { height: 24px; }
+    .spacer-28 { height: 20px; }
+
+    /* ── Video embeds ── */
+    .page > div[style*="padding-top: 75%"] {
+      border-radius: 12px !important;
+    }
+
+    /* ── Dividers ── */
+    .divider { margin: 20px 0; }
+  }
+
+  /* ── Small phones ── */
+  @media (max-width: 400px) {
+    .page { padding: 28px 16px 48px; }
+    h1 { font-size: 26px; line-height: 32px; }
+    h2 { font-size: 21px; line-height: 28px; }
+    .cover { padding: 36px 16px; }
+    .stat-card { padding: 16px 20px; }
+    .stat-value { font-size: 24px; }
+    .glass-card, .glass-card-solid, .brand-card { padding: 16px; }
+    .section-num { font-size: 36px; right: 16px; }
+    .page-number { right: 16px; bottom: 16px; }
+    .page-footer-brand { left: 16px; bottom: 16px; }
+    table { min-width: 500px; }
   }
 </style>
 </head>
@@ -902,12 +1019,12 @@
 
   <!-- Lucas result -->
   <div class="brand-card" style="margin-bottom: 20px;">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+    <div class="brand-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
       <div>
         <div class="name" style="font-size:17px; font-weight:600; color:var(--alpha-brand-950);">Lucas &mdash; Founder</div>
         <div class="role" style="font-size:14px; color:var(--alpha-light-500);">Marketing Agency Owner &amp; AI Product Creator</div>
       </div>
-      <div style="text-align:right;">
+      <div class="brand-card-stat" style="text-align:right;">
         <div style="font-size:32px; font-weight:700; color:var(--alpha-brand-950); line-height:1;">$1.5M+</div>
         <div style="font-size:12px; color:var(--alpha-light-500);">revenue generated</div>
       </div>
@@ -967,7 +1084,7 @@
   <h2>Example: Personal Trainer AI</h2>
   <div class="spacer-20"></div>
 
-  <div style="display: flex; gap: 20px; align-items: flex-start;">
+  <div class="compare-row" style="display: flex; gap: 20px; align-items: flex-start;">
     <div class="example-card" style="flex: 1;">
       <div class="label before-label">The Problem</div>
       <div class="before" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0; font-size: 15px; line-height: 24px;">Every time a new client comes in, you're manually writing a custom workout plan, meal plan, and adjusting it every few weeks. Clients log meals by hand, wait for your feedback. More clients = less time.</div>
@@ -1009,7 +1126,7 @@
   <h2>Example: Life Coaching AI</h2>
   <div class="spacer-20"></div>
 
-  <div style="display: flex; gap: 20px; align-items: flex-start;">
+  <div class="compare-row" style="display: flex; gap: 20px; align-items: flex-start;">
     <div class="example-card" style="flex: 1;">
       <div class="label before-label">The Problem</div>
       <div class="before" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0; font-size: 15px; line-height: 24px;">Every new client means back-to-back calls, learning their situation, then manually building an action plan. Questions at 11pm? They wait until the next scheduled call. Not scalable.</div>
@@ -1051,7 +1168,7 @@
   <h2>Example: Facebook Ads AI</h2>
   <div class="spacer-20"></div>
 
-  <div style="display: flex; gap: 20px; align-items: flex-start;">
+  <div class="compare-row" style="display: flex; gap: 20px; align-items: flex-start;">
     <div class="example-card" style="flex: 1;">
       <div class="label before-label">The Problem</div>
       <div class="before" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0; font-size: 15px; line-height: 24px;">Countless hours reviewing client accounts, gathering data, building reports, walking clients through numbers on calls. A never-ending cycle of manual review and hand-holding.</div>
@@ -1183,7 +1300,7 @@
   <div class="spacer-28"></div>
 
   <!-- Comparison table -->
-  <div style="border: 1px solid var(--alpha-light-100); border-radius: 16px; overflow: hidden;">
+  <div class="table-wrap" style="border: 1px solid var(--alpha-light-100); border-radius: 16px; overflow: hidden;">
     <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
       <thead>
         <tr style="background: var(--alpha-light-25);">
