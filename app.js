@@ -1225,24 +1225,24 @@ document.addEventListener('DOMContentLoaded', () => {
         <img src="${IMG.squat}" alt="Squat form" class="form-analyzer__photo"/>
         <!-- Overlay lines drawn via SVG on top of photo -->
         <svg class="form-analyzer__overlay-svg" viewBox="0 0 520 390" fill="none">
-          <!-- Upper back line — green (good) -->
-          <line x1="270" y1="70" x2="255" y2="170" stroke="#16a34a" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
-          <!-- Lower back line — red (fix needed) -->
-          <line x1="255" y1="170" x2="240" y2="240" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
-          <!-- Knee tracking — orange/warning -->
-          <circle cx="220" cy="300" r="16" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
-          <circle cx="300" cy="295" r="16" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
+          <!-- Upper back line — green (good): head down through upper back -->
+          <line x1="255" y1="95" x2="248" y2="175" stroke="#16a34a" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
+          <!-- Lower back line — red (fix needed): upper back down to hips -->
+          <line x1="248" y1="175" x2="235" y2="225" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
+          <!-- Knee tracking — orange/warning: circles on both knees -->
+          <circle cx="182" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
+          <circle cx="302" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
         </svg>
         <!-- Annotation callouts -->
-        <div class="form-analyzer__annotation" style="top:10%;left:55%">
+        <div class="form-analyzer__annotation" style="top:20%;left:55%">
           <span class="form-analyzer__annotation-num form-analyzer__annotation-num--good">1</span>
           <span class="form-analyzer__annotation-text">Head neutral — good</span>
         </div>
-        <div class="form-analyzer__annotation" style="top:48%;left:5%">
+        <div class="form-analyzer__annotation" style="top:46%;left:3%">
           <span class="form-analyzer__annotation-num form-analyzer__annotation-num--fix">2</span>
           <span class="form-analyzer__annotation-text">Lower back rounding</span>
         </div>
-        <div class="form-analyzer__annotation" style="top:72%;left:55%">
+        <div class="form-analyzer__annotation" style="top:62%;left:62%">
           <span class="form-analyzer__annotation-num form-analyzer__annotation-num--warning">3</span>
           <span class="form-analyzer__annotation-text">Knees caving inward</span>
         </div>
