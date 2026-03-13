@@ -5169,7 +5169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   
     const callsHtml = calls.map(c => `
-      <div class="callhist__item">
+      <div class="callhist__item" data-call-type="${c.type.toLowerCase()}">
         <div class="callhist__item-left">
           <span class="callhist__date">${c.date}</span>
           <div class="callhist__client-info">
@@ -5215,11 +5215,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="callhist__summary-label">Needs Work</span>
         </div>
       </div>
-      <div class="callhist__filters">
-        <button class="callhist__filter callhist__filter--active">All</button>
-        <button class="callhist__filter">Discovery</button>
-        <button class="callhist__filter">Demo</button>
-        <button class="callhist__filter">Closing</button>
+      <div class="callhist__filters" id="callHistFilters">
+        <button class="callhist__filter callhist__filter--active" data-call-filter="all">All</button>
+        <button class="callhist__filter" data-call-filter="discovery">Discovery</button>
+        <button class="callhist__filter" data-call-filter="demo">Demo</button>
+        <button class="callhist__filter" data-call-filter="closing">Closing</button>
       </div>
       <div class="callhist__list">
         ${callsHtml}
@@ -7960,6 +7960,23 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
               card.style.display = 'none';
             }
+          });
+        });
+      });
+    }
+
+    // Call History filter buttons
+    const callHistFilters = container.querySelector('#callHistFilters');
+    if (callHistFilters) {
+      const filterBtns = callHistFilters.querySelectorAll('.callhist__filter');
+      const callItems = container.querySelectorAll('.callhist__item[data-call-type]');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('callhist__filter--active'));
+          btn.classList.add('callhist__filter--active');
+          const filter = btn.dataset.callFilter;
+          callItems.forEach(item => {
+            item.style.display = (filter === 'all' || item.dataset.callType === filter) ? '' : 'none';
           });
         });
       });
