@@ -1226,12 +1226,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Overlay lines drawn via SVG on top of photo -->
         <svg class="form-analyzer__overlay-svg" viewBox="0 0 520 390" fill="none">
           <!-- Upper back line — green (good): head down through upper back -->
-          <line x1="255" y1="95" x2="248" y2="175" stroke="#16a34a" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
+          <line x1="290" y1="95" x2="283" y2="175" stroke="#16a34a" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
           <!-- Lower back line — red (fix needed): upper back down to hips -->
-          <line x1="248" y1="175" x2="235" y2="225" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
+          <line x1="283" y1="175" x2="270" y2="225" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
           <!-- Knee tracking — orange/warning: circles on both knees -->
-          <circle cx="182" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
-          <circle cx="302" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
+          <circle cx="217" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
+          <circle cx="337" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
         </svg>
         <!-- Annotation callouts -->
         <div class="form-analyzer__annotation" style="top:20%;left:55%">
