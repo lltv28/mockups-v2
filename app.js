@@ -1261,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="form-analyzer__compare-toggle" id="formCompareSwitch"></div>
         <span class="form-analyzer__compare-label">Compare with Ideal Form</span>
       </div>
-      <div class="form-analyzer__side-by-side hidden" id="formSideBySide"
+      <div class="form-analyzer__side-by-side hidden" id="formSideBySide">
         <div>
           <div class="form-analyzer__side-label form-analyzer__side-label--yours">Your Form</div>
           <div class="form-analyzer__side-image">
