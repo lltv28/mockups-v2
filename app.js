@@ -5313,6 +5313,67 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   
+  // --- Price Objection Guide ---
+  function buildPriceObjectionGuide() {
+    const steps = [
+      {
+        label: 'Step 1 — Acknowledge & Isolate',
+        script: '"I totally hear you on the price. Before we go any further — is price the only thing holding you back, or is there something else?"',
+        why: 'This isolates the real objection. If price isn\'t the only issue, you\'ll uncover the true blocker.',
+      },
+      {
+        label: 'Step 2 — Reframe the Comparison',
+        script: '"Help me understand — too expensive compared to what? The cost of the problem you\'re dealing with, or another solution you\'re considering?"',
+        why: 'Shifts the frame from "your price vs. zero" to "your price vs. the cost of inaction."',
+      },
+      {
+        label: 'Step 3 — Quantify the Cost of Inaction',
+        script: '"You mentioned [specific pain point] is costing you roughly [X] per month. Over the next 6 months, that\'s [6X] — and we\'re talking about an investment of [price]. The math kind of speaks for itself."',
+        why: 'Makes the price feel small relative to the problem. Use their own numbers from discovery.',
+      },
+      {
+        label: 'Step 4 — Offer a Bridge',
+        script: '"What if we started with [smaller scope / pilot / phase 1] so you can prove the ROI internally before committing to the full engagement?"',
+        why: 'Reduces perceived risk without discounting. Gives them an easier yes.',
+      },
+    ];
+
+    const stepsHtml = steps.map((s, i) => `
+      <div class="playbook__section ${i === 0 ? 'playbook__section--open' : ''}" data-section="${i}">
+        <div class="playbook__section-header">
+          <div class="playbook__section-icon" style="background:rgba(220,38,38,0.08);color:#dc2626">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="playbook__section-title">${s.label}</span>
+          <svg class="playbook__section-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 6l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="playbook__section-body">
+          <div class="playbook__list-item" style="font-style:italic;border-left:2px solid rgba(220,38,38,0.3);padding-left:12px;margin-bottom:8px">${s.script}</div>
+          <div class="playbook__tip">
+            <div class="playbook__tip-badge">Why it works</div>
+            <span>${s.why}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    return `
+    <div class="message-ai-text message-ai-text--spaced">
+      <p>Price objections are the most common — and usually the easiest to handle once you stop defending the price and start reframing the conversation. Here's my 4-step framework from analyzing 800+ price objection moments:</p>
+    </div>
+    <div class="chat-response-card" id="priceObjectionCard">
+      <div class="chat-response-card__header">
+        <div>
+          <div class="chat-response-card__title">Price Objection Framework</div>
+          <div class="chat-response-card__subtitle">4-step recovery sequence &middot; Closer AI</div>
+        </div>
+      </div>
+      <div class="playbook__body">
+        ${stepsHtml}
+      </div>
+    </div>`;
+  }
+
   // ===========================================================
   // DEMO 6: REAL ESTATE COACH AI — CMA BUILDER
   // ===========================================================
@@ -8819,10 +8880,16 @@ document.addEventListener('DOMContentLoaded', () => {
       return { component: buildCallHistory(), genericThinking: true, genericThinkingText: 'Loading call history...' };
     }
 
+    // Sales: Price Objection Guide (before generic playbook)
+    if (currentDemo.id === 'salescoach' && (lower.includes('price objection') || lower.includes('price concern') ||
+        lower.includes('too expensive') || lower.includes('cost objection'))) {
+      return { component: buildPriceObjectionGuide(), genericThinking: true, genericThinkingText: 'Building objection framework...' };
+    }
+
     // Sales: Playbook
     if (currentDemo.id === 'salescoach' && (lower.includes('playbook') || lower.includes('framework') ||
         lower.includes('discovery call') || lower.includes('sales techniques') || lower.includes('objection handling') ||
-        lower.includes('objection') || lower.includes('price concern'))) {
+        lower.includes('objection'))) {
       return { component: buildSalesPlaybook(), genericThinking: true, genericThinkingText: 'Loading playbook...' };
     }
 
