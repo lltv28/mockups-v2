@@ -1230,7 +1230,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Lower back line — red (fix needed): upper back down to hips -->
           <line x1="303" y1="175" x2="290" y2="225" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 4" opacity="0.85"/>
           <!-- Knee tracking — orange/warning: circles on both knees -->
-          <circle cx="237" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
+          <circle cx="257" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
           <circle cx="357" cy="265" r="18" fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
         </svg>
         <!-- Annotation callouts -->
@@ -1238,7 +1238,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="form-analyzer__annotation-num form-analyzer__annotation-num--good">1</span>
           <span class="form-analyzer__annotation-text">Head neutral — good</span>
         </div>
-        <div class="form-analyzer__annotation" style="top:46%;left:3%">
+        <div class="form-analyzer__annotation" style="top:46%;left:38%">
           <span class="form-analyzer__annotation-num form-analyzer__annotation-num--fix">2</span>
           <span class="form-analyzer__annotation-text">Lower back rounding</span>
         </div>
