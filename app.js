@@ -8480,27 +8480,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // --- Sales Coach: Call History filter pills ---
-    const callHistFilters = container.querySelector('#callHistFilters');
-    if (callHistFilters) {
-      const filterBtns = callHistFilters.querySelectorAll('.competitor__filter-btn');
-      const callRows = container.querySelectorAll('.callhist__row');
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('competitor__filter-btn--active'));
-          btn.classList.add('competitor__filter-btn--active');
-          const filter = btn.dataset.filter;
-          callRows.forEach(row => {
-            if (filter === 'all' || row.dataset.calltype === filter) {
-              row.style.display = '';
-            } else {
-              row.style.display = 'none';
-            }
-          });
-        });
-      });
-    }
-
     // --- Sales Coach: Playbook accordion ---
     container.querySelectorAll('.playbook__section').forEach(section => {
       const header = section.querySelector('.playbook__section-header');
