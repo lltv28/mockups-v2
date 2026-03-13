@@ -231,9 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
       suggestionsLabel: 'Common questions for Closer',
       suggestions: [
         { text: 'Score my latest sales call transcript', prompt: 'Score this sales call transcript and give me a detailed breakdown', highlighted: true },
-        { text: 'Show my call performance history', prompt: 'Show my sales call score history and trends' },
+        { text: 'Show my call performance history', prompt: 'Show my call performance history and trends' },
         { text: 'What does the ideal discovery call look like?', prompt: 'Show me the sales playbook for discovery calls' },
-        { text: 'How do I handle price objections better?', prompt: 'Give me the objection handling framework for price concerns' },
+        { text: 'How do I handle price objections better?', prompt: 'How do I handle price objections on sales calls?' },
       ],
     },
     {
