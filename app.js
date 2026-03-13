@@ -1204,9 +1204,22 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
       <div class="form-analyzer__score">
-        <span class="form-analyzer__score-value">7.2</span>
-        <span class="form-analyzer__score-max">/ 10</span>
-        <span class="form-analyzer__score-label">— Good, with room to improve</span>
+        <div class="form-analyzer__score-ring">
+          <svg viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="34" fill="none" stroke="var(--alpha-light-100)" stroke-width="6"/>
+            <circle cx="40" cy="40" r="34" fill="none" stroke="#16a34a" stroke-width="6"
+              stroke-dasharray="${(72 / 100) * 213.6} 213.6"
+              stroke-linecap="round" transform="rotate(-90 40 40)" opacity="0.85"/>
+          </svg>
+          <div class="form-analyzer__score-center">
+            <span class="form-analyzer__score-value">7.2</span>
+            <span class="form-analyzer__score-max">/ 10</span>
+          </div>
+        </div>
+        <div class="form-analyzer__score-detail">
+          <span class="form-analyzer__score-grade">Good</span>
+          <span class="form-analyzer__score-label">Solid foundation with room to improve</span>
+        </div>
       </div>
       <div class="form-analyzer__image-wrap" id="formAnalyzerImageSingle">
         <img src="${IMG.squat}" alt="Squat form" class="form-analyzer__photo"/>

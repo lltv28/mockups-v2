@@ -1986,20 +1986,54 @@ html, body {
 .form-analyzer__score {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 0 16px 4px;
+  gap: 16px;
+  padding: 12px 16px;
+}
+
+.form-analyzer__score-ring {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.form-analyzer__score-ring svg {
+  width: 80px;
+  height: 80px;
+}
+
+.form-analyzer__score-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-analyzer__score-value {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--alpha-light-900);
+  line-height: 1;
 }
 
 .form-analyzer__score-max {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--alpha-light-400);
+  margin-top: 2px;
+}
+
+.form-analyzer__score-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.form-analyzer__score-grade {
+  font-size: 15px;
+  font-weight: 600;
+  color: #16a34a;
 }
 
 .form-analyzer__score-label {
