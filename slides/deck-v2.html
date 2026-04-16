@@ -1082,42 +1082,6 @@
     font-weight: 600;
   }
 
-  /* ── Nav Buttons ── */
-  .nav {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 100;
-  }
-
-  .nav-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 999px;
-    border: 1px solid var(--al-100);
-    background: var(--ad-800);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    color: var(--al-600);
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 150ms ease-out;
-    box-shadow: var(--shadow-card);
-  }
-
-  .nav-btn:hover {
-    background: var(--brand-50);
-    border-color: rgba(16,104,68,0.12);
-    color: var(--brand-950);
-    transform: translateY(-1px);
-  }
-
   /* ── Responsive ── */
   /* ── Tablet & Mobile: disable reveal animations ── */
   @media (max-width: 900px) {
@@ -1149,8 +1113,6 @@
     .guar-duo__card { padding: 24px 20px; }
     .guar-circle { width: 130px; height: 130px; }
     .guar-num { font-size: 44px; }
-    .nav { bottom: 16px; }
-    .nav-btn { width: 48px; height: 48px; font-size: 20px; }
     .counter { bottom: 20px; left: 16px; }
     .video-modal-inner { width: 95%; height: auto; aspect-ratio: 16/9; }
     .bonus-val { font-size: 24px; }
@@ -1235,8 +1197,6 @@
     .glass--strong.flex-row { gap: 12px; }
 
     /* Nav */
-    .nav { bottom: 10px; }
-    .nav-btn { width: 40px; height: 40px; font-size: 16px; }
     .counter { bottom: 14px; left: 12px; font-size: 10px; }
     .progress { height: 2px; }
   }
@@ -1464,7 +1424,7 @@
         <div class="detail-row rv d3">
           <div class="detail-icon">🗺️</div>
           <div class="detail-text">
-            <h4>The AI Plan</h4>
+            <h4>AI Welcome + Roadmap Planning</h4>
             <p>Your client dashboard — where they interact with the AI and track their progress.</p>
           </div>
         </div>
@@ -1531,10 +1491,10 @@
 
     <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
       <div class="rv d1"><span class="label-tag">Phase 1 · Step 2</span></div>
-      <div class="rv d2"><h2 class="h-lg">The AI Plan</h2></div>
+      <div class="rv d2"><h2 class="h-lg">AI Welcome + Roadmap Planning</h2></div>
       <div class="rv d3">
         <p class="body-lg" style="max-width: 720px; margin: 0 auto;">
-          Every client logs into their own AI dashboard — where they interact with the AI, track their progress, and work through their gameplan.
+          The moment a client buys, they login and the AI welcomes them and immediately walks them through their own personalized gameplan so they can see progress to their goals ASAP.
         </p>
       </div>
       <div class="rv d4" style="display: flex; justify-content: center;">
@@ -1878,26 +1838,6 @@
     </div>
   </div>
 
-  <!-- Phase 2 — Slide 4 — Plan Feature: Welcome + Checklist -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 40%;"></div>
-    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
-      <div class="rv d1"><span class="label-tag">Phase 2 · Step 4</span></div>
-      <div class="rv d2"><h2 class="h-lg">Welcome + Checklist</h2></div>
-      <div class="rv d3">
-        <p class="body-lg" style="max-width: 720px; margin: 0 auto;">
-          The moment a client buys, they log in and the AI welcomes them by name, then walks them through a personalized checklist so they take action immediately.
-        </p>
-      </div>
-      <div class="rv d4" style="display: flex; justify-content: center;">
-        <div style="width: 100%; max-width: 620px; aspect-ratio: 640/436; border-radius: 16px; overflow: hidden; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
-          <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/10e104ae659be5b964cea6160ba65d5a/iframe?muted=true&preload=true&loop=true&autoplay=true&controls=false&letterboxColor=transparent" style="width: 100%; height: 100%; border: none;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true" loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 2 — Slide 5 — Urgency Calculator (Interactive) -->
   <div class="slide">
     <div class="bg-orb bg-orb--green" style="bottom: -120px; right: -80px;"></div>
     <div class="content--wide flex-col gap-24" style="justify-content: center;">
@@ -2442,11 +2382,6 @@
   </div>
 </div>
 
-<!-- Nav -->
-<div class="nav">
-  <button class="nav-btn" id="prev" aria-label="Previous">&#8592;</button>
-  <button class="nav-btn" id="next" aria-label="Next">&#8594;</button>
-</div>
 
 </div>
 
@@ -2598,8 +2533,6 @@
     if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
   });
 
-  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
-  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
 
   let tx = 0;
   document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
