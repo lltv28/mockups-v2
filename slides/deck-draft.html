@@ -1,0 +1,2607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kodara — Sales Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Base */
+    --white: #FFFFFF;
+
+    /* Alpha Light (rgba 26,26,26) */
+    --al-25: rgba(26,26,26,0.04);
+    --al-50: rgba(26,26,26,0.06);
+    --al-100: rgba(26,26,26,0.09);
+    --al-200: rgba(26,26,26,0.20);
+    --al-300: rgba(26,26,26,0.28);
+    --al-400: rgba(26,26,26,0.36);
+    --al-500: rgba(26,26,26,0.48);
+    --al-600: rgba(26,26,26,0.60);
+    --al-900: rgba(26,26,26,0.80);
+
+    /* Alpha Dark (rgba 255,255,255) */
+    --ad-300: rgba(255,255,255,0.28);
+    --ad-600: rgba(255,255,255,0.60);
+    --ad-800: rgba(255,255,255,0.75);
+    --ad-900: rgba(255,255,255,0.80);
+
+    /* Brand (rgba 16,104,68) */
+    --brand-50: rgba(16,104,68,0.06);
+    --brand-100: rgba(16,104,68,0.08);
+    --brand-200: rgba(16,104,68,0.12);
+    --brand-300: rgba(16,104,68,0.18);
+    --brand-600: rgba(16,104,68,0.55);
+    --brand-950: rgba(16,104,68,0.92);
+
+    /* Neutrals */
+    --n50: #FAFAFA;
+    --n200: #E5E5E5;
+    --n300: #D4D4D4;
+    --n500: #737373;
+    --n700: #404040;
+
+    /* Shadows */
+    --shadow-card: 0px 22px 6px rgba(0,0,0,0), 0px 14px 6px rgba(0,0,0,0), 0px 8px 5px rgba(0,0,0,0.01), 0px 4px 4px rgba(0,0,0,0.02), 0px 1px 2px rgba(0,0,0,0.02);
+    --shadow-modal: 0px 67px 19px rgba(0,0,0,0), 0px 43px 17px rgba(0,0,0,0.01), 0px 24px 15px rgba(0,0,0,0.02), 0px 11px 11px rgba(0,0,0,0.03), 0px 3px 6px rgba(0,0,0,0.04);
+
+    /* Font */
+    --font: 'Instrument Sans', sans-serif;
+    --font-hero: 'Instrument Serif', serif;
+    --fvs: 'wdth' 100;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--white);
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── App Shell ── */
+  .app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── Panel Toggle Button ── */
+  .panel-toggle {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--al-100);
+    background: var(--ad-800);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 150ms ease-out;
+    padding: 0;
+  }
+
+  .panel-toggle:hover {
+    background: var(--brand-50);
+    border-color: rgba(16,104,68,0.12);
+  }
+
+  .panel-toggle svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--al-600);
+    stroke-width: 1.8;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .panel-toggle:hover svg {
+    stroke: var(--brand-950);
+  }
+
+  /* ── Slide Panel (left sidebar) ── */
+  .panel {
+    width: 220px;
+    min-width: 220px;
+    height: 100vh;
+    background: var(--n50);
+    border-right: 1px solid var(--al-50);
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 200;
+    scrollbar-width: thin;
+    scrollbar-color: var(--al-200) transparent;
+    transition: margin-left 250ms ease-out, opacity 200ms ease-out;
+  }
+
+  .panel::-webkit-scrollbar { width: 4px; }
+  .panel::-webkit-scrollbar-track { background: transparent; }
+  .panel::-webkit-scrollbar-thumb { background: var(--al-200); border-radius: 999px; }
+
+  .panel.collapsed {
+    margin-left: -220px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .thumb {
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 150ms ease-out;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .thumb:hover {
+    background: var(--al-50);
+  }
+
+  .thumb.active {
+    background: var(--brand-50);
+  }
+
+  .thumb-num {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--al-400);
+    padding-left: 2px;
+  }
+
+  .thumb.active .thumb-num {
+    color: var(--brand-950);
+    font-weight: 600;
+  }
+
+  .thumb-box {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    border: 1.5px solid var(--al-100);
+    background: var(--white);
+    overflow: hidden;
+    position: relative;
+    transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+  }
+
+  .thumb.active .thumb-box {
+    border-color: var(--brand-950);
+    box-shadow: 0 0 0 1px var(--brand-950);
+  }
+
+  .thumb-clone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1600px;
+    height: 900px;
+    transform: translate(-50%, -50%) scale(var(--thumb-scale, 0.122));
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Cloned slides inside thumbs: force visible and static */
+  .thumb-clone > .slide {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 1600px !important;
+    height: 900px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    zoom: 1 !important;
+    padding: 48px 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .thumb-clone .rv {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+
+  .thumb-clone .bg-orb {
+    opacity: 0.7;
+  }
+
+  /* ── Split Layout (text left, image right) ── */
+  .split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    text-align: left;
+  }
+
+  .split-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    border: 1px solid var(--al-100);
+    background: var(--al-25);
+    overflow: visible;
+    position: relative;
+    box-shadow: var(--shadow-card);
+  }
+
+  .split-image img {
+    border-radius: 16px;
+  }
+
+  .split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .split-image iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .split-image .collage-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--al-300);
+  }
+
+  /* ── Testimonials Collage ── */
+  .collage-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 120px;
+    gap: 10px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .collage-item {
+    border-radius: 12px;
+    border: 1px solid var(--al-100);
+    background: var(--al-25);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .collage-item--tall {
+    grid-row: span 2;
+  }
+
+  .collage-item--wide {
+    grid-column: span 2;
+  }
+
+  .collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collage-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--al-300);
+  }
+
+  /* ── Video Modal ── */
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(26,26,26,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease-out, visibility 200ms;
+  }
+
+  .video-modal.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .video-modal-inner {
+    width: 95%;
+    height: 95%;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-modal);
+    background: #000;
+  }
+
+  .video-modal-inner iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 150ms ease-out;
+  }
+
+  .video-modal-close:hover {
+    background: rgba(0,0,0,0.8);
+  }
+
+  /* Clickable video thumbnail */
+  .video-wrap--clickable {
+    cursor: pointer;
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+  }
+
+  .video-wrap--clickable:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-modal);
+  }
+
+  /* ── Video / Demo Slide ── */
+  .video-wrap {
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    border: 1px solid var(--al-100);
+    background: var(--al-25);
+    overflow: visible;
+    position: relative;
+    box-shadow: var(--shadow-card);
+  }
+
+  .video-wrap img {
+    border-radius: 16px;
+  }
+
+  .video-wrap video,
+  .video-wrap iframe,
+  .video-wrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+    object-fit: cover;
+  }
+
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--al-400);
+  }
+
+  .video-placeholder svg {
+    width: 48px;
+    height: 48px;
+    stroke: var(--al-300);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .video-placeholder span {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--al-400);
+  }
+
+  /* ── Deck ── */
+  .deck {
+    position: relative;
+    flex: 1;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── Slide ── */
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 60px;
+    zoom: 1.5;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.5s;
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .slide.active .rv { opacity: 1; transform: translateY(0); }
+
+  .rv {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .rv.d1 { transition-delay: 0.12s; }
+  .rv.d2 { transition-delay: 0.24s; }
+  .rv.d3 { transition-delay: 0.36s; }
+  .rv.d4 { transition-delay: 0.48s; }
+  .rv.d5 { transition-delay: 0.60s; }
+  .rv.d6 { transition-delay: 0.72s; }
+  .rv.d7 { transition-delay: 0.84s; }
+
+  /* ── Background Decorative Blurs ── */
+  .bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-orb--green {
+    background: rgba(16,104,68,0.06);
+    width: 500px;
+    height: 500px;
+  }
+
+  .bg-orb--neutral {
+    background: rgba(26,26,26,0.03);
+    width: 400px;
+    height: 400px;
+  }
+
+  .bg-orb--cyan {
+    background: rgba(0,180,212,0.04);
+    width: 350px;
+    height: 350px;
+  }
+
+  .slide > *:not(.bg-orb):not(.logo) { position: relative; z-index: 1; }
+
+  /* ── Typography ── */
+  .h-hero {
+    font-family: var(--font-hero);
+    font-size: clamp(38px, 5.4vw, 67px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: var(--al-900);
+    text-wrap: balance;
+  }
+
+  .h-lg {
+    font-family: var(--font-hero);
+    font-size: clamp(31px, 3.6vw, 50px);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    color: var(--al-900);
+    text-wrap: balance;
+  }
+
+  .h-md {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.15px;
+    color: var(--al-900);
+  }
+
+  .body-lg {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: clamp(16px, 1.3vw, 20px);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: -0.15px;
+    color: var(--al-600);
+    text-wrap: pretty;
+  }
+
+  .body {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.15px;
+    color: var(--al-600);
+  }
+
+  .body-sm {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.15px;
+    color: var(--al-500);
+  }
+
+  .label-tag {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--brand-950);
+  }
+
+  .brand-text { color: var(--brand-950); }
+  .muted { color: var(--al-500); }
+  .emphasis { color: var(--al-900); font-weight: 600; }
+
+  /* ── Layout ── */
+  .content { max-width: 704px; width: 100%; }
+  .content--wide { max-width: 960px; width: 100%; }
+  .content--narrow { max-width: 560px; width: 100%; }
+  .text-center { text-align: center; }
+  .flex-col { display: flex; flex-direction: column; }
+  .flex-row { display: flex; flex-direction: row; }
+  .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
+  .gap-4 { gap: 4px; }
+  .gap-6 { gap: 6px; }
+  .gap-8 { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .gap-16 { gap: 16px; }
+  .gap-20 { gap: 20px; }
+  .gap-24 { gap: 24px; }
+  .gap-32 { gap: 32px; }
+  .gap-40 { gap: 40px; }
+
+  /* ── Glass Card ── */
+  .glass {
+    background: var(--ad-300);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--al-50);
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .glass--strong {
+    background: var(--ad-800);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--al-100);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .glass--modal {
+    background: var(--ad-600);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--al-100);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--shadow-modal);
+  }
+
+  /* ── Brand Tint Card ── */
+  .brand-card {
+    background: var(--brand-50);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(16,104,68,0.06);
+  }
+
+  /* ── Subtle Card (settings-style) ── */
+  .subtle-card {
+    background: var(--al-25);
+    border-radius: 16px;
+    padding: 12px;
+  }
+
+  /* ── Phase Number Circle ── */
+  .phase-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-hero);
+    font-size: 20px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .phase-num--brand {
+    background: var(--brand-50);
+    color: var(--brand-950);
+    border: 1px solid rgba(16,104,68,0.08);
+  }
+
+  /* ── Three Phases Grid ── */
+  .phases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .phase-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 24px 20px;
+    border-radius: 16px;
+    background: var(--ad-800);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--al-50);
+    box-shadow: var(--shadow-card);
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+  }
+
+  .phase-col:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-modal);
+  }
+
+  .phase-week-tag {
+    display: inline-flex;
+    padding: 4px 8px;
+    border-radius: 24px;
+    background: var(--brand-50);
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--brand-950);
+    width: fit-content;
+  }
+
+  /* ── Detail Slide Layout ── */
+  .detail-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .detail-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+    padding: 14px 12px;
+    border-radius: 16px;
+    background: var(--ad-800);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--al-50);
+    box-shadow: var(--shadow-card);
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+  }
+
+  .detail-row:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-modal);
+  }
+
+  .detail-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--brand-50);
+    border: 1px solid rgba(16,104,68,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .detail-text h4 {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.15px;
+    color: var(--al-900);
+  }
+
+  .detail-text p {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.15px;
+    color: var(--al-600);
+  }
+
+  /* ── Big Number ── */
+  .big-num {
+    font-family: var(--font-hero);
+    font-size: clamp(56px, 10vw, 140px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -3px;
+    color: var(--brand-950);
+  }
+
+  /* ── Investment Card ── */
+  .invest-card {
+    background: var(--white);
+    border: 1px solid var(--al-100);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: var(--shadow-card);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .price-line {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .price-amt {
+    font-family: var(--font-hero);
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--al-900);
+    letter-spacing: -1.5px;
+  }
+
+  .price-per {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--al-500);
+  }
+
+  .hr {
+    height: 1px;
+    background: var(--al-50);
+    margin: 20px 0;
+    border: none;
+  }
+
+  .check-row {
+    display: flex;
+    gap: 10px;
+    padding: 6px 0;
+    align-items: flex-start;
+  }
+
+  .check-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: var(--brand-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .check-dot svg {
+    width: 12px;
+    height: 12px;
+    stroke: rgba(16,104,68,0.92);
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .check-row p {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.15px;
+    color: var(--al-600);
+  }
+
+  .check-row strong {
+    color: var(--al-900);
+    font-weight: 600;
+  }
+
+  /* ── Guarantee Circle ── */
+  .guar-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 999px;
+    border: 1px solid var(--al-100);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+  }
+
+  .guar-circle::before {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border-radius: 999px;
+    border: 1px solid var(--al-50);
+  }
+
+  .guar-num {
+    font-family: var(--font-hero);
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--brand-950);
+    line-height: 1;
+  }
+
+  .guar-label {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--al-400);
+    margin-top: 2px;
+  }
+
+  /* ── Guarantee Duo (side-by-side) ── */
+  .guar-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .guar-duo__card {
+    padding: 32px 24px;
+    border-radius: 20px;
+    border: 1px solid var(--al-50);
+    background: var(--ad-800);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* ── Slide Disclaimer ── */
+  .slide-disclaimer {
+    position: absolute;
+    bottom: 12px;
+    left: 24px;
+    right: 24px;
+    font-family: var(--font);
+    font-size: 8px;
+    line-height: 1.4;
+    color: var(--al-300);
+    text-align: center;
+  }
+
+  .guar-rect {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border: 1px solid var(--al-100);
+    background: var(--brand-50);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .guar-rect .guar-num {
+    font-size: 72px;
+  }
+
+  .guar-rect .guar-label {
+    font-size: 13px;
+  }
+
+  .guar-duo__card .h-md {
+    font-size: clamp(16px, 1.6vw, 22px);
+  }
+
+  /* ── Bonus Grid ── */
+  .bonus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .bonus-card {
+    border-radius: 16px;
+    padding: 24px 20px;
+    background: var(--ad-800);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--al-50);
+    box-shadow: var(--shadow-card);
+  }
+
+  .bonus-val {
+    font-family: var(--font-hero);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--brand-950);
+    margin-bottom: 6px;
+  }
+
+  .bonus-title {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--al-900);
+    line-height: 20px;
+    margin-bottom: 6px;
+  }
+
+  .bonus-desc {
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--al-500);
+    line-height: 18px;
+  }
+
+  /* ── Blockquote ── */
+  .bq {
+    border-left: 2px solid rgba(16,104,68,0.18);
+    padding-left: 20px;
+  }
+
+
+  /* ── Progress ── */
+  .progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: rgba(16,104,68,0.35);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+  }
+
+  /* ── Counter ── */
+  .counter {
+    position: fixed;
+    bottom: 24px;
+    left: 32px;
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--al-400);
+    z-index: 100;
+    letter-spacing: 0.5px;
+  }
+
+  .counter .cur {
+    color: var(--al-900);
+    font-weight: 600;
+  }
+
+  /* ── Nav Buttons ── */
+  .nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .nav-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 999px;
+    border: 1px solid var(--al-100);
+    background: var(--ad-800);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: var(--al-600);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 150ms ease-out;
+    box-shadow: var(--shadow-card);
+  }
+
+  .nav-btn:hover {
+    background: var(--brand-50);
+    border-color: rgba(16,104,68,0.12);
+    color: var(--brand-950);
+    transform: translateY(-1px);
+  }
+
+  /* ── Responsive ── */
+  /* ── Tablet & Mobile: disable reveal animations ── */
+  @media (max-width: 900px) {
+    .rv {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ── Tablet ── */
+  @media (max-width: 900px) {
+    .slide { padding: 48px 28px; zoom: 1; justify-content: center; align-items: center; }
+    .panel { display: none; }
+    .panel-toggle { display: none; }
+    .phases-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+    .detail-items { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+    .split-layout { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+    .split-layout .flex-col { align-items: center; }
+    .split-image { max-width: 360px; margin: 0 auto; }
+    .bonus-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+    .collage-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 100px; }
+    .collage-item--tall { grid-row: span 2; }
+    .collage-item--wide { grid-column: span 1; }
+    .video-wrap { max-width: 100%; }
+    .invest-card { max-width: 100%; }
+    .big-num { font-size: clamp(48px, 14vw, 100px); }
+    .guar-duo { grid-template-columns: 1fr; max-width: 400px; gap: 20px; }
+    .guar-duo__card { padding: 24px 20px; }
+    .guar-circle { width: 130px; height: 130px; }
+    .guar-num { font-size: 44px; }
+    .nav { bottom: 16px; }
+    .nav-btn { width: 48px; height: 48px; font-size: 20px; }
+    .counter { bottom: 20px; left: 16px; }
+    .video-modal-inner { width: 95%; height: auto; aspect-ratio: 16/9; }
+    .bonus-val { font-size: 24px; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 600px) {
+    .slide {
+      padding: 32px 20px;
+           overflow-y: auto;
+      justify-content: center;
+      align-items: center;
+      padding-top: 48px;
+      padding-bottom: 80px;
+    }
+    .slide > *:not(.bg-orb) { width: 100%; text-align: center; }
+    .slide > [class*="content"] { align-items: center; }
+
+    /* Typography */
+    .h-hero { font-size: clamp(24px, 7vw, 34px); }
+    .h-lg { font-size: clamp(20px, 6vw, 28px); }
+    .h-md { font-size: clamp(16px, 5vw, 22px); }
+    .body-lg { font-size: 14px; }
+    .label-tag { font-size: 10px; letter-spacing: 1.5px; }
+
+    /* Grids stack to 1 column */
+    .phases-grid { gap: 12px; max-width: 100%; grid-template-columns: 1fr; }
+    .detail-items { grid-template-columns: 1fr; max-width: 100%; }
+    .collage-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 80px; gap: 6px; }
+    .collage-item--tall { grid-row: span 1; }
+    .collage-item--wide { grid-column: span 2; }
+
+    /* Split layout stacks */
+    .split-layout { grid-template-columns: 1fr; gap: 20px; text-align: center; }
+    .split-layout .flex-col { align-items: center; }
+    .split-image { max-width: 100%; }
+
+    /* Phase cards */
+    .phase-col { padding: 16px 14px; gap: 10px; }
+    .phase-num { width: 36px; height: 36px; font-size: 16px; }
+
+    /* Detail cards */
+    .detail-grid { gap: 20px; }
+    .detail-row { padding: 10px; }
+    .detail-icon { width: 28px; height: 28px; font-size: 13px; }
+
+    /* Video */
+    .video-wrap { border-radius: 10px; }
+    .video-modal-inner { width: 98%; height: auto; aspect-ratio: 16/9; border-radius: 10px; }
+    .video-modal-close { width: 32px; height: 32px; font-size: 16px; top: 8px; right: 8px; }
+
+    /* Investment */
+    .price-amt { font-size: 32px; }
+    .price-line { justify-content: center; }
+    .invest-card { padding: 20px 16px; border-radius: 14px; text-align: left; }
+    .check-row { text-align: left; }
+
+    /* Guarantee */
+    .guar-duo { grid-template-columns: 1fr; max-width: 100%; gap: 16px; }
+    .guar-duo__card { padding: 20px 16px; border-radius: 14px; }
+    .guar-circle { width: 100px; height: 100px; }
+    .guar-circle::before { inset: -10px; }
+    .guar-num { font-size: 36px; }
+    .guar-label { font-size: 9px; }
+
+    /* Bonuses */
+    .bonus-val { font-size: 20px; }
+    .bonus-title { font-size: 12px; }
+    .bonus-desc { font-size: 11px; }
+
+    /* Big number (Hormozi) */
+    .big-num { font-size: clamp(36px, 16vw, 64px); letter-spacing: -2px; }
+
+    /* Glass / BQ */
+    .glass--strong { padding: 14px; }
+    .bq { padding-left: 12px; text-align: left; }
+
+    /* Content max-width */
+    .content, .content--narrow, .content--wide { max-width: 100%; }
+
+    /* Next Steps cards */
+    .glass--strong.flex-row { gap: 12px; }
+
+    /* Nav */
+    .nav { bottom: 10px; }
+    .nav-btn { width: 40px; height: 40px; font-size: 16px; }
+    .counter { bottom: 14px; left: 12px; font-size: 10px; }
+    .progress { height: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- Slide Panel -->
+<div class="panel" id="panel"></div>
+
+<div class="deck" id="deck">
+
+<!-- Panel Toggle -->
+<button class="panel-toggle" id="panelToggle" aria-label="Toggle slide panel">
+  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+</button>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- S1 — The Solution (Brain Box) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide active" data-slide="0">
+    <div class="bg-orb bg-orb--green" style="top: 40%; right: -100px; transform: translateY(-50%);"></div>
+    <div class="bg-orb bg-orb--cyan" style="top: -120px; left: 30%;"></div>
+
+    <div class="content--wide split-layout">
+      <div class="flex-col gap-24">
+        <div class="rv d1">
+          <span class="label-tag">The Solution</span>
+        </div>
+        <div class="rv d2">
+          <h2 class="h-hero">Your own AI product</h2>
+        </div>
+        <div class="rv d3">
+          <p class="body-lg">
+            A digital AI version of you that can think, behave, and take action like you — without requiring a single minute of your time.
+          </p>
+        </div>
+        <div class="rv d4">
+          <div class="glass--strong">
+            <div class="bq">
+              <p class="body" style="line-height: 24px; color: var(--al-600);">
+                "It's like taking your brain, shrinking it down, and putting it into a box your clients can keep on their desk. When they have a problem — they just tap the box."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rv d3">
+        <div class="split-image">
+          <img src="ai-product.png" alt="AI Product concept — shrink your brain into a box">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- S2 — The Math (Flowchart) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide" data-slide="1">
+    <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
+    <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
+
+    <div class="content--wide flex-col gap-32" style="justify-content: center;">
+      <!-- Without AI Product -->
+      <div class="rv d1" style="background: rgba(193,69,69,0.06); border: 1px solid rgba(193,69,69,0.22); border-radius: 18px; padding: 34px 42px;">
+        <div style="color: rgba(193,69,69,0.92); font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; margin-bottom: 22px; text-align: center;">Without AI Product</div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: nowrap;">
+          <div style="background: rgba(193,69,69,0.12); border-radius: 13px; padding: 15px 22px; text-align: center; min-width: 122px;">
+            <div style="font-weight: 600; color: var(--al-900); font-size: 17px;">Cold</div>
+            <div style="font-size: 12px; color: var(--al-500); margin-top: 2px;">traffic</div>
+          </div>
+          <span style="color: rgba(193,69,69,0.75); font-size: 24px;">→</span>
+          <div style="background: rgba(193,69,69,0.12); border-radius: 13px; padding: 15px 22px; text-align: center; min-width: 154px;">
+            <div style="font-weight: 600; color: var(--al-900); font-size: 17px;">High ticket offer</div>
+            <div style="font-size: 12px; color: var(--al-500); margin-top: 2px;">cold pitch</div>
+          </div>
+          <span style="color: rgba(193,69,69,0.75); font-size: 24px;">→</span>
+          <div style="background: rgba(193,69,69,0.92); color: white; border-radius: 13px; padding: 15px 24px; font-weight: 600; font-size: 15px; text-align: center; line-height: 1.35;">
+            No shows, lack of trust,<br>low close rate
+          </div>
+        </div>
+      </div>
+
+      <!-- With AI Product -->
+      <div class="rv d2" style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 18px; padding: 34px 42px;">
+        <div style="color: var(--brand-950); font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; margin-bottom: 22px; text-align: center;">With AI Product</div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap;">
+          <div style="background: var(--brand-100); border-radius: 13px; padding: 13px 18px; text-align: center; min-width: 104px;">
+            <div style="font-weight: 600; color: var(--al-900); font-size: 14px; white-space: nowrap;">Cold</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">traffic</div>
+          </div>
+          <span style="color: var(--brand-950); font-size: 22px;">→</span>
+          <div style="background: var(--brand-200); border-radius: 13px; padding: 13px 18px; text-align: center; min-width: 150px;">
+            <div style="font-weight: 600; color: var(--al-900); font-size: 14px; white-space: nowrap;">Low ticket AI product</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">warm buyer</div>
+          </div>
+          <span style="color: var(--brand-950); font-size: 22px;">→</span>
+          <div style="background: var(--brand-200); border-radius: 13px; padding: 13px 18px; text-align: center; min-width: 134px;">
+            <div style="font-weight: 600; color: var(--al-900); font-size: 14px; white-space: nowrap;">High ticket offer</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">warm pitch</div>
+          </div>
+          <span style="color: var(--brand-950); font-size: 22px;">→</span>
+          <div style="background: var(--brand-950); color: white; border-radius: 13px; padding: 13px 20px; font-weight: 600; font-size: 12px; text-align: center; line-height: 1.35;">
+            Warm, pre-qualified, pre-sold<br>leads show up ready-to-buy
+          </div>
+        </div>
+      </div>
+
+      <div class="rv d3">
+        <p class="body-lg text-center" style="max-width: 820px; margin: 0 auto; font-size: 17px; line-height: 1.5; color: var(--al-600);">
+          The low-ticket AI product means every high-ticket call feels like a referral who already <span class="emphasis">knows / likes / trusts</span> you. The AI product automatically nurtures &amp; warms people up to want to buy more from you.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonial 1 -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
+    <div class="content--wide text-center flex-col gap-24">
+      <div class="rv d1"><span class="label-tag">Client Results</span></div>
+      <div class="rv d2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 960px; margin: 0 auto;">
+        <img src="leanne-testimonial.png" alt="Leanne Ellington testimonial — $3,600 ad spend, $19,000 in enrolled clients from one month" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-card);">
+        <img src="leanne-landing.jpg" alt="Teenager Brain landing page — Emotional Fitness for the TikTok Generation" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-card);">
+      </div>
+      <div class="rv d3"></div>
+      <div class="rv d4"><p class="body" style="color: var(--al-400);">— Leanne Ellington, Stressless Eating &amp; Teenager Brain</p></div>
+      <div class="rv d5"><p class="slide-disclaimer" style="position: static;">Any individual experiences presented are not typical. The information shared is for example purposes and is not a guarantee of a rate of return or a specific result. Your results may vary.</p></div>
+    </div>
+  </div>
+
+  <!-- Testimonial 2 -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="bottom: -100px; left: -60px;"></div>
+    <div class="content--wide text-center flex-col gap-24">
+      <div class="rv d1"><span class="label-tag">Client Results</span></div>
+      <div class="rv d2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 960px; margin: 0 auto;">
+        <img src="https://i.gyazo.com/01df4357212d7505b91da8ae8d6ed2bc.png" alt="Scotty Tregellas testimonial" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-card);">
+        <img src="scotty-profile.jpg" alt="Scotty Tregellas — Creditlift, $50M+ approved funding" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-card);">
+      </div>
+      <div class="rv d3"></div>
+      <div class="rv d4"><p class="body" style="color: var(--al-400);">— Scotty Tregellas, Creditlift</p></div>
+      <div class="rv d5"><p class="slide-disclaimer" style="position: static;">Any individual experiences presented are not typical. The information shared is for example purposes and is not a guarantee of a rate of return or a specific result. Your results may vary.</p></div>
+    </div>
+  </div>
+
+  <!-- Testimonial 3 -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: 50%; right: -80px; transform: translateY(-50%);"></div>
+    <div class="content--wide text-center flex-col gap-24">
+      <div class="rv d1"><span class="label-tag">Client Results</span></div>
+      <div class="rv d2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 960px; margin: 0 auto;">
+        <img src="sandra-testimonial.png" alt="Sandra Parker testimonial — three calls this week all came from the low ticket offer" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-card);">
+        <img src="sandra-landing.jpg" alt="The Alcohol Freedom System landing page" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-card);">
+      </div>
+      <div class="rv d3"></div>
+      <div class="rv d4"><p class="body" style="color: var(--al-400);">— Sandra Parker, Just The Tonic Coaching</p></div>
+      <div class="rv d5"><p class="slide-disclaimer" style="position: static;">Any individual experiences presented are not typical. The information shared is for example purposes and is not a guarantee of a rate of return or a specific result. Your results may vary.</p></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- S5 — 3 Phases Overview -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide" data-slide="4">
+    <div class="bg-orb bg-orb--green" style="bottom: -150px; right: -100px;"></div>
+    <div class="bg-orb bg-orb--cyan" style="top: -100px; left: -80px;"></div>
+
+    <div class="content--wide text-center flex-col gap-40">
+      <div class="flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">The Kodara System</span></div>
+        <div class="rv d2"><h2 class="h-lg">Three phases to launch</h2></div>
+      </div>
+      <div class="phases-grid">
+        <div class="phase-col rv d3">
+          <div class="phase-num phase-num--brand">1</div>
+
+          <div class="h-md" style="font-size: 20px;">AI Build</div>
+          <p class="body">We extract your expertise and build your fully functional AI product — all done for you in 2 weeks.</p>
+        </div>
+        <div class="phase-col rv d4">
+          <div class="phase-num phase-num--brand">2</div>
+
+          <div class="h-md" style="font-size: 20px;">Sell Your AI</div>
+          <p class="body">We plug your AI into a low-ticket funnel that captures every lead you're leaving on the table.</p>
+        </div>
+        <div class="phase-col rv d5">
+          <div class="phase-num phase-num--brand">3</div>
+
+          <div class="h-md" style="font-size: 20px;">Ascension</div>
+          <p class="body">Low-ticket buyers ascend into your high-ticket offer — on autopilot, without another sales call.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Phase 1 — AI Build (Cover) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide" data-slide="5">
+    <div class="bg-orb bg-orb--green" style="top: -100px; right: 20%;"></div>
+
+    <div class="content--wide detail-grid">
+      <div class="flex-col gap-20">
+        <div class="rv d1"><span class="label-tag">Phase 1</span></div>
+        <div class="rv d2">
+          <h2 class="h-lg">AI Build</h2>
+        </div>
+        <div class="rv d3">
+          <p class="body-lg" style="max-width: 540px;">
+            We extract your expertise and build your fully functional AI product — all done for you in 2 weeks.
+          </p>
+        </div>
+      </div>
+      <div class="detail-items">
+        <div class="detail-row rv d2">
+          <div class="detail-icon">📞</div>
+          <div class="detail-text">
+            <h4>Lucas Onboarding Call</h4>
+            <p>Personal strategy session to map your marketing plan, AI functions, and pricing roadmap.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d3">
+          <div class="detail-icon">🗺️</div>
+          <div class="detail-text">
+            <h4>The AI Plan</h4>
+            <p>Your client dashboard — where they interact with the AI and track their progress.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d4">
+          <div class="detail-icon">⚡</div>
+          <div class="detail-text">
+            <h4>AI Capabilities</h4>
+            <p>Six core functions your AI performs on autopilot, 24/7, for every client.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d5">
+          <div class="detail-icon">🎥</div>
+          <div class="detail-text">
+            <h4>Your AI Avatar</h4>
+            <p>Your face, your voice — clients see and hear the AI version of you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 — Slide 1 — Lucas Onboarding Call -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -100px; right: 20%;"></div>
+
+    <div class="content--wide split-layout">
+      <div class="flex-col gap-24">
+        <div class="rv d1"><span class="label-tag">Phase 1 · Step 1</span></div>
+        <div class="rv d2"><h2 class="h-lg">Lucas Onboarding Call</h2></div>
+        <div class="rv d3">
+          <p class="body-lg">
+            A personal strategy session with Lucas to map out your entire launch. You walk away with a clear plan to make money from day one.
+          </p>
+        </div>
+        <div class="rv d4 flex-col gap-12">
+          <div class="check-row">
+            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <p><strong>Marketing Plan</strong> — the exact strategy to launch and sell your AI</p>
+          </div>
+          <div class="check-row">
+            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <p><strong>1–2 AI Key Functions</strong> — the core things your AI will do for your clients</p>
+          </div>
+          <div class="check-row">
+            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <p><strong>Pricing Roadmap</strong> — your low, mid, and high-ticket offer structure</p>
+          </div>
+        </div>
+      </div>
+      <div class="rv d3 flex-col gap-16">
+        <div class="split-image" style="aspect-ratio: 1/1; background: var(--al-100); border: 2px dashed var(--al-300); display: flex; align-items: center; justify-content: center;">
+          <div style="text-align: center; color: var(--al-500); padding: 24px;">
+            <div style="font-size: 40px; margin-bottom: 10px;">👤</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">[ Placeholder ]</div>
+            <div style="font-size: 12px; margin-top: 6px;">Square Lucas photo</div>
+          </div>
+        </div>
+        <p style="text-align: center; font-size: 13px; color: var(--al-600); font-weight: 600; line-height: 1.5;">
+          [ Achievement 1 ] &nbsp;·&nbsp; [ Achievement 2 ] &nbsp;·&nbsp; [ Achievement 3 ]
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 — Slide 2 — The AI Plan -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="bottom: -100px; left: -60px;"></div>
+
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 1 · Step 2</span></div>
+      <div class="rv d2"><h2 class="h-lg">The AI Plan</h2></div>
+      <div class="rv d3">
+        <p class="body-lg" style="max-width: 720px; margin: 0 auto;">
+          Every client logs into their own AI dashboard — where they interact with the AI, track their progress, and work through their gameplan.
+        </p>
+      </div>
+      <div class="rv d4" style="display: flex; justify-content: center;">
+        <div style="width: 100%; max-width: 720px; aspect-ratio: 16/9; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+          <div style="text-align: center; color: var(--al-500); padding: 32px;">
+            <div style="font-size: 40px; margin-bottom: 10px;">🗺️</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">[ Placeholder ]</div>
+            <div style="font-size: 12px; margin-top: 6px;">AI Plan dashboard screenshot</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 — Slide 3 — 6 AI Demos -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -80px; right: 40%;"></div>
+
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 1 · Step 3</span></div>
+      <div class="rv d2"><h2 class="h-lg">What Your AI Can Do</h2></div>
+      <div class="rv d3">
+        <p class="body" style="max-width: 680px; margin: 0 auto; color: var(--al-500);">
+          Six real capabilities your AI performs on autopilot — 24/7, for every client.
+        </p>
+      </div>
+      <div class="rv d4" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1100px; margin: 0 auto; width: 100%;">
+        <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 16px;"><div style="font-size: 28px; margin-bottom: 6px;">🎬</div><div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Demo 1</div><div style="font-size: 11px; margin-top: 4px; text-align: center;">[AI GIF]</div></div>
+        <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 16px;"><div style="font-size: 28px; margin-bottom: 6px;">🎬</div><div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Demo 2</div><div style="font-size: 11px; margin-top: 4px; text-align: center;">[AI GIF]</div></div>
+        <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 16px;"><div style="font-size: 28px; margin-bottom: 6px;">🎬</div><div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Demo 3</div><div style="font-size: 11px; margin-top: 4px; text-align: center;">[AI GIF]</div></div>
+        <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 16px;"><div style="font-size: 28px; margin-bottom: 6px;">🎬</div><div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Demo 4</div><div style="font-size: 11px; margin-top: 4px; text-align: center;">[AI GIF]</div></div>
+        <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 16px;"><div style="font-size: 28px; margin-bottom: 6px;">🎬</div><div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Demo 5</div><div style="font-size: 11px; margin-top: 4px; text-align: center;">[AI GIF]</div></div>
+        <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 16px;"><div style="font-size: 28px; margin-bottom: 6px;">🎬</div><div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Demo 6</div><div style="font-size: 11px; margin-top: 4px; text-align: center;">[AI GIF]</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 — Slide 4a — AI Avatar: Jeff -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: 50%; left: -60px; transform: translateY(-50%);"></div>
+
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 1 · Step 4 — Avatar 1/3</span></div>
+      <div class="rv d2"><h2 class="h-lg">Your AI Avatar — Jeff</h2></div>
+      <div class="rv d3">
+        <p class="body" style="max-width: 680px; margin: 0 auto; color: var(--al-500);">
+          Real vs. AI, side-by-side.
+        </p>
+      </div>
+      <div class="rv d4" style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 24px; align-items: center; max-width: 820px; margin: 0 auto; width: 100%;">
+        <div class="flex-col gap-10">
+          <div style="aspect-ratio: 1/1; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500);">
+            <div style="font-size: 40px; margin-bottom: 8px;">📷</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Real Jeff</div>
+          </div>
+          <div style="font-size: 13px; color: var(--al-600); font-weight: 600;">Before</div>
+        </div>
+        <div style="font-size: 32px; color: var(--al-400);">→</div>
+        <div class="flex-col gap-10">
+          <div style="aspect-ratio: 1/1; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500);">
+            <div style="font-size: 40px; margin-bottom: 8px;">🎥</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Jeff AI</div>
+          </div>
+          <div style="font-size: 13px; color: var(--al-600); font-weight: 600;">After</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 — Slide 4b — AI Avatar: Lucas -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="bottom: -100px; right: 20%;"></div>
+
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 1 · Step 4 — Avatar 2/3</span></div>
+      <div class="rv d2"><h2 class="h-lg">Your AI Avatar — Lucas</h2></div>
+      <div class="rv d3">
+        <p class="body" style="max-width: 680px; margin: 0 auto; color: var(--al-500);">
+          Real vs. AI, side-by-side.
+        </p>
+      </div>
+      <div class="rv d4" style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 24px; align-items: center; max-width: 820px; margin: 0 auto; width: 100%;">
+        <div class="flex-col gap-10">
+          <div style="aspect-ratio: 1/1; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500);">
+            <div style="font-size: 40px; margin-bottom: 8px;">📷</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Real Lucas</div>
+          </div>
+          <div style="font-size: 13px; color: var(--al-600); font-weight: 600;">Before</div>
+        </div>
+        <div style="font-size: 32px; color: var(--al-400);">→</div>
+        <div class="flex-col gap-10">
+          <div style="aspect-ratio: 1/1; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500);">
+            <div style="font-size: 40px; margin-bottom: 8px;">🎥</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Lucas AI</div>
+          </div>
+          <div style="font-size: 13px; color: var(--al-600); font-weight: 600;">After</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 — Slide 4c — AI Avatar: TBD -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: -100px; right: 30%;"></div>
+
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 1 · Step 4 — Avatar 3/3</span></div>
+      <div class="rv d2"><h2 class="h-lg">Your AI Avatar — [ TBD ]</h2></div>
+      <div class="rv d3">
+        <p class="body" style="max-width: 680px; margin: 0 auto; color: var(--al-500);">
+          Real vs. AI, side-by-side.
+        </p>
+      </div>
+      <div class="rv d4" style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 24px; align-items: center; max-width: 820px; margin: 0 auto; width: 100%;">
+        <div class="flex-col gap-10">
+          <div style="aspect-ratio: 1/1; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500);">
+            <div style="font-size: 40px; margin-bottom: 8px;">📷</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Real</div>
+          </div>
+          <div style="font-size: 13px; color: var(--al-600); font-weight: 600;">Before</div>
+        </div>
+        <div style="font-size: 32px; color: var(--al-400);">→</div>
+        <div class="flex-col gap-10">
+          <div style="aspect-ratio: 1/1; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500);">
+            <div style="font-size: 40px; margin-bottom: 8px;">🎥</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">AI</div>
+          </div>
+          <div style="font-size: 13px; color: var(--al-600); font-weight: 600;">After</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Phase 2 — Sell Your AI (Cover) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide" data-slide="6">
+    <div class="bg-orb bg-orb--cyan" style="bottom: -80px; left: 30%;"></div>
+
+    <div class="content--wide detail-grid">
+      <div class="flex-col gap-20">
+        <div class="rv d1"><span class="label-tag">Phase 2</span></div>
+        <div class="rv d2">
+          <h2 class="h-lg">Sell Your AI</h2>
+        </div>
+        <div class="rv d3">
+          <p class="body-lg" style="max-width: 540px;">
+            We plug your AI into a low-ticket funnel that captures every lead you're leaving on the table.
+          </p>
+        </div>
+      </div>
+      <div class="detail-items">
+        <div class="detail-row rv d2">
+          <div class="detail-icon">🛠️</div>
+          <div class="detail-text">
+            <h4>Done-For-You Funnel</h4>
+            <p>A complete sales funnel built to sell your AI to your existing audience.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d3">
+          <div class="detail-icon">🎯</div>
+          <div class="detail-text">
+            <h4>Every Traffic Source</h4>
+            <p>Ads, organic, referrals, and every lead in your CRM — all feeding the funnel.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d4">
+          <div class="detail-icon">📊</div>
+          <div class="detail-text">
+            <h4>The Funnel Math</h4>
+            <p>Exactly how low-ticket buyers ascend into your high-ticket offer.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d5">
+          <div class="detail-icon">🚀</div>
+          <div class="detail-text">
+            <h4>Welcome + Checklist</h4>
+            <p>Every buyer gets an AI-guided onboarding that keeps them engaged and buying.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 — Slide 1 — Done-For-You Funnel (Leanne's) -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
+    <div class="content--wide split-layout">
+      <div class="flex-col gap-24">
+        <div class="rv d1"><span class="label-tag">Phase 2 · Step 1</span></div>
+        <div class="rv d2"><h2 class="h-lg">Done-For-You Funnel</h2></div>
+        <div class="rv d3">
+          <p class="body-lg">
+            A complete sales funnel designed to sell your AI product to your existing audience — ready to launch from day one.
+          </p>
+        </div>
+        <div class="rv d4">
+          <p class="body" style="color: var(--al-500); font-style: italic;">
+            Example: Leanne Ellington's AI funnel — Teenager Brain.
+          </p>
+        </div>
+      </div>
+      <div class="rv d3">
+        <div class="split-image" style="aspect-ratio: 4/3;">
+          <img src="leanne-landing.jpg" alt="Leanne Ellington's Teenager Brain AI funnel example">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 — Slide 2 — Traffic Sources Flow -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 30%;"></div>
+    <div class="content--wide flex-col gap-32" style="justify-content: center;">
+      <div class="text-center flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">Phase 2 · Step 2</span></div>
+        <div class="rv d2"><h2 class="h-lg">Every Traffic Source Fuels Your Funnel</h2></div>
+      </div>
+
+      <div class="rv d3" style="display: grid; grid-template-columns: 1.2fr 60px 1fr 60px 1fr; gap: 16px; align-items: center; max-width: 1100px; margin: 0 auto; width: 100%;">
+        <!-- 4 source boxes -->
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 20px;">📢</div>
+            <div>
+              <div style="font-weight: 600; color: var(--al-900); font-size: 14px;">Paid Ads<span style="color: var(--brand-950);">*</span></div>
+              <div style="font-size: 11px; color: var(--al-500);">Meta, Google, YouTube</div>
+            </div>
+          </div>
+          <div style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 20px;">📱</div>
+            <div>
+              <div style="font-weight: 600; color: var(--al-900); font-size: 14px;">Organic Social</div>
+              <div style="font-size: 11px; color: var(--al-500);">IG, TikTok, YouTube</div>
+            </div>
+          </div>
+          <div style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 20px;">🤝</div>
+            <div>
+              <div style="font-weight: 600; color: var(--al-900); font-size: 14px;">Word-of-Mouth</div>
+              <div style="font-size: 11px; color: var(--al-500);">Referrals &amp; affiliates</div>
+            </div>
+          </div>
+          <div style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 20px;">📇</div>
+            <div>
+              <div style="font-weight: 600; color: var(--al-900); font-size: 14px;">Every Lead in Your CRM</div>
+              <div style="font-size: 11px; color: var(--al-500);">Every email you've ever captured</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size: 28px; color: var(--brand-950); text-align: center;">→</div>
+
+        <!-- Traffic hub -->
+        <div style="background: var(--brand-200); border-radius: 16px; padding: 30px 20px; text-align: center;">
+          <div style="font-size: 32px; margin-bottom: 8px;">🚦</div>
+          <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">Traffic</div>
+          <div style="font-size: 12px; color: var(--al-600); margin-top: 4px;">all channels consolidated</div>
+        </div>
+
+        <div style="font-size: 28px; color: var(--brand-950); text-align: center;">→</div>
+
+        <!-- Funnel destination -->
+        <div style="background: var(--brand-950); color: white; border-radius: 16px; padding: 30px 20px; text-align: center;">
+          <div style="font-size: 32px; margin-bottom: 8px;">🛒</div>
+          <div style="font-weight: 700; font-size: 18px;">Your Funnel</div>
+          <div style="font-size: 12px; opacity: 0.8; margin-top: 4px;">low-ticket AI product</div>
+        </div>
+      </div>
+
+      <div class="rv d4 text-center">
+        <p class="body" style="color: var(--al-500); font-size: 13px; max-width: 820px; margin: 0 auto;">
+          <span style="color: var(--brand-950);">*</span> We help set up your ad campaigns and give you the creatives — you control the spend.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 — Slide 3 — The Funnel Math -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
+    <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
+
+    <div class="content--wide flex-col gap-20" style="justify-content: center;">
+      <div class="text-center flex-col gap-8">
+        <div class="rv d1"><span class="label-tag">Phase 2 · Step 3</span></div>
+        <div class="rv d2"><h2 class="h-lg">The Funnel Math</h2></div>
+      </div>
+
+      <!-- Without AI Product -->
+      <div class="rv d3" style="background: rgba(193,69,69,0.06); border: 1px solid rgba(193,69,69,0.22); border-radius: 16px; padding: 22px 30px;">
+        <div style="color: rgba(193,69,69,0.92); font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; text-align: center;">Without AI Product</div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: nowrap;">
+          <div style="background: rgba(193,69,69,0.12); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">1,000</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">clicks</div>
+          </div>
+          <span style="color: rgba(193,69,69,0.75); font-size: 20px;">→</span>
+          <div style="background: rgba(193,69,69,0.12); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">200</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">leads</div>
+          </div>
+          <span style="color: rgba(193,69,69,0.75); font-size: 20px;">→</span>
+          <div style="background: rgba(193,69,69,0.12); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">20</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">calls booked</div>
+          </div>
+          <span style="color: rgba(193,69,69,0.75); font-size: 20px;">→</span>
+          <div style="background: rgba(193,69,69,0.12); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">10</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">show up</div>
+          </div>
+          <span style="color: rgba(193,69,69,0.75); font-size: 20px;">→</span>
+          <div style="background: rgba(193,69,69,0.92); color: white; border-radius: 11px; padding: 12px 16px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; font-size: 18px;">2</div>
+            <div style="font-size: 11px; opacity: 0.85; margin-top: 2px;">clients</div>
+          </div>
+        </div>
+        <p class="body" style="text-align: center; color: var(--al-600); margin-top: 14px; font-size: 13px;">
+          <strong style="color: rgba(193,69,69,0.95);">1% of leads</strong> become high-ticket clients — and <strong>198 people</strong> just take up space in your CRM.
+        </p>
+      </div>
+
+      <!-- With AI Product -->
+      <div class="rv d4" style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 16px; padding: 22px 30px;">
+        <div style="color: var(--brand-950); font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; text-align: center;">With AI Product</div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: nowrap;">
+          <div style="background: var(--brand-100); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">1,000</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">clicks</div>
+          </div>
+          <span style="color: var(--brand-950); font-size: 20px;">→</span>
+          <div style="background: var(--brand-200); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">100</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">buyers&nbsp;($17)</div>
+          </div>
+          <span style="color: var(--brand-950); font-size: 20px;">→</span>
+          <div style="background: var(--brand-200); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">60</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">calls booked</div>
+          </div>
+          <span style="color: var(--brand-950); font-size: 20px;">→</span>
+          <div style="background: var(--brand-200); border-radius: 11px; padding: 12px 14px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">40</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">show up</div>
+          </div>
+          <span style="color: var(--brand-950); font-size: 20px;">→</span>
+          <div style="background: var(--brand-950); color: white; border-radius: 11px; padding: 12px 16px; text-align: center; min-width: 110px;">
+            <div style="font-weight: 700; font-size: 18px;">12</div>
+            <div style="font-size: 11px; opacity: 0.85; margin-top: 2px;">clients</div>
+          </div>
+        </div>
+        <p class="body" style="text-align: center; color: var(--al-600); margin-top: 14px; font-size: 13px;">
+          <strong style="color: var(--brand-950);">6× more clients</strong> from the same traffic — plus a pool of <strong>88 low-ticket buyers</strong> who are <strong>70% more likely</strong> to buy high-ticket than a cold lead.
+        </p>
+      </div>
+
+      <div class="rv d5 text-center">
+        <p class="body-lg" style="max-width: 900px; margin: 0 auto; font-size: 15px; color: var(--al-600);">
+          A second door for people who aren't ready to walk through the first one. <span class="emphasis">Same traffic, 6× the outcome.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 — Slide 4 — Plan Feature: Welcome + Checklist -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 40%;"></div>
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 2 · Step 4</span></div>
+      <div class="rv d2"><h2 class="h-lg">Welcome + Checklist</h2></div>
+      <div class="rv d3">
+        <p class="body-lg" style="max-width: 720px; margin: 0 auto;">
+          The moment a client buys, they log in and the AI welcomes them by name, then walks them through a personalized checklist so they take action immediately.
+        </p>
+      </div>
+      <div class="rv d4" style="display: flex; justify-content: center;">
+        <div style="width: 100%; max-width: 720px; aspect-ratio: 16/9; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+          <div style="text-align: center; color: var(--al-500); padding: 32px;">
+            <div style="font-size: 40px; margin-bottom: 10px;">✅</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">[ Placeholder ]</div>
+            <div style="font-size: 12px; margin-top: 6px;">Lucas AI welcome + checklist demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 — Slide 5 — Urgency Calculator (Interactive) -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="bottom: -120px; right: -80px;"></div>
+    <div class="content--wide flex-col gap-24" style="justify-content: center;">
+      <div class="text-center flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">Phase 2 · Exercise</span></div>
+        <div class="rv d2"><h2 class="h-lg">How Much Are You Leaving On The Table?</h2></div>
+        <div class="rv d3">
+          <p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500);">
+            Imagine your website went down while your ads were still running. That's what's happening right now with every lead that doesn't close.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv d4" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; width: 100%; align-items: stretch;">
+        <!-- Inputs -->
+        <div style="background: white; border: 1px solid var(--al-200); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 18px;">
+          <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--brand-950);">Your Current Numbers</div>
+
+          <label style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 13px; font-weight: 600; color: var(--al-700);">Monthly clicks / visitors</span>
+            <input type="number" id="calc-clicks" value="1000" min="0" style="padding: 10px 14px; border: 1px solid var(--al-200); border-radius: 10px; font-size: 15px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <label style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 13px; font-weight: 600; color: var(--al-700);">High-ticket clients / month (today)</span>
+            <input type="number" id="calc-clients" value="2" min="0" step="0.1" style="padding: 10px 14px; border: 1px solid var(--al-200); border-radius: 10px; font-size: 15px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <label style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 13px; font-weight: 600; color: var(--al-700);">Low-ticket AI price ($)</span>
+            <input type="number" id="calc-lt" value="17" min="0" style="padding: 10px 14px; border: 1px solid var(--al-200); border-radius: 10px; font-size: 15px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <label style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 13px; font-weight: 600; color: var(--al-700);">High-ticket price ($)</span>
+            <input type="number" id="calc-ht" value="5000" min="0" style="padding: 10px 14px; border: 1px solid var(--al-200); border-radius: 10px; font-size: 15px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+        </div>
+
+        <!-- Outputs -->
+        <div style="background: var(--brand-950); color: white; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 14px; justify-content: center;">
+          <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.7);">With Your AI Product</div>
+
+          <div>
+            <div style="font-size: 12px; opacity: 0.7;">Low-ticket buyers (10% of clicks)</div>
+            <div id="calc-buyers" style="font-size: 26px; font-weight: 700; color: white;">—</div>
+          </div>
+
+          <div>
+            <div style="font-size: 12px; opacity: 0.7;">High-ticket clients (6× current)</div>
+            <div id="calc-ht-clients" style="font-size: 26px; font-weight: 700; color: white;">—</div>
+          </div>
+
+          <div>
+            <div style="font-size: 12px; opacity: 0.7;">Revenue from low-ticket buyers</div>
+            <div id="calc-lt-rev" style="font-size: 22px; font-weight: 700; color: white;">—</div>
+          </div>
+
+          <div>
+            <div style="font-size: 12px; opacity: 0.7;">Extra high-ticket revenue</div>
+            <div id="calc-ht-rev" style="font-size: 22px; font-weight: 700; color: white;">—</div>
+          </div>
+
+          <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px;">
+            <div style="font-size: 12px; opacity: 0.7;">Total monthly upside</div>
+            <div id="calc-total" style="font-size: 38px; font-weight: 700; color: white; letter-spacing: -0.02em;">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const fmtMoney = n => '$' + Math.round(n).toLocaleString();
+      const fmtNum   = n => Math.round(n).toLocaleString();
+      const ids = ['calc-clicks', 'calc-clients', 'calc-lt', 'calc-ht'];
+      function recompute() {
+        const clicks      = parseFloat(document.getElementById('calc-clicks').value)  || 0;
+        const currClients = parseFloat(document.getElementById('calc-clients').value) || 0;
+        const ltPrice     = parseFloat(document.getElementById('calc-lt').value)      || 0;
+        const htPrice     = parseFloat(document.getElementById('calc-ht').value)      || 0;
+
+        const ltBuyers     = clicks * 0.10;             // 10% of clicks buy low-ticket
+        const newHtClients = currClients * 6;           // 6× ascension
+        const residualLt   = Math.max(ltBuyers - newHtClients, 0);
+        const ltRev        = residualLt * ltPrice;
+        const extraHt      = (newHtClients - currClients) * htPrice;
+        const total        = ltRev + extraHt;
+
+        document.getElementById('calc-buyers').textContent     = fmtNum(ltBuyers) + ' buyers / mo';
+        document.getElementById('calc-ht-clients').textContent = fmtNum(newHtClients) + ' clients / mo';
+        document.getElementById('calc-lt-rev').textContent     = fmtMoney(ltRev) + ' / mo';
+        document.getElementById('calc-ht-rev').textContent     = fmtMoney(extraHt) + ' / mo';
+        document.getElementById('calc-total').textContent      = fmtMoney(total) + ' / mo';
+      }
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', recompute);
+      });
+      recompute();
+    })();
+  </script>
+
+  <!-- Phase 2 — Slide 6 — Low → Full AI Ascension -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: -80px; right: 30%;"></div>
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 2 · Step 6</span></div>
+      <div class="rv d2"><h2 class="h-lg">Low-Ticket Buyers Ascend To Full AI</h2></div>
+      <div class="rv d3">
+        <p class="body-lg" style="max-width: 720px; margin: 0 auto;">
+          Every low-ticket buyer uses your demo AI, falls in love with it, and gets automatically upsold into the full AI product — on autopilot.
+        </p>
+      </div>
+      <div class="rv d4" style="display: flex; justify-content: center;">
+        <div style="width: 100%; max-width: 820px; aspect-ratio: 16/9; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+          <div style="text-align: center; color: var(--al-500); padding: 32px;">
+            <div style="font-size: 40px; margin-bottom: 10px;">🪜</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">[ Placeholder ]</div>
+            <div style="font-size: 12px; margin-top: 6px;">Ascension visual — Demo AI → Full AI (e.g., personal trainer example)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Phase 3 — Ascension (Cover) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide" data-slide="7">
+    <div class="bg-orb bg-orb--green" style="top: 50%; right: -80px; transform: translateY(-50%);"></div>
+
+    <div class="content--wide detail-grid">
+      <div class="flex-col gap-20">
+        <div class="rv d1"><span class="label-tag">Phase 3</span></div>
+        <div class="rv d2">
+          <h2 class="h-lg">Ascension</h2>
+        </div>
+        <div class="rv d3">
+          <p class="body-lg" style="max-width: 540px;">
+            How low-ticket buyers ascend into your highest offer — plus every other way this system makes you money.
+          </p>
+        </div>
+      </div>
+      <div class="detail-items">
+        <div class="detail-row rv d2">
+          <div class="detail-icon">💬</div>
+          <div class="detail-text">
+            <h4>AI Paywalls</h4>
+            <p>The AI pitches your high-ticket inside itself and books calls on your calendar.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d3">
+          <div class="detail-icon">🎯</div>
+          <div class="detail-text">
+            <h4>High-Ticket Packaging</h4>
+            <p>Lucas + his marketing team restructure your offers for maximum profit.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d4">
+          <div class="detail-icon">💎</div>
+          <div class="detail-text">
+            <h4>Mastermind Upsell</h4>
+            <p>Existing clients ascend from your core offer into a premium mastermind.</p>
+          </div>
+        </div>
+        <div class="detail-row rv d5">
+          <div class="detail-icon">🌳</div>
+          <div class="detail-text">
+            <h4>Low-Hanging Fruit</h4>
+            <p>12+ additional ways your business earns more from the same audience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 — Slide 1 — AI Paywalls (Side-by-Side) -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: -80px; right: 30%;"></div>
+    <div class="content--wide flex-col gap-24" style="justify-content: center;">
+      <div class="text-center flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">Phase 3 · Step 1</span></div>
+        <div class="rv d2"><h2 class="h-lg">How The AI Sells The Upgrade</h2></div>
+        <div class="rv d3">
+          <p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500);">
+            Every client interaction becomes a path to your high-ticket offer. Two built-in paywalls do the selling for you.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv d4" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; width: 100%;">
+        <!-- Left — Product Paywall -->
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 24px;">
+            <div style="font-size: 40px; margin-bottom: 10px;">💬</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">[ Placeholder ]</div>
+            <div style="font-size: 12px; margin-top: 6px; text-align: center;">AI pitching product inside chat</div>
+          </div>
+          <div>
+            <h4 style="font-size: 17px; font-weight: 700; color: var(--al-900); margin-bottom: 4px;">Product Paywall</h4>
+            <p class="body" style="font-size: 13px; color: var(--al-500);">The AI recommends — and sells — your higher-tier products directly inside the conversation.</p>
+          </div>
+        </div>
+
+        <!-- Right — Book-a-Call Paywall -->
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="aspect-ratio: 4/3; background: var(--al-100); border: 2px dashed var(--al-300); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--al-500); padding: 24px;">
+            <div style="font-size: 40px; margin-bottom: 10px;">📅</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">[ Placeholder ]</div>
+            <div style="font-size: 12px; margin-top: 6px; text-align: center;">Book-a-call paywall demo</div>
+          </div>
+          <div>
+            <h4 style="font-size: 17px; font-weight: 700; color: var(--al-900); margin-bottom: 4px;">Book-a-Call Paywall</h4>
+            <p class="body" style="font-size: 13px; color: var(--al-500);">When a client is ready for your high-ticket, the AI routes them straight to your calendar — pre-qualified.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 — Slide 2 — High-Ticket Packaging (Split) -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
+    <div class="content--wide split-layout">
+      <div class="flex-col gap-24">
+        <div class="rv d1"><span class="label-tag">Phase 3 · Step 2</span></div>
+        <div class="rv d2"><h2 class="h-lg">High-Ticket Packaging</h2></div>
+        <div class="rv d3">
+          <p class="body-lg">
+            Lucas and his marketing team restructure your pricing, packaging, and offer ladder so every upsell is the most profitable use of your time.
+          </p>
+        </div>
+        <div class="rv d4 flex-col gap-12">
+          <div class="check-row">
+            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <p><strong>Raise your 1-on-1 rates</strong> — the AI handles everything else, so your time is worth more</p>
+          </div>
+          <div class="check-row">
+            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <p><strong>Rebuild the offer ladder</strong> — low, mid, and high-ticket priced for maximum ascension</p>
+          </div>
+          <div class="check-row">
+            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <p><strong>Optimize every upsell</strong> — take the least of your time, earn the most revenue</p>
+          </div>
+        </div>
+      </div>
+      <div class="rv d3">
+        <div class="split-image" style="aspect-ratio: 4/5; background: var(--al-100); border: 2px dashed var(--al-300); display: flex; align-items: center; justify-content: center;">
+          <div style="text-align: center; color: var(--al-500); padding: 32px;">
+            <div style="font-size: 44px; margin-bottom: 10px;">🎯</div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">[ Placeholder ]</div>
+            <div style="font-size: 12px; margin-top: 6px; max-width: 240px;">Lucas + marketing team photo / credentials</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 — Slide 3 — Mastermind Upsell -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="bottom: -120px; left: -80px;"></div>
+    <div class="content--wide flex-col gap-28" style="justify-content: center;">
+      <div class="text-center flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">Phase 3 · Step 3</span></div>
+        <div class="rv d2"><h2 class="h-lg">From Core Offer → Mastermind</h2></div>
+        <div class="rv d3">
+          <p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500);">
+            Clients who've already paid you once are 70% more likely to buy again. The AI pre-sells them into your premium offer — without another sales call.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv d4" style="display: grid; grid-template-columns: 1fr 60px 1fr 60px 1fr; gap: 14px; align-items: center; max-width: 1100px; margin: 0 auto; width: 100%;">
+        <!-- Tier 1 -->
+        <div style="background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 14px; padding: 22px 18px; text-align: center;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--al-500); font-weight: 700; margin-bottom: 8px;">Entry</div>
+          <div style="font-size: 26px; font-weight: 700; color: var(--al-900);">$17</div>
+          <div style="font-size: 12px; color: var(--al-500); margin-top: 4px;">Low-ticket AI demo</div>
+        </div>
+        <div style="font-size: 28px; color: var(--brand-950); text-align: center;">→</div>
+        <!-- Tier 2 -->
+        <div style="background: var(--brand-100); border: 1px solid var(--brand-300); border-radius: 14px; padding: 22px 18px; text-align: center;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--al-500); font-weight: 700; margin-bottom: 8px;">Core Offer</div>
+          <div style="font-size: 26px; font-weight: 700; color: var(--al-900);">$5K</div>
+          <div style="font-size: 12px; color: var(--al-500); margin-top: 4px;">1-on-1 coaching / program</div>
+        </div>
+        <div style="font-size: 28px; color: var(--brand-950); text-align: center;">→</div>
+        <!-- Tier 3 -->
+        <div style="background: var(--brand-950); color: white; border-radius: 14px; padding: 22px 18px; text-align: center;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.8; font-weight: 700; margin-bottom: 8px;">Mastermind</div>
+          <div style="font-size: 26px; font-weight: 700;">$50K</div>
+          <div style="font-size: 12px; opacity: 0.85; margin-top: 4px;">Premium tier / inner circle</div>
+        </div>
+      </div>
+
+      <div class="rv d5 text-center">
+        <p class="body" style="max-width: 820px; margin: 0 auto; font-size: 15px; color: var(--al-600);">
+          Most coaches give away their access for too cheap. <span class="emphasis">We help you price it like a mastermind, not a deliverable.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 — Slide 4 — Low-Hanging Fruit Tree -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -100px; right: 30%;"></div>
+    <div class="content--wide flex-col gap-20" style="justify-content: center;">
+      <div class="text-center flex-col gap-8">
+        <div class="rv d1"><span class="label-tag">Phase 3 · Bonus</span></div>
+        <div class="rv d2"><h2 class="h-lg">🌳 Low-Hanging Fruit</h2></div>
+        <div class="rv d3">
+          <p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500);">
+            12 additional ways your business earns more from the same audience — on top of everything above.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv d4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 1200px; margin: 0 auto; width: 100%;">
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Raise 1-on-1 Rates</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">AI handles the work — your time is worth more</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 +10–20% Close Rate</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">Warm buyers close higher than cold</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Capture the Maybes</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">$17–$100 from leads who'd never go high-ticket</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Liquidate Ad Spend</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">Recapture money on non-converting traffic</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Re-Engage Ghosts</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">AI emails inactive CRM leads on autopilot</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Cut Coaching Hours</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">AI answers FAQs — you focus on $5K+ work</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 $5K → $50K Ascension</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">Existing clients pre-sold into your mastermind</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Referral Loop</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">Happy AI users share with peers automatically</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Content Engine</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">AI writes posts, emails, ads in your voice</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Book-a-Call Paywall</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">AI routes ready buyers to your calendar</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Reactivate Email List</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">Every CRM lead gets an offer they'd pay for</div>
+        </div>
+        <div style="background: white; border: 1px solid var(--brand-200); border-radius: 12px; padding: 14px 16px;">
+          <div style="font-weight: 700; color: var(--brand-950); font-size: 13px; margin-bottom: 4px;">🌿 Spot High-Spenders</div>
+          <div style="font-size: 12px; color: var(--al-500); line-height: 1.4;">AI flags hot leads, routes to premium tier</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- S9 — Guarantee + DFY Organic (combined) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide" data-slide="8">
+    <div class="bg-orb bg-orb--green" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 550px; height: 550px;"></div>
+
+    <div class="content--wide text-center flex-col gap-24">
+      <div class="rv d1">
+        <span class="label-tag">Same Day Bonuses</span>
+      </div>
+
+      <div class="rv d2">
+        <h2 class="h-md" style="max-width: 680px; margin: 0 auto;">For Decisive Clients Who Take Fast Action</h2>
+      </div>
+
+      <div class="rv d3 guar-duo">
+        <!-- Left: 3 Months DFY Organic -->
+        <div class="guar-duo__card">
+          <div class="split-image" style="aspect-ratio: 16 / 9; border-radius: 12px; margin-bottom: 16px;">
+            <iframe src="https://fast.wistia.net/embed/iframe/ikwkqiyrpe?plugin%5Bbranding%5D=false&autoPlay=true&silentAutoPlay=true&muted=true&endVideoBehavior=loop&playbar=false&smallPlayButton=false&controlsVisibleOnLoad=false" allow="autoplay; fullscreen" allowfullscreen frameborder="0"></iframe>
+          </div>
+          <h3 class="h-md">3 Months DFY Organic Marketing</h3>
+          <p class="body" style="color: var(--al-500); margin-top: 8px;">
+            Our team creates ALL your organic marketing materials for 3 months using your AI 2nd Brain.<br><br>We create 90 videos, images, and text posts for IG/FB ready-to-post and bring in warm leads &amp; clients.<br><br><strong style="color: var(--brand-950);">Normally $2,000/month — $6,000 total.</strong>
+          </p>
+        </div>
+
+        <!-- Right: 50 Client Guarantee -->
+        <div class="guar-duo__card">
+          <div class="guar-rect">
+            <div class="guar-num">50</div>
+            <div class="guar-label">Clients Guaranteed</div>
+          </div>
+          <h3 class="h-md">50 Clients Guarantee</h3>
+          <p class="body" style="color: var(--al-500); margin-top: 8px;">
+            We guarantee to bring in a total of 50 high-ticket upsell clients from your AI, or else we refund every single penny of your investment.<br><br>We offer this only to fast-action clients as we know those are the clients we can get the best results for.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- S10 — The Investment -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--neutral" style="bottom: -100px; right: -80px;"></div>
+
+    <div class="content--wide flex-col gap-24 text-center">
+      <div class="rv d1">
+        <span class="label-tag">The Investment</span>
+      </div>
+      <div class="rv d2" style="display: flex; gap: 24px; justify-content: center; align-items: stretch; flex-wrap: wrap;">
+        <!-- Flagship -->
+        <div class="invest-card" style="text-align: left; flex: 1; max-width: 420px;">
+          <div style="text-align: center;"><span class="label-tag" style="margin-bottom: 12px; display: inline-block; font-size: 16px;">Kodara Flagship</span></div>
+          <div class="flex-col gap-8">
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Done-For-You AI Build</strong> — we extract your expertise and build your entire AI product</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Done-For-You Sales Funnel</strong> — a complete low-ticket funnel ready to launch</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Done-For-You Traffic + Ascension</strong> — every lead captured and pre-sold to high-ticket</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Done-For-You High-Ticket Packaging</strong> — Lucas + team restructure your offer for profit</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>1-On-1 Executive Support</strong> — direct access to Lucas + daily-monitored gameplan</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Keep 100% Of Profits</strong> — your AI, your clients, your money</p>
+            </div>
+          </div>
+          <div class="hr"></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 13px; color: var(--al-500);">
+            <span><span class="price-amt">$18,000</span> <span class="price-per">/ year</span><span style="font-size: 12px; color: var(--al-300);">, or...</span></span>
+            <span><strong style="color: var(--al-700);">$6,800</strong> down + <strong style="color: var(--al-700);">$1,600</strong>/month<span style="color: var(--al-300);">, or...</span></span>
+            <span><strong style="color: var(--al-700);">$2,500</strong>/month</span>
+          </div>
+        </div>
+        <!-- Diamond -->
+        <div class="invest-card" style="text-align: left; flex: 1; max-width: 420px; border-color: var(--brand-600); border-width: 2px;">
+          <div style="text-align: center;"><span class="label-tag" style="margin-bottom: 12px; display: inline-block; font-size: 16px;">Kodara Diamond</span></div>
+          <div class="flex-col gap-8">
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Everything In Flagship</strong></p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Ongoing 1-On-1 Consulting</strong> — direct access to Lucas Tyson, CEO</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Fully Done-For-You Paid Ads System</strong> — we build and manage your ad campaigns</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Full AI Implementation</strong> — across all departments in your business</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>Diamond-Only Community</strong> — exclusive access to a private network of top clients</p>
+            </div>
+            <div class="check-row">
+              <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <p><strong>In-Person Events In California</strong> — live meetups and strategy sessions</p>
+            </div>
+          </div>
+          <div class="hr"></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 13px; color: var(--al-500);">
+            <span><span class="price-amt">Invite Only</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Video Modal -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="videoModalClose">&times;</button>
+    <iframe id="videoModalIframe" src="" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>
+  </div>
+</div>
+
+<!-- Nav -->
+<div class="nav">
+  <button class="nav-btn" id="prev" aria-label="Previous">&#8592;</button>
+  <button class="nav-btn" id="next" aria-label="Next">&#8594;</button>
+</div>
+
+</div>
+
+</div><!-- end .app -->
+
+<!-- Progress -->
+<div class="progress" id="progress"></div>
+
+<!-- Counter -->
+<div class="counter" id="counter"><span class="cur">01</span> / 11</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const panel = document.getElementById('panel');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const toggle = document.getElementById('panelToggle');
+  const total = slides.length;
+  let current = 0;
+
+  // Build thumbnail panel from actual slide clones
+  slides.forEach((slide, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb' + (i === 0 ? ' active' : '');
+    thumb.dataset.thumb = i;
+
+    const num = document.createElement('span');
+    num.className = 'thumb-num';
+    num.textContent = i + 1;
+
+    const box = document.createElement('div');
+    box.className = 'thumb-box';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'thumb-clone';
+
+    // Clone the full slide element so it keeps its own classes + styles
+    const clonedSlide = slide.cloneNode(true);
+    clonedSlide.removeAttribute('data-slide');
+    wrapper.appendChild(clonedSlide);
+
+    box.appendChild(wrapper);
+    thumb.appendChild(num);
+    thumb.appendChild(box);
+    panel.appendChild(thumb);
+  });
+
+  const thumbs = document.querySelectorAll('.thumb');
+
+  // Set correct scale based on actual thumb-box width
+  function updateThumbScale() {
+    const firstBox = document.querySelector('.thumb-box');
+    if (firstBox) {
+      const scale = firstBox.clientWidth / 1600;
+      document.querySelectorAll('.thumb-clone').forEach(c => {
+        c.style.setProperty('--thumb-scale', scale);
+      });
+    }
+  }
+  updateThumbScale();
+  window.addEventListener('resize', updateThumbScale);
+
+  function goTo(i) {
+    if (i < 0 || i >= total) return;
+    slides[current].classList.remove('active');
+    thumbs[current].classList.remove('active');
+    current = i;
+
+    // Update progress and counter immediately
+    thumbs[current].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    const n = String(current + 1).padStart(2, '0');
+    counter.innerHTML = '<span class="cur">' + n + '</span> / ' + String(total).padStart(2, '0');
+
+    // Force-reset reveal animations:
+    // 1. Strip 'rv' class so elements lose their opacity/transform rules
+    // 2. Make slide visible so browser computes layout without rv styles
+    // 3. Re-add 'rv' class (elements snap to opacity:0, translateY:20px)
+    // 4. Next frame: add 'active' which triggers transition to opacity:1, translateY:0)
+    const slide = slides[current];
+    const rvEls = slide.querySelectorAll('.rv');
+    const rvData = [];
+    rvEls.forEach(el => {
+      rvData.push({ el, classes: [...el.classList].filter(c => c === 'rv' || c.match(/^d\d$/)) });
+      el.classList.remove('rv');
+      el.className = el.className.replace(/\bd\d\b/g, '').trim();
+    });
+
+    slide.classList.add('active');
+    thumbs[current].classList.add('active');
+
+    // Force reflow so browser renders elements at full opacity (no rv class)
+    void slide.offsetHeight;
+
+    // Re-add rv classes — elements snap to hidden state
+    rvData.forEach(({ el, classes }) => {
+      classes.forEach(c => el.classList.add(c));
+    });
+
+    // Force another reflow, then the .slide.active .rv rule triggers the transition
+    void slide.offsetHeight;
+  }
+
+  // Video modal
+  const videoModal = document.getElementById('videoModal');
+  const videoModalIframe = document.getElementById('videoModalIframe');
+  const videoModalClose = document.getElementById('videoModalClose');
+
+  document.querySelectorAll('.video-wrap--clickable').forEach(el => {
+    el.addEventListener('click', () => {
+      const src = el.dataset.videoSrc;
+      if (src) {
+        videoModalIframe.src = src;
+        videoModal.classList.add('open');
+      }
+    });
+  });
+
+  function closeVideoModal() {
+    videoModal.classList.remove('open');
+    videoModalIframe.src = '';
+  }
+
+  videoModalClose.addEventListener('click', closeVideoModal);
+  videoModal.addEventListener('click', (e) => {
+    if (e.target === videoModal) closeVideoModal();
+  });
+
+  // Panel click
+  thumbs.forEach(t => {
+    t.addEventListener('click', () => goTo(parseInt(t.dataset.thumb)));
+  });
+
+  // Panel toggle
+  toggle.addEventListener('click', () => {
+    panel.classList.toggle('collapsed');
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && videoModal.classList.contains('open')) { closeVideoModal(); return; }
+    if (videoModal.classList.contains('open')) return; // don't navigate while modal is open
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+  });
+
+  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const d = tx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 50) d > 0 ? goTo(current + 1) : goTo(current - 1);
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>
