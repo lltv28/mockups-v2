@@ -1082,6 +1082,42 @@
     font-weight: 600;
   }
 
+  /* ── Nav Buttons ── */
+  .nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .nav-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 999px;
+    border: 1px solid var(--al-100);
+    background: var(--ad-800);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: var(--al-600);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 150ms ease-out;
+    box-shadow: var(--shadow-card);
+  }
+
+  .nav-btn:hover {
+    background: var(--brand-50);
+    border-color: rgba(16,104,68,0.12);
+    color: var(--brand-950);
+    transform: translateY(-1px);
+  }
+
   /* ── Responsive ── */
   /* ── Tablet & Mobile: disable reveal animations ── */
   @media (max-width: 900px) {
@@ -1113,6 +1149,8 @@
     .guar-duo__card { padding: 24px 20px; }
     .guar-circle { width: 130px; height: 130px; }
     .guar-num { font-size: 44px; }
+    .nav { bottom: 16px; }
+    .nav-btn { width: 48px; height: 48px; font-size: 20px; }
     .counter { bottom: 20px; left: 16px; }
     .video-modal-inner { width: 95%; height: auto; aspect-ratio: 16/9; }
     .bonus-val { font-size: 24px; }
@@ -1197,6 +1235,8 @@
     .glass--strong.flex-row { gap: 12px; }
 
     /* Nav */
+    .nav { bottom: 10px; }
+    .nav-btn { width: 40px; height: 40px; font-size: 16px; }
     .counter { bottom: 14px; left: 12px; font-size: 10px; }
     .progress { height: 2px; }
   }
@@ -1857,6 +1897,128 @@
     </div>
   </div>
 
+  <!-- Phase 2 — Slide 5 — Urgency Calculator (Interactive) -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="bottom: -120px; right: -80px;"></div>
+    <div class="content--wide flex-col gap-24" style="justify-content: center;">
+      <div class="text-center flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">Phase 2 · Exercise</span></div>
+        <div class="rv d2"><h2 class="h-lg">How Many More Clients Could You Reach?</h2></div>
+        <div class="rv d3">
+          <p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500);">
+            Imagine your website went down while your ads were still running. That's what's happening right now with every lead that never becomes a client.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv d4" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; max-width: 1060px; margin: 0 auto; width: 100%; align-items: stretch;">
+        <!-- Inputs -->
+        <div style="background: white; border: 1px solid var(--al-200); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
+          <label style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--al-700);">Monthly leads</span>
+            <input type="number" id="calc-leads" value="200" min="0" style="padding: 6px 10px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <label style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--al-700);">Low-ticket price ($)</span>
+            <input type="number" id="calc-ltprice" value="17" min="0" style="padding: 6px 10px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <label style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--al-700);">High-ticket price ($)</span>
+            <input type="number" id="calc-htprice" value="5000" min="0" style="padding: 6px 10px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <div style="border-top: 1px solid var(--al-100); padding-top: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--brand-950);">With Low-Ticket AI</div>
+
+          <label style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--al-700);">% leads → low-ticket conversion</span>
+            <input type="number" id="calc-ltconv" value="25" min="0" max="100" step="0.1" style="padding: 6px 10px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <label style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--al-700);">% LT → HT ascension rate</span>
+            <input type="number" id="calc-ascend" value="10" min="0" max="100" step="0.1" style="padding: 6px 10px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
+          </label>
+
+          <button type="button" id="calc-btn" style="margin-top: 2px; padding: 8px 16px; border: none; border-radius: 8px; background: var(--brand-950); color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; transition: transform 0.1s ease, opacity 0.1s ease;">
+            Calculate →
+          </button>
+        </div>
+
+        <!-- Outputs: 2x2 Grid -->
+        <div style="background: var(--brand-950); color: white; border-radius: 14px; padding: 24px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; text-align: center;">
+          <!-- Top Left: LT Buyers -->
+          <div style="padding: 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.12); border-right: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; font-weight: 700; margin-bottom: 6px;">New LT Buyers</div>
+            <div style="display: flex; align-items: baseline; justify-content: center; gap: 3px;">
+              <span style="font-size: 14px; font-weight: 700; opacity: 0.6;">+</span>
+              <span id="calc-lt-buyers" style="font-size: 42px; font-weight: 700; letter-spacing: -0.03em;">—</span>
+            </div>
+          </div>
+          <!-- Top Right: HT Clients -->
+          <div style="padding: 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; font-weight: 700; margin-bottom: 6px;">New HT Clients</div>
+            <div style="display: flex; align-items: baseline; justify-content: center; gap: 3px;">
+              <span style="font-size: 14px; font-weight: 700; opacity: 0.6;">+</span>
+              <span id="calc-total" style="font-size: 42px; font-weight: 700; letter-spacing: -0.03em;">—</span>
+            </div>
+          </div>
+          <!-- Bottom Left: LT Revenue -->
+          <div style="padding: 14px 10px; border-right: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; font-weight: 700; margin-bottom: 6px;">Potential LT Revenue</div>
+            <div style="display: flex; align-items: baseline; justify-content: center;">
+              <span id="calc-lt-rev" style="font-size: 28px; font-weight: 700; letter-spacing: -0.02em;">—</span>
+            </div>
+          </div>
+          <!-- Bottom Right: HT Revenue -->
+          <div style="padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; font-weight: 700; margin-bottom: 6px;">Potential HT Revenue</div>
+            <div style="display: flex; align-items: baseline; justify-content: center;">
+              <span id="calc-ht-rev" style="font-size: 28px; font-weight: 700; letter-spacing: -0.02em;">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv d5 text-center">
+        <p class="slide-disclaimer" style="position: static; margin-top: 6px; max-width: 900px; margin-left: auto; margin-right: auto;">For illustrative and educational purposes only. Any figures shown are hypothetical projections based on benchmark assumptions — not a guarantee, forecast, promise, or representation of actual results or earnings. We do not guarantee any specific outcome. Individual results vary widely based on offer, market, effort, and factors outside our control.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const fmtNum   = n => Math.round(n).toLocaleString();
+      const fmtMoney = n => '$' + Math.round(n).toLocaleString();
+
+      function recompute() {
+        const leads   = parseFloat(document.getElementById('calc-leads').value)   || 0;
+        const ltPrice = parseFloat(document.getElementById('calc-ltprice').value) || 0;
+        const htPrice = parseFloat(document.getElementById('calc-htprice').value) || 0;
+        const ltConv  = parseFloat(document.getElementById('calc-ltconv').value)  || 0;
+        const ascend  = parseFloat(document.getElementById('calc-ascend').value)  || 0;
+
+        const ltBuyers = leads * (ltConv / 100);
+        const clients  = ltBuyers * (ascend / 100);
+        const residual = Math.max(ltBuyers - clients, 0);
+        const ltRev    = residual * ltPrice;
+        const htRev    = clients * htPrice;
+
+        document.getElementById('calc-lt-buyers').textContent = fmtNum(ltBuyers);
+        document.getElementById('calc-total').textContent     = fmtNum(clients);
+        document.getElementById('calc-lt-rev').textContent    = fmtMoney(ltRev);
+        document.getElementById('calc-ht-rev').textContent    = fmtMoney(htRev);
+      }
+
+      const btn = document.getElementById('calc-btn');
+      if (btn) btn.addEventListener('click', recompute);
+
+      // Initial compute so defaults render on load
+      recompute();
+    })();
+  </script>
+
   <!-- ═══════════════════════════════════════ -->
   <!-- Phase 3 — Ascension (Cover) -->
   <!-- ═══════════════════════════════════════ -->
@@ -2280,6 +2442,11 @@
   </div>
 </div>
 
+<!-- Nav -->
+<div class="nav">
+  <button class="nav-btn" id="prev" aria-label="Previous">&#8592;</button>
+  <button class="nav-btn" id="next" aria-label="Next">&#8594;</button>
+</div>
 
 </div>
 
@@ -2431,6 +2598,8 @@
     if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
   });
 
+  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
 
   let tx = 0;
   document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
