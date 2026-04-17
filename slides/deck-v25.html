@@ -602,6 +602,7 @@
   /* ── Layout ── */
   .content { max-width: 704px; width: 100%; }
   .content--wide { max-width: 960px; width: 100%; }
+  .content--snug { max-width: 768px; width: 100%; }
   .content--narrow { max-width: 560px; width: 100%; }
   .text-center { text-align: center; }
   .flex-col { display: flex; flex-direction: column; }
@@ -1191,7 +1192,7 @@
     .bq { padding-left: 12px; text-align: left; }
 
     /* Content max-width */
-    .content, .content--narrow, .content--wide { max-width: 100%; }
+    .content, .content--narrow, .content--wide, .content--snug { max-width: 100%; }
 
     /* Next Steps cards */
     .glass--strong.flex-row { gap: 12px; }
@@ -2231,7 +2232,7 @@
   <div class="slide" data-slide="8">
     <div class="bg-orb bg-orb--green" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 520px; height: 520px;"></div>
 
-    <div class="content--wide text-center flex-col gap-16">
+    <div class="content--snug text-center flex-col gap-16">
       <div class="rv d1"><span class="label-tag">Before You See The Price</span></div>
 
       <div class="rv d2">
@@ -2287,7 +2288,7 @@
   <div class="slide">
     <div class="bg-orb bg-orb--cyan" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 520px; height: 520px;"></div>
 
-    <div class="content--wide text-center flex-col gap-16">
+    <div class="content--snug text-center flex-col gap-16">
       <div class="rv d1"><span class="label-tag">And One More Thing</span></div>
 
       <div class="rv d2">
@@ -2344,7 +2345,7 @@
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
-    <div class="content--wide text-center flex-col gap-12">
+    <div class="content--snug text-center flex-col gap-12">
       <div class="flex-col gap-4">
         <div class="rv d1"><span class="label-tag">You're One Decision Away</span></div>
         <div class="rv d2">
@@ -2428,7 +2429,7 @@
     <div class="bg-orb bg-orb--neutral" style="bottom: -100px; right: -80px;"></div>
     <div class="bg-orb bg-orb--green" style="top: -120px; left: -80px;"></div>
 
-    <div class="content--wide flex-col gap-16 text-center">
+    <div class="content--snug flex-col gap-16 text-center">
       <div class="rv d1 flex-col gap-8">
         <h2 class="h-lg" style="font-size: clamp(22px, 2.6vw, 34px);">Everything done for you. You keep 100% of the profits.</h2>
         <p class="body" style="max-width: 760px; margin: 0 auto; color: var(--al-600); font-weight: 400; line-height: 1.55;">
