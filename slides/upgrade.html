@@ -1420,6 +1420,148 @@
     .tier-grid { grid-template-columns: 1fr; }
     .investment-duo { grid-template-columns: 1fr; }
   }
+
+  /* ── Referral Earnings Ladder Row (horizontal client tiers) ── */
+  .ref-ladder-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .ref-ladder-step {
+    background: var(--ad-800);
+    border: 1px solid var(--al-50);
+    border-radius: 16px;
+    padding: 20px 14px 18px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+  }
+  .ref-ladder-step:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-modal);
+  }
+  .ref-ladder-step--featured {
+    background: var(--brand-950);
+    border-color: var(--brand-950);
+    color: white;
+  }
+  .ref-ladder-step__count {
+    font-family: var(--font-hero);
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -1.5px;
+    color: var(--brand-950);
+  }
+  .ref-ladder-step--featured .ref-ladder-step__count { color: white; }
+  .ref-ladder-step__label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--al-500);
+    margin-top: 2px;
+  }
+  .ref-ladder-step--featured .ref-ladder-step__label { color: rgba(255,255,255,0.7); }
+  .ref-ladder-step__amt {
+    font-family: var(--font-hero);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--al-900);
+    letter-spacing: -0.5px;
+    margin-top: 10px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .ref-ladder-step--featured .ref-ladder-step__amt { color: white; }
+  .ref-ladder-step__unit {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--al-500);
+    letter-spacing: 0;
+    margin-left: 2px;
+  }
+  .ref-ladder-step--featured .ref-ladder-step__unit { color: rgba(255,255,255,0.65); }
+  .ref-ladder-step__yr {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--al-400);
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+  .ref-ladder-step--featured .ref-ladder-step__yr { color: rgba(255,255,255,0.6); }
+
+  /* ── Upgrade/Diamond bonus row ── */
+  .ref-bonus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .ref-bonus {
+    background: var(--ad-800);
+    border: 1px solid var(--al-50);
+    border-radius: 16px;
+    padding: 22px 28px;
+    box-shadow: var(--shadow-card);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+  }
+  .ref-bonus--diamond {
+    background: var(--brand-950);
+    border-color: var(--brand-950);
+    color: white;
+  }
+  .ref-bonus__label {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--al-500);
+  }
+  .ref-bonus--diamond .ref-bonus__label { color: rgba(255,255,255,0.7); }
+  .ref-bonus__amt {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-family: var(--font-hero);
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+    color: var(--brand-950);
+    white-space: nowrap;
+  }
+  .ref-bonus--diamond .ref-bonus__amt { color: white; }
+  .ref-bonus__note {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 13px;
+    color: var(--al-500);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .ref-bonus--diamond .ref-bonus__note { color: rgba(255,255,255,0.7); }
+
+  @media (max-width: 900px) {
+    .ref-ladder-row { grid-template-columns: repeat(2, 1fr); max-width: 420px; }
+    .ref-bonus-grid { grid-template-columns: 1fr; max-width: 360px; }
+  }
 </style>
 </head>
 <body>
@@ -1753,6 +1895,78 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════ -->
+<!-- Slide 6 · 25% Lifetime Referral Program -->
+<!-- ═══════════════════════════════════════ -->
+<div class="slide">
+  <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
+  <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
+
+  <div class="content--wide flex-col gap-20" style="justify-content: center; align-items: center;">
+
+    <div class="rv d1 flex-col gap-8 text-center">
+      <span class="label-tag">One more thing</span>
+      <h2 class="h-lg">Earn <span class="brand-text">25% lifetime</span> on every client you introduce</h2>
+      <p class="body" style="max-width: 640px; margin: 0 auto; color: var(--al-600); font-weight: 400;">
+        Every payment they make — every renewal, every upsell — for as long as they're a client of Kodara.
+      </p>
+    </div>
+
+    <div class="rv d2 flex-col gap-8" style="width: 100%; align-items: center;">
+      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--al-500);">Potential earnings · $2,500 / mo client · 25% = $625 / mo each</div>
+
+      <div class="ref-ladder-row">
+        <div class="ref-ladder-step">
+          <div class="ref-ladder-step__count">5</div>
+          <div class="ref-ladder-step__label">Clients</div>
+          <div class="ref-ladder-step__amt">$3,125<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$37,500 / yr</div>
+        </div>
+        <div class="ref-ladder-step">
+          <div class="ref-ladder-step__count">10</div>
+          <div class="ref-ladder-step__label">Clients</div>
+          <div class="ref-ladder-step__amt">$6,250<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$75,000 / yr</div>
+        </div>
+        <div class="ref-ladder-step">
+          <div class="ref-ladder-step__count">25</div>
+          <div class="ref-ladder-step__label">Clients</div>
+          <div class="ref-ladder-step__amt">$15,625<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$187,500 / yr</div>
+        </div>
+        <div class="ref-ladder-step">
+          <div class="ref-ladder-step__count">50</div>
+          <div class="ref-ladder-step__label">Clients</div>
+          <div class="ref-ladder-step__amt">$31,250<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$375,000 / yr</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv d3 flex-col gap-8" style="width: 100%; align-items: center; max-width: 880px;">
+      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--al-500);">Plus, when a client upgrades — you get the bonus too</div>
+
+      <div class="ref-bonus-grid">
+        <div class="ref-bonus ref-bonus--diamond">
+          <div class="ref-bonus__label">If they pay in full</div>
+          <div class="ref-bonus__amt">+$4,500</div>
+          <div class="ref-bonus__note">25% of $18,000 · one-time bonus</div>
+        </div>
+        <div class="ref-bonus ref-bonus--diamond">
+          <div class="ref-bonus__label">If they go Diamond</div>
+          <div class="ref-bonus__amt">+$10,000</div>
+          <div class="ref-bonus__note">25% of $40,000 · one-time bonus</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv d4 text-center" style="font-size: 11px; color: var(--al-400); max-width: 640px;">
+      Lifetime = you keep earning 25% every month the client stays, plus 25% of any upsell or upgrade they buy down the road.
+    </div>
+
+  </div>
+</div>
+
 
 </div>
 
@@ -1762,7 +1976,7 @@
 <div class="progress" id="progress"></div>
 
 <!-- Counter -->
-<div class="counter" id="counter"><span class="cur">01</span> / 05</div>
+<div class="counter" id="counter"><span class="cur">01</span> / 06</div>
 
 <script>
   const slides = document.querySelectorAll('.slide');
