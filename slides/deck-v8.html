@@ -787,6 +787,182 @@
     justify-content: center;
   }
 
+  .ascension-math {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0 auto;
+  }
+
+  .ascension-math__top {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .ascension-math__copy {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .ascension-math__tree {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .ascension-math__root {
+    width: min(100%, 320px);
+    padding: 14px 16px;
+    background: var(--brand-50);
+    border: 1px solid var(--brand-300);
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  .ascension-math__connector {
+    width: 100%;
+    height: 44px;
+    position: relative;
+  }
+
+  .ascension-math__connector::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 22px;
+    background: var(--brand-950);
+    transform: translateX(-50%);
+  }
+
+  .ascension-math__connector::after {
+    content: "";
+    position: absolute;
+    left: calc((100% - 20px) / 6);
+    right: calc((100% - 20px) / 6);
+    top: 22px;
+    height: 2px;
+    background: var(--brand-950);
+  }
+
+  .ascension-math__paths {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .ascension-math__path {
+    position: relative;
+    min-height: 92px;
+    padding: 14px 12px;
+    background: var(--white);
+    border: 1px solid var(--brand-200);
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+  }
+
+  .ascension-math__path::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -22px;
+    width: 2px;
+    height: 22px;
+    background: var(--brand-950);
+    transform: translateX(-50%);
+  }
+
+  .ascension-math__label {
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--brand-950);
+    font-weight: 700;
+  }
+
+  .ascension-math__price {
+    font-size: 22px;
+    line-height: 28px;
+    color: var(--al-900);
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  .ascension-math__note {
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--al-500);
+    margin-top: 2px;
+  }
+
+  .ascension-math__flows {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .ascension-math__flow {
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+
+  .ascension-math__flow--without {
+    background: rgba(193,69,69,0.06);
+    border: 1px solid rgba(193,69,69,0.22);
+  }
+
+  .ascension-math__flow--with {
+    background: var(--brand-50);
+    border: 1px solid var(--brand-300);
+  }
+
+  .ascension-math__steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    margin-top: 12px;
+  }
+
+  .ascension-math__metric {
+    min-width: 74px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .ascension-math__flow--without .ascension-math__metric {
+    background: rgba(193,69,69,0.12);
+  }
+
+  .ascension-math__flow--with .ascension-math__metric {
+    background: var(--brand-100);
+  }
+
+  .ascension-math__metric--final {
+    color: var(--white);
+  }
+
+  .ascension-math__flow--without .ascension-math__metric--final {
+    background: rgba(193,69,69,0.92);
+  }
+
+  .ascension-math__flow--with .ascension-math__metric--final {
+    background: var(--brand-950);
+  }
+
   /* ── Subtle Card (settings-style) ── */
   .subtle-card {
     background: var(--al-25);
@@ -1263,6 +1439,10 @@
     .replace-row--head { grid-template-columns: 1.4fr 0.9fr 0.7fr 0.9fr !important; gap: 8px !important; }
     .replace-summary { padding: 18px 22px !important; }
     .replace-summary > div > div:last-child { font-size: 22px !important; }
+    .ascension-math { gap: 16px; max-width: 720px; }
+    .ascension-math__top { grid-template-columns: 1fr; gap: 18px; text-align: center; }
+    .ascension-math__copy { text-align: center; align-items: center; }
+    .ascension-math__flows { grid-template-columns: 1fr; }
   }
 
   /* ── Mobile ── */
@@ -1274,6 +1454,10 @@
       align-items: center;
       padding-top: 48px;
       padding-bottom: 80px;
+    }
+    .slide--ascension-math {
+      justify-content: flex-start;
+      align-items: flex-start;
     }
     .slide > *:not(.bg-orb) { width: 100%; text-align: center; }
     .slide > [class*="content"] { align-items: center; }
@@ -1361,8 +1545,17 @@
     .replace-summary > div { border: none !important; padding: 0 !important; text-align: left !important; }
     .replace-summary > div > div:last-child { font-size: 20px !important; }
 
-    /* Fast-action duo (50 clients / 12 months) */
+    /* Fast-action duo (1,000 buyers / 12 months) */
     .fab-duo { grid-template-columns: 1fr !important; }
+    .ascension-math { gap: 14px; }
+    .ascension-math__paths { grid-template-columns: 1fr; gap: 8px; }
+    .ascension-math__connector { display: none; }
+    .ascension-math__path { min-height: auto; padding: 10px; }
+    .ascension-math__path::before { display: none; }
+    .ascension-math__price { font-size: 18px; line-height: 24px; }
+    .ascension-math__flow { padding: 12px; }
+    .ascension-math__steps { gap: 6px; flex-wrap: wrap; }
+    .ascension-math__metric { min-width: 68px; padding: 7px 8px; }
   }
 </style>
 </head>
@@ -1826,236 +2019,125 @@
     </div>
   </div>
 
-  <!-- Phase 2, Slide 3, Ascension Ladder -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-    <div class="content--wide split-layout">
-      <div class="flex-col gap-24">
-        <div class="rv d1"><span class="label-tag">Phase 2 · Step 3</span></div>
-        <div class="rv d2"><h2 class="h-lg">Your Ascension Ladder</h2></div>
-        <div class="rv d3">
-          <p class="body-lg">
-            We restructure your pricing so every tier feeds the next, and every client who enters at $17 has a clear path to $50K+.
-          </p>
-        </div>
-        <div class="rv d5">
-          <p class="body" style="color: var(--al-500); font-size: 13px; font-style: italic;">
-            Price it like a real business product line, not trading your time for money.
-          </p>
-        </div>
-      </div>
-        <div class="rv d3">
-          <!-- Choice map: buyers can choose the best-fit offer instead of moving in sequence. -->
-          <div class="choice-org" aria-label="$17 buyers can choose any next product path">
-            <div class="choice-org__card choice-org__card--root">
-              <div class="choice-org__eyebrow">Low-ticket AI buyer</div>
-              <div class="choice-org__price">$17-$97</div>
-              <div class="choice-org__note">entry point into your product line</div>
-            </div>
-
-            <div class="choice-org__connector" aria-hidden="true">
-              <div class="choice-org__connector-spine"></div>
-              <div class="choice-org__connector-branches">
-                <div class="choice-org__branch"></div>
-                <div class="choice-org__branch"></div>
-                <div class="choice-org__branch"></div>
-              </div>
-            </div>
-
-            <div class="choice-org__paths">
-              <div class="choice-org__card choice-org__path">
-                <div class="choice-org__eyebrow">Mid Ticket</div>
-                <div class="choice-org__price">$500-$2K</div>
-              <div class="choice-org__note">Est. 15% - 30%+</div>
-              </div>
-
-              <div class="choice-org__card choice-org__path">
-                <div class="choice-org__eyebrow">High Ticket</div>
-                <div class="choice-org__price">$5K-$20K</div>
-              <div class="choice-org__note">Est. 10% - 20%+</div>
-              </div>
-
-              <div class="choice-org__card choice-org__path">
-                <div class="choice-org__eyebrow">Super Ticket</div>
-                <div class="choice-org__price">$50K-$100K+</div>
-              <div class="choice-org__note">Est. 3% - 6%+</div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-    <p class="slide-disclaimer">Any individual experiences presented are not typical. The information shared is for example purposes and is not a guarantee of a rate of return or a specific result. Your results may vary.</p>
-  </div>
-
-  <!-- Phase 2, Slide 4, The Funnel Math (combined flow + calculator) -->
-  <div class="slide">
+  <!-- Phase 2, Steps 3 & 4, Ascension Ladder + Funnel Math -->
+  <div class="slide slide--ascension-math">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
     <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
 
-    <div class="content--wide flex-col gap-20" style="justify-content: center;">
-      <div class="text-center flex-col gap-8">
-        <div class="rv d1"><span class="label-tag">Phase 2 · Step 4</span></div>
-        <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(24px, 2.8vw, 38px);">The Funnel Math</h2></div>
-      </div>
-
-      <!-- Inputs row -->
-      <div class="rv d2" style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; max-width: 880px; margin: 0 auto; width: 100%; align-items: end;">
-        <label style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
-          <span style="font-size: 11px; font-weight: 600; color: var(--al-500); text-transform: uppercase; letter-spacing: 0.06em;">Monthly clicks</span>
-          <input type="number" id="fm-clicks" value="1000" min="0" style="padding: 8px 12px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
-        </label>
-        <label style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
-          <span style="font-size: 11px; font-weight: 600; color: var(--al-500); text-transform: uppercase; letter-spacing: 0.06em;">Low-ticket price ($)</span>
-          <input type="number" id="fm-ltprice" value="17" min="0" style="padding: 8px 12px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
-        </label>
-        <label style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
-          <span style="font-size: 11px; font-weight: 600; color: var(--al-500); text-transform: uppercase; letter-spacing: 0.06em;">High-ticket price ($)</span>
-          <input type="number" id="fm-htprice" value="5000" min="0" style="padding: 8px 12px; border: 1px solid var(--al-200); border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--al-900); background: var(--al-50);">
-        </label>
-        <button type="button" id="fm-calc-btn" style="padding: 8px 18px; border: none; border-radius: 8px; background: var(--brand-950); color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; height: 36px; white-space: nowrap; box-shadow: var(--shadow-card); transition: transform 0.1s ease, opacity 0.1s ease;">Calculate →</button>
-      </div>
-
-      <!-- Without AI Product -->
-      <div class="rv d3" style="background: rgba(193,69,69,0.06); border: 1px solid rgba(193,69,69,0.22); border-radius: 14px; padding: 14px 22px; max-width: 880px; margin: 0 auto; width: 100%;">
-        <div style="color: rgba(193,69,69,0.92); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; text-align: center;">Without AI Product</div>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap;">
-          <div style="background: rgba(193,69,69,0.12); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fw-clicks" style="font-weight: 700; color: var(--al-900); font-size: 16px;">1,000</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 1px;">clicks</div>
-          </div>
-          <span style="color: rgba(193,69,69,0.75); font-size: 18px;">→</span>
-          <div style="background: rgba(193,69,69,0.12); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fw-leads" style="font-weight: 700; color: var(--al-900); font-size: 16px;">200</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 1px;">leads</div>
-          </div>
-          <span style="color: rgba(193,69,69,0.75); font-size: 18px;">→</span>
-          <div style="background: rgba(193,69,69,0.12); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fw-calls" style="font-weight: 700; color: var(--al-900); font-size: 16px;">20</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 1px;">calls booked</div>
-          </div>
-          <span style="color: rgba(193,69,69,0.75); font-size: 18px;">→</span>
-          <div style="background: rgba(193,69,69,0.12); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fw-show" style="font-weight: 700; color: var(--al-900); font-size: 16px;">10</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 1px;">show up</div>
-          </div>
-          <span style="color: rgba(193,69,69,0.75); font-size: 18px;">→</span>
-          <div style="background: rgba(193,69,69,0.92); color: white; border-radius: 10px; padding: 9px 14px; text-align: center; min-width: 96px;">
-            <div id="fw-clients" style="font-weight: 700; font-size: 16px;">2</div>
-            <div style="font-size: 10px; opacity: 0.85; margin-top: 1px;">clients</div>
+    <div class="ascension-math">
+      <div class="ascension-math__top">
+        <div class="ascension-math__copy">
+          <div class="rv d1"><span class="label-tag">Phase 2 · Steps 3 &amp; 4</span></div>
+          <div class="rv d2"><h2 class="h-lg">Your Ascension Ladder</h2></div>
+          <div class="rv d3">
+            <p class="body-lg">
+              Every client who enters at $17 has a clear path to $50K+.
+            </p>
           </div>
         </div>
-        <p id="fw-cap" class="body" style="text-align: center; color: var(--al-600); margin-top: 10px; font-size: 12px;">
-          <strong style="color: rgba(193,69,69,0.95);">1% of leads</strong> become high-ticket clients, and <strong>198 people</strong> just take up space in your CRM.
-        </p>
-      </div>
 
-      <!-- With AI Product -->
-      <div class="rv d4" style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 14px; padding: 14px 22px; max-width: 880px; margin: 0 auto; width: 100%;">
-        <div style="color: var(--brand-950); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; text-align: center;">With AI Product</div>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap;">
-          <div style="background: var(--brand-100); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fa-clicks" style="font-weight: 700; color: var(--al-900); font-size: 16px;">1,000</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 1px;">clicks</div>
+        <div class="rv d3 ascension-math__tree" aria-label="$17 buyers can choose any next product path">
+          <div class="ascension-math__root">
+            <div class="ascension-math__label">Low-Ticket AI Buyer</div>
+            <div class="ascension-math__price">$17-$97</div>
+            <div class="ascension-math__note">entry point</div>
           </div>
-          <span style="color: var(--brand-950); font-size: 18px;">→</span>
-          <div style="background: var(--brand-200); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fa-buyers" style="font-weight: 700; color: var(--al-900); font-size: 16px;">100</div>
-            <div id="fa-buyers-lbl" style="font-size: 10px; color: var(--al-500); margin-top: 1px;">buyers&nbsp;($17)</div>
-          </div>
-          <span style="color: var(--brand-950); font-size: 18px;">→</span>
-          <div style="background: var(--brand-200); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fa-calls" style="font-weight: 700; color: var(--al-900); font-size: 16px;">60</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 1px;">calls booked</div>
-          </div>
-          <span style="color: var(--brand-950); font-size: 18px;">→</span>
-          <div style="background: var(--brand-200); border-radius: 10px; padding: 9px 12px; text-align: center; min-width: 96px;">
-            <div id="fa-show" style="font-weight: 700; color: var(--al-900); font-size: 16px;">40</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 1px;">show up</div>
-          </div>
-          <span style="color: var(--brand-950); font-size: 18px;">→</span>
-          <div style="background: var(--brand-950); color: white; border-radius: 10px; padding: 9px 14px; text-align: center; min-width: 96px;">
-            <div id="fa-clients" style="font-weight: 700; font-size: 16px;">12</div>
-            <div style="font-size: 10px; opacity: 0.85; margin-top: 1px;">clients</div>
+
+          <div class="ascension-math__connector" aria-hidden="true"></div>
+
+          <div class="ascension-math__paths">
+            <div class="ascension-math__path">
+              <div class="ascension-math__label">Mid Ticket</div>
+              <div class="ascension-math__price">$500-$2K</div>
+              <div class="ascension-math__note">15%-30%+</div>
+            </div>
+            <div class="ascension-math__path">
+              <div class="ascension-math__label">High Ticket</div>
+              <div class="ascension-math__price">$5K-$20K</div>
+              <div class="ascension-math__note">10%-20%+</div>
+            </div>
+            <div class="ascension-math__path">
+              <div class="ascension-math__label">Super Ticket</div>
+              <div class="ascension-math__price">$50K-$100K+</div>
+              <div class="ascension-math__note">3%-6%+</div>
+            </div>
           </div>
         </div>
-        <p id="fa-cap" class="body" style="text-align: center; color: var(--al-600); margin-top: 10px; font-size: 12px;">
-          <strong style="color: var(--brand-950);">6.0× more clients</strong> from the same traffic, plus <strong>88 low-ticket buyers</strong> who are <strong>70% more likely</strong> to buy high-ticket than a cold lead.
-        </p>
       </div>
 
-      <div class="rv d5 text-center">
+      <div class="ascension-math__flows">
+        <div class="rv d4 ascension-math__flow ascension-math__flow--without">
+          <div style="color: rgba(193,69,69,0.92); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; text-align: center;">Without AI Product</div>
+          <div class="ascension-math__steps">
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">1,000</div>
+              <div style="font-size: 10px; color: var(--al-500);">clicks</div>
+            </div>
+            <span style="color: rgba(193,69,69,0.75);">→</span>
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">200</div>
+              <div style="font-size: 10px; color: var(--al-500);">leads</div>
+            </div>
+            <span style="color: rgba(193,69,69,0.75);">→</span>
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">20</div>
+              <div style="font-size: 10px; color: var(--al-500);">calls booked</div>
+            </div>
+            <span style="color: rgba(193,69,69,0.75);">→</span>
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">10</div>
+              <div style="font-size: 10px; color: var(--al-500);">show up</div>
+            </div>
+            <span style="color: rgba(193,69,69,0.75);">→</span>
+            <div class="ascension-math__metric ascension-math__metric--final">
+              <div style="font-weight: 700; font-size: 18px;">2</div>
+              <div style="font-size: 10px; opacity: 0.85;">clients</div>
+            </div>
+          </div>
+          <p class="body" style="text-align: center; color: var(--al-600); margin-top: 12px; font-size: 12px;">
+            <strong style="color: rgba(193,69,69,0.95);">1% of leads</strong> convert. 198 people go nowhere.
+          </p>
+        </div>
+
+        <div class="rv d5 ascension-math__flow ascension-math__flow--with">
+          <div style="color: var(--brand-950); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; text-align: center;">With AI Product</div>
+          <div class="ascension-math__steps">
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">1,000</div>
+              <div style="font-size: 10px; color: var(--al-500);">clicks</div>
+            </div>
+            <span style="color: var(--brand-950);">→</span>
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">100</div>
+              <div style="font-size: 10px; color: var(--al-500);">buyers ($17)</div>
+            </div>
+            <span style="color: var(--brand-950);">→</span>
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">60</div>
+              <div style="font-size: 10px; color: var(--al-500);">calls booked</div>
+            </div>
+            <span style="color: var(--brand-950);">→</span>
+            <div class="ascension-math__metric">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">40</div>
+              <div style="font-size: 10px; color: var(--al-500);">show up</div>
+            </div>
+            <span style="color: var(--brand-950);">→</span>
+            <div class="ascension-math__metric ascension-math__metric--final">
+              <div style="font-weight: 700; font-size: 18px;">12</div>
+              <div style="font-size: 10px; opacity: 0.85;">clients</div>
+            </div>
+          </div>
+          <p class="body" style="text-align: center; color: var(--al-600); margin-top: 12px; font-size: 12px;">
+            <strong style="color: var(--brand-950);">6x more clients.</strong> Same traffic. Every buyer is a warm lead.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv d6 text-center">
         <p class="slide-disclaimer" style="position: static; max-width: 900px; margin: 0 auto; font-size: 8px;">For illustrative and educational purposes only. Figures are hypothetical projections based on benchmark assumptions, not a guarantee of results. Individual results vary based on offer, market, effort, and factors outside our control.</p>
       </div>
     </div>
   </div>
-
-  <script>
-    (function() {
-      const fmtNum   = n => Math.round(n).toLocaleString();
-      const fmtMoney = n => '$' + Math.round(n).toLocaleString();
-
-      // Fixed conversion assumptions (baseline from reference)
-      const W = { leadRate: 0.20, callRate: 0.10, showRate: 0.50, closeRate: 0.20 };
-      const A = { buyerRate: 0.10, callRate: 0.60, showRate: 2/3,  closeRate: 0.30 };
-
-      function recompute() {
-        const clicks  = parseFloat(document.getElementById('fm-clicks').value)  || 0;
-        const ltPrice = parseFloat(document.getElementById('fm-ltprice').value) || 0;
-        const htPrice = parseFloat(document.getElementById('fm-htprice').value) || 0;
-
-        // Without AI
-        const wLeads   = clicks * W.leadRate;
-        const wCalls   = wLeads * W.callRate;
-        const wShow    = wCalls * W.showRate;
-        const wClients = wShow  * W.closeRate;
-
-        // With AI
-        const aBuyers  = clicks * A.buyerRate;
-        const aCalls   = aBuyers * A.callRate;
-        const aShow    = aCalls  * A.showRate;
-        const aClients = aShow   * A.closeRate;
-
-        const ltBuyersResidual = Math.max(aBuyers - aClients, 0);
-        const multiplier = wClients > 0 ? (aClients / wClients) : 0;
-        const htRevLeft = Math.max(aClients - wClients, 0) * htPrice;
-        const ltRevLeft = aBuyers * ltPrice;
-        const revLeft   = htRevLeft + ltRevLeft;
-        const crmDead  = Math.max(wLeads - wClients, 0);
-        const leadPct  = wLeads > 0 ? (wClients / wLeads * 100) : 0;
-
-        // Update flow numbers
-        document.getElementById('fw-clicks').textContent  = fmtNum(clicks);
-        document.getElementById('fw-leads').textContent   = fmtNum(wLeads);
-        document.getElementById('fw-calls').textContent   = fmtNum(wCalls);
-        document.getElementById('fw-show').textContent    = fmtNum(wShow);
-        document.getElementById('fw-clients').textContent = fmtNum(wClients);
-
-        document.getElementById('fa-clicks').textContent  = fmtNum(clicks);
-        document.getElementById('fa-buyers').textContent  = fmtNum(aBuyers);
-        document.getElementById('fa-buyers-lbl').innerHTML = 'buyers ($' + fmtNum(ltPrice) + ')';
-        document.getElementById('fa-calls').textContent   = fmtNum(aCalls);
-        document.getElementById('fa-show').textContent    = fmtNum(aShow);
-        document.getElementById('fa-clients').textContent = fmtNum(aClients);
-
-        // Update captions
-        document.getElementById('fw-cap').innerHTML =
-          '<strong style="color: rgba(193,69,69,0.95);">' + leadPct.toFixed(0) + '% of leads</strong> become high-ticket clients, and <strong>' + fmtNum(crmDead) + ' people</strong> just take up space in your CRM.';
-
-        document.getElementById('fa-cap').innerHTML =
-          '<strong style="color: var(--brand-950);">' + multiplier.toFixed(1) + '× more clients</strong> from the same traffic, plus <strong>' + fmtNum(ltBuyersResidual) + ' low-ticket buyers</strong> who are <strong>70% more likely</strong> to buy high-ticket than a cold lead.';
-
-      }
-
-      const btn = document.getElementById('fm-calc-btn');
-      if (btn) btn.addEventListener('click', recompute);
-      // Also recompute when user presses Enter inside any input
-      ['fm-clicks','fm-ltprice','fm-htprice'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); recompute(); } });
-      });
-      recompute();
-    })();
-  </script>
 
   <!-- ═══════════════════════════════════════ -->
   <!-- Phase 3, Your Autonomous AI Team (Cover) -->
@@ -2223,7 +2305,7 @@
   </div>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- S9, Fast Action Bonus · DFY Organic Until 50 Clients -->
+  <!-- S9, Fast Action Bonus · DFY Organic Until 1,000 Buyers -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide" data-slide="8">
     <div class="bg-orb bg-orb--green" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 520px; height: 520px;"></div>
@@ -2232,12 +2314,12 @@
       <div class="rv d1"><span class="label-tag">Before You See The Price</span></div>
 
       <div class="rv d2">
-        <h2 class="h-lg" style="max-width: 820px; margin: 0 auto;">We run your organic marketing until you land 50 high-ticket clients.</h2>
+        <h2 class="h-lg" style="max-width: 820px; margin: 0 auto;">Your AI Nurtures &amp; Warms Up 1,000+ People, Or You Get A Full Refund</h2>
       </div>
 
       <div class="rv d3">
         <p class="body" style="max-width: 700px; margin: 0 auto; color: var(--al-600); font-weight: 400; line-height: 1.55;">
-          Our team creates content in your voice and runs your organic marketing non-stop. If we can't deliver <strong style="color: var(--al-900);">50 high-ticket clients within 12 months</strong>, we refund every penny. No questions, no hoops.
+          Our team creates content in your voice and runs your organic marketing non-stop. We optimize everything until your AI has nurtured &amp; warmed up at least 1,000+ people for your higher level offers. If we don't deliver, we refund every penny.
         </p>
       </div>
 
@@ -2250,11 +2332,11 @@
         </div>
       </div>
 
-      <!-- Two-number card: 50 clients · 12 months -->
+      <!-- Two-number card: 1,000 buyers · 12 months -->
       <div class="rv d4 fab-duo" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 820px; margin: 0 auto; width: 100%;">
         <div style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 18px; padding: 22px 20px; text-align: center;">
-          <div style="font-family: var(--font-hero); font-size: 54px; font-weight: 700; color: var(--brand-950); line-height: 1; letter-spacing: -1.5px;">50</div>
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-top: 6px;">High-Ticket Clients Guaranteed</div>
+          <div style="font-family: var(--font-hero); font-size: 54px; font-weight: 700; color: var(--brand-950); line-height: 1; letter-spacing: -1.5px;">1,000</div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-top: 6px;">Leads Nurtured Minimum</div>
         </div>
         <div style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 18px; padding: 22px 20px; text-align: center;">
           <div style="font-family: var(--font-hero); font-size: 54px; font-weight: 700; color: var(--brand-950); line-height: 1; letter-spacing: -1.5px;">12</div>
@@ -2271,12 +2353,12 @@
         <div style="background: var(--ad-800); border: 1px solid var(--al-50); border-radius: 12px; padding: 12px 14px; text-align: center; box-shadow: var(--shadow-card);">
           <div style="color: var(--brand-950); font-size: 18px; line-height: 1; margin-bottom: 6px; font-weight: 700;">✓</div>
           <div style="font-size: 12px; font-weight: 700; color: var(--al-900); margin-bottom: 3px;">Zero financial risk</div>
-          <div style="font-size: 11px; color: var(--al-500); line-height: 1.4;">50 clients in 12 months or every penny refunded.</div>
+          <div style="font-size: 11px; color: var(--al-500); line-height: 1.4;">1,000 leads nurtured in 12 months or every penny refunded.</div>
         </div>
         <div style="background: var(--ad-800); border: 1px solid var(--al-50); border-radius: 12px; padding: 12px 14px; text-align: center; box-shadow: var(--shadow-card);">
           <div style="color: var(--brand-950); font-size: 18px; line-height: 1; margin-bottom: 6px; font-weight: 700;">✓</div>
           <div style="font-size: 12px; font-weight: 700; color: var(--al-900); margin-bottom: 3px;">Zero extra work for you</div>
-          <div style="font-size: 11px; color: var(--al-500); line-height: 1.4;">You keep teaching. We fill your audience and pipeline.</div>
+          <div style="font-size: 11px; color: var(--al-500); line-height: 1.4;">You stay in your zone of genius. We fill your pipeline.</div>
         </div>
       </div>
     </div>
@@ -2404,11 +2486,11 @@
         <div class="flex-col" style="gap: 6px;">
           <div class="check-row" style="padding: 2px 0; align-items: center;">
             <div class="check-dot" style="background: rgba(212, 150, 40, 0.15);"><svg viewBox="0 0 12 12" style="stroke: rgba(172, 110, 20, 0.95);"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p style="font-size: 12px; line-height: 16px;"><strong>Done-for-you organic marketing</strong> made by us until you land 50 high-ticket clients, all created in your voice, designed for maximum conversions.</p>
+            <p style="font-size: 12px; line-height: 16px;"><strong>Done-for-you organic marketing</strong> made by us until you get 1,000 low-ticket AI buyers, all created in your voice, designed for maximum conversions.</p>
           </div>
           <div class="check-row" style="padding: 2px 0; align-items: center;">
             <div class="check-dot" style="background: rgba(212, 150, 40, 0.15);"><svg viewBox="0 0 12 12" style="stroke: rgba(172, 110, 20, 0.95);"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p style="font-size: 12px; line-height: 16px;"><strong>12 Month warranty</strong>, if we can't hit 50 high ticket clients in 12 months, you get every penny of your investment back, no questions asked.</p>
+            <p style="font-size: 12px; line-height: 16px;"><strong>12 Month warranty</strong>, if we can't hit 1,000 low-ticket AI buyers in 12 months, you get every penny of your investment back, no questions asked.</p>
           </div>
         </div>
       </div>
