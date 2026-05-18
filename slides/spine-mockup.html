@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Backbone Structure — Spine Mockup v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --al-25: rgba(26,26,26,0.04);
+    --al-50: rgba(26,26,26,0.06);
+    --al-100: rgba(26,26,26,0.09);
+    --al-200: rgba(26,26,26,0.20);
+    --al-300: rgba(26,26,26,0.28);
+    --al-400: rgba(26,26,26,0.36);
+    --al-500: rgba(26,26,26,0.48);
+    --al-600: rgba(26,26,26,0.60);
+    --al-700: rgba(26,26,26,0.70);
+    --al-900: rgba(26,26,26,0.80);
+    --brand-50: rgba(16,104,68,0.06);
+    --brand-100: rgba(16,104,68,0.08);
+    --brand-200: rgba(16,104,68,0.12);
+    --brand-300: rgba(16,104,68,0.18);
+    --brand-600: rgba(16,104,68,0.55);
+    --brand-950: rgba(16,104,68,0.92);
+    --n50: #FAFAFA;
+    --shadow-modal: 0px 67px 19px rgba(0,0,0,0), 0px 43px 17px rgba(0,0,0,0.01), 0px 24px 15px rgba(0,0,0,0.02), 0px 11px 11px rgba(0,0,0,0.03), 0px 3px 6px rgba(0,0,0,0.04);
+    --font: 'Instrument Sans', sans-serif;
+    --font-hero: 'Instrument Serif', serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--n50);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .slide-frame {
+    width: 100%;
+    max-width: 1600px;
+    aspect-ratio: 16/9;
+    background: white;
+    border-radius: 24px;
+    box-shadow: var(--shadow-modal);
+    padding: 60px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-orb--green { background: rgba(16,104,68,0.06); width: 500px; height: 500px; }
+  .bg-orb--neutral { background: rgba(26,26,26,0.03); width: 400px; height: 400px; }
+
+  .slide-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .copy { display: flex; flex-direction: column; gap: 18px; }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--brand-950);
+  }
+
+  h2 {
+    font-family: var(--font-hero);
+    font-size: clamp(32px, 3.4vw, 50px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: var(--al-900);
+  }
+
+  .lede {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--al-600);
+    max-width: 480px;
+  }
+  .lede strong { color: var(--al-900); font-weight: 600; }
+
+  .pull-quote {
+    font-family: var(--font-hero);
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--al-700);
+    border-left: 2px solid var(--brand-300);
+    padding-left: 18px;
+    margin-top: 4px;
+  }
+
+  .spine-stage {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .spine-stage svg { width: 100%; height: auto; display: block; }
+
+  /* Math comparison */
+  .math-row { display: grid; gap: 10px; max-width: 1180px; margin: 0 auto; width: 100%; }
+  .flow { border-radius: 12px; padding: 14px 18px; }
+  .flow--without { background: rgba(193,69,69,0.06); border: 1px solid rgba(193,69,69,0.22); }
+  .flow--with { background: var(--brand-50); border: 1px solid var(--brand-300); }
+  .flow-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .flow--without .flow-label { color: rgba(193,69,69,0.92); }
+  .flow--with .flow-label { color: var(--brand-950); }
+  .flow-steps { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: nowrap; }
+  .metric { min-width: 72px; padding: 6px 8px; border-radius: 8px; text-align: center; }
+  .flow--without .metric { background: rgba(193,69,69,0.12); }
+  .flow--with .metric { background: var(--brand-100); }
+  .metric--final { color: white; }
+  .flow--without .metric--final { background: rgba(193,69,69,0.92); }
+  .flow--with .metric--final { background: var(--brand-950); }
+  .metric-big { font-weight: 700; color: var(--al-900); font-size: 15px; line-height: 1; }
+  .metric--final .metric-big { color: white; }
+  .metric-small { font-size: 9px; color: var(--al-500); margin-top: 3px; line-height: 1.2; }
+  .metric--final .metric-small { color: rgba(255,255,255,0.85); }
+  .flow-note { text-align: center; color: var(--al-600); margin-top: 8px; font-size: 11px; }
+  .flow-note strong { font-weight: 700; }
+  .flow--without .flow-note strong { color: rgba(193,69,69,0.95); }
+  .flow--with .flow-note strong { color: var(--brand-950); }
+  .flow-arrow { color: var(--al-400); font-size: 13px; }
+  .flow--without .flow-arrow { color: rgba(193,69,69,0.75); }
+  .flow--with .flow-arrow { color: var(--brand-950); }
+</style>
+</head>
+<body>
+
+<div class="slide-frame">
+  <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
+  <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
+
+  <div class="slide-content">
+
+    <div class="grid">
+      <div class="copy">
+        <span class="eyebrow">Phase 2 · Step 2</span>
+        <h2>Offer Backbone Structure</h2>
+        <p class="lede">
+          You're already a doctor for your clients — they walk in, tell you where it hurts, and you prescribe what they actually need.
+        </p>
+        <p class="pull-quote">
+          "Your AI does this all day. Every $17 buyer gets diagnosed and routed to the offer that solves their real pain."
+        </p>
+      </div>
+
+      <div class="spine-stage">
+        <svg viewBox="0 0 620 580" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <!-- Reusable vertebra shape (bumpy top, rounded bottom body) -->
+            <symbol id="vert" viewBox="-12 -11 24 20" overflow="visible">
+              <path d="M -10 7
+                       L -10 -3
+                       L -7 -3
+                       L -7 -7
+                       L -4 -7
+                       L -4 -4
+                       L -2 -10
+                       L 2 -10
+                       L 2 -4
+                       L 4 -7
+                       L 7 -7
+                       L 7 -3
+                       L 10 -3
+                       L 10 7
+                       Q 0 9 -10 7 Z"
+                    stroke-linejoin="round"/>
+            </symbol>
+
+            <!-- Body silhouette gradient -->
+            <linearGradient id="silhouette-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.05)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0.10)"/>
+            </linearGradient>
+
+            <!-- Soft vignette for panel depth -->
+            <radialGradient id="panel-vignette" cx="40%" cy="50%" r="80%">
+              <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0.25)"/>
+            </radialGradient>
+
+            <filter id="vert-shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="1" stdDeviation="0.8" flood-color="rgba(0,0,0,0.4)"/>
+            </filter>
+          </defs>
+
+          <!-- Dark teal diagnostic panel (matches reference style) -->
+          <rect x="0" y="0" width="620" height="580" rx="20" fill="#264B4D"/>
+          <rect x="0" y="0" width="620" height="580" rx="20" fill="url(#panel-vignette)"/>
+
+          <!-- Subtle panel header -->
+          <text x="32" y="36" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="rgba(255,255,255,0.65)">AI DIAGNOSTIC · OFFER BACKBONE</text>
+          <text x="588" y="36" text-anchor="end" font-family="Instrument Sans, sans-serif" font-size="10" font-weight="600" letter-spacing="1.4" fill="rgba(255,255,255,0.4)">LIVE</text>
+          <circle cx="572" cy="32" r="3.5" fill="rgba(170,225,200,0.95)">
+            <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+          <line x1="32" y1="48" x2="588" y2="48" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
+
+          <!-- Body silhouette (subtle profile, facing right) -->
+          <g fill="url(#silhouette-fade)" opacity="0.85">
+            <!-- Head -->
+            <path d="M 100 100
+                     Q 80 100, 70 120
+                     Q 60 145, 78 168
+                     L 90 174
+                     Q 95 182, 90 192
+                     L 100 210
+                     L 150 220
+                     L 175 250
+                     Q 200 320, 175 410
+                     Q 165 460, 175 490
+                     L 195 520
+                     Q 175 535, 130 540
+                     L 100 540
+                     L 100 540
+                     L 60 540
+                     L 60 100
+                     Z"/>
+            <!-- Subtle face contour line -->
+          </g>
+
+          <!--
+            SPINE — 17 vertebrae along an S-curve, color-coded by region
+            (cervical → thoracic → lumbar → sacrum → coccyx)
+            Each vertebra uses the <use href="#vert"/> symbol, scaled and translated.
+          -->
+
+          <!-- ═══ Cervical (4 vertebrae, sage-teal) ═══ -->
+          <g stroke="#3A7666" stroke-width="0.6" stroke-linejoin="round">
+            <use href="#vert" x="0" y="0" transform="translate(225, 90) scale(0.55)" fill="#6FB8A2" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(222, 108) scale(0.6)" fill="#6FB8A2" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(218, 128) scale(0.65)" fill="#6FB8A2" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(216, 150) scale(0.7)" fill="#6FB8A2" filter="url(#vert-shadow)"/>
+          </g>
+
+          <!-- ═══ Thoracic (7 vertebrae, warm coral) ═══ -->
+          <g stroke="#A55448" stroke-width="0.6" stroke-linejoin="round">
+            <use href="#vert" x="0" y="0" transform="translate(214, 173) scale(0.75)" fill="#E27A6B" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(213, 197) scale(0.8)" fill="#E27A6B" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(213, 223) scale(0.85)" fill="#E27A6B" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(215, 250) scale(0.88)" fill="#E27A6B" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(218, 278) scale(0.9)" fill="#E27A6B" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(222, 306) scale(0.92)" fill="#E27A6B" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(228, 334) scale(0.95)" fill="#E27A6B" filter="url(#vert-shadow)"/>
+          </g>
+
+          <!-- ═══ Lumbar (4 vertebrae, warm amber) ═══ -->
+          <g stroke="#B58A4A" stroke-width="0.6" stroke-linejoin="round">
+            <use href="#vert" x="0" y="0" transform="translate(236, 364) scale(1.05)" fill="#EFC182" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(244, 394) scale(1.1)" fill="#EFC182" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(252, 425) scale(1.15)" fill="#EFC182" filter="url(#vert-shadow)"/>
+            <use href="#vert" x="0" y="0" transform="translate(258, 456) scale(1.18)" fill="#EFC182" filter="url(#vert-shadow)"/>
+          </g>
+
+          <!-- ═══ Sacrum (single wedge shape, deeper amber-orange) ═══ -->
+          <g filter="url(#vert-shadow)">
+            <path d="M 230 478
+                     L 290 478
+                     Q 304 478, 304 490
+                     L 292 528
+                     Q 290 538, 280 538
+                     L 248 538
+                     Q 240 538, 238 530
+                     L 224 492
+                     Q 222 478, 230 478 Z"
+                  fill="#D88862" stroke="#A65F40" stroke-width="0.8" stroke-linejoin="round"/>
+            <!-- Sacral foramen marks -->
+            <circle cx="252" cy="494" r="2" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="276" cy="494" r="2" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="254" cy="510" r="2" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="278" cy="510" r="2" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="258" cy="525" r="1.6" fill="rgba(0,0,0,0.18)"/>
+            <circle cx="276" cy="525" r="1.6" fill="rgba(0,0,0,0.18)"/>
+          </g>
+
+          <!-- Coccyx tip -->
+          <g filter="url(#vert-shadow)">
+            <path d="M 260 542
+                     Q 274 544, 274 552
+                     Q 272 562, 264 564
+                     Q 258 562, 258 554
+                     Q 258 544, 260 542 Z"
+                  fill="#DA9582" stroke="#A86C5C" stroke-width="0.8"/>
+          </g>
+
+          <!-- ═══ LABELS — reference style: thin white line + dot + 2-line text ═══ -->
+
+          <!-- Cervical → PATIENT INTAKE -->
+          <line x1="240" y1="108" x2="370" y2="108" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+          <circle cx="240" cy="108" r="2.5" fill="white"/>
+          <text x="380" y="100" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="rgba(170,225,200,0.95)">PATIENT INTAKE</text>
+          <text x="380" y="118" font-family="Instrument Sans, sans-serif" font-size="18" font-weight="700" fill="white" letter-spacing="-0.3px">$17 · Walks In</text>
+
+          <!-- Thoracic → MID TICKET -->
+          <line x1="230" y1="250" x2="370" y2="250" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+          <circle cx="230" cy="250" r="2.5" fill="white"/>
+          <text x="380" y="242" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="#F4A89A">MID TICKET</text>
+          <text x="380" y="260" font-family="Instrument Sans, sans-serif" font-size="18" font-weight="700" fill="white" letter-spacing="-0.3px">$500 – $2K</text>
+          <text x="380" y="276" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="500" font-style="italic" fill="rgba(255,255,255,0.65)">"I just need more leads"</text>
+
+          <!-- Lumbar → HIGH TICKET -->
+          <line x1="270" y1="394" x2="380" y2="394" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+          <circle cx="270" cy="394" r="2.5" fill="white"/>
+          <text x="390" y="386" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="#F1CC92">HIGH TICKET</text>
+          <text x="390" y="404" font-family="Instrument Sans, sans-serif" font-size="18" font-weight="700" fill="white" letter-spacing="-0.3px">$5K – $20K</text>
+          <text x="390" y="420" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="500" font-style="italic" fill="rgba(255,255,255,0.65)">"I need to scale this"</text>
+
+          <!-- Sacrum → SUPER TICKET -->
+          <line x1="305" y1="508" x2="395" y2="508" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+          <circle cx="305" cy="508" r="2.5" fill="white"/>
+          <text x="405" y="500" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="700" letter-spacing="1.6" fill="#EAA483">SUPER TICKET</text>
+          <text x="405" y="518" font-family="Instrument Sans, sans-serif" font-size="18" font-weight="700" fill="white" letter-spacing="-0.3px">$50K – $100K+</text>
+          <text x="405" y="534" font-family="Instrument Sans, sans-serif" font-size="11" font-weight="500" font-style="italic" fill="rgba(255,255,255,0.65)">"Build me the system"</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Math comparison -->
+    <div class="math-row">
+      <div class="flow flow--without">
+        <div class="flow-label">Without AI Product</div>
+        <div class="flow-steps">
+          <div class="metric"><div class="metric-big">1,000</div><div class="metric-small">clicks</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric"><div class="metric-big">200</div><div class="metric-small">leads</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric"><div class="metric-big">20</div><div class="metric-small">calls booked</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric"><div class="metric-big">10</div><div class="metric-small">show up</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric metric--final"><div class="metric-big">2</div><div class="metric-small">clients</div></div>
+        </div>
+        <div class="flow-note"><strong>1% of leads</strong> convert. 198 people go nowhere.</div>
+      </div>
+      <div class="flow flow--with">
+        <div class="flow-label">With AI Product</div>
+        <div class="flow-steps">
+          <div class="metric"><div class="metric-big">1,000</div><div class="metric-small">clicks</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric"><div class="metric-big">100</div><div class="metric-small">buyers ($17)</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric"><div class="metric-big">25</div><div class="metric-small">mid-ticket</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric"><div class="metric-big">8</div><div class="metric-small">high-ticket</div></div>
+          <span class="flow-arrow">→</span>
+          <div class="metric metric--final"><div class="metric-big">2</div><div class="metric-small">super-ticket</div></div>
+        </div>
+        <div class="flow-note"><strong>Diagnoses every buyer.</strong> Same traffic. Each pain prescribed the right offer.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -418,6 +418,60 @@
     object-fit: cover;
   }
 
+  .demo-carousel {
+    width: 100%;
+    max-width: 660px;
+  }
+
+  .demo-carousel__frame-row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 560px) 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .demo-carousel__stage {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 2px solid var(--al-200);
+    position: relative;
+  }
+
+  .demo-carousel__stage iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .demo-carousel__button {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--brand-200);
+    background: var(--white);
+    color: var(--brand-950);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    line-height: 1;
+    font-weight: 600;
+    transition: transform 150ms ease-out, background 150ms ease-out;
+  }
+
+  .demo-carousel__button:hover {
+    background: var(--brand-50);
+    transform: translateY(-1px);
+  }
+
   .video-placeholder {
     position: absolute;
     inset: 0;
@@ -1557,6 +1611,93 @@
     .ascension-math__steps { gap: 6px; flex-wrap: wrap; }
     .ascension-math__metric { min-width: 68px; padding: 7px 8px; }
   }
+
+  /* ═══════════════════════════════════════════════════════════════════ */
+  /* Property Coach AI mockups (Slide 16 "24/7 Salesperson" cards)       */
+  /* ═══════════════════════════════════════════════════════════════════ */
+
+  /* Shared: sky-blue orb avatar + status dot + bg glow */
+  .pc-orb { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #BAE6FD 0%, #7DD3FC 45%, #0EA5E9 85%, #0369A1 100%); box-shadow: 0 4px 14px rgba(14,165,233,0.18); flex-shrink: 0; }
+  .pc-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #0284C7; box-shadow: 0 0 0 2px rgba(2,132,199,0.18); display: inline-block; }
+  .pc-bg-glow { position: absolute; bottom: -15%; left: 50%; transform: translateX(-50%); width: 110%; height: 60%; border-radius: 50%; background: radial-gradient(ellipse, rgba(14,165,233,0.10) 0%, transparent 70%); filter: blur(40px); pointer-events: none; z-index: 0; }
+
+  /* Card 1: AI Nurture chat */
+  .pc-app { position: relative; height: 100%; display: flex; flex-direction: column; background: linear-gradient(180deg, #fff 0%, #fff 65%, #f7fdff 100%); overflow: hidden; font-feature-settings: 'ss01', 'ss02'; }
+  .pc-header { flex-shrink: 0; position: relative; z-index: 5; padding: 12px 16px 10px; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.88); backdrop-filter: saturate(180%) blur(14px); -webkit-backdrop-filter: saturate(180%) blur(14px); border-bottom: 1px solid var(--al-50); min-height: 54px; }
+  .pc-header-text { display: flex; flex-direction: column; align-items: center; line-height: 1; gap: 3px; }
+  .pc-name { font-size: 13px; font-weight: 600; color: var(--al-900); letter-spacing: -0.15px; }
+  .pc-status { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 500; color: var(--al-600); letter-spacing: -0.1px; }
+  .pc-chat { flex: 1; overflow: hidden; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+  .pc-msg-agent { display: flex; flex-direction: column; gap: 3px; align-self: stretch; }
+  .pc-byline { font-size: 9px; font-weight: 600; color: var(--al-600); letter-spacing: 0.3px; text-transform: uppercase; line-height: 12px; }
+  .pc-text { font-size: 11px; font-weight: 500; color: var(--al-900); letter-spacing: -0.15px; line-height: 16px; }
+  .pc-msg-user { align-self: flex-end; max-width: 78%; }
+  .pc-bubble { padding: 7px 12px; border-radius: 16px; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--al-100); color: var(--al-900); font-size: 11px; font-weight: 500; letter-spacing: -0.15px; line-height: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+  .pc-typing { display: flex; flex-direction: column; gap: 4px; align-self: flex-start; }
+  .pc-typing-row { display: inline-flex; align-items: center; gap: 3px; }
+  .pc-typing-row span { width: 4px; height: 4px; border-radius: 50%; background: var(--al-200); animation: pcTyping 1.2s infinite; }
+  .pc-typing-row span:nth-child(2) { animation-delay: 0.15s; }
+  .pc-typing-row span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes pcTyping { 0%,60%,100% { transform: translateY(0); opacity: 0.35; } 30% { transform: translateY(-2px); opacity: 1; } }
+  .pc-input { flex-shrink: 0; padding: 10px 12px 14px; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.88); backdrop-filter: saturate(180%) blur(14px); -webkit-backdrop-filter: saturate(180%) blur(14px); border-top: 1px solid var(--al-50); }
+  .pc-input-attach { width: 22px; height: 22px; border-radius: 50%; background: var(--al-25); color: var(--al-600); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; font-weight: 400; }
+  .pc-input-field { flex: 1; padding: 7px 12px; border-radius: 999px; background: var(--al-25); font-size: 11px; color: rgba(26,26,26,0.3); font-weight: 500; letter-spacing: -0.15px; }
+  .pc-input-send { width: 26px; height: 26px; border-radius: 50%; background: #0EA5E9; color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 10px rgba(14,165,233,0.25); }
+  .pc-input-send svg { width: 12px; height: 12px; stroke: white; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Card 2: lock-screen notifications */
+  .lock { position: relative; height: 100%; display: flex; flex-direction: column; background: linear-gradient(180deg, #c5e3ee 0%, #95c8dc 45%, #4f9cba 100%); overflow: hidden; padding: 14px 14px 12px; font-feature-settings: 'ss01', 'ss02'; }
+  .lock::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 10%, rgba(255,255,255,0.32) 0%, transparent 50%), radial-gradient(ellipse at 20% 90%, rgba(3,105,161,0.30) 0%, transparent 60%); pointer-events: none; }
+  .lock-status { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 700; color: white; letter-spacing: -0.15px; }
+  .lock-status-icons { display: inline-flex; align-items: center; gap: 4px; }
+  .lock-status-icons svg { display: block; }
+  .lock-clock { position: relative; z-index: 2; text-align: center; margin-top: 2px; padding-bottom: 14px; }
+  .lock-date { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.95); letter-spacing: -0.1px; margin-bottom: 1px; text-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+  .lock-time { font-family: 'Instrument Sans', sans-serif; font-size: 56px; font-weight: 300; color: white; letter-spacing: -3px; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .lock-notifs { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+  .notif { background: rgba(255,255,255,0.78); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-radius: 16px; padding: 10px 12px; display: grid; grid-template-columns: 22px 1fr auto; grid-template-rows: auto auto; column-gap: 8px; row-gap: 2px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); align-items: center; }
+  .notif-icon { grid-row: 1 / span 2; width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(180deg, #34D399 0%, #10B981 100%); display: flex; align-items: center; justify-content: center; color: white; align-self: center; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+  .notif-icon svg { width: 14px; height: 14px; }
+  .notif-app { grid-column: 2; grid-row: 1; font-size: 9px; font-weight: 700; color: var(--al-600); letter-spacing: 0.4px; text-transform: uppercase; }
+  .notif-time { grid-column: 3; grid-row: 1; font-size: 9px; font-weight: 500; color: var(--al-600); letter-spacing: -0.1px; }
+  .notif-body { grid-column: 2 / -1; grid-row: 2; font-size: 11px; font-weight: 500; color: var(--al-900); line-height: 14px; letter-spacing: -0.15px; }
+  .notif-body strong { font-weight: 700; }
+  .notif--older { background: rgba(255,255,255,0.62); transform: scale(0.985); transform-origin: top center; }
+  .notif--oldest { background: rgba(255,255,255,0.5); transform: scale(0.97); }
+
+  /* Card 3: email inbox */
+  .pc-mail { position: relative; height: 100%; background: white; display: flex; flex-direction: column; overflow: hidden; font-feature-settings: 'ss01', 'ss02'; }
+  .mail-chrome { flex-shrink: 0; padding: 8px 12px; display: flex; align-items: center; gap: 8px; background: var(--al-25); border-bottom: 1px solid var(--al-50); }
+  .mail-lights { display: inline-flex; gap: 5px; align-items: center; }
+  .mail-light { width: 9px; height: 9px; border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.1); }
+  .mail-light--close { background: #ff736a; }
+  .mail-light--min { background: #febc2e; }
+  .mail-light--zoom { background: #19c332; }
+  .mail-search { flex: 1; background: white; border: 1px solid var(--al-100); border-radius: 999px; padding: 3px 10px; font-size: 9px; color: var(--al-600); font-weight: 500; display: flex; align-items: center; gap: 6px; letter-spacing: -0.1px; }
+  .mail-compose { background: var(--al-900); color: white; border-radius: 999px; padding: 3px 9px; font-size: 9px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); letter-spacing: -0.1px; }
+  .mail-titlebar { flex-shrink: 0; padding: 10px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--al-50); }
+  .mail-title { font-size: 13px; font-weight: 700; color: var(--al-900); letter-spacing: -0.15px; }
+  .mail-badge { background: var(--al-200); color: var(--al-900); font-size: 9px; font-weight: 700; padding: 1px 7px; border-radius: 999px; }
+  .mail-filters { margin-left: auto; display: inline-flex; gap: 10px; font-size: 9px; font-weight: 500; letter-spacing: -0.1px; }
+  .mail-filter { color: var(--al-600); }
+  .mail-filter.active { color: var(--al-900); font-weight: 700; }
+  .mail-rows { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+  .mail-row { flex: 1; min-height: 0; padding: 10px 12px 10px 14px; display: grid; grid-template-columns: 28px 1fr auto; grid-template-rows: auto auto auto; column-gap: 10px; row-gap: 1px; align-items: center; border-bottom: 1px solid var(--al-50); position: relative; }
+  .mail-row:last-child { border-bottom: none; }
+  .mail-row.unread { background: rgba(14,165,233,0.06); }
+  .mail-row.unread::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #0EA5E9; }
+  .mail-avatar { grid-row: 1 / span 3; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; letter-spacing: -0.15px; position: relative; }
+  .mail-avatar.ai { background: radial-gradient(circle at 50% 50%, #BAE6FD 0%, #7DD3FC 45%, #0EA5E9 85%, #0369A1 100%); box-shadow: 0 2px 8px rgba(14,165,233,0.18); }
+  .mail-avatar.ai::after { content: "AI"; position: absolute; bottom: -2px; right: -3px; background: white; color: #0284C7; font-size: 6px; font-weight: 700; padding: 1px 3px; border-radius: 4px; line-height: 1; border: 1px solid rgba(14,165,233,0.12); }
+  .mail-avatar.gray { background: var(--al-200); }
+  .mail-sender { grid-column: 2; font-size: 11px; font-weight: 700; color: var(--al-900); letter-spacing: -0.15px; }
+  .mail-row:not(.unread) .mail-sender { font-weight: 600; }
+  .mail-time { grid-column: 3; grid-row: 1; font-size: 9px; font-weight: 500; color: var(--al-600); letter-spacing: -0.1px; }
+  .mail-row.unread .mail-time { color: #0284C7; font-weight: 700; }
+  .mail-subject { grid-column: 2; grid-row: 2; font-size: 10px; font-weight: 600; color: var(--al-900); letter-spacing: -0.15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mail-row:not(.unread) .mail-subject { font-weight: 500; color: var(--al-600); }
+  .mail-preview { grid-column: 2; grid-row: 3; font-size: 9px; font-weight: 400; color: var(--al-600); letter-spacing: -0.1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mail-dot { grid-column: 3; grid-row: 2; align-self: center; justify-self: end; width: 7px; height: 7px; border-radius: 50%; background: #0EA5E9; box-shadow: 0 0 0 2px rgba(14,165,233,0.18); }
 </style>
 </head>
 <body>
@@ -1588,7 +1729,7 @@
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 820px; margin: 0 auto;">
-            We build a digital AI version of you, based on your knowledge, expertise, and voice, that can coach your leads, earn their trust, and sell your high-ticket offer 24/7/365.<br><br>Finally stop trading time for money with your expertise.<br><span class="emphasis">Fully done-for-you in 30 days or less.</span>
+            We build a digital AI version of you, based on your expertise and voice, that coaches your leads, earns their trust, and sells your high-ticket offer around the clock.<br><br>Finally stop trading time for money with your expertise.<br><span class="emphasis">Fully done-for-you in 30 days.</span>
           </p>
         </div>
       </div>
@@ -1650,8 +1791,8 @@
           </div>
           <span style="color: var(--brand-950); font-size: 22px;">→</span>
           <div style="background: var(--brand-200); border-radius: 13px; padding: 14px 18px; text-align: center; min-width: 130px; flex: 1;">
-            <div style="font-weight: 600; color: var(--al-900); font-size: 15px;">AI books call</div>
-            <div style="font-size: 12px; color: var(--al-500); margin-top: 2px;">While you sleep</div>
+            <div style="font-weight: 600; color: var(--al-900); font-size: 15px;">Ascension offer</div>
+            <div style="font-size: 12px; color: var(--al-500); margin-top: 2px;">Upsells on autopilot</div>
           </div>
           <span style="color: var(--brand-950); font-size: 22px;">→</span>
           <div style="background: var(--brand-950); border-radius: 13px; padding: 14px 18px; text-align: center; min-width: 130px; flex: 1;">
@@ -1724,20 +1865,20 @@
         <div class="phase-col rv d3">
           <div class="phase-num phase-num--brand">1</div>
 
-          <div class="h-md" style="font-size: 20px;">We Build Your AI</div>
-          <p class="body" style="font-size: 15px; line-height: 22px;">We extract your expertise and build your fully functional AI product, all done for you in 30 days.</p>
+          <div class="h-md" style="font-size: 20px;">Build Your AI Brain</div>
+          <p class="body" style="font-size: 15px; line-height: 22px;">We extract your expertise and turn it into a working AI product in 30 days.</p>
         </div>
         <div class="phase-col rv d4">
           <div class="phase-num phase-num--brand">2</div>
 
-          <div class="h-md" style="font-size: 20px;">Sell Your Low Ticket AI</div>
-          <p class="body" style="font-size: 15px; line-height: 22px;">We plug your AI into a low-ticket funnel and built-in ascension that upsells to high-ticket on autopilot.</p>
+          <div class="h-md" style="font-size: 20px;">Your Offer Backbone System</div>
+          <p class="body" style="font-size: 15px; line-height: 22px;">We build the low-ticket AI funnel and upsell path that moves buyers into mid and high-ticket offers.</p>
         </div>
         <div class="phase-col rv d5">
           <div class="phase-num phase-num--brand">3</div>
 
-          <div class="h-md" style="font-size: 20px;">Your Autonomous AI Team</div>
-          <p class="body" style="font-size: 15px; line-height: 22px;">AI agents take over sales, client success, and ops, so you scale revenue without scaling overhead.</p>
+          <div class="h-md" style="font-size: 20px;">Attract New Leads</div>
+          <p class="body" style="font-size: 15px; line-height: 22px;">We help fill the funnel with content, paid angles, pipeline activation, and a clear guarantee.</p>
         </div>
       </div>
     </div>
@@ -1753,7 +1894,7 @@
       <div class="flex-col gap-20">
         <div class="rv d1"><span class="label-tag">Phase 1</span></div>
         <div class="rv d2">
-          <h2 class="h-lg">AI Build</h2>
+          <h2 class="h-lg">Build Your AI Brain</h2>
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 540px;">
@@ -1831,9 +1972,18 @@
 
     <div class="content--wide text-center flex-col gap-10" style="justify-content: center;">
       <div class="rv d1"><span class="label-tag">Phase 1 · Demo</span></div>
-      <div class="rv d2"><h2 class="h-lg">What Your Can Do &amp; Connect To</h2></div>
+      <div class="rv d2"><h2 class="h-lg">What Your AI Can Do &amp; Connect To</h2></div>
       <div class="rv d3" style="display: flex; justify-content: center; margin-top: 14px;">
-        <div style="width: 100%; max-width: 500px; aspect-ratio: 4/3; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); border: 2px solid var(--al-200);"><iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/28070a9a919026404884127d1abf59f7/iframe?muted=true&preload=true&loop=true&autoplay=true&controls=false" style="width: 100%; height: 100%; border: none;" allow="autoplay"></iframe></div>
+        <div style="width: 100%; max-width: 640px; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
+          <div style="position: relative; padding-top: 75%;">
+            <iframe
+              src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/28070a9a919026404884127d1abf59f7/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false"
+              style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+              allowfullscreen="true"
+            ></iframe>
+          </div>
+        </div>
       </div>
       <div class="rv d4" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-width: 500px; margin: 16px auto 0; width: 100%;">
         <div style="background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 12px; padding: 8px 10px; text-align: left;">
@@ -1852,21 +2002,6 @@
           <div style="font-weight: 700; color: var(--al-900); font-size: 12px;">CRM</div>
           <div style="font-size: 9px; color: var(--al-600); line-height: 1.25; margin-top: 2px;">Leads, purchases, tags</div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 1, Cal AI Example -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--cyan" style="bottom: -100px; left: 30%;"></div>
-    <div class="content--wide text-center flex-col gap-10" style="justify-content: center;">
-      <div class="rv d1"><span class="label-tag">AI Product Example</span></div>
-      <div class="rv d2"><h2 class="h-lg">A Calorie Counter Became A 9-Figure Exit</h2></div>
-      <div class="rv d3" style="text-align: center; display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 14px auto 0; width: 100%;">
-          <div style="overflow: hidden; background: white; height: 460px; display: flex; align-items: flex-start; justify-content: center; border: 2px solid var(--al-200); border-radius: 16px; box-shadow: var(--shadow-card); padding: 8px;">
-            <img src="cal-ai-inc-screenshot.jpeg" alt="Inc. article screenshot about Cal AI founder Zach Yadegari selling to MyFitnessPal" style="width: 100%; height: 100%; object-fit: contain; object-position: top center; transform: scale(1.2); transform-origin: top center; display: block; border-radius: 10px;">
-          </div>
-          <p style="font-size: 10px; line-height: 1.35; color: var(--al-400); margin: 0; text-align: center;">Cal AI is not a Kodara client. Public example only.</p>
       </div>
     </div>
   </div>
@@ -1902,7 +2037,7 @@
   </div>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- Phase 2, Sell Your AI (Cover) -->
+  <!-- Phase 2, Offer Backbone System (Cover) -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide" data-slide="6">
     <div class="bg-orb bg-orb--cyan" style="bottom: -80px; left: 30%;"></div>
@@ -1911,115 +2046,87 @@
       <div class="flex-col gap-20">
         <div class="rv d1"><span class="label-tag">Phase 2</span></div>
         <div class="rv d2">
-          <h2 class="h-lg">Sell Your AI</h2>
+          <h2 class="h-lg">Offer Backbone System</h2>
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 540px;">
-            We plug your AI into a low-ticket funnel that captures every lead you're leaving on the table.
+            We turn your low-ticket AI into a buyer path with clear mid-ticket and high-ticket upsells.
           </p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 2, Slide 1, Done-For-You Funnel (Leanne's) -->
+  <!-- Phase 2, Value Ladder → Offer Backbone (the shift) -->
   <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-    <div class="content--wide split-layout">
-      <div class="flex-col gap-24">
-        <div class="rv d1"><span class="label-tag">Phase 2 · Step 1</span></div>
-        <div class="rv d2"><h2 class="h-lg">Done-For-You Funnel</h2></div>
-        <div class="rv d3">
-          <p class="body-lg">
-            A complete sales funnel designed to sell your AI product to your existing audience, ready to launch from day one.
-          </p>
-        </div>
-        <div class="rv d4">
-          <p class="body" style="color: var(--al-500); font-style: italic;">
-            Example: Leanne Ellington's AI funnel, Teenager Brain.
-          </p>
-        </div>
+    <div class="bg-orb bg-orb--neutral" style="top: -120px; left: -100px;"></div>
+    <div class="bg-orb bg-orb--green" style="bottom: -120px; right: -100px;"></div>
+
+    <div class="content--wide flex-col gap-24" style="justify-content: center;">
+      <div class="text-center flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">Phase 2 · The Shift</span></div>
+        <div class="rv d2"><h2 class="h-lg">The Old Way vs. The New Way</h2></div>
       </div>
-      <div class="rv d3">
-        <div class="split-image" style="aspect-ratio: 4/3;">
-          <img src="leanne-landing.jpg" alt="Leanne Ellington's Teenager Brain AI funnel example">
+
+      <div class="rv d3" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch; justify-content: center;">
+        <!-- LEFT: The Value Ladder (old way) -->
+        <div style="flex: 1 1 380px; max-width: 520px; background: rgba(193,69,69,0.06); border: 1px solid rgba(193,69,69,0.22); border-radius: 18px; padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="text-align: center;">
+            <div style="color: rgba(193,69,69,0.92); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;">The Value Ladder · The Old Way</div>
+            <div style="font-size: 14px; color: var(--al-600); font-weight: 500;">One path. Climb or drop off.</div>
+          </div>
+
+          <div style="display: flex; justify-content: center;">
+            <img src="value-ladder.png" alt="The Value Ladder — 5-step staircase from $17 bait up to $50K high-ticket, most buyers stranded at the bottom" style="width: 100%; max-width: 364px; height: auto; display: block; mix-blend-mode: multiply;">
+          </div>
+
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <li style="display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--al-600); line-height: 1.5;">
+              <span style="color: rgba(193,69,69,0.85); font-weight: 700; flex-shrink: 0;">✕</span>
+              Most leads never make it past step one
+            </li>
+            <li style="display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--al-600); line-height: 1.5;">
+              <span style="color: rgba(193,69,69,0.85); font-weight: 700; flex-shrink: 0;">✕</span>
+              Miss a rung and they're gone for good
+            </li>
+            <li style="display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--al-600); line-height: 1.5;">
+              <span style="color: rgba(193,69,69,0.85); font-weight: 700; flex-shrink: 0;">✕</span>
+              You wait for them to be "ready"
+            </li>
+          </ul>
+        </div>
+
+        <!-- RIGHT: The Offer Backbone (new way) -->
+        <div style="flex: 1 1 380px; max-width: 520px; background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 18px; padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="text-align: center;">
+            <div style="color: var(--brand-950); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;">The Offer Backbone · The New Way</div>
+            <div style="font-size: 14px; color: var(--al-600); font-weight: 500;">Diagnose the pain. Prescribe the offer.</div>
+          </div>
+
+          <div style="display: flex; justify-content: center;">
+            <img src="spine.png" alt="Offer backbone — $17 patient intake routes to mid, high, or super-ticket tiers" style="width: 100%; max-width: 364px; height: auto; display: block; mix-blend-mode: multiply;">
+          </div>
+
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <li style="display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--al-600); line-height: 1.5;">
+              <span style="color: var(--brand-950); font-weight: 700; flex-shrink: 0;">✓</span>
+              Finds out what each buyer actually needs
+            </li>
+            <li style="display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--al-600); line-height: 1.5;">
+              <span style="color: var(--brand-950); font-weight: 700; flex-shrink: 0;">✓</span>
+              Sends them the right offer without you on the call
+            </li>
+            <li style="display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--al-600); line-height: 1.5;">
+              <span style="color: var(--brand-950); font-weight: 700; flex-shrink: 0;">✓</span>
+              Every buyer gets a prescription, not a pitch
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 2, Slide 2, Everything We Do To Fill Your Funnel -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 30%;"></div>
-    <div class="content--wide flex-col gap-10" style="justify-content: center; max-width: 1188px;">
-      <div class="text-center flex-col gap-8">
-        <div class="rv d1"><span class="label-tag">Phase 2 · Step 2</span></div>
-        <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(25px, 3vw, 42px);">Everything we do to fill your funnel</h2></div>
-      </div>
-
-      <div class="rv d3" style="max-width: 1188px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 6px; align-items: center;">
-        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; width: 100%;">
-          <div style="background: white; border: 1px solid var(--brand-200); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
-            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100);">
-              <div style="position: relative; padding-top: 100%;">
-                <iframe
-                  src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cf012831e12dd92855000b85e12a60db/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcf012831e12dd92855000b85e12a60db%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-                  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                  allowfullscreen="true"
-                ></iframe>
-              </div>
-            </div>
-            <div style="text-align: left;">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-With-You Paid Ads</div>
-              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Lucas AI builds hooks, angles, and ad creative while you control the spend.</div>
-            </div>
-          </div>
-          <div style="background: white; border: 1px solid var(--brand-200); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
-            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100);">
-              <div style="position: relative; padding-top: 100%;">
-                <iframe
-                  src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/393d729a00e6a20de5e23ae1665153da/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F393d729a00e6a20de5e23ae1665153da%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-                  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                  allowfullscreen="true"
-                ></iframe>
-              </div>
-            </div>
-            <div style="text-align: left;">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-For-You Organic Marketing</div>
-              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">A delivered content library of short videos, posts, and captions in your voice.</div>
-            </div>
-          </div>
-          <div style="background: white; border: 1px solid var(--brand-200); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
-            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; background: #f8faf9; border: 1px solid var(--al-100); overflow: hidden;">
-              <img src="pipeline-activation-email.png" alt="Email draft sequence for pipeline activation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            </div>
-            <div style="text-align: left;">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-For-You Pipeline Activation</div>
-              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Email and SMS drafts written to wake up every lead already sitting in your CRM.</div>
-            </div>
-          </div>
-        </div>
-
-        <svg viewBox="0 0 1000 60" style="width: 82%; height: 24px;" preserveAspectRatio="none">
-          <line x1="165" y1="0" x2="165" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="500" y1="0" x2="500" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="835" y1="0" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="165" y1="34" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="500" y1="34" x2="500" y2="54" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <polygon points="492,52 500,60 508,52" fill="var(--brand-950)"/>
-        </svg>
-
-        <div style="background: var(--brand-950); color: white; border-radius: 16px; padding: 12px 42px; text-align: center; box-shadow: var(--shadow-card); min-width: 300px;">
-          <div style="font-weight: 700; font-size: 17px;">Your AI Product</div>
-          <div style="font-size: 11px; opacity: 0.82; margin-top: 4px; line-height: 1.3;">traffic, trust, buyers, booked calls</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 2, Steps 3 & 4, Ascension Ladder + Funnel Math -->
+  <!-- Phase 2, Upsell Path + Ascension Math -->
   <div class="slide slide--ascension-math">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
     <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
@@ -2027,41 +2134,17 @@
     <div class="ascension-math">
       <div class="ascension-math__top">
         <div class="ascension-math__copy">
-          <div class="rv d1"><span class="label-tag">Phase 2 · Steps 3 &amp; 4</span></div>
-          <div class="rv d2"><h2 class="h-lg">Your Ascension Ladder</h2></div>
+          <div class="rv d1"><span class="label-tag">Phase 2</span></div>
+          <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(26px, 2.6vw, 38px);">Offer Backbone System</h2></div>
           <div class="rv d3">
             <p class="body-lg">
-              Every client who enters at $17 has a clear path to $50K+.
+              You're already a doctor for your clients — they tell you where it hurts, you prescribe what they need. <strong>Your AI does this all day</strong>, routing every $17 buyer to the offer that solves their real pain.
             </p>
           </div>
         </div>
 
-        <div class="rv d3 ascension-math__tree" aria-label="$17 buyers can choose any next product path">
-          <div class="ascension-math__root">
-            <div class="ascension-math__label">Low-Ticket AI Buyer</div>
-            <div class="ascension-math__price">$17-$97</div>
-            <div class="ascension-math__note">entry point</div>
-          </div>
-
-          <div class="ascension-math__connector" aria-hidden="true"></div>
-
-          <div class="ascension-math__paths">
-            <div class="ascension-math__path">
-              <div class="ascension-math__label">Mid Ticket</div>
-              <div class="ascension-math__price">$500-$2K</div>
-              <div class="ascension-math__note">15%-30%+</div>
-            </div>
-            <div class="ascension-math__path">
-              <div class="ascension-math__label">High Ticket</div>
-              <div class="ascension-math__price">$5K-$20K</div>
-              <div class="ascension-math__note">10%-20%+</div>
-            </div>
-            <div class="ascension-math__path">
-              <div class="ascension-math__label">Super Ticket</div>
-              <div class="ascension-math__price">$50K-$100K+</div>
-              <div class="ascension-math__note">3%-6%+</div>
-            </div>
-          </div>
+        <div class="rv d3 ascension-math__tree" style="display: flex; justify-content: center;" aria-label="Offer backbone — $17 patient intake routes to mid, high, or super-ticket tiers based on diagnosis">
+          <img src="spine.png" alt="Offer backbone diagram — $17 patient intake at the top of the spine routes to mid, high, or super-ticket tiers based on diagnosed pain" style="width: 100%; max-width: 360px; height: auto; display: block; mix-blend-mode: multiply;">
         </div>
       </div>
 
@@ -2113,22 +2196,22 @@
             </div>
             <span style="color: var(--brand-950);">→</span>
             <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">60</div>
-              <div style="font-size: 10px; color: var(--al-500);">calls booked</div>
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">25</div>
+              <div style="font-size: 10px; color: var(--al-500);">mid-ticket buyers</div>
             </div>
             <span style="color: var(--brand-950);">→</span>
             <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">40</div>
-              <div style="font-size: 10px; color: var(--al-500);">show up</div>
+              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">8</div>
+              <div style="font-size: 10px; color: var(--al-500);">high-ticket buyers</div>
             </div>
             <span style="color: var(--brand-950);">→</span>
             <div class="ascension-math__metric ascension-math__metric--final">
-              <div style="font-weight: 700; font-size: 18px;">12</div>
-              <div style="font-size: 10px; opacity: 0.85;">clients</div>
+              <div style="font-weight: 700; font-size: 18px;">2</div>
+              <div style="font-size: 10px; opacity: 0.85;">super-ticket clients</div>
             </div>
           </div>
           <p class="body" style="text-align: center; color: var(--al-600); margin-top: 12px; font-size: 12px;">
-            <strong style="color: var(--brand-950);">6x more clients.</strong> Same traffic. Every buyer is a warm lead.
+            <strong style="color: var(--brand-950);">Upsells happen automatically.</strong> Same traffic. Buyers see the right next step.
           </p>
         </div>
       </div>
@@ -2139,8 +2222,232 @@
     </div>
   </div>
 
+  <!-- Phase 2, Offer Backbone System Demo Reprise -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="bottom: -100px; left: -60px;"></div>
+
+    <div class="content--wide text-center flex-col gap-18" style="justify-content: center;">
+      <div class="rv d1"><span class="label-tag">Phase 2 · Demo</span></div>
+      <div class="rv d2"><h2 class="h-lg">The Offer Backbone System</h2></div>
+      <div class="rv d3">
+        <p class="body-lg" style="max-width: 680px; margin: 0 auto;">
+          The system turns low-ticket AI buyers into mid, high, and super-ticket opportunities automatically.
+        </p>
+      </div>
+      <div class="rv d4" style="display: flex; justify-content: center; margin-top: 20px;">
+        <div class="demo-carousel" data-demo-carousel>
+          <div class="demo-carousel__frame-row">
+            <button class="demo-carousel__button" type="button" data-carousel-prev aria-label="Previous demo">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="10 3 5 8 10 13"></polyline></svg>
+            </button>
+            <div class="demo-carousel__stage" style="aspect-ratio: 1 / 1; max-width: 640px;">
+              <iframe
+                data-carousel-frame
+                src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/35b9f48a121f060024cb7189594b69c6/iframe?muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F35b9f48a121f060024cb7189594b69c6%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+                style="width: 100%; height: 100%; border: none;"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowfullscreen="true"
+              ></iframe>
+            </div>
+            <button class="demo-carousel__button" type="button" data-carousel-next aria-label="Next demo">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 3 11 8 6 13"></polyline></svg>
+            </button>
+          </div>
+          <span data-demo-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/35b9f48a121f060024cb7189594b69c6/iframe?muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F35b9f48a121f060024cb7189594b69c6%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" hidden></span>
+          <span data-demo-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/76b20cf70805d01998a3556d8ac300aa/iframe?muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F76b20cf70805d01998a3556d8ac300aa%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" hidden></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2, Fill Your Funnel Duplicate -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 30%;"></div>
+    <div class="content--wide flex-col gap-10" style="justify-content: center; max-width: 1188px;">
+      <div class="text-center flex-col gap-8">
+        <div class="rv d1"><span class="label-tag">Phase 3 · Step 2</span></div>
+        <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(25px, 3vw, 42px);">Your AI Becomes Your 24/7 Salesperson</h2></div>
+      </div>
+
+      <div class="rv d3" style="max-width: 1188px; margin: 20px auto 0; width: 100%; display: flex; flex-direction: column; gap: 6px; align-items: center;">
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; width: 100%;">
+          <!-- AI Nurture mockup -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; background: white; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
+              <div class="pc-app">
+                <div class="pc-bg-glow"></div>
+                <div class="pc-header">
+                  <div class="pc-orb"></div>
+                  <div class="pc-header-text">
+                    <div class="pc-name">Property Coach AI</div>
+                    <div class="pc-status"><span class="pc-status-dot"></span><span>Active now</span></div>
+                  </div>
+                </div>
+                <div class="pc-chat">
+                  <div class="pc-msg-agent">
+                    <div class="pc-byline">Coach</div>
+                    <div class="pc-text">Hi Sarah! I noticed you're thinking about scaling your coaching practice.</div>
+                  </div>
+                  <div class="pc-msg-user"><div class="pc-bubble">Yes! Where do I start?</div></div>
+                  <div class="pc-msg-agent">
+                    <div class="pc-byline">Coach</div>
+                    <div class="pc-text">Based on your client list, I'd start with a group offer. Want me to draft it?</div>
+                  </div>
+                  <div class="pc-typing">
+                    <div class="pc-byline">Coach is typing</div>
+                    <div class="pc-typing-row"><span></span><span></span><span></span></div>
+                  </div>
+                </div>
+                <div class="pc-input">
+                  <div class="pc-input-attach">+</div>
+                  <div class="pc-input-field">Type a message…</div>
+                  <div class="pc-input-send"><svg viewBox="0 0 12 12"><polyline points="3 7 6 4 9 7"/><line x1="6" y1="4" x2="6" y2="10"/></svg></div>
+                </div>
+              </div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">AI Nurture</div>
+              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Your AI talks to every lead, 24/7, and tells you which ones are ready to buy.</div>
+            </div>
+          </div>
+
+          <!-- SMS Follow-Up mockup -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; background: white; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
+              <div class="lock">
+                <div class="lock-status">
+                  <span>9:41</span>
+                  <span class="lock-status-icons">
+                    <svg width="14" height="9" viewBox="0 0 14 9" fill="none"><rect x="0" y="6" width="2.5" height="3" rx="0.4" fill="white"/><rect x="3.5" y="4" width="2.5" height="5" rx="0.4" fill="white"/><rect x="7" y="2" width="2.5" height="7" rx="0.4" fill="white"/><rect x="10.5" y="0" width="2.5" height="9" rx="0.4" fill="white"/></svg>
+                    <svg width="20" height="9" viewBox="0 0 20 9" fill="none"><rect x="0" y="1" width="16" height="7" rx="1.5" fill="none" stroke="white" stroke-width="0.8" opacity="0.9"/><rect x="1.5" y="2.5" width="11" height="4" rx="0.6" fill="white"/><rect x="17" y="3" width="1.2" height="3" fill="white" opacity="0.9"/></svg>
+                  </span>
+                </div>
+                <div class="lock-clock">
+                  <div class="lock-date">Tuesday, November 14</div>
+                  <div class="lock-time">9:41</div>
+                </div>
+                <div class="lock-notifs">
+                  <div class="notif">
+                    <div class="notif-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M 2 4 Q 2 2 4 2 L 10 2 Q 12 2 12 4 L 12 7 Q 12 9 10 9 L 6 9 L 3.5 11 L 4 9 Q 2 9 2 7 Z" fill="white"/></svg></div>
+                    <div class="notif-app">Messages</div>
+                    <div class="notif-time">now</div>
+                    <div class="notif-body"><strong>Property Coach AI</strong> · Hey! Just checking in on your launch—how's it going?</div>
+                  </div>
+                  <div class="notif notif--older">
+                    <div class="notif-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M 2 4 Q 2 2 4 2 L 10 2 Q 12 2 12 4 L 12 7 Q 12 9 10 9 L 6 9 L 3.5 11 L 4 9 Q 2 9 2 7 Z" fill="white"/></svg></div>
+                    <div class="notif-app">Messages</div>
+                    <div class="notif-time">1h ago</div>
+                    <div class="notif-body"><strong>Property Coach AI</strong> · Quick reminder: your funnel review is ready when you are.</div>
+                  </div>
+                  <div class="notif notif--oldest">
+                    <div class="notif-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M 2 4 Q 2 2 4 2 L 10 2 Q 12 2 12 4 L 12 7 Q 12 9 10 9 L 6 9 L 3.5 11 L 4 9 Q 2 9 2 7 Z" fill="white"/></svg></div>
+                    <div class="notif-app">Messages</div>
+                    <div class="notif-time">Yesterday</div>
+                    <div class="notif-body"><strong>Property Coach AI</strong> · Sent over the new ad copy—let me know what you think!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">SMS Follow-Up</div>
+              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Text follow-ups in your voice. Hits them on the device they actually check.</div>
+            </div>
+          </div>
+
+          <!-- Email Remarketing mockup -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; background: white; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
+              <div class="pc-mail">
+                <div class="mail-chrome">
+                  <div class="mail-lights">
+                    <div class="mail-light mail-light--close"></div>
+                    <div class="mail-light mail-light--min"></div>
+                    <div class="mail-light mail-light--zoom"></div>
+                  </div>
+                  <div class="mail-search">
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="3.5" cy="3.5" r="2.8" stroke="currentColor" stroke-width="1"/><line x1="5.5" y1="5.5" x2="8" y2="8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+                    Search inbox
+                  </div>
+                  <div class="mail-compose">+ Compose</div>
+                </div>
+                <div class="mail-titlebar">
+                  <div class="mail-title">Inbox</div>
+                  <div class="mail-badge">3</div>
+                  <div class="mail-filters">
+                    <span class="mail-filter active">All</span>
+                    <span class="mail-filter">Unread</span>
+                    <span class="mail-filter">Flagged</span>
+                  </div>
+                </div>
+                <div class="mail-rows">
+                  <div class="mail-row unread">
+                    <div class="mail-avatar ai">L</div>
+                    <div class="mail-sender">Property Coach AI</div>
+                    <div class="mail-time">2m ago</div>
+                    <div class="mail-subject">Quick check-in on your goals</div>
+                    <div class="mail-dot"></div>
+                    <div class="mail-preview">Hey Sarah — noticed you haven't logged in...</div>
+                  </div>
+                  <div class="mail-row">
+                    <div class="mail-avatar gray">S</div>
+                    <div class="mail-sender">Sarah Chen</div>
+                    <div class="mail-time">1h</div>
+                    <div class="mail-subject">Re: Our coaching session</div>
+                    <div></div>
+                    <div class="mail-preview">Loved our chat yesterday. One quick...</div>
+                  </div>
+                  <div class="mail-row">
+                    <div class="mail-avatar gray">M</div>
+                    <div class="mail-sender">Mike Wilson</div>
+                    <div class="mail-time">3h</div>
+                    <div class="mail-subject">Your weekly summary</div>
+                    <div></div>
+                    <div class="mail-preview">Here's what happened with your funnel...</div>
+                  </div>
+                  <div class="mail-row">
+                    <div class="mail-avatar gray">A</div>
+                    <div class="mail-sender">Anna Williams</div>
+                    <div class="mail-time">Yesterday</div>
+                    <div class="mail-subject">Question about your program</div>
+                    <div></div>
+                    <div class="mail-preview">Hi Sarah, I saw your latest post and...</div>
+                  </div>
+                  <div class="mail-row">
+                    <div class="mail-avatar gray">D</div>
+                    <div class="mail-sender">David Park</div>
+                    <div class="mail-time">2d</div>
+                    <div class="mail-subject">Thanks for the strategy call</div>
+                    <div></div>
+                    <div class="mail-preview">Wanted to follow up on what we discussed...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Email Remarketing</div>
+              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Email sequences that wake up old leads and pull them back into your offer.</div>
+            </div>
+          </div>
+        </div>
+
+        <svg viewBox="0 0 1000 60" style="width: 82%; height: 24px;" preserveAspectRatio="none">
+          <line x1="165" y1="0" x2="165" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="500" y1="0" x2="500" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="835" y1="0" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="165" y1="34" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="500" y1="34" x2="500" y2="54" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <polygon points="492,52 500,60 508,52" fill="var(--brand-950)"/>
+        </svg>
+
+        <div style="background: var(--brand-950); color: white; border-radius: 16px; padding: 14px 48px; text-align: center; box-shadow: var(--shadow-card); min-width: 220px;">
+          <div style="font-family: var(--font); font-weight: 700; font-size: 32px; line-height: 1; letter-spacing: -0.5px;">$ $ $</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════ -->
-  <!-- Phase 3, Your Autonomous AI Team (Cover) -->
+  <!-- Phase 3, Market It (Cover) -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide" data-slide="7">
     <div class="bg-orb bg-orb--green" style="top: 50%; right: -80px; transform: translateY(-50%);"></div>
@@ -2149,156 +2456,142 @@
       <div class="flex-col gap-20">
         <div class="rv d1"><span class="label-tag">Phase 3</span></div>
         <div class="rv d2">
-          <h2 class="h-lg">Your Autonomous AI Team</h2>
+          <h2 class="h-lg">Attract New Leads</h2>
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 540px;">
-            AI agents take over sales, client success, and ops, so you scale revenue without scaling overhead.
+            We help fill the funnel, wake up existing leads, and keep the guarantee tied to real pipeline activity.
           </p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 3, Slide 1, AI Agents Live Demo -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--cyan" style="top: -80px; right: -100px;"></div>
-    <div class="bg-orb bg-orb--green" style="bottom: -100px; left: -80px;"></div>
-
-    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
-      <div class="flex-col gap-8 text-center">
-        <div class="rv d1"><span class="label-tag">Phase 3</span></div>
-        <div class="rv d2"><h2 class="h-lg">Your AI team, working 24/7</h2></div>
-      </div>
-      <div class="rv d3" style="display: flex; justify-content: center;">
-        <div style="width: 100%; max-width: 980px; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; border: 2px solid var(--al-200); box-shadow: var(--shadow-card); background: #f7f8fc;">
-          <iframe src="./agents-demo.html" style="width: 100%; height: 100%; border: none; display: block;" loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 3, Slide 2, Replace Your Team With AI -->
+  <!-- Phase 3, Slide 1, Done-For-You Funnel (Leanne's) -->
   <div class="slide">
     <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-    <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
-
-    <div class="content--wide flex-col gap-20" style="justify-content: center;">
-      <div class="flex-col gap-8 text-center">
-        <div class="rv d1"><span class="label-tag">Phase 3</span></div>
-        <div class="rv d2"><h2 class="h-lg">Scale your business, not your overhead costs</h2></div>
-      </div>
-
-      <!-- Comparison Table -->
-      <div class="rv d3 replace-table" style="background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 18px; overflow: hidden; max-width: 1080px; margin: 0 auto; width: 100%;">
-        <!-- Header -->
-        <div class="replace-row replace-row--head" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px; padding: 14px 28px; font-size: 11px; font-weight: 700; color: var(--al-500); text-transform: uppercase; letter-spacing: 0.1em;">
-          <div>Role</div>
-          <div style="text-align: center;">Human Hire</div>
-          <div style="text-align: center;">Kodara AI</div>
-          <div style="text-align: right;">You Save</div>
+    <div class="content--wide split-layout">
+      <div class="flex-col gap-24">
+        <div class="rv d1"><span class="label-tag">Phase 3 · Step 1</span></div>
+        <div class="rv d2"><h2 class="h-lg">Done-For-You Funnel</h2></div>
+        <div class="rv d3">
+          <p class="body-lg">
+            A complete sales funnel designed to sell your AI product to your existing audience, ready to launch from day one.
+          </p>
         </div>
-
-        <!-- Rows -->
-        <div style="display: flex; flex-direction: column; gap: 6px; padding: 0 10px 10px;">
-          <div class="replace-row" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px; padding: 14px 18px; background: white; border-radius: 12px; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--al-900);"><span style="font-size: 16px;">📞</span>Sales &amp; follow-up AI</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 600; color: rgba(193,69,69,0.92);">$2,000/mo</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 500; color: var(--al-500);">$0</div>
-            <div style="text-align: right; font-size: 14px; font-weight: 600; color: var(--al-900);">$2,000</div>
-          </div>
-          <div class="replace-row" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px; padding: 14px 18px; background: white; border-radius: 12px; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--al-900);"><span style="font-size: 16px;">🎨</span>Content &amp; copy AI</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 600; color: rgba(193,69,69,0.92);">$1,500/mo</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 500; color: var(--al-500);">$0</div>
-            <div style="text-align: right; font-size: 14px; font-weight: 600; color: var(--al-900);">$1,500</div>
-          </div>
-          <div class="replace-row" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px; padding: 14px 18px; background: white; border-radius: 12px; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--al-900);"><span style="font-size: 16px;">💬</span>Customer support AI</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 600; color: rgba(193,69,69,0.92);">$3,000/mo</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 500; color: var(--al-500);">$0</div>
-            <div style="text-align: right; font-size: 14px; font-weight: 600; color: var(--al-900);">$3,000</div>
-          </div>
-          <div class="replace-row" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px; padding: 14px 18px; background: white; border-radius: 12px; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--al-900);"><span style="font-size: 16px;">🎓</span>Onboarding AI</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 600; color: rgba(193,69,69,0.92);">$2,000/mo</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 500; color: var(--al-500);">$0</div>
-            <div style="text-align: right; font-size: 14px; font-weight: 600; color: var(--al-900);">$2,000</div>
-          </div>
-          <div class="replace-row" style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px; padding: 14px 18px; background: white; border-radius: 12px; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--al-900);"><span style="font-size: 16px;">⚙️</span>Ops &amp; admin AI</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 600; color: rgba(193,69,69,0.92);">$2,500/mo</div>
-            <div style="text-align: center; font-size: 14px; font-weight: 500; color: var(--al-500);">$0</div>
-            <div style="text-align: right; font-size: 14px; font-weight: 600; color: var(--al-900);">$2,500</div>
-          </div>
+        <div class="rv d4">
+          <p class="body" style="color: var(--al-500); font-style: italic;">
+            Example: Leanne Ellington's AI funnel, Teenager Brain.
+          </p>
         </div>
       </div>
-
-      <!-- Summary bar -->
-      <div class="rv d4 replace-summary" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; background: var(--brand-950); color: white; border-radius: 16px; padding: 22px 32px; max-width: 1080px; margin: 0 auto; width: 100%; box-shadow: var(--shadow-card);">
-        <div>
-          <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; font-weight: 700; margin-bottom: 6px;">Monthly Payroll</div>
-          <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; letter-spacing: -0.5px; line-height: 1;">$11,000<span style="font-size: 16px; opacity: 0.7; font-weight: 500;">/mo</span></div>
-        </div>
-        <div style="text-align: center; border-left: 1px solid rgba(255,255,255,0.18); border-right: 1px solid rgba(255,255,255,0.18); padding: 0 16px;">
-          <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; font-weight: 700; margin-bottom: 6px;">With Kodara</div>
-          <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; letter-spacing: -0.5px; line-height: 1;">$0<span style="font-size: 16px; opacity: 0.7; font-weight: 500;">/mo</span></div>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; font-weight: 700; margin-bottom: 6px;">Annual Savings</div>
-          <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; letter-spacing: -0.5px; line-height: 1;">$132,000<span style="font-size: 16px; opacity: 0.7; font-weight: 500;">/yr</span></div>
+      <div class="rv d3">
+        <div class="split-image" style="aspect-ratio: 4/3;">
+          <img src="leanne-landing.jpg" alt="Leanne Ellington's Teenager Brain AI funnel example">
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Phase 3, Slide 2, Everything We Do To Fill Your Funnel -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 30%;"></div>
+    <div class="content--wide flex-col gap-10" style="justify-content: center; max-width: 1188px;">
+      <div class="text-center flex-col gap-8">
+        <div class="rv d1"><span class="label-tag">Phase 3 · Step 2</span></div>
+        <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(25px, 3vw, 42px);">Everything we do to fill your funnel</h2></div>
+      </div>
+
+      <div class="rv d3" style="max-width: 1188px; margin: 20px auto 0; width: 100%; display: flex; flex-direction: column; gap: 6px; align-items: center;">
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; width: 100%;">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100);">
+              <div style="position: relative; padding-top: 100%;">
+                <iframe
+                  src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cf012831e12dd92855000b85e12a60db/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcf012831e12dd92855000b85e12a60db%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
+                  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                  allowfullscreen="true"
+                ></iframe>
+              </div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-With-You Paid Ads</div>
+              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Lucas AI builds hooks, angles, and ad creative while you control the spend.</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100);">
+              <div style="position: relative; padding-top: 100%;">
+                <iframe
+                  src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/393d729a00e6a20de5e23ae1665153da/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F393d729a00e6a20de5e23ae1665153da%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
+                  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                  allowfullscreen="true"
+                ></iframe>
+              </div>
+            </div>
+            <div style="text-align: left;">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-For-You Organic Marketing</div>
+              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">A delivered content library of short videos, posts, and captions in your voice.</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; background: #f8faf9; border: 1px solid var(--al-100); overflow: hidden;">
+              <img src="pipeline-activation-email.png" alt="Email draft sequence for pipeline activation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div>
+            <div style="text-align: left;">
+              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-For-You Pipeline Activation</div>
+              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Email and SMS drafts written to wake up every lead already sitting in your CRM.</div>
+            </div>
+          </div>
+        </div>
+
+        <svg viewBox="0 0 1000 60" style="width: 82%; height: 24px;" preserveAspectRatio="none">
+          <line x1="165" y1="0" x2="165" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="500" y1="0" x2="500" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="835" y1="0" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="165" y1="34" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <line x1="500" y1="34" x2="500" y2="54" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+          <polygon points="492,52 500,60 508,52" fill="var(--brand-950)"/>
+        </svg>
+
+        <div style="background: var(--brand-950); color: white; border-radius: 16px; padding: 12px 42px; text-align: center; box-shadow: var(--shadow-card); min-width: 300px;">
+          <div style="font-weight: 700; font-size: 17px;">Your AI Product</div>
+          <div style="font-size: 11px; opacity: 0.82; margin-top: 4px; line-height: 1.3;">traffic, trust, buyers, booked calls</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- ═══════════════════════════════════════ -->
-  <!-- Offer Stack, Flagship Recap -->
+  <!-- Offer Stack, Simple Phase Recap -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide">
     <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -60px;"></div>
 
-    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
-      <div class="rv d1"><span class="label-tag">Everything You Get</span></div>
-      <div class="rv d2"><h2 class="h-lg">Kodara Flagship</h2></div>
+    <div class="content--wide text-center flex-col gap-32" style="justify-content: center;">
+      <div class="flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">Offer Summary</span></div>
+        <div class="rv d2"><h2 class="h-lg">3 phases plus same-day bonuses</h2></div>
+      </div>
 
-      <div class="rv d3 flex-col gap-12" style="max-width: 640px; margin: 0 auto; text-align: left; font-size: 17px;">
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>1-on-1 Call With Our CMO Lucas</strong>: personal strategy session to map your launch</p>
+      <div class="rv d3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 980px; margin: 0 auto;">
+        <div class="brand-card" style="padding: 24px 18px; text-align: center;">
+          <div class="phase-num phase-num--brand" style="margin: 0 auto 14px;">1</div>
+          <div class="h-md" style="font-size: 19px;">Build Your AI Brain</div>
         </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>Done-For-You AI Build</strong>: your expertise → fully functional AI in 30 days</p>
+        <div class="brand-card" style="padding: 24px 18px; text-align: center;">
+          <div class="phase-num phase-num--brand" style="margin: 0 auto 14px;">2</div>
+          <div class="h-md" style="font-size: 19px;">Your Offer Backbone System</div>
         </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>Done-For-You AI Avatar</strong>: your face and voice as the AI version of you</p>
+        <div class="brand-card" style="padding: 24px 18px; text-align: center;">
+          <div class="phase-num phase-num--brand" style="margin: 0 auto 14px;">3</div>
+          <div class="h-md" style="font-size: 19px;">Attract New Leads</div>
         </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>Done-For-You Sales Funnel</strong>: a complete low-ticket funnel ready to launch</p>
-        </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>Done-For-You Ascension</strong>: structure your offers so leads can upsell on autopilot</p>
-        </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>Done-For-You High-Ticket Packaging</strong>: your offer restructured for profit</p>
-        </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>Done-For-You AI Team</strong>: scale sales, support, and operations with AI agents</p>
-        </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>1-On-1 Executive Support</strong>: direct access to Lucas + daily gameplan</p>
-        </div>
-        <div class="check-row">
-          <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-          <p style="font-size: 17px; line-height: 24px;"><strong>Keep 100% Of Profits</strong>: your AI, your clients, your money</p>
+        <div style="grid-column: 1 / -1; background: var(--brand-950); color: white; border-radius: 16px; padding: 20px 26px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: center; gap: 18px;">
+          <div style="width: 54px; height: 54px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.24); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; flex: 0 0 auto;">?</div>
+          <div style="font-size: 22px; line-height: 1.2; font-weight: 800;">Same-Day Bonuses</div>
         </div>
       </div>
     </div>
@@ -2311,7 +2604,7 @@
     <div class="bg-orb bg-orb--green" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 520px; height: 520px;"></div>
 
     <div class="content--snug text-center flex-col gap-16">
-      <div class="rv d1"><span class="label-tag">Before You See The Price</span></div>
+      <div class="rv d1"><span class="label-tag">Phase 3 Guarantee</span></div>
 
       <div class="rv d2">
         <h2 class="h-lg" style="max-width: 820px; margin: 0 auto;">Your AI Nurtures &amp; Warms Up 1,000+ People, Or You Get A Full Refund</h2>
@@ -2605,7 +2898,7 @@
 
       <!-- Tagline -->
       <div class="rv d5">
-        <p style="font-family: var(--font-hero); font-size: 18px; color: var(--al-500); letter-spacing: -0.2px;">The only way to lose is to keep waiting.</p>
+        <p style="font-family: var(--font-hero); font-size: 18px; color: var(--al-500); letter-spacing: -0.2px;">Waiting is the only mistake here.</p>
       </div>
     </div>
   </div>
@@ -2731,6 +3024,25 @@
     // Force another reflow, then the .slide.active .rv rule triggers the transition
     void slide.offsetHeight;
   }
+
+  document.querySelectorAll('[data-demo-carousel]').forEach(carousel => {
+    const frame = carousel.querySelector('[data-carousel-frame]');
+    const demos = Array.from(carousel.querySelectorAll('[data-demo-src]'));
+    const prev = carousel.querySelector('[data-carousel-prev]');
+    const next = carousel.querySelector('[data-carousel-next]');
+    let activeDemo = 0;
+
+    if (!frame || !prev || !next || demos.length === 0) return;
+
+    function showDemo(index) {
+      activeDemo = (index + demos.length) % demos.length;
+      frame.src = demos[activeDemo].dataset.demoSrc;
+    }
+
+    prev.addEventListener('click', () => showDemo(activeDemo - 1));
+    next.addEventListener('click', () => showDemo(activeDemo + 1));
+    showDemo(0);
+  });
 
   // Video modal
   const videoModal = document.getElementById('videoModal');

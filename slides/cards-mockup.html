@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide 16 — 24/7 Salesperson · Property Coach AI design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Property Coach AI tokens — pelorous brand */
+    --font: 'Instrument Sans', sans-serif;
+    --font-hero: 'Instrument Serif', serif;
+    --pelorous-50: rgba(14, 165, 233, 0.06);
+    --pelorous-100: rgba(14, 165, 233, 0.12);
+    --pelorous-600: #0EA5E9;
+    --pelorous-700: #0284C7;
+    --pelorous-deep: #0369A1;
+    --brand-100: rgba(3, 105, 161, 0.08);
+    --brand-900: rgba(3, 105, 161, 0.8);
+    --light-25: rgba(26, 26, 26, 0.04);
+    --light-50: rgba(26, 26, 26, 0.06);
+    --light-100: rgba(26, 26, 26, 0.09);
+    --light-200: rgba(26, 26, 26, 0.2);
+    --light-300: rgba(26, 26, 26, 0.3);
+    --light-600: rgba(26, 26, 26, 0.6);
+    --light-900: rgba(26, 26, 26, 0.8);
+    --dark-800: rgba(255, 255, 255, 0.75);
+    --white: #ffffff;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-xl: 24px;
+    --radius-full: 999px;
+    --bg-soft: #f7fdff;
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.04), 0 24px 48px rgba(14,165,233,0.06);
+    --shadow-modal: 0px 67px 19px rgba(0,0,0,0), 0px 43px 17px rgba(0,0,0,0.01), 0px 24px 15px rgba(0,0,0,0.02), 0px 11px 11px rgba(0,0,0,0.03), 0px 3px 6px rgba(0,0,0,0.04);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font), -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #edeef1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'ss01', 'ss02';
+  }
+
+  .slide-frame {
+    width: 100%;
+    max-width: 1600px;
+    aspect-ratio: 16/9;
+    background: white;
+    border-radius: 24px;
+    box-shadow: var(--shadow-modal);
+    padding: 60px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    width: 100%;
+    max-width: 1188px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--pelorous-700);
+  }
+
+  h2 {
+    font-family: var(--font-hero);
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: var(--light-900);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--light-100);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-visual {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--light-100);
+    position: relative;
+  }
+
+  .card-text { text-align: left; }
+  .card-title {
+    font-weight: 700;
+    color: var(--light-900);
+    font-size: 14px;
+    letter-spacing: -0.15px;
+  }
+  .card-desc {
+    font-size: 11px;
+    color: var(--light-600);
+    line-height: 1.4;
+    margin-top: 3px;
+    letter-spacing: -0.1px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════ */
+  /* SHARED PROPERTY COACH AI COMPONENTS                              */
+  /* ═══════════════════════════════════════════════════════════════ */
+
+  /* Signature sky-blue orb avatar */
+  .pc-orb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, #BAE6FD 0%, #7DD3FC 45%, #0EA5E9 85%, #0369A1 100%);
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.18);
+    flex-shrink: 0;
+  }
+  .pc-orb--sm { width: 20px; height: 20px; }
+  .pc-orb--lg { width: 36px; height: 36px; }
+
+  /* Status dot with halo */
+  .pc-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pelorous-700);
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.18);
+  }
+
+  /* Background ellipse glow */
+  .pc-bg-glow {
+    position: absolute;
+    bottom: -15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110%;
+    height: 60%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(14, 165, 233, 0.10) 0%, transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════ */
+  /* CARD 1: AI NURTURE — Property Coach chat interface              */
+  /* ═══════════════════════════════════════════════════════════════ */
+
+  .pc-app {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 65%, #f7fdff 100%);
+    overflow: hidden;
+  }
+
+  .pc-header {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 5;
+    padding: 12px 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--light-50);
+    min-height: 54px;
+  }
+
+  .pc-header-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    gap: 3px;
+  }
+
+  .pc-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--light-900);
+    letter-spacing: -0.15px;
+  }
+
+  .pc-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--light-600);
+    letter-spacing: -0.1px;
+  }
+
+  .pc-chat {
+    flex: 1;
+    overflow: hidden;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Agent message: NO bubble, just text with byline */
+  .pc-msg-agent { display: flex; flex-direction: column; gap: 3px; align-self: stretch; }
+  .pc-byline {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--light-600);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    line-height: 12px;
+  }
+  .pc-text {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--light-900);
+    letter-spacing: -0.15px;
+    line-height: 16px;
+  }
+
+  /* User reply: frosted glass chip, right-aligned */
+  .pc-msg-user {
+    align-self: flex-end;
+    max-width: 78%;
+  }
+  .pc-bubble {
+    padding: 7px 12px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--light-100);
+    color: var(--light-900);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: -0.15px;
+    line-height: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  }
+
+  /* Typing dots */
+  .pc-typing { display: flex; flex-direction: column; gap: 4px; align-self: flex-start; }
+  .pc-typing-row { display: inline-flex; align-items: center; gap: 3px; }
+  .pc-typing-row span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--light-200);
+    animation: pcTyping 1.2s infinite;
+  }
+  .pc-typing-row span:nth-child(2) { animation-delay: 0.15s; }
+  .pc-typing-row span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes pcTyping {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+    30% { transform: translateY(-2px); opacity: 1; }
+  }
+
+  /* Bottom input bar */
+  .pc-input {
+    flex-shrink: 0;
+    padding: 10px 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-top: 1px solid var(--light-50);
+  }
+
+  .pc-input-attach {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--light-25);
+    color: var(--light-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .pc-input-field {
+    flex: 1;
+    padding: 7px 12px;
+    border-radius: var(--radius-full);
+    background: var(--light-25);
+    font-size: 11px;
+    color: var(--light-300);
+    font-weight: 500;
+    letter-spacing: -0.15px;
+  }
+
+  .pc-input-send {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--pelorous-600);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25);
+  }
+  .pc-input-send svg { width: 12px; height: 12px; stroke: white; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ═══════════════════════════════════════════════════════════════ */
+  /* CARD 2: SMS FOLLOW-UP — iOS lock-screen notification stack       */
+  /* ═══════════════════════════════════════════════════════════════ */
+
+  .lock {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #c5e3ee 0%, #95c8dc 45%, #4f9cba 100%);
+    overflow: hidden;
+    padding: 14px 14px 12px;
+  }
+
+  .lock::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba(255,255,255,0.32) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 90%, rgba(3,105,161,0.30) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .lock-status {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.15px;
+  }
+  .lock-status-icons { display: inline-flex; align-items: center; gap: 4px; }
+  .lock-status-icons svg { display: block; }
+
+  .lock-clock {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 2px;
+    padding-bottom: 14px;
+  }
+  .lock-date {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: -0.1px;
+    margin-bottom: 1px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .lock-time {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: white;
+    letter-spacing: -3px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .lock-notifs {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow: hidden;
+  }
+
+  .notif {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    grid-template-rows: auto auto;
+    column-gap: 8px;
+    row-gap: 2px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    align-items: center;
+  }
+
+  .notif-icon {
+    grid-row: 1 / span 2;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #34D399 0%, #10B981 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    align-self: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  }
+  .notif-icon svg { width: 14px; height: 14px; }
+
+  .notif-app {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--light-600);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+  .notif-time {
+    grid-column: 3;
+    grid-row: 1;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--light-600);
+    letter-spacing: -0.1px;
+  }
+  .notif-body {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--light-900);
+    line-height: 14px;
+    letter-spacing: -0.15px;
+  }
+  .notif-body strong { font-weight: 700; }
+
+  /* Stacked notifications: subtle scale for older ones */
+  .notif--older {
+    background: rgba(255,255,255,0.62);
+    transform: scale(0.985);
+    transform-origin: top center;
+  }
+  .notif--oldest {
+    background: rgba(255,255,255,0.5);
+    transform: scale(0.97);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════ */
+  /* CARD 3: EMAIL REMARKETING — Inbox with property-coach palette    */
+  /* ═══════════════════════════════════════════════════════════════ */
+
+  .pc-mail {
+    position: relative;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .mail-chrome {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--light-25);
+    border-bottom: 1px solid var(--light-50);
+  }
+  .mail-lights { display: inline-flex; gap: 5px; align-items: center; }
+  .mail-light { width: 9px; height: 9px; border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.1); }
+  .mail-light--close { background: #ff736a; }
+  .mail-light--min { background: #febc2e; }
+  .mail-light--zoom { background: #19c332; }
+  .mail-search {
+    flex: 1;
+    background: white;
+    border: 1px solid var(--light-100);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 9px;
+    color: var(--light-600);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: -0.1px;
+  }
+  .mail-compose {
+    background: var(--light-900);
+    color: white;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 9px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    letter-spacing: -0.1px;
+  }
+
+  .mail-titlebar {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--light-50);
+  }
+  .mail-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--light-900);
+    letter-spacing: -0.15px;
+  }
+  .mail-badge {
+    background: var(--light-200);
+    color: var(--light-900);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+  .mail-filters {
+    margin-left: auto;
+    display: inline-flex;
+    gap: 10px;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+  }
+  .mail-filter { color: var(--light-600); }
+  .mail-filter.active { color: var(--light-900); font-weight: 700; }
+
+  .mail-rows {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mail-row {
+    flex: 1;
+    min-height: 0;
+    padding: 10px 12px 10px 14px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    grid-template-rows: auto auto auto;
+    column-gap: 10px;
+    row-gap: 1px;
+    align-items: center;
+    border-bottom: 1px solid var(--light-50);
+    position: relative;
+  }
+  .mail-row:last-child { border-bottom: none; }
+  .mail-row.unread { background: var(--pelorous-50); }
+  .mail-row.unread::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--pelorous-600);
+  }
+
+  .mail-avatar {
+    grid-row: 1 / span 3;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.15px;
+    position: relative;
+  }
+  .mail-avatar.ai {
+    background: radial-gradient(circle at 50% 50%, #BAE6FD 0%, #7DD3FC 45%, #0EA5E9 85%, #0369A1 100%);
+    box-shadow: 0 2px 8px rgba(14,165,233,0.18);
+  }
+  .mail-avatar.ai::after {
+    content: "AI";
+    position: absolute;
+    bottom: -2px;
+    right: -3px;
+    background: white;
+    color: var(--pelorous-700);
+    font-size: 6px;
+    font-weight: 700;
+    padding: 1px 3px;
+    border-radius: 4px;
+    line-height: 1;
+    border: 1px solid var(--pelorous-100);
+  }
+  .mail-avatar.gray { background: var(--light-200); }
+
+  .mail-sender {
+    grid-column: 2;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--light-900);
+    letter-spacing: -0.15px;
+  }
+  .mail-row:not(.unread) .mail-sender { font-weight: 600; }
+
+  .mail-time {
+    grid-column: 3;
+    grid-row: 1;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--light-600);
+    letter-spacing: -0.1px;
+  }
+  .mail-row.unread .mail-time { color: var(--pelorous-700); font-weight: 700; }
+
+  .mail-subject {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--light-900);
+    letter-spacing: -0.15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mail-row:not(.unread) .mail-subject { font-weight: 500; color: var(--light-600); }
+
+  .mail-preview {
+    grid-column: 2;
+    grid-row: 3;
+    font-size: 9px;
+    font-weight: 400;
+    color: var(--light-600);
+    letter-spacing: -0.1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mail-dot {
+    grid-column: 3;
+    grid-row: 2;
+    align-self: center;
+    justify-self: end;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--pelorous-600);
+    box-shadow: 0 0 0 2px rgba(14,165,233,0.18);
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-frame">
+  <div class="slide-content">
+
+    <div class="header">
+      <span class="eyebrow">Phase 3 · Step 2</span>
+      <h2>Your AI Becomes Your 24/7 Salesperson</h2>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <!-- CARD 1: AI Nurture — Property Coach chat                -->
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="card-visual">
+          <div class="pc-app">
+            <div class="pc-bg-glow"></div>
+
+            <div class="pc-header">
+              <div class="pc-orb"></div>
+              <div class="pc-header-text">
+                <div class="pc-name">Property Coach AI</div>
+                <div class="pc-status">
+                  <span class="pc-status-dot"></span>
+                  <span>Active now</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pc-chat">
+              <div class="pc-msg-agent">
+                <div class="pc-byline">Coach</div>
+                <div class="pc-text">Hi Sarah! I noticed you're thinking about scaling your coaching practice.</div>
+              </div>
+
+              <div class="pc-msg-user">
+                <div class="pc-bubble">Yes! Where do I start?</div>
+              </div>
+
+              <div class="pc-msg-agent">
+                <div class="pc-byline">Coach</div>
+                <div class="pc-text">Based on your client list, I'd start with a group offer. Want me to draft it?</div>
+              </div>
+
+              <div class="pc-typing">
+                <div class="pc-byline">Coach is typing</div>
+                <div class="pc-typing-row"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+
+            <div class="pc-input">
+              <div class="pc-input-attach">+</div>
+              <div class="pc-input-field">Type a message…</div>
+              <div class="pc-input-send">
+                <svg viewBox="0 0 12 12"><polyline points="3 7 6 4 9 7"/><line x1="6" y1="4" x2="6" y2="10"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-text">
+          <div class="card-title">AI Nurture</div>
+          <div class="card-desc">Your AI talks to every lead, 24/7, and tells you which ones are ready to buy.</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <!-- CARD 2: SMS Follow-Up — iPhone with pelorous palette    -->
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="card-visual">
+          <div class="lock">
+            <div class="lock-status">
+              <span>9:41</span>
+              <span class="lock-status-icons">
+                <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
+                  <rect x="0" y="6" width="2.5" height="3" rx="0.4" fill="white"/>
+                  <rect x="3.5" y="4" width="2.5" height="5" rx="0.4" fill="white"/>
+                  <rect x="7" y="2" width="2.5" height="7" rx="0.4" fill="white"/>
+                  <rect x="10.5" y="0" width="2.5" height="9" rx="0.4" fill="white"/>
+                </svg>
+                <svg width="20" height="9" viewBox="0 0 20 9" fill="none">
+                  <rect x="0" y="1" width="16" height="7" rx="1.5" fill="none" stroke="white" stroke-width="0.8" opacity="0.9"/>
+                  <rect x="1.5" y="2.5" width="11" height="4" rx="0.6" fill="white"/>
+                  <rect x="17" y="3" width="1.2" height="3" fill="white" opacity="0.9"/>
+                </svg>
+              </span>
+            </div>
+
+            <div class="lock-clock">
+              <div class="lock-date">Tuesday, November 14</div>
+              <div class="lock-time">9:41</div>
+            </div>
+
+            <div class="lock-notifs">
+              <div class="notif">
+                <div class="notif-icon">
+                  <svg viewBox="0 0 14 14" fill="none">
+                    <path d="M 2 4 Q 2 2 4 2 L 10 2 Q 12 2 12 4 L 12 7 Q 12 9 10 9 L 6 9 L 3.5 11 L 4 9 Q 2 9 2 7 Z" fill="white"/>
+                  </svg>
+                </div>
+                <div class="notif-app">Messages</div>
+                <div class="notif-time">now</div>
+                <div class="notif-body"><strong>Property Coach AI</strong> · Hey! Just checking in on your launch—how's it going?</div>
+              </div>
+
+              <div class="notif notif--older">
+                <div class="notif-icon">
+                  <svg viewBox="0 0 14 14" fill="none">
+                    <path d="M 2 4 Q 2 2 4 2 L 10 2 Q 12 2 12 4 L 12 7 Q 12 9 10 9 L 6 9 L 3.5 11 L 4 9 Q 2 9 2 7 Z" fill="white"/>
+                  </svg>
+                </div>
+                <div class="notif-app">Messages</div>
+                <div class="notif-time">1h ago</div>
+                <div class="notif-body"><strong>Property Coach AI</strong> · Quick reminder: your funnel review is ready when you are.</div>
+              </div>
+
+              <div class="notif notif--oldest">
+                <div class="notif-icon">
+                  <svg viewBox="0 0 14 14" fill="none">
+                    <path d="M 2 4 Q 2 2 4 2 L 10 2 Q 12 2 12 4 L 12 7 Q 12 9 10 9 L 6 9 L 3.5 11 L 4 9 Q 2 9 2 7 Z" fill="white"/>
+                  </svg>
+                </div>
+                <div class="notif-app">Messages</div>
+                <div class="notif-time">Yesterday</div>
+                <div class="notif-body"><strong>Property Coach AI</strong> · Sent over the new ad copy—let me know what you think!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-text">
+          <div class="card-title">SMS Follow-Up</div>
+          <div class="card-desc">Text follow-ups in your voice. Hits them on the device they actually check.</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <!-- CARD 3: Email Remarketing — inbox with pelorous palette -->
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="card-visual">
+          <div class="pc-mail">
+            <div class="mail-chrome">
+              <div class="mail-lights">
+                <div class="mail-light mail-light--close"></div>
+                <div class="mail-light mail-light--min"></div>
+                <div class="mail-light mail-light--zoom"></div>
+              </div>
+              <div class="mail-search">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><circle cx="3.5" cy="3.5" r="2.8" stroke="currentColor" stroke-width="1"/><line x1="5.5" y1="5.5" x2="8" y2="8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+                Search inbox
+              </div>
+              <div class="mail-compose">+ Compose</div>
+            </div>
+
+            <div class="mail-titlebar">
+              <div class="mail-title">Inbox</div>
+              <div class="mail-badge">3</div>
+              <div class="mail-filters">
+                <span class="mail-filter active">All</span>
+                <span class="mail-filter">Unread</span>
+                <span class="mail-filter">Flagged</span>
+              </div>
+            </div>
+
+            <div class="mail-rows">
+              <div class="mail-row unread">
+                <div class="mail-avatar ai">L</div>
+                <div class="mail-sender">Property Coach AI</div>
+                <div class="mail-time">2m ago</div>
+                <div class="mail-subject">Quick check-in on your goals</div>
+                <div class="mail-dot"></div>
+                <div class="mail-preview">Hey Sarah — noticed you haven't logged in...</div>
+              </div>
+
+              <div class="mail-row">
+                <div class="mail-avatar gray">S</div>
+                <div class="mail-sender">Sarah Chen</div>
+                <div class="mail-time">1h</div>
+                <div class="mail-subject">Re: Our coaching session</div>
+                <div></div>
+                <div class="mail-preview">Loved our chat yesterday. One quick...</div>
+              </div>
+
+              <div class="mail-row">
+                <div class="mail-avatar gray">M</div>
+                <div class="mail-sender">Mike Wilson</div>
+                <div class="mail-time">3h</div>
+                <div class="mail-subject">Your weekly summary</div>
+                <div></div>
+                <div class="mail-preview">Here's what happened with your funnel...</div>
+              </div>
+
+              <div class="mail-row">
+                <div class="mail-avatar gray">A</div>
+                <div class="mail-sender">Anna Williams</div>
+                <div class="mail-time">Yesterday</div>
+                <div class="mail-subject">Question about your program</div>
+                <div></div>
+                <div class="mail-preview">Hi Sarah, I saw your latest post and...</div>
+              </div>
+
+              <div class="mail-row">
+                <div class="mail-avatar gray">D</div>
+                <div class="mail-sender">David Park</div>
+                <div class="mail-time">2d</div>
+                <div class="mail-subject">Thanks for the strategy call</div>
+                <div></div>
+                <div class="mail-preview">Wanted to follow up on what we discussed...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-text">
+          <div class="card-title">Email Remarketing</div>
+          <div class="card-desc">Email sequences that wake up old leads and pull them back into your offer.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
