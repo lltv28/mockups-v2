@@ -1017,6 +1017,103 @@
     background: var(--brand-950);
   }
 
+  /* ── Ascension Pyramid ── */
+  .asc-pyramid-wrap {
+    position: relative;
+    width: 680px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .asc-arrows {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .asc-pyramid {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 520px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .asc-tier {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 76px;
+    padding: 14px 56px;
+    text-align: left;
+    /* 52px taper per equal-height tier keeps all edges on one continuous slope */
+    clip-path: polygon(52px 0, calc(100% - 52px) 0, 100% 100%, 0 100%);
+  }
+  .asc-tier--top {
+    width: 312px;
+    padding: 14px 52px;
+    background: linear-gradient(180deg, #2C9166, #25865B);
+  }
+  .asc-tier--mid {
+    width: 416px;
+    background: linear-gradient(180deg, #14794F, #106844);
+  }
+  .asc-tier--low {
+    width: 520px;
+    background: linear-gradient(180deg, #0E5C3D, #0A4730);
+  }
+  .asc-tier__label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .asc-tier__sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.78);
+    margin-top: 3px;
+  }
+  .asc-tier__pct {
+    font-family: var(--font-hero);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+  .asc-tier__count {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.78);
+    margin-top: 3px;
+    white-space: nowrap;
+  }
+  @media (max-width: 600px) {
+    .asc-arrows { display: none; }
+    .asc-pyramid {
+      width: 100%;
+      gap: 6px;
+    }
+    .asc-tier,
+    .asc-tier--top,
+    .asc-tier--mid,
+    .asc-tier--low {
+      width: 100%;
+      height: auto;
+      clip-path: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+  }
+
   /* ── Subtle Card (settings-style) ── */
   .subtle-card {
     background: var(--al-25);
@@ -1725,15 +1822,107 @@
       <div class="flex-col gap-12">
         <div class="rv d1"><span class="label-tag">Kodara</span></div>
         <div class="rv d2">
-          <h2 class="h-hero">A version of you that works 24/7 coaching &amp; converting leads into high-ticket clients</h2>
+          <h2 class="h-hero">Turn your expertise into an AI that <em style="font-style: italic; color: var(--brand-950);">works, sells, and earns 24/7</em>.</h2>
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 820px; margin: 0 auto;">
-            We build a digital AI version of you, based on your expertise and voice, that coaches your leads, earns their trust, and sells your high-ticket offer around the clock.<br><br>Finally stop trading time for money with your expertise.<br><span class="emphasis">Fully done-for-you in 30 days.</span>
+            We build a done-for-you AI product, trained on your knowledge and voice, that converts leads at every level while you focus on what you do best.<br><br>Finally stop trading time for money with your expertise.<br><span class="emphasis">Fully done-for-you in 30 days.</span>
           </p>
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- S1.25, Chef Visual -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -120px; right: -90px;"></div>
+    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
+
+    <div class="rv d1" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+      <img src="Chef-final.png" alt="The personal chef analogy, before and after" style="max-width: 90%; max-height: 90%; width: auto; height: auto; object-fit: contain; border-radius: 16px; box-shadow: var(--shadow-card); display: block;">
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- S1.5, The Solution, Three-Tier Offer Ladder -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
+    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
+
+    <div class="content--wide flex-col gap-24" style="justify-content: center;">
+      <div class="text-center flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">The Solution</span></div>
+        <div class="rv d2"><h2 class="h-lg">One offer for every buyer.<br>Three levels. All automated.</h2></div>
+      </div>
+
+      <div class="rv d3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; width: 100%; align-items: stretch;">
+        <!-- Tier 1, Cookbook -->
+        <div style="background: var(--ad-800); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid var(--al-50); border-radius: 16px; padding: 20px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 26px; line-height: 1;">📖</div>
+          <div>
+            <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500); margin-bottom: 4px;">Low Ticket</div>
+            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">The Cookbook</div>
+            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 2px;">AI assessment</div>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; flex: 1;">
+            <li style="font-size: 12px; line-height: 1.5; color: var(--al-600); display: flex; gap: 6px;"><span style="color: var(--brand-950);">•</span> One-time use</li>
+            <li style="font-size: 12px; line-height: 1.5; color: var(--al-600); display: flex; gap: 6px;"><span style="color: var(--brand-950);">•</span> Instant plan or assessment</li>
+            <li style="font-size: 12px; line-height: 1.5; color: var(--al-600); display: flex; gap: 6px;"><span style="color: var(--brand-950);">•</span> No sales call needed</li>
+          </ul>
+          <div style="border-top: 1px solid var(--al-50); padding-top: 12px;">
+            <div style="font-family: var(--font-hero); font-size: 28px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$17</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">one time</div>
+          </div>
+        </div>
+
+        <!-- Tier 2, Meal Delivery -->
+        <div style="background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 16px; padding: 20px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 26px; line-height: 1;">🥡</div>
+          <div>
+            <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-bottom: 4px;">Mid Ticket AI</div>
+            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">The Meal Delivery</div>
+            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 2px;">AI coach 24/7</div>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; flex: 1;">
+            <li style="font-size: 12px; line-height: 1.5; color: var(--al-600); display: flex; gap: 6px;"><span style="color: var(--brand-950);">•</span> AI coach on demand</li>
+            <li style="font-size: 12px; line-height: 1.5; color: var(--al-600); display: flex; gap: 6px;"><span style="color: var(--brand-950);">•</span> DFY work &amp; agents</li>
+            <li style="font-size: 12px; line-height: 1.5; color: var(--al-600); display: flex; gap: 6px;"><span style="color: var(--brand-950);">•</span> Full AI suite, ongoing</li>
+          </ul>
+          <div style="border-top: 1px solid rgba(16,104,68,0.12); padding-top: 12px;">
+            <div style="font-family: var(--font-hero); font-size: 28px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$497</div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">+ $197/month</div>
+          </div>
+        </div>
+
+        <!-- Tier 3, Personal Chef -->
+        <div style="background: var(--brand-950); border: 1px solid var(--brand-950); border-radius: 16px; padding: 20px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px; color: white;">
+          <div style="font-size: 26px; line-height: 1;">👨‍🍳</div>
+          <div>
+            <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.7); margin-bottom: 4px;">High Ticket</div>
+            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: white; letter-spacing: -0.3px;">The Personal Chef</div>
+            <div style="font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.78); margin-top: 2px;">1-on-1 service</div>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; flex: 1;">
+            <li style="font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.82); display: flex; gap: 6px;"><span style="color: rgba(255,255,255,0.6);">•</span> Direct access &amp; coaching</li>
+            <li style="font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.82); display: flex; gap: 6px;"><span style="color: rgba(255,255,255,0.6);">•</span> Full done-for-you service</li>
+            <li style="font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.82); display: flex; gap: 6px;"><span style="color: rgba(255,255,255,0.6);">•</span> Custom implementation</li>
+          </ul>
+          <div style="border-top: 1px solid rgba(255,255,255,0.18); padding-top: 12px;">
+            <div style="font-family: var(--font-hero); font-size: 28px; font-weight: 700; color: white; letter-spacing: -0.6px; line-height: 1;">$5,000+</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 4px;">full service</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv d4" style="max-width: 980px; margin: 0 auto; width: 100%; background: var(--al-25); border: 1px solid var(--al-50); border-radius: 14px; padding: 14px 22px; text-align: center;">
+        <p style="font-size: 14px; line-height: 1.5; color: var(--al-600); margin: 0;">
+          They buy the assessment. They experience the AI. <span class="emphasis" style="color: var(--brand-950);">Then they want you directly.</span>
+        </p>
+      </div>
     </div>
   </div>
 
@@ -1776,26 +1965,70 @@
         </div>
       </div>
 
-      <!-- With Kodara -->
+      <!-- With Kodara, branching tier flow -->
       <div class="rv d3" style="background: var(--brand-50); border: 1px solid var(--brand-300); border-radius: 18px; padding: 28px 34px;">
         <div style="color: var(--brand-950); font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; margin-bottom: 20px; text-align: center;">With Kodara</div>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: nowrap;">
-          <div style="background: var(--brand-100); border-radius: 13px; padding: 14px 18px; text-align: center; min-width: 130px; flex: 1;">
+        <div style="display: grid; grid-template-columns: 1fr auto 1.1fr auto 1.3fr auto 1fr; align-items: center; gap: 10px;">
+          <!-- Cold lead -->
+          <div style="background: var(--brand-100); border-radius: 13px; padding: 14px 18px; text-align: center;">
             <div style="font-weight: 600; color: var(--al-900); font-size: 15px;">Cold lead</div>
             <div style="font-size: 12px; color: var(--al-500); margin-top: 2px;">Finds you online</div>
           </div>
+
+          <!-- Arrow -->
           <span style="color: var(--brand-950); font-size: 22px;">→</span>
-          <div style="background: var(--brand-200); border-radius: 13px; padding: 14px 18px; text-align: center; min-width: 130px; flex: 1;">
-            <div style="font-weight: 600; color: var(--al-900); font-size: 15px;">Buys &lt;$100 AI</div>
-            <div style="font-size: 12px; color: var(--al-500); margin-top: 2px;">Builds trust &amp; nurtures</div>
+
+          <!-- $17 assessment, the entry point -->
+          <div style="background: var(--brand-200); border-radius: 13px; padding: 14px 16px; text-align: center;">
+            <div style="font-size: 18px; line-height: 1; margin-bottom: 4px;">📖</div>
+            <div style="font-weight: 600; color: var(--al-900); font-size: 14px;">AI assessment</div>
+            <div style="font-family: var(--font-hero); font-size: 20px; font-weight: 700; color: var(--al-900); line-height: 1.1; letter-spacing: -0.4px; margin-top: 4px;">$17</div>
+            <div style="font-size: 10px; color: var(--al-500); margin-top: 2px;">one-time</div>
           </div>
-          <span style="color: var(--brand-950); font-size: 22px;">→</span>
-          <div style="background: var(--brand-200); border-radius: 13px; padding: 14px 18px; text-align: center; min-width: 130px; flex: 1;">
-            <div style="font-weight: 600; color: var(--al-900); font-size: 15px;">Ascension offer</div>
-            <div style="font-size: 12px; color: var(--al-500); margin-top: 2px;">Upsells on autopilot</div>
+
+          <!-- Diverging branches -->
+          <svg width="44" height="120" viewBox="0 0 44 120" preserveAspectRatio="none" style="display: block;">
+            <path d="M 0 60 H 18 V 26 H 44" stroke="var(--brand-950)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 0 60 H 18 V 94 H 44" stroke="var(--brand-950)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <polygon points="36,22 44,26 36,30" fill="var(--brand-950)"/>
+            <polygon points="36,90 44,94 36,98" fill="var(--brand-950)"/>
+          </svg>
+
+          <!-- Stacked tier cards -->
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: var(--ad-800); border: 1px solid var(--brand-200); border-radius: 12px; padding: 10px 14px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px;">
+              <div style="font-size: 16px; line-height: 1;">🥡</div>
+              <div style="text-align: left;">
+                <div style="font-size: 12px; font-weight: 600; color: var(--al-900); line-height: 1.2;">AI coach 24/7</div>
+                <div style="font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-top: 2px;">Mid Ticket</div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-family: var(--font-hero); font-size: 16px; font-weight: 700; color: var(--al-900); line-height: 1; letter-spacing: -0.3px;">$497</div>
+                <div style="font-size: 9px; color: var(--al-500); margin-top: 1px;">+ $197/mo</div>
+              </div>
+            </div>
+            <div style="background: var(--brand-950); border: 1px solid var(--brand-950); border-radius: 12px; padding: 10px 14px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; color: white;">
+              <div style="font-size: 16px; line-height: 1;">👨‍🍳</div>
+              <div style="text-align: left;">
+                <div style="font-size: 12px; font-weight: 600; color: white; line-height: 1.2;">1-on-1 service</div>
+                <div style="font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.7); margin-top: 2px;">High Ticket</div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-family: var(--font-hero); font-size: 16px; font-weight: 700; color: white; line-height: 1; letter-spacing: -0.3px;">$5,000+</div>
+                <div style="font-size: 9px; color: rgba(255,255,255,0.7); margin-top: 1px;">full service</div>
+              </div>
+            </div>
           </div>
-          <span style="color: var(--brand-950); font-size: 22px;">→</span>
-          <div style="background: var(--brand-950); border-radius: 13px; padding: 14px 18px; text-align: center; min-width: 130px; flex: 1;">
+
+          <!-- Converging branches -->
+          <svg width="44" height="120" viewBox="0 0 44 120" preserveAspectRatio="none" style="display: block;">
+            <path d="M 0 26 H 26 V 60 H 44" stroke="var(--brand-950)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 0 94 H 26 V 60 H 44" stroke="var(--brand-950)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <polygon points="36,56 44,60 36,64" fill="var(--brand-950)"/>
+          </svg>
+
+          <!-- 10-20% convert -->
+          <div style="background: var(--brand-950); border-radius: 13px; padding: 14px 18px; text-align: center;">
             <div style="font-weight: 700; color: white; font-size: 15px;">10-20%+</div>
             <div style="font-size: 12px; color: rgba(255,255,255,0.82); margin-top: 2px;">of leads convert</div>
           </div>
@@ -1872,7 +2105,7 @@
           <div class="phase-num phase-num--brand">2</div>
 
           <div class="h-md" style="font-size: 20px;">Your Offer Backbone System</div>
-          <p class="body" style="font-size: 15px; line-height: 22px;">We build the low-ticket AI funnel and upsell path that moves buyers into mid and high-ticket offers.</p>
+          <p class="body" style="font-size: 15px; line-height: 22px;">A team of AI agents that upsell and ascend low-ticket buyers into your mid and high-ticket offers.</p>
         </div>
         <div class="phase-col rv d5">
           <div class="phase-num phase-num--brand">3</div>
@@ -1925,7 +2158,7 @@
           </div>
           <div class="check-row">
             <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>1–2 AI Key Functions</strong>: the core things your AI will do for your clients</p>
+            <p><strong>Low-Ticket AI Function + Mid-Ticket AI Function</strong>: the two AI products we build for your tier ladder</p>
           </div>
           <div class="check-row">
             <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -1944,15 +2177,15 @@
     </div>
   </div>
 
-  <!-- Phase 1, Slide 2, The AI Plan -->
+  <!-- Phase 1, Slide 2, The AI Plan + Connector Grid -->
   <div class="slide">
     <div class="bg-orb bg-orb--cyan" style="bottom: -100px; left: -60px;"></div>
 
-    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+    <div class="content--wide text-center flex-col gap-16" style="justify-content: center;">
       <div class="rv d1"><span class="label-tag">Phase 1 · Step 2</span></div>
       <div class="rv d2"><h2 class="h-lg">Your Client's Pocket Coach</h2></div>
       <div class="rv d3" style="display: flex; justify-content: center;">
-        <div style="width: 100%; max-width: 560px; aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
+        <div style="width: 100%; max-width: 480px; aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
           <div style="position: relative; padding-top: 100%;">
             <iframe
               src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/4dd8bf82c945e420ea86869f6f95faf4/iframe?muted=true&preload=true&poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F4dd8bf82c945e420ea86869f6f95faf4%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
@@ -1963,29 +2196,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Phase 1, Slide 3, AI Demo With Data Layer -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -80px; right: 40%;"></div>
-
-    <div class="content--wide text-center flex-col gap-10" style="justify-content: center;">
-      <div class="rv d1"><span class="label-tag">Phase 1 · Demo</span></div>
-      <div class="rv d2"><h2 class="h-lg">What Your AI Can Do &amp; Connect To</h2></div>
-      <div class="rv d3" style="display: flex; justify-content: center; margin-top: 14px;">
-        <div style="width: 100%; max-width: 640px; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; border: 2px solid var(--al-200); box-shadow: var(--shadow-card);">
-          <div style="position: relative; padding-top: 75%;">
-            <iframe
-              src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/28070a9a919026404884127d1abf59f7/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false"
-              style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-              allowfullscreen="true"
-            ></iframe>
-          </div>
-        </div>
-      </div>
-      <div class="rv d4" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-width: 500px; margin: 16px auto 0; width: 100%;">
+      <div class="rv d4" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-width: 500px; margin: 0 auto; width: 100%;">
         <div style="background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 12px; padding: 8px 10px; text-align: left;">
           <div style="font-weight: 700; color: var(--al-900); font-size: 12px;">Apps</div>
           <div style="font-size: 9px; color: var(--al-600); line-height: 1.25; margin-top: 2px;">Calendars, forms, portals</div>
@@ -2149,7 +2360,7 @@
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 540px;">
-            We turn your low-ticket AI into a buyer path with clear mid-ticket and high-ticket upsells.
+            You get a team of AI agents focused on upselling — ascending your low-ticket buyers into your mid-ticket and high-ticket offers.
           </p>
         </div>
       </div>
@@ -2225,103 +2436,7 @@
     </div>
   </div>
 
-  <!-- Phase 2, Upsell Path + Ascension Math -->
-  <div class="slide slide--ascension-math">
-    <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
-    <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
-
-    <div class="ascension-math">
-      <div class="ascension-math__top">
-        <div class="ascension-math__copy">
-          <div class="rv d1"><span class="label-tag">Phase 2</span></div>
-          <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(26px, 2.6vw, 38px);">Offer Backbone System</h2></div>
-          <div class="rv d3">
-            <p class="body-lg">
-              You're already a doctor for your clients — they tell you where it hurts, you prescribe what they need. <strong>Your AI does this all day</strong>, routing every $17 buyer to the offer that solves their real pain.
-            </p>
-          </div>
-        </div>
-
-        <div class="rv d3 ascension-math__tree" style="display: flex; justify-content: center;" aria-label="Offer backbone — $17 patient intake routes to mid, high, or super-ticket tiers based on diagnosis">
-          <img src="spine.png" alt="Offer backbone diagram — $17 patient intake at the top of the spine routes to mid, high, or super-ticket tiers based on diagnosed pain" style="width: 100%; max-width: 360px; height: auto; display: block; mix-blend-mode: multiply;">
-        </div>
-      </div>
-
-      <div class="ascension-math__flows">
-        <div class="rv d4 ascension-math__flow ascension-math__flow--without">
-          <div style="color: rgba(193,69,69,0.92); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; text-align: center;">Without AI Product</div>
-          <div class="ascension-math__steps">
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">1,000</div>
-              <div style="font-size: 10px; color: var(--al-500);">clicks</div>
-            </div>
-            <span style="color: rgba(193,69,69,0.75);">→</span>
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">200</div>
-              <div style="font-size: 10px; color: var(--al-500);">leads</div>
-            </div>
-            <span style="color: rgba(193,69,69,0.75);">→</span>
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">20</div>
-              <div style="font-size: 10px; color: var(--al-500);">calls booked</div>
-            </div>
-            <span style="color: rgba(193,69,69,0.75);">→</span>
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">10</div>
-              <div style="font-size: 10px; color: var(--al-500);">show up</div>
-            </div>
-            <span style="color: rgba(193,69,69,0.75);">→</span>
-            <div class="ascension-math__metric ascension-math__metric--final">
-              <div style="font-weight: 700; font-size: 18px;">2</div>
-              <div style="font-size: 10px; opacity: 0.85;">clients</div>
-            </div>
-          </div>
-          <p class="body" style="text-align: center; color: var(--al-600); margin-top: 12px; font-size: 12px;">
-            <strong style="color: rgba(193,69,69,0.95);">1% of leads</strong> convert. 198 people go nowhere.
-          </p>
-        </div>
-
-        <div class="rv d5 ascension-math__flow ascension-math__flow--with">
-          <div style="color: var(--brand-950); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; text-align: center;">With AI Product</div>
-          <div class="ascension-math__steps">
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">1,000</div>
-              <div style="font-size: 10px; color: var(--al-500);">clicks</div>
-            </div>
-            <span style="color: var(--brand-950);">→</span>
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">100</div>
-              <div style="font-size: 10px; color: var(--al-500);">buyers ($17)</div>
-            </div>
-            <span style="color: var(--brand-950);">→</span>
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">25</div>
-              <div style="font-size: 10px; color: var(--al-500);">mid-ticket buyers</div>
-            </div>
-            <span style="color: var(--brand-950);">→</span>
-            <div class="ascension-math__metric">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 18px;">8</div>
-              <div style="font-size: 10px; color: var(--al-500);">high-ticket buyers</div>
-            </div>
-            <span style="color: var(--brand-950);">→</span>
-            <div class="ascension-math__metric ascension-math__metric--final">
-              <div style="font-weight: 700; font-size: 18px;">2</div>
-              <div style="font-size: 10px; opacity: 0.85;">super-ticket clients</div>
-            </div>
-          </div>
-          <p class="body" style="text-align: center; color: var(--al-600); margin-top: 12px; font-size: 12px;">
-            <strong style="color: var(--brand-950);">Upsells happen automatically.</strong> Same traffic. Buyers see the right next step.
-          </p>
-        </div>
-      </div>
-
-      <div class="rv d6 text-center">
-        <p class="slide-disclaimer" style="position: static; max-width: 900px; margin: 0 auto; font-size: 8px;">For illustrative and educational purposes only. Figures are hypothetical projections based on benchmark assumptions, not a guarantee of results. Individual results vary based on offer, market, effort, and factors outside our control.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 2, Offer Backbone System Demo Reprise -->
+  <!-- Phase 2 · Demo (moved to follow "The Old Way vs. The New Way") -->
   <div class="slide">
     <div class="bg-orb bg-orb--cyan" style="bottom: -100px; left: -60px;"></div>
 
@@ -2355,6 +2470,99 @@
           <span data-demo-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/35b9f48a121f060024cb7189594b69c6/iframe?muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F35b9f48a121f060024cb7189594b69c6%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" hidden></span>
           <span data-demo-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/76b20cf70805d01998a3556d8ac300aa/iframe?muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F76b20cf70805d01998a3556d8ac300aa%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" hidden></span>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2, Ascension Pyramid (What Ascension Looks Like) -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -120px; right: -100px;"></div>
+    <div class="bg-orb bg-orb--neutral" style="bottom: -120px; left: -100px;"></div>
+
+    <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
+      <div class="flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">What Ascension Looks Like</span></div>
+        <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(26px, 2.8vw, 40px);">From 1,000 Warmed-Up Leads,<br>Here's What Typically Ascends</h2></div>
+        <div class="rv d3">
+          <p class="body" style="max-width: 660px; margin: 0 auto; color: var(--al-500); font-size: 14px;">
+            Every business is different — but generally, when your AI nurtures 1,000 people, this is the ascension pattern we see across the funnel.
+          </p>
+        </div>
+      </div>
+
+      <div class="rv d4 asc-pyramid-wrap">
+        <!-- Jump arrows: Low Ticket can ascend to Mid or High, shown on both sides -->
+        <svg class="asc-arrows" viewBox="0 0 680 228" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <marker id="ascArrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8.5" markerHeight="8.5" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#106844"></path>
+            </marker>
+          </defs>
+          <!-- LEFT side: each branch is one continuous path that includes the stem (identical stem segment overlaps as one line, then forks — no junction seam) -->
+          <path d="M82 206 C 68 190, 52 172, 46 150 C 44 124, 100 132, 150 114" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
+          <path d="M82 206 C 68 190, 52 172, 46 150 C 44 120, 78 56, 202 40" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
+          <!-- RIGHT side (mirrored) -->
+          <path d="M598 206 C 612 190, 628 172, 634 150 C 636 124, 580 132, 530 114" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
+          <path d="M598 206 C 612 190, 628 172, 634 150 C 636 120, 602 56, 478 40" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
+        </svg>
+
+        <div class="asc-pyramid">
+          <!-- HIGH TICKET (top) -->
+          <div class="asc-tier asc-tier--top">
+            <div>
+              <div class="asc-tier__label">High Ticket</div>
+              <div class="asc-tier__sub">Core offer · 1-on-1</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="asc-tier__pct">3–8%</div>
+              <div class="asc-tier__count">~30–80 people</div>
+            </div>
+          </div>
+          <!-- MID TICKET -->
+          <div class="asc-tier asc-tier--mid">
+            <div>
+              <div class="asc-tier__label">Mid Ticket</div>
+              <div class="asc-tier__sub">Group · AI coaching program</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="asc-tier__pct">10–20%</div>
+              <div class="asc-tier__count">~100–200 people</div>
+            </div>
+          </div>
+          <!-- LOW TICKET (bottom) -->
+          <div class="asc-tier asc-tier--low">
+            <div>
+              <div class="asc-tier__label">Low Ticket</div>
+              <div class="asc-tier__sub">$17 AI entry point</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="asc-tier__pct">1,000</div>
+              <div class="asc-tier__count">leads warmed up</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rv d5" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 860px; margin: 0 auto; width: 100%;">
+        <div style="background: var(--ad-800); border: 1px solid var(--al-50); border-radius: 14px; padding: 16px; text-align: left; box-shadow: var(--shadow-card);">
+          <div style="color: var(--brand-950); font-size: 16px; line-height: 1; font-weight: 700; margin-bottom: 8px;">✓</div>
+          <div style="font-size: 13px; font-weight: 700; color: var(--al-900); margin-bottom: 4px;">Goal is always maximum ascension</div>
+          <div style="font-size: 11px; color: var(--al-500); line-height: 1.45;">Every system is built to move people up, from low-ticket to your core high-ticket offer.</div>
+        </div>
+        <div style="background: var(--ad-800); border: 1px solid var(--al-50); border-radius: 14px; padding: 16px; text-align: left; box-shadow: var(--shadow-card);">
+          <div style="color: var(--brand-950); font-size: 16px; line-height: 1; font-weight: 700; margin-bottom: 8px;">✓</div>
+          <div style="font-size: 13px; font-weight: 700; color: var(--al-900); margin-bottom: 4px;">Your AI does the heavy lifting</div>
+          <div style="font-size: 11px; color: var(--al-500); line-height: 1.45;">Nurtures, follows up, and qualifies leads automatically, without you on every call.</div>
+        </div>
+        <div style="background: var(--ad-800); border: 1px solid var(--al-50); border-radius: 14px; padding: 16px; text-align: left; box-shadow: var(--shadow-card);">
+          <div style="color: var(--brand-950); font-size: 16px; line-height: 1; font-weight: 700; margin-bottom: 8px;">✓</div>
+          <div style="font-size: 13px; font-weight: 700; color: var(--al-900); margin-bottom: 4px;">Same traffic. More revenue.</div>
+          <div style="font-size: 11px; color: var(--al-500); line-height: 1.45;">No new leads needed — just better conversion of the audience you already have.</div>
+        </div>
+      </div>
+
+      <div class="rv d6">
+        <p class="slide-disclaimer" style="position: static; max-width: 900px; margin: 0 auto; font-size: 8px;">For illustrative and educational purposes only. Figures are hypothetical projections based on benchmark assumptions, not a guarantee of results. Individual results vary based on offer, market, effort, and factors outside our control.</p>
       </div>
     </div>
   </div>
