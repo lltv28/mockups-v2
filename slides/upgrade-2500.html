@@ -1299,8 +1299,8 @@
     background: var(--brand-50);
     color: var(--brand-950);
   }
-  /* The upgrade pricing row uses 3 cards in the 760px container, so the
-     progress pills run narrower — shrink font/padding so "$3,500 paid"
+  /* Diamond's pricing row uses 3 cards in the 760px container, so the
+     progress pills run narrower — shrink font/padding so "$2,500 paid"
      stays readable. */
   .pay-grid-v2--triple .pay-progress__seg { font-size: 9px; padding: 0 4px; }
   .pay-card-v2--featured .pay-progress { border-color: rgba(255,255,255,0.25); }
@@ -1571,7 +1571,7 @@
   }
   .ref-ladder-step--featured .ref-ladder-step__yr { color: rgba(255,255,255,0.6); }
 
-  /* ── Upgrade referral bonus row ── */
+  /* ── Upgrade/Diamond bonus row ── */
   .ref-bonus-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1737,7 +1737,7 @@
     <div class="rv d1 text-center"><span class="label-tag">Side by side</span></div>
     <div class="rv d2 text-center"><h2 class="h-lg" style="font-size: clamp(24px, 2.6vw, 32px);">Pick the path that feels best for your business goals</h2></div>
 
-    <div class="rv d3 tier-grid" style="grid-template-columns: 1fr 1fr; max-width: 760px;">
+    <div class="rv d3 tier-grid">
       <!-- Flagship -->
       <div class="tier-col tier-col--current">
         <div class="flex-col gap-4">
@@ -1768,6 +1768,21 @@
           <div class="check-row tier-row--new"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;"><strong>Mid-Ticket Products Ecosystem</strong><span class="tier-new-pill">New</span></p></div>
           <div class="check-row tier-row--new"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;"><strong>Lucas AI Setter</strong><span class="tier-new-pill">New</span></p></div>
           <div class="check-row tier-row--new"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;"><strong>Full Branded Website</strong><span class="tier-new-pill">New</span></p></div>
+        </div>
+      </div>
+
+      <!-- Diamond -->
+      <div class="tier-col tier-col--diamond">
+        <div class="flex-col gap-4">
+          <div class="tier-tagline">Maximum acceleration</div>
+          <div class="tier-name">Kodara Diamond</div>
+        </div>
+        <div class="tier-list">
+          <div class="check-row"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;">Everything in Upgrade</p></div>
+          <div class="check-row tier-row--new"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;"><strong>DFY Ads</strong><span class="tier-new-pill">New</span></p></div>
+          <div class="check-row tier-row--new"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;"><strong>DFY Sales Coaching + Call Reviews</strong><span class="tier-new-pill">New</span></p></div>
+          <div class="check-row tier-row--new"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;"><strong>DFY Webinar</strong><span class="tier-new-pill">New</span></p></div>
+          <div class="check-row tier-row--new"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="font-size: 12px; line-height: 16px;"><strong>DFY Book Bundle Funnel</strong><span class="tier-new-pill">New</span></p></div>
         </div>
       </div>
     </div>
@@ -1814,50 +1829,140 @@
     <div class="rv d3 flex-col gap-12" style="width: 100%; max-width: 760px; align-items: center;">
       <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--al-500);">Choose Your Payment Option</div>
 
-      <div class="pay-grid-v2 pay-grid-v2--triple" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="pay-card-v2">
-          <div class="pay-card-v2__label">Monthly</div>
-          <div class="pay-card-v2__amount">$3,500</div>
-          <div class="pay-card-v2__terms">per month · fully refundable</div>
-          <div class="pay-progress">
-            <div class="pay-progress__seg pay-progress__paid">$3,500 paid</div>
-            <div class="pay-progress__seg pay-progress__owed">$38,500 remaining</div>
-          </div>
-          <div class="pay-card-v2__footnote">= $42,000 / yr</div>
-        </div>
-
+      <div class="pay-grid-v2" style="grid-template-columns: 1fr 1fr;">
         <div class="pay-card-v2">
           <div class="pay-card-v2__label">Down + monthly</div>
-          <div class="pay-card-v2__amount">$9,500</div>
-          <div class="pay-card-v2__terms">down · then $2,200/mo × 11</div>
+          <div class="pay-card-v2__amount">$4,300</div>
+          <div class="pay-card-v2__terms">due today · then $1,600/mo × 11</div>
           <div class="pay-progress">
-            <div class="pay-progress__seg pay-progress__paid">$3,500 paid</div>
-            <div class="pay-progress__seg pay-progress__owed">$30,200 remaining</div>
+            <div class="pay-progress__seg pay-progress__paid">$2,500 paid</div>
+            <div class="pay-progress__seg pay-progress__owed">$4,300 remaining</div>
           </div>
           <div class="pay-save">
             <span class="pay-save__label">You save</span>
-            <span class="pay-save__amount">$8,300</span>
-            <span class="pay-save__suffix">annually</span>
+            <span class="pay-save__amount">$5,600</span>
+            <span class="pay-save__suffix">vs paying monthly</span>
           </div>
         </div>
 
         <div class="pay-card-v2">
           <div class="pay-card-v2__label">Pay in full</div>
-          <div class="pay-card-v2__amount">$25,000</div>
+          <div class="pay-card-v2__amount">$15,500</div>
           <div class="pay-card-v2__terms">due today · paid in full</div>
           <div class="pay-progress">
-            <div class="pay-progress__seg pay-progress__paid">$3,500 paid</div>
-            <div class="pay-progress__seg pay-progress__owed">$21,500 remaining</div>
+            <div class="pay-progress__seg pay-progress__paid">$2,500 paid</div>
+            <div class="pay-progress__seg pay-progress__owed">$15,500 remaining</div>
           </div>
           <div class="pay-save pay-save--light">
             <span class="pay-save__label">You save</span>
-            <span class="pay-save__amount">$17,000</span>
-            <span class="pay-save__suffix">annually</span>
+            <span class="pay-save__amount">$12,000</span>
+            <span class="pay-save__suffix">vs paying monthly</span>
           </div>
         </div>
       </div>
 
-      <div style="font-size: 11px; color: var(--al-400);">Your $3,500 is credited toward whichever option you choose.</div>
+      <div style="font-size: 11px; color: var(--al-400);">Your $2,500 is credited toward whichever option you choose.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Slide 8 · Diamond — What's Included + Pricing -->
+<!-- ═══════════════════════════════════════ -->
+<div class="slide">
+  <div class="bg-orb bg-orb--cyan" style="top: -120px; right: -80px;"></div>
+  <div class="bg-orb bg-orb--green" style="bottom: -120px; left: -100px;"></div>
+
+  <div class="content--wide flex-col gap-16" style="justify-content: center; align-items: center;">
+
+    <div class="rv d1 flex-col gap-8 text-center">
+      <h2 class="h-lg">Kodara Diamond (Invite Only)</h2>
+      <p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-600); font-weight: 400;">Maximum acceleration. Everything done for you.</p>
+    </div>
+
+    <div class="rv d2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; max-width: 760px; margin: 0 auto; width: 100%; text-align: left;">
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>DFY Ads</strong><br>Our team runs your paid ads end-to-end: creative, copy, targeting, optimization</p>
+      </div>
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>DFY Sales Coaching + Call Reviews</strong><br>Ongoing coaching and call reviews for your closer/setter team — every week, every call</p>
+      </div>
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>DFY Webinar</strong><br>A built and presented webinar funnel that converts cold traffic into high-ticket buyers</p>
+      </div>
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>DFY Book Bundle Funnel</strong><br>A book-as-front-end funnel with 4–5 upsells: audio, course, mastermind invite, more</p>
+      </div>
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>Full Branded Website</strong><br>A full authority website that gives buyers social proof and trust before upgrading</p>
+      </div>
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>Mid-Ticket Products Ecosystem</strong><br>3-5 mid-ticket products between low-ticket and high-ticket so buyers can ascend sooner</p>
+      </div>
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>Lucas AI Setter</strong><br>A trained DM/inbox AI built on Lucas's playbook that qualifies leads and books your calendar</p>
+      </div>
+      <div class="check-row" style="padding: 3px 0; align-items: center;">
+        <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <p style="font-size: 14px; line-height: 20px;"><strong>2× / year Events in Newport Beach, CA</strong><br>Network with 7–8 figure entrepreneurs all-in on becoming industry leaders</p>
+      </div>
+    </div>
+
+    <div class="rv d3 flex-col gap-12" style="width: 100%; max-width: 760px; align-items: center;">
+      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--al-500);">Choose Your Payment Option</div>
+
+      <div class="pay-grid-v2 pay-grid-v2--triple" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="pay-card-v2">
+          <div class="pay-card-v2__label">Monthly</div>
+          <div class="pay-card-v2__amount">$3,000</div>
+          <div class="pay-card-v2__terms">due today · then $5,500/mo × 11</div>
+          <div class="pay-progress">
+            <div class="pay-progress__seg pay-progress__paid">$2,500 paid</div>
+            <div class="pay-progress__seg pay-progress__owed">$3,000 remaining</div>
+          </div>
+          <div class="pay-card-v2__footnote">= $63,500 total</div>
+        </div>
+
+        <div class="pay-card-v2">
+          <div class="pay-card-v2__label">Down + monthly</div>
+          <div class="pay-card-v2__amount">$12,500</div>
+          <div class="pay-card-v2__terms">due today · then $3,500/mo × 11</div>
+          <div class="pay-progress">
+            <div class="pay-progress__seg pay-progress__paid">$2,500 paid</div>
+            <div class="pay-progress__seg pay-progress__owed">$12,500 remaining</div>
+          </div>
+          <div class="pay-save">
+            <span class="pay-save__label">You save</span>
+            <span class="pay-save__amount">$13,000</span>
+            <span class="pay-save__suffix">vs paying monthly</span>
+          </div>
+        </div>
+
+        <div class="pay-card-v2">
+          <div class="pay-card-v2__label">Pay in full</div>
+          <div class="pay-card-v2__amount">$37,500</div>
+          <div class="pay-card-v2__terms">due today · paid in full</div>
+          <div class="pay-progress">
+            <div class="pay-progress__seg pay-progress__paid">$2,500 paid</div>
+            <div class="pay-progress__seg pay-progress__owed">$37,500 remaining</div>
+          </div>
+          <div class="pay-save pay-save--light">
+            <span class="pay-save__label">You save</span>
+            <span class="pay-save__amount">$26,000</span>
+            <span class="pay-save__suffix">vs paying monthly</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 11px; color: var(--al-400);">Your $2,500 is credited toward whichever option you choose.</div>
     </div>
 
   </div>
@@ -1881,32 +1986,32 @@
     </div>
 
     <div class="rv d2 flex-col gap-8" style="width: 100%; align-items: center;">
-      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--al-500);">Potential earnings · $3,500 / mo client · 25% = $875 / mo each</div>
+      <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--al-500);">Potential earnings · $2,500 / mo client · 25% = $625 / mo each</div>
 
       <div class="ref-ladder-row">
         <div class="ref-ladder-step">
           <div class="ref-ladder-step__count">5</div>
           <div class="ref-ladder-step__label">Clients</div>
-          <div class="ref-ladder-step__amt">$4,375<span class="ref-ladder-step__unit">/mo</span></div>
-          <div class="ref-ladder-step__yr">$52,500 / yr</div>
+          <div class="ref-ladder-step__amt">$3,125<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$37,500 / yr</div>
         </div>
         <div class="ref-ladder-step">
           <div class="ref-ladder-step__count">10</div>
           <div class="ref-ladder-step__label">Clients</div>
-          <div class="ref-ladder-step__amt">$8,750<span class="ref-ladder-step__unit">/mo</span></div>
-          <div class="ref-ladder-step__yr">$105,000 / yr</div>
+          <div class="ref-ladder-step__amt">$6,250<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$75,000 / yr</div>
         </div>
         <div class="ref-ladder-step">
           <div class="ref-ladder-step__count">25</div>
           <div class="ref-ladder-step__label">Clients</div>
-          <div class="ref-ladder-step__amt">$21,875<span class="ref-ladder-step__unit">/mo</span></div>
-          <div class="ref-ladder-step__yr">$262,500 / yr</div>
+          <div class="ref-ladder-step__amt">$15,625<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$187,500 / yr</div>
         </div>
         <div class="ref-ladder-step">
           <div class="ref-ladder-step__count">50</div>
           <div class="ref-ladder-step__label">Clients</div>
-          <div class="ref-ladder-step__amt">$43,750<span class="ref-ladder-step__unit">/mo</span></div>
-          <div class="ref-ladder-step__yr">$525,000 / yr</div>
+          <div class="ref-ladder-step__amt">$31,250<span class="ref-ladder-step__unit">/mo</span></div>
+          <div class="ref-ladder-step__yr">$375,000 / yr</div>
         </div>
       </div>
     </div>
@@ -1914,11 +2019,16 @@
     <div class="rv d3 flex-col gap-8" style="width: 100%; align-items: center; max-width: 880px;">
       <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--al-500);">Plus, when a client upgrades — you get the bonus too</div>
 
-      <div class="ref-bonus-grid" style="grid-template-columns: 1fr; max-width: 440px;">
+      <div class="ref-bonus-grid">
         <div class="ref-bonus ref-bonus--diamond">
           <div class="ref-bonus__label">If they pay in full</div>
-          <div class="ref-bonus__amt">+$6,250</div>
-          <div class="ref-bonus__note">25% of $25,000 · one-time bonus</div>
+          <div class="ref-bonus__amt">+$4,500</div>
+          <div class="ref-bonus__note">25% of $18,000 · one-time bonus</div>
+        </div>
+        <div class="ref-bonus ref-bonus--diamond">
+          <div class="ref-bonus__label">If they go Diamond</div>
+          <div class="ref-bonus__amt">+$10,000</div>
+          <div class="ref-bonus__note">25% of $40,000 · one-time bonus</div>
         </div>
       </div>
     </div>
@@ -1939,7 +2049,7 @@
 <div class="progress" id="progress"></div>
 
 <!-- Counter -->
-<div class="counter" id="counter"><span class="cur">01</span> / 05</div>
+<div class="counter" id="counter"><span class="cur">01</span> / 06</div>
 
 <script>
   const slides = document.querySelectorAll('.slide');
