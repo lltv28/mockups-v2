@@ -87,17 +87,10 @@ strong{color:var(--ink);font-weight:600}
 .rnav a:hover{background:rgba(46,43,38,.05);color:var(--ink)}
 .rnav a.active{background:linear-gradient(168deg,var(--dark),var(--dark-2));color:#fff;font-weight:600;box-shadow:0 6px 14px -6px rgba(46,43,38,.5)}
 .rnav a.active .n{color:var(--accent-mint)}
-/* mobile: rail collapses to a horizontal sticky top bar */
+/* mobile: hide the rail nav entirely, content goes full width */
 @media(max-width:860px){
   .layout{grid-template-columns:1fr}
-  .rail{height:auto}
-  .rail-inner{flex-direction:row;justify-content:flex-start;align-items:center;gap:10px;height:auto;padding:9px 14px;border-right:0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
-  .rail-inner::-webkit-scrollbar{display:none}
-  .rail-brand{display:none}
-  .rnav{flex-direction:row;gap:2px}
-  .rnav a{padding:8px 12px;white-space:nowrap;font-size:.9rem}
-  .rnav a .n{display:none}
-  .rnav a.active{box-shadow:none}
+  .rail{display:none}
 }
 
 /* hero / welcome */
@@ -190,6 +183,8 @@ wistia-player[media-id='5ycx1zrlxw']:not(:defined){background:center/contain no-
 .vs-head.you{background:var(--accent-soft);color:var(--accent-ink)}
 .vs-row{padding:16px 22px;font-size:var(--fs-sm);line-height:1.5;color:var(--ink-2);border-top:1px solid var(--line)}
 .vs-row.you{background:var(--surface-2)}
+/* mobile: stack to one column so cells aren't crushed to ~125px; accent border keeps the "your AI" side readable as the contrast */
+@media(max-width:760px){.vs{grid-template-columns:1fr}.vs-row.you{border-left:3px solid var(--accent)}}
 
 /* dark sections */
 .section.dark{background:linear-gradient(158deg,var(--dark),var(--dark-2));color:rgba(255,255,255,.78)}
