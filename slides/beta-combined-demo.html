@@ -92,9 +92,11 @@ if(window.ResizeObserver)new ResizeObserver(fit).observe(centerEl);
 addEventListener('resize',layout);layout();
 
 // faint wires
-function drawWires(){ctx.clearRect(0,0,canvas.width,canvas.height);const hx=canvas.width/2,hy=canvas.height/2;
-  PEOPLE.forEach(p=>{const tx=hx+(p.x<hx?-1:1)*(centerEl.clientWidth/2-10);
-    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.quadraticCurveTo((p.x+tx)/2,p.y,tx,hy);
+function drawWires(){ctx.clearRect(0,0,canvas.width,canvas.height);
+  const fx=canvas.width/2,fy=canvas.height/2,cw=centerEl.clientWidth,chh=centerEl.clientHeight;
+  const fl=fx-cw/2,fr=fx+cw/2,ft=fy-chh/2,fb=fy+chh/2;
+  PEOPLE.forEach(p=>{const onLeft=p.x<fx;const tx=onLeft?fl:fr;const ty=Math.max(ft+14,Math.min(fb-14,p.y));
+    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.quadraticCurveTo((p.x+tx)/2,p.y,tx,ty);
     ctx.strokeStyle='rgba(26,26,26,.08)';ctx.lineWidth=1.5;ctx.stroke();});
   requestAnimationFrame(drawWires);}
 drawWires();
