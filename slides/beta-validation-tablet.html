@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Beta Validation — Tablet Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{--brand:#106844;--brand-strong:rgba(16,104,68,.92);--brand-soft:rgba(16,104,68,.06);
+    --ink:rgba(26,26,26,.82);--muted:rgba(26,26,26,.55);--faint:rgba(26,26,26,.4);
+    --line:rgba(26,26,26,.09);--line-soft:rgba(26,26,26,.06);--track:rgba(26,26,26,.06);
+    --bg:#F6F7F5;--surface:#FFFFFF;--good:#106844;--warn:#C99A06;--neutral:rgba(26,26,26,.26);--concern:#B0524A;
+    --emoji:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+    --shadow:0 6px 18px rgba(26,26,26,.06),0 2px 5px rgba(26,26,26,.04);
+    --font:'Instrument Sans',sans-serif;--serif:'Instrument Serif',serif;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);background:transparent;color:var(--ink);-webkit-font-smoothing:antialiased;}
+  /* portrait tablet ~700x900 */
+  .wrap{width:700px;height:660px;margin:0 auto;padding:26px 28px 24px;display:flex;flex-direction:column;gap:16px;}
+  .head .eyebrow{font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--brand-strong);}
+  .head h1{font-family:var(--serif);font-size:30px;font-weight:500;letter-spacing:-.5px;line-height:1.1;margin-top:3px;}
+  .head .meta{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:5px;}
+  .card{background:var(--surface);border:1px solid var(--line-soft);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);}
+  .card h3{font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;justify-content:space-between;gap:8px;}
+  .card h3 .sub{color:var(--brand-strong);font-weight:700;text-transform:none;letter-spacing:0;}
+
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .kpi{background:var(--surface);border:1px solid var(--line-soft);border-radius:16px;padding:17px 18px;box-shadow:var(--shadow);}
+  .kpi.hero{background:linear-gradient(135deg,#13754c,#0c4f34);border-color:transparent;}
+  .kpi .v{font-size:40px;font-weight:600;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;}
+  .kpi.hero .v{color:#fff;}
+  .kpi .k{font-size:13px;color:var(--ink);font-weight:600;margin-top:7px;} .kpi.hero .k{color:#fff;}
+  .kpi .s{font-size:11.5px;color:var(--muted);margin-top:2px;font-weight:500;} .kpi.hero .s{color:rgba(255,255,255,.82);}
+
+  /* hot leads funnel */
+  .frow{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .frow:last-child{margin-bottom:0;}
+  .frow .lab{width:172px;font-size:13px;font-weight:600;color:var(--ink);}
+  .frow .lab small{display:block;font-size:11px;color:var(--muted);font-weight:500;}
+  .frow .track{flex:1;height:30px;background:var(--track);border-radius:8px;overflow:hidden;position:relative;}
+  .frow .track i{display:block;height:100%;width:0;border-radius:8px;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+  .frow .track i.t1{background:rgba(26,26,26,.12);} .frow .track i.t2{background:rgba(26,26,26,.22);} .frow .track i.t3{background:var(--brand);}
+  .frow .n{position:absolute;top:0;right:10px;height:30px;display:flex;align-items:center;font-size:13px;font-weight:700;color:var(--ink);}
+  .frow.hot .lab{color:var(--brand-strong);}
+  .hotnote{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.5;}
+  .hotnote b{color:var(--ink);}
+
+  /* sentiment */
+  .sent-bar{height:24px;border-radius:8px;overflow:hidden;display:flex;background:var(--track);}
+  .sent-bar span{height:100%;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+  .sent-bar .pos{background:var(--good);} .sent-bar .neu{background:var(--neutral);} .sent-bar .con{background:rgba(26,26,26,.36);}
+  .sent-leg{display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--muted);font-weight:500;}
+  .sent-leg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:middle;}
+  /* faces sentiment */
+  .faces{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .face{border:1px solid var(--line-soft);border-radius:12px;padding:13px 10px;text-align:center;}
+  .face .em{font-family:var(--emoji);font-size:25px;line-height:1;}
+  .face .pct{font-size:25px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums;color:var(--ink);}
+  .face .lab{font-size:12px;color:var(--muted);font-weight:600;margin-top:1px;}
+  .face.pos{background:rgba(16,104,68,.05);} .face.pos .pct{color:var(--good);}
+  .face.con .pct{color:var(--concern);}
+  .themes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:12px;font-weight:600;color:var(--ink);}
+  .chip b{color:var(--ink);}
+  .quote{margin-top:13px;font-size:13px;color:var(--ink);font-style:italic;line-height:1.5;border-left:3px solid var(--brand);padding-left:12px;}
+  .quote span{display:block;font-style:normal;color:var(--muted);font-size:11px;margin-top:3px;}
+
+  /* gate */
+  .gate{margin-top:auto;background:var(--brand-soft);border:1px solid rgba(16,104,68,.18);border-radius:16px;padding:15px 18px;display:flex;align-items:center;gap:14px;}
+  .gate .seal{width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+  .gate h4{font-size:15px;font-weight:700;color:var(--ink);}
+  .gate p{font-size:12.5px;color:var(--muted);margin-top:2px;font-weight:500;}
+  .gate .chiptrained{margin-left:auto;background:#fff;border:1px solid var(--line-soft);border-radius:999px;padding:6px 12px;font-size:11.5px;font-weight:700;color:var(--brand-strong);white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>Beta Validation Command Center</h1>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi hero"><div class="v" data-count="71" data-suffix="%">0</div><div class="k">Came back 3+ times</div><div class="s">avg 4.2 sessions each</div></div>
+    <div class="kpi"><div class="v" data-count="96" data-suffix="%">0</div><div class="k">Rated it helpful</div><div class="s">45 of 47 clients</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Hot leads surfaced <span class="sub">ready for your next-level offer</span></h3>
+    <div class="frow"><div class="lab">Active clients<small>used it this beta</small></div><div class="track"><i class="t1" data-w="100"></i><div class="n">47</div></div></div>
+    <div class="frow"><div class="lab">Highly engaged<small>came back 3+ times</small></div><div class="track"><i class="t2" data-w="60"></i><div class="n">28</div></div></div>
+    <div class="frow hot"><div class="lab">Hot &amp; asking for more<small>satisfied + want to go deeper</small></div><div class="track"><i class="t3" data-w="26"></i><div class="n">12</div></div></div>
+    <div class="hotnote"><b>12 clients</b> are satisfied and already asking about going deeper, your AI flagged them and is ready to book the call.</div>
+  </div>
+
+  <div class="card">
+    <h3>Conversation sentiment <span class="sub">AI-analyzed · 312 messages</span></h3>
+    <div class="faces">
+      <div class="face pos"><div class="em">🙂</div><div class="pct">88%</div><div class="lab">Positive</div></div>
+      <div class="face neu"><div class="em">😐</div><div class="pct">9%</div><div class="lab">Neutral</div></div>
+      <div class="face con"><div class="em">🙁</div><div class="pct">3%</div><div class="lab">Concern</div></div>
+    </div>
+    <div class="themes">
+      <div class="chip">loved the accountability <b>· 18</b></div>
+      <div class="chip">ready for the next step <b>· 12</b></div>
+      <div class="chip">wants more depth <b>· 7</b></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function run(){
+  document.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count,suf=el.dataset.suffix||'';
+    let n=0,st=Math.max(1,Math.ceil(to/40));const t=setInterval(()=>{n+=st;if(n>=to){n=to;clearInterval(t);}el.textContent=n+suf;},30);});
+  document.querySelectorAll('.frow .track i,.sent-bar span').forEach((el,i)=>setTimeout(()=>{el.style.width=el.dataset.w+'%';},200+i*120));
+}
+run();
+</script>
+</body>
+</html>

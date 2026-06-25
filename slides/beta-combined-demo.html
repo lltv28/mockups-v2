@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Beta Combined Demo — Avatar Ring</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{--brand:#106844;--brand-strong:rgba(16,104,68,.92);--brand-soft:rgba(16,104,68,.06);
+    --ink:rgba(26,26,26,.82);--muted:rgba(26,26,26,.55);--faint:rgba(26,26,26,.4);
+    --line:rgba(26,26,26,.09);--line-soft:rgba(26,26,26,.06);--bg:#F6F7F5;--surface:#fff;
+    --voice:#0E7C9B;--rating:#C99A06;--booking:#0c4f34;
+    --shadow:0 12px 32px rgba(26,26,26,.09),0 3px 8px rgba(26,26,26,.05);
+    --shadow-lift:0 26px 60px rgba(26,26,26,.16),0 6px 16px rgba(26,26,26,.09);
+    --font:'Instrument Sans',sans-serif;--serif:'Instrument Serif',serif;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:var(--font);background:transparent;color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased;}
+  .stage{width:100%;height:100%;position:relative;padding:16px 24px;}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand-strong);text-align:center;}
+  h1{font-family:var(--serif);font-weight:500;font-size:27px;letter-spacing:-.5px;text-align:center;margin-top:2px;}
+  .sub{text-align:center;color:var(--muted);font-size:12.5px;font-weight:500;margin-top:3px;}
+  .orbit{position:absolute;inset:86px 0 12px;}
+  #wires{position:absolute;inset:0;z-index:1;}
+  /* center = portrait tablet command center */
+  .center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;overflow:hidden;background:transparent;}
+  .center iframe{position:absolute;top:0;left:0;border:0;transform-origin:top left;background:transparent;}
+  /* avatars */
+  .av{position:absolute;z-index:2;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;width:96px;}
+  .circle{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--ink);
+    background:#fff;box-shadow:var(--shadow);border:1px solid var(--line-soft);position:relative;transition:transform .25s ease;}
+  .av.ping .circle{transform:scale(1.12);}
+  .av .dot{position:absolute;right:2px;bottom:2px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;}
+  .av .nm{font-size:11px;font-weight:600;color:var(--ink);white-space:nowrap;}
+  .av .nm small{color:var(--muted);font-weight:500;}
+  /* data chips */
+  .chip{position:absolute;z-index:6;display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line-soft);
+    box-shadow:var(--shadow);border-radius:999px;padding:5px 10px;font-size:11px;font-weight:600;white-space:nowrap;
+    transform:translate(-50%,-50%);will-change:left,top,opacity,transform;}
+  .chip .ic{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:#fff;}
+  .chip.q .ic{background:var(--brand);} .chip.q{color:var(--brand-strong);}
+  .chip.v .ic{background:var(--voice);} .chip.v{color:var(--voice);}
+  .chip.r .ic{background:var(--rating);} .chip.r{color:#8a6a04;}
+  .chip.b .ic{background:var(--booking);} .chip.b{color:var(--booking);}
+  .legend{position:absolute;left:50%;bottom:0;transform:translateX(-50%);display:flex;gap:16px;font-size:11px;color:var(--muted);font-weight:500;z-index:5;}
+  .legend span{display:flex;align-items:center;gap:6px;} .legend i{width:9px;height:9px;border-radius:50%;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>Scientific Feedback &amp; Validation</h1>
+  <div class="sub">Every question, voice note, rating and booking streams in as data, so you launch already proven.</div>
+
+  <div class="orbit">
+    <canvas id="wires"></canvas>
+    <div class="center"><iframe id="dash" src="beta-validation-tablet.html" title="Command center" scrolling="no"></iframe></div>
+  </div>
+</div>
+<script>
+const PEOPLE=[
+  {nm:'Emma R.',in:'ER',c:'#6f747b'},{nm:'Oliver H.',in:'OH',c:'#7e838a'},
+  {nm:'James W.',in:'JW',c:'#676c73'},{nm:'Charlotte B.',in:'CB',c:'#878c93'},
+  {nm:'Michael D.',in:'MD',c:'#73787f'},{nm:'Sophie T.',in:'ST',c:'#82878e'},
+  {nm:'Jack M.',in:'JM',c:'#6b7077'},{nm:'Grace P.',in:'GP',c:'#8b9097'},
+];
+const orbit=document.querySelector('.orbit');
+const canvas=document.getElementById('wires'),ctx=canvas.getContext('2d');
+const centerEl=document.querySelector('.center'),dash=document.getElementById('dash');
+
+PEOPLE.forEach(p=>{const d=document.createElement('div');d.className='av';p._el=d;
+  d.innerHTML=`<div class="circle">${p.in}</div><div class="nm">${p.nm}</div>`;
+  orbit.appendChild(d);});
+
+function size(){canvas.width=orbit.clientWidth;canvas.height=orbit.clientHeight;}
+const TW=700,TH=660;
+function fit(){const w=centerEl.clientWidth;if(!w)return;dash.style.width=TW+'px';dash.style.height=TH+'px';dash.style.transform='scale('+(w/TW)+')';}
+function layout(){
+  size();const W=canvas.width,H=canvas.height;
+  const ch=Math.min(H*0.96,TH), cw=ch*(TW/TH);
+  centerEl.style.width=cw+'px';centerEl.style.height=ch+'px';
+  fit();
+  // two gentle arcs (4 per side) flanking the tall tablet
+  const margin=(W-cw)/2, lx=margin/2, rx=W-margin/2;
+  const ys=[0.13,0.38,0.62,0.87].map(f=>f*H);
+  PEOPLE.forEach((p,i)=>{const side=i<4?'L':'R',row=i%4,bow=(row===1||row===2)?20:0;
+    p.x=(side==='L')?lx+bow:rx-bow; p.y=ys[row];
+    p._el.style.left=p.x+'px';p._el.style.top=p.y+'px';});
+}
+if(window.ResizeObserver)new ResizeObserver(fit).observe(centerEl);
+addEventListener('resize',layout);layout();
+
+// faint wires
+function drawWires(){ctx.clearRect(0,0,canvas.width,canvas.height);const hx=canvas.width/2,hy=canvas.height/2;
+  PEOPLE.forEach(p=>{const tx=hx+(p.x<hx?-1:1)*(centerEl.clientWidth/2-10);
+    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.quadraticCurveTo((p.x+tx)/2,p.y,tx,hy);
+    ctx.strokeStyle='rgba(26,26,26,.08)';ctx.lineWidth=1.5;ctx.stroke();});
+  requestAnimationFrame(drawWires);}
+drawWires();
+
+</script>
+</body>
+</html>

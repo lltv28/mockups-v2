@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validation Command Center — Kodara Beta Launch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* deck design system */
+    --brand:#106844; --brand-strong:rgba(16,104,68,0.92); --brand-soft:rgba(16,104,68,0.06);
+    --ink:rgba(26,26,26,0.80); --muted:rgba(26,26,26,0.55); --faint:rgba(26,26,26,0.40);
+    --line:rgba(26,26,26,0.09); --line-soft:rgba(26,26,26,0.06);
+    --bg:#F6F7F5; --surface:#FFFFFF;
+    --good:#106844; --warn:#C99A06; --thin:#C4372A;
+    --track:rgba(26,26,26,0.06);
+    --shadow-card:0px 8px 5px rgba(0,0,0,0.01),0px 4px 4px rgba(0,0,0,0.02),0px 1px 2px rgba(0,0,0,0.02);
+    --font:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --serif:'Instrument Serif',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.4;-webkit-font-smoothing:antialiased;}
+  /* designed as a 16:9 command center ~1280x720 */
+  .wrap{width:1280px;max-width:100%;margin:0 auto;padding:18px 26px 16px;}
+  .topbar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand-strong);}
+  .title{font-family:var(--serif);font-size:26px;font-weight:500;letter-spacing:-.5px;color:var(--ink);line-height:1.1;margin-top:3px;}
+  .who{font-size:12px;color:var(--muted);font-weight:500;}
+
+  /* KPI row */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px;}
+  .kpi{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:13px 15px;box-shadow:var(--shadow-card);}
+  .kpi .v{font-size:27px;font-weight:600;letter-spacing:-.5px;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .kpi .v small{font-size:11px;color:var(--good);font-weight:700;}
+  .kpi .k{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.25;font-weight:500;}
+  .kpi.hero-kpi{background:linear-gradient(135deg,#13754c,#0c4f34);border-color:transparent;}
+  .kpi.hero-kpi .v{color:#fff;} .kpi.hero-kpi .k{color:rgba(255,255,255,.82);}
+
+  /* two main columns */
+  .main{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;}
+  .col{display:flex;flex-direction:column;gap:12px;}
+  .box{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-card);}
+  .box h3{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:11px;display:flex;justify-content:space-between;}
+  .box h3 .sub{color:var(--brand-strong);font-weight:700;}
+
+  /* hourly chart (command-center artifact) */
+  .chart-grid{display:grid;grid-template-columns:24px 1fr;grid-template-rows:96px auto;column-gap:7px;}
+  .y-axis{grid-column:1;grid-row:1;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;}
+  .y-axis span{font-size:9px;color:var(--faint);line-height:1;}
+  .plot{grid-column:2;grid-row:1;position:relative;}
+  .gridlines{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;}
+  .gridlines i{height:1px;background:var(--line-soft);width:100%;}
+  .bars{position:absolute;inset:0;display:flex;align-items:flex-end;gap:2px;}
+  .bar{flex:1;height:0;background:linear-gradient(180deg,#1f9c64,#106844);border-radius:2px 2px 0 0;transition:height 1s cubic-bezier(.22,1,.36,1);}
+  .bar.after{background:linear-gradient(180deg,#7fcea6,#3da877);}
+  .x-axis{grid-column:2;grid-row:2;display:flex;justify-content:space-between;margin-top:5px;}
+  .x-axis span{font-size:9px;color:var(--faint);}
+  .chart-note{font-size:11px;color:var(--muted);margin-top:9px;display:flex;align-items:center;gap:6px;font-weight:500;}
+  .chart-note b{color:var(--ink);} .chart-note .sw{width:16px;height:7px;border-radius:3px;background:linear-gradient(90deg,#7fcea6,#3da877);flex-shrink:0;display:inline-block;}
+
+  /* question categories (command-center artifact) */
+  .cat{margin-bottom:9px;} .cat:last-child{margin-bottom:0;}
+  .cat-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;}
+  .cat-name{font-weight:600;color:var(--ink);} .cat-pct{color:var(--muted);font-weight:600;}
+  .cat-bar{height:7px;background:var(--track);border-radius:999px;overflow:hidden;}
+  .cat-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1f9c64,#106844);border-radius:999px;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+
+  /* benchmark bars (readiness-report artifact) */
+  .bench-row{display:grid;grid-template-columns:122px 1fr 38px;align-items:center;gap:10px;margin-bottom:10px;}
+  .bench-row:last-child{margin-bottom:0;}
+  .bench-row .nm{font-size:12px;color:var(--ink);} .bench-row .nm small{display:block;color:var(--muted);font-size:10px;}
+  .bench-track{height:20px;background:var(--track);border-radius:6px;overflow:hidden;}
+  .bench-track i{display:block;height:100%;border-radius:6px;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+  .bench-row .v{font-size:12px;font-weight:700;text-align:right;}
+  .b-chatgpt i{background:rgba(26,26,26,0.18);} .b-chatgpt .v{color:var(--muted);}
+  .b-human i{background:rgba(26,26,26,0.30);} .b-human .v{color:var(--faint);}
+  .b-yours i{background:var(--brand);} .b-yours .nm{font-weight:700;} .b-yours .v{color:var(--brand-strong);}
+
+  /* coverage rows (readiness-report artifact) */
+  .covrow{margin-bottom:9px;} .covrow:last-child{margin-bottom:0;}
+  .covrow-top{display:flex;align-items:baseline;gap:8px;margin-bottom:4px;}
+  .covrow-top .nm{font-size:12px;font-weight:600;color:var(--ink);}
+  .covrow-top .pct{margin-left:auto;font-size:13px;font-weight:700;}
+  .pct.s{color:var(--good);} .pct.m{color:var(--warn);} .pct.t{color:var(--thin);}
+  .covbar{height:8px;background:var(--track);border-radius:999px;overflow:hidden;}
+  .covbar i{display:block;height:100%;border-radius:999px;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+  .covbar i.s{background:var(--good);} .covbar i.m{background:var(--warn);} .covbar i.t{background:var(--thin);}
+
+  /* validation gate strip */
+  .gate{margin-top:12px;background:var(--brand-soft);border:1px solid rgba(16,104,68,0.18);border-radius:14px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+  .gate .l{display:flex;align-items:center;gap:12px;}
+  .gate .seal{width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .gate h4{font-size:14px;font-weight:700;color:var(--ink);} .gate p{font-size:12px;color:var(--muted);margin-top:1px;font-weight:500;} .gate p b{color:var(--brand-strong);}
+  .gate button{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .gate button:hover{background:#0c4f34;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="eyebrow">Step 2 · Scientific Feedback &amp; Validation</div>
+      <div class="title">Beta Validation Command Center</div>
+    </div>
+    <div class="who">Steven · Hypnotherapy AI · 5 beta clients · 2 weeks</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi hero-kpi"><div class="v" data-count="47">0</div><div class="k">Real sessions with your clients</div></div>
+    <div class="kpi"><div class="v" data-count="312">0</div><div class="k">Questions answered in your voice</div></div>
+    <div class="kpi"><div class="v" data-count="96" data-suffix="%">0</div><div class="k">Client satisfaction <span style="color:var(--good)">(45 of 47)</span></div></div>
+    <div class="kpi"><div class="v" data-count="100" data-suffix="%">0</div><div class="k">Stayed inside your method</div></div>
+  </div>
+
+  <div class="main">
+    <!-- LEFT column: the command-center artifact (usage) -->
+    <div class="col">
+      <div class="box">
+        <h3>When your clients reach out <span class="sub">this beta</span></h3>
+        <div class="chart-grid">
+          <div class="y-axis"><span>20</span><span>10</span><span>0</span></div>
+          <div class="plot">
+            <div class="gridlines"><i></i><i></i><i></i></div>
+            <div class="bars" id="bars"></div>
+          </div>
+          <div class="x-axis"><span>12a</span><span>6a</span><span>12p</span><span>6p</span><span>11p</span></div>
+        </div>
+        <p class="chart-note"><span class="sw"></span><b>43%</b> of activity happened after 6 PM, when you're off the clock.</p>
+      </div>
+      <div class="box">
+        <h3>What clients ask about <span class="sub">312 questions</span></h3>
+        <div class="cat"><div class="cat-top"><span class="cat-name">Getting started</span><span class="cat-pct">31%</span></div><div class="cat-bar"><i data-w="31"></i></div></div>
+        <div class="cat"><div class="cat-top"><span class="cat-name">Pricing &amp; plans</span><span class="cat-pct">24%</span></div><div class="cat-bar"><i data-w="24"></i></div></div>
+        <div class="cat"><div class="cat-top"><span class="cat-name">Staying on track</span><span class="cat-pct">19%</span></div><div class="cat-bar"><i data-w="19"></i></div></div>
+        <div class="cat"><div class="cat-top"><span class="cat-name">Troubleshooting</span><span class="cat-pct">15%</span></div><div class="cat-bar"><i data-w="15"></i></div></div>
+        <div class="cat"><div class="cat-top"><span class="cat-name">Other</span><span class="cat-pct">11%</span></div><div class="cat-bar"><i data-w="11"></i></div></div>
+      </div>
+    </div>
+
+    <!-- RIGHT column: the readiness-report artifact (proof) -->
+    <div class="col">
+      <div class="box">
+        <h3>How it compares <span class="sub">knowing your business</span></h3>
+        <div class="bench-row b-chatgpt"><div class="nm">Generic ChatGPT<small>no knowledge of you</small></div><div class="bench-track"><i data-w="22"></i></div><div class="v">Low</div></div>
+        <div class="bench-row b-human"><div class="nm">A new assistant<small>first week on the job</small></div><div class="bench-track"><i data-w="55"></i></div><div class="v">Mid</div></div>
+        <div class="bench-row b-yours"><div class="nm">Your AI<small>proven on 47 sessions</small></div><div class="bench-track"><i data-w="92"></i></div><div class="v">High</div></div>
+      </div>
+      <div class="box">
+        <h3>Coverage, proven by real usage <span class="sub">88% overall</span></h3>
+        <div class="covrow"><div class="covrow-top"><span class="nm">Voice &amp; tone</span><span class="pct s" data-pct>0%</span></div><div class="covbar"><i class="s" data-w="100"></i></div></div>
+        <div class="covrow"><div class="covrow-top"><span class="nm">Onboarding &amp; first steps</span><span class="pct s" data-pct>0%</span></div><div class="covbar"><i class="s" data-w="97"></i></div></div>
+        <div class="covrow"><div class="covrow-top"><span class="nm">Top client questions</span><span class="pct s" data-pct>0%</span></div><div class="covbar"><i class="s" data-w="94"></i></div></div>
+        <div class="covrow"><div class="covrow-top"><span class="nm">Pricing &amp; refunds</span><span class="pct m" data-pct>0%</span></div><div class="covbar"><i class="m" data-w="72"></i></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="l">
+      <div class="seal">✓</div>
+      <div>
+        <h4>Validated and cleared for full rollout</h4>
+        <p><b>88% coverage</b> across real sessions, <b>96% satisfaction</b>, zero off-method answers, the proof is in before you spend a dollar on ads.</p>
+      </div>
+    </div>
+    <button>Start Step 3 — Full Rollout →</button>
+  </div>
+</div>
+
+<script>
+// ponytail: tiny reveal, no libs. Build the hourly bars, count KPIs, fill every bar once.
+const HOURS=[2,1,1,1,1,2,5,8,11,10,8,9,12,9,7,8,10,13,16,20,18,21,13,7]; // 12a..11p
+const MAX=21;
+const barsEl=document.getElementById('bars');
+HOURS.forEach((v,h)=>{const b=document.createElement('div');b.className='bar'+(h>=18?' after':'');b.dataset.h=Math.round(v/MAX*100);barsEl.appendChild(b);});
+
+function run(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const to=+el.dataset.count, suf=el.dataset.suffix||''; let n=0; const step=Math.max(1,Math.ceil(to/40));
+    const t=setInterval(()=>{n+=step; if(n>=to){n=to;clearInterval(t);} el.textContent=n+suf;},30);
+  });
+  setTimeout(()=>document.querySelectorAll('.bar').forEach(b=>b.style.height=b.dataset.h+'%'),150);
+  document.querySelectorAll('.cat-bar i,.bench-track i,.covbar i').forEach((el,idx)=>setTimeout(()=>{
+    const w=+el.dataset.w; el.style.width=w+'%';
+    const pct=el.closest('.covrow')?.querySelector('[data-pct]');
+    if(pct){let n=0;const t=setInterval(()=>{n+=Math.ceil(w/26);if(n>=w){n=w;clearInterval(t);}pct.textContent=n+'%';},45);}
+  }, 200+idx*90));
+}
+run();
+</script>
+</body>
+</html>
