@@ -95,9 +95,15 @@ addEventListener('resize',layout);layout();
 function drawWires(){ctx.clearRect(0,0,canvas.width,canvas.height);
   const fx=canvas.width/2,fy=canvas.height/2,cw=centerEl.clientWidth,chh=centerEl.clientHeight;
   const fl=fx-cw/2,fr=fx+cw/2,ft=fy-chh/2,fb=fy+chh/2;
-  PEOPLE.forEach(p=>{const onLeft=p.x<fx;const tx=onLeft?fl:fr;const ty=Math.max(ft+14,Math.min(fb-14,p.y));
-    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.quadraticCurveTo((p.x+tx)/2,p.y,tx,ty);
+  const leftAnchor={x:fl,y:fy}, rightAnchor={x:fr,y:fy};
+  PEOPLE.forEach(p=>{const onLeft=p.x<fx;const a=onLeft?leftAnchor:rightAnchor;
+    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.quadraticCurveTo((p.x+a.x)/2,p.y,a.x,a.y);
     ctx.strokeStyle='rgba(26,26,26,.08)';ctx.lineWidth=1.5;ctx.stroke();});
+  [leftAnchor,rightAnchor].forEach(a=>{
+    ctx.beginPath();ctx.arc(a.x,a.y,4.5,0,Math.PI*2);
+    ctx.fillStyle='rgba(16,104,68,.12)';ctx.fill();
+    ctx.strokeStyle='rgba(16,104,68,.28)';ctx.lineWidth=1.5;ctx.stroke();
+  });
   requestAnimationFrame(drawWires);}
 drawWires();
 
