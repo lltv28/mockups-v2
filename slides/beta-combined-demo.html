@@ -23,12 +23,12 @@
   h1{font-family:var(--serif);font-weight:500;font-size:27px;letter-spacing:-.5px;text-align:center;margin-top:2px;}
   .sub{text-align:center;color:var(--muted);font-size:12.5px;font-weight:500;margin-top:3px;}
   .orbit{position:absolute;inset:86px 0 12px;}
-  #wires{position:absolute;inset:0;z-index:1;}
+  #wires{position:absolute;inset:0;z-index:3;pointer-events:none;}
   /* center = portrait tablet command center */
-  .center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;overflow:hidden;background:transparent;}
+  .center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;overflow:hidden;background:transparent;}
   .center iframe{position:absolute;top:0;left:0;border:0;transform-origin:top left;background:transparent;}
   /* avatars */
-  .av{position:absolute;z-index:2;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;width:96px;}
+  .av{position:absolute;z-index:4;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;width:96px;}
   .circle{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--ink);
     background:#fff;box-shadow:var(--shadow);border:1px solid var(--line-soft);position:relative;transition:transform .25s ease;}
   .av.ping .circle{transform:scale(1.12);}
@@ -76,6 +76,21 @@ PEOPLE.forEach(p=>{const d=document.createElement('div');d.className='av';p._el=
 function size(){canvas.width=orbit.clientWidth;canvas.height=orbit.clientHeight;}
 const TW=700,TH=660;
 function fit(){const w=centerEl.clientWidth;if(!w)return;dash.style.width=TW+'px';dash.style.height=TH+'px';dash.style.transform='scale('+(w/TW)+')';}
+function getHotLeadsAnchors(){
+  const doc=dash.contentDocument;
+  const card=doc && doc.getElementById('hot-leads-surfaced-card');
+  if(!card)return null;
+  if(!dash.clientWidth)return null;
+  const orbitRect=orbit.getBoundingClientRect();
+  const frame=dash.getBoundingClientRect();
+  const rect=card.getBoundingClientRect();
+  const scale=frame.width/dash.clientWidth;
+  const y=frame.top - orbitRect.top + (rect.top + rect.height/2)*scale;
+  return {
+    left:{x:frame.left - orbitRect.left + rect.left*scale, y},
+    right:{x:frame.left - orbitRect.left + rect.right*scale, y}
+  };
+}
 function layout(){
   size();const W=canvas.width,H=canvas.height;
   const ch=Math.min(H*0.96,TH), cw=ch*(TW/TH);
@@ -93,9 +108,10 @@ addEventListener('resize',layout);layout();
 
 // faint wires
 function drawWires(){ctx.clearRect(0,0,canvas.width,canvas.height);
-  const fx=canvas.width/2,fy=canvas.height/2,cw=centerEl.clientWidth,chh=centerEl.clientHeight;
-  const fl=fx-cw/2,fr=fx+cw/2,ft=fy-chh/2,fb=fy+chh/2;
-  const leftAnchor={x:fl,y:fy}, rightAnchor={x:fr,y:fy};
+  const fx=canvas.width/2, fy=canvas.height/2;
+  const anchors=getHotLeadsAnchors();
+  const leftAnchor=anchors?.left ?? {x:fx-centerEl.clientWidth/2,y:fy};
+  const rightAnchor=anchors?.right ?? {x:fx+centerEl.clientWidth/2,y:fy};
   PEOPLE.forEach(p=>{const onLeft=p.x<fx;const a=onLeft?leftAnchor:rightAnchor;
     ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.quadraticCurveTo((p.x+a.x)/2,p.y,a.x,a.y);
     ctx.strokeStyle='rgba(26,26,26,.08)';ctx.lineWidth=1.5;ctx.stroke();});
