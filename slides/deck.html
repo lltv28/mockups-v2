@@ -2631,24 +2631,15 @@
         </div>
       </div>
 
-      <!-- equation -->
-      <div class="rv d5" style="max-width: 920px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 26px 1fr 26px 1.15fr; gap: 8px; align-items: stretch;">
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 18px 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; justify-content: center;">
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Your High Ticket</div>
-          <div id="beHT" style="font-family: var(--font-hero); font-size: clamp(26px, 3vw, 36px); font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; line-height: 1.05; margin-top: 6px;">$15,000</div>
-          <div style="font-size: 11px; color: var(--al-500); margin-top: 6px;">what one client is worth to you</div>
-        </div>
-        <div style="display: flex; align-items: center; justify-content: center; font-family: var(--font-hero); font-size: 26px; color: var(--al-400);">×</div>
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 18px 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; justify-content: center;">
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Clients Needed</div>
-          <div id="beClients" style="font-family: var(--font-hero); font-size: clamp(26px, 3vw, 36px); font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; line-height: 1.05; margin-top: 6px;">2</div>
-          <div style="font-size: 11px; color: var(--al-500); margin-top: 6px;">to fully cover your investment</div>
-        </div>
-        <div style="display: flex; align-items: center; justify-content: center; font-family: var(--font-hero); font-size: 26px; color: var(--al-400);">=</div>
-        <div style="background: var(--brand-950); border-radius: 16px; padding: 18px 16px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; justify-content: center;">
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.7);">Break-Even</div>
-          <div id="beTotal" style="font-family: var(--font-hero); font-size: clamp(28px, 3.2vw, 40px); font-weight: 700; color: white; letter-spacing: -0.5px; line-height: 1.05; margin-top: 6px;">$30,000</div>
-          <div id="beNote" style="font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 6px;">from 2 clients, over 12 months</div>
+      <!-- result: how few clients it takes -->
+      <div class="rv d5" style="max-width: 600px; margin: 0 auto; width: 100%;">
+        <div class="brand-card" style="padding: 26px 28px; text-align: center; border-color: var(--brand-300);">
+          <div style="display: flex; align-items: baseline; justify-content: center; gap: 10px;">
+            <span id="beClients" style="font-family: var(--font-hero); font-size: clamp(56px, 8vw, 88px); font-weight: 700; color: var(--brand-950); letter-spacing: -1.5px; line-height: 1;">2</span>
+            <span id="beClientsWord" style="font-family: var(--font-hero); font-size: clamp(24px, 3vw, 34px); font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">clients</span>
+          </div>
+          <div style="font-size: clamp(14px, 1.5vw, 18px); color: var(--al-900); font-weight: 500; margin-top: 10px;">to earn back your entire <strong style="font-weight: 700;">$30,000</strong> investment</div>
+          <div style="font-size: 12px; color: var(--al-500); margin-top: 8px;">Everything you close after that is profit.</div>
         </div>
       </div>
     </div>
@@ -3118,19 +3109,14 @@
     var input = document.getElementById('beInput');
     var slider = document.getElementById('beSlider');
     if (!input || !slider) return;
-    var htEl = document.getElementById('beHT');
     var clEl = document.getElementById('beClients');
-    var totEl = document.getElementById('beTotal');
-    var noteEl = document.getElementById('beNote');
-    var fmt = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+    var wordEl = document.getElementById('beClientsWord');
     function sizeInput() { input.style.width = (input.value.length + 0.5) + 'ch'; }
 
     function render(v) {
       var clients = Math.max(1, Math.ceil(INVEST / v));
-      htEl.textContent = fmt(v);
       clEl.textContent = clients;
-      totEl.textContent = fmt(clients * v);
-      noteEl.textContent = 'from ' + clients + ' client' + (clients === 1 ? '' : 's') + ', over 12 months';
+      wordEl.textContent = clients === 1 ? 'client' : 'clients';
     }
 
     function commit(v) {
