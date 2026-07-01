@@ -2602,6 +2602,59 @@
   </div>
 
   <!-- ═══════════════════════════════════════ -->
+  <!-- Break-Even · The Floor, Not The Dream (interactive) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="slide">
+    <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
+    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
+
+    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+      <div class="flex-col gap-12">
+        <div class="rv d1"><span class="label-tag">The Floor, Not The Dream</span></div>
+        <div class="rv d2"><h2 class="h-hero" style="font-size: clamp(34px, 4.6vw, 60px);">What's the worst case, really?</h2></div>
+        <div class="rv d3">
+          <p class="body-lg" style="max-width: 640px; margin: 0 auto;">Forget the $17 assessment. Forget the $297/month upgrades. Just your existing high-ticket offer, the one you already close.</p>
+        </div>
+      </div>
+
+      <!-- editable high ticket -->
+      <div class="rv d4" style="max-width: 420px; margin: 0 auto; width: 100%;">
+        <div class="glass--strong" style="text-align: center; padding: 18px 24px;">
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Your High Ticket — drag or type to edit</div>
+          <div style="display: flex; align-items: baseline; justify-content: center; gap: 1px; margin-top: 6px;">
+            <span style="font-family: var(--font-hero); font-size: clamp(30px, 4vw, 42px); font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$</span>
+            <input id="beInput" type="text" inputmode="numeric" value="15,000" aria-label="Your high ticket price"
+              style="font-family: var(--font-hero); font-size: clamp(30px, 4vw, 42px); font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1; border: none; background: transparent; text-align: left; width: 4.4ch; padding: 0 2px; outline: none; border-bottom: 2px dashed var(--brand-300);">
+          </div>
+          <input id="beSlider" type="range" min="3000" max="100000" step="1000" value="15000" aria-label="High ticket slider"
+            style="width: 100%; margin-top: 16px; accent-color: var(--brand-950); cursor: pointer;">
+        </div>
+      </div>
+
+      <!-- equation -->
+      <div class="rv d5" style="max-width: 920px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 26px 1fr 26px 1.15fr; gap: 8px; align-items: stretch;">
+        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 18px 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; justify-content: center;">
+          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Your High Ticket</div>
+          <div id="beHT" style="font-family: var(--font-hero); font-size: clamp(26px, 3vw, 36px); font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; line-height: 1.05; margin-top: 6px;">$15,000</div>
+          <div style="font-size: 11px; color: var(--al-500); margin-top: 6px;">what one client is worth to you</div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; font-family: var(--font-hero); font-size: 26px; color: var(--al-400);">×</div>
+        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 18px 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; justify-content: center;">
+          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Clients Needed</div>
+          <div id="beClients" style="font-family: var(--font-hero); font-size: clamp(26px, 3vw, 36px); font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; line-height: 1.05; margin-top: 6px;">2</div>
+          <div style="font-size: 11px; color: var(--al-500); margin-top: 6px;">to fully cover your investment</div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; font-family: var(--font-hero); font-size: 26px; color: var(--al-400);">=</div>
+        <div style="background: var(--brand-950); border-radius: 16px; padding: 18px 16px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; justify-content: center;">
+          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: rgba(255,255,255,0.7);">Break-Even</div>
+          <div id="beTotal" style="font-family: var(--font-hero); font-size: clamp(28px, 3.2vw, 40px); font-weight: 700; color: white; letter-spacing: -0.5px; line-height: 1.05; margin-top: 6px;">$30,000</div>
+          <div id="beNote" style="font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 6px;">from 2 clients, over 12 months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
   <!-- Offer Stack, Simple Phase Recap -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide">
@@ -3055,6 +3108,60 @@
   });
 
   goTo(0);
+</script>
+
+<script>
+  // Break-even calculator (The Floor, Not The Dream slide).
+  // Live slide only; thumbnail clones have their IDs stripped, so they keep the static defaults.
+  (function () {
+    var INVEST = 30000; // matches the $30,000 pay-in-full price
+    var input = document.getElementById('beInput');
+    var slider = document.getElementById('beSlider');
+    if (!input || !slider) return;
+    var htEl = document.getElementById('beHT');
+    var clEl = document.getElementById('beClients');
+    var totEl = document.getElementById('beTotal');
+    var noteEl = document.getElementById('beNote');
+    var fmt = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+    function sizeInput() { input.style.width = (input.value.length + 0.5) + 'ch'; }
+
+    function render(v) {
+      var clients = Math.max(1, Math.ceil(INVEST / v));
+      htEl.textContent = fmt(v);
+      clEl.textContent = clients;
+      totEl.textContent = fmt(clients * v);
+      noteEl.textContent = 'from ' + clients + ' client' + (clients === 1 ? '' : 's') + ', over 12 months';
+    }
+
+    function commit(v) {
+      v = Math.min(100000, Math.max(3000, v));
+      slider.value = v;
+      input.value = v.toLocaleString('en-US');
+      sizeInput();
+      render(v);
+    }
+
+    slider.addEventListener('input', function () {
+      var v = parseInt(slider.value, 10);
+      input.value = v.toLocaleString('en-US');
+      sizeInput();
+      render(v);
+    });
+
+    input.addEventListener('input', function () {
+      sizeInput();
+      var v = parseInt(input.value.replace(/[^0-9]/g, ''), 10);
+      if (!isNaN(v) && v > 0) { slider.value = Math.min(100000, Math.max(3000, v)); render(v); }
+    });
+
+    input.addEventListener('blur', function () {
+      var v = parseInt(input.value.replace(/[^0-9]/g, ''), 10);
+      commit(isNaN(v) ? 15000 : v);
+    });
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') input.blur(); });
+
+    commit(15000);
+  })();
 </script>
 
 </body>
