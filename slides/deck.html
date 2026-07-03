@@ -2828,6 +2828,7 @@
           <span id="beClientsWord" style="font-family: var(--font-hero); font-size: clamp(18px, 2.2vw, 25px); font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">clients</span>
         </div>
         <div style="font-size: clamp(13px, 1.4vw, 16px); color: var(--al-900); font-weight: 500; margin-top: 6px;">to earn back your entire <strong style="font-weight: 700;">$30,000</strong> investment</div>
+        <div style="font-size: clamp(12px, 1.3vw, 15px); color: var(--al-600); font-weight: 500; margin-top: 4px;">That's <strong id="bePct" style="font-weight: 700; color: var(--al-900);">0.07%</strong> of your 3,000 completed assessments</div>
         <p class="slide-disclaimer" style="position: static; max-width: 560px; margin: 10px auto 0;">For illustrative and educational purposes only. This is not a guarantee of results, and your results will vary based on your offer, effort, and factors outside our control.</p>
       </div>
     </div>
@@ -3091,12 +3092,18 @@
     if (!input || !slider) return;
     var clEl = document.getElementById('beClients');
     var wordEl = document.getElementById('beClientsWord');
+    var pctEl = document.getElementById('bePct');
     function sizeInput() { input.style.width = (input.value.length + 0.5) + 'ch'; }
 
     function render(v) {
       var clients = Math.max(1, Math.ceil(INVEST / v));
       clEl.textContent = clients;
       wordEl.textContent = clients === 1 ? 'client' : 'clients';
+      if (pctEl) {
+        // percent of 3,000 completed assessments those break-even deals represent
+        var pct = clients / 3000 * 100;
+        pctEl.textContent = (pct < 0.1 ? pct.toFixed(3) : pct.toFixed(2)) + '%';
+      }
     }
 
     function commit(v) {
