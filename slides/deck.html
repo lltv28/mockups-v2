@@ -2283,7 +2283,7 @@
         </div>
       </div>
 
-      <div class="rv d5"><p style="font-size: 11px; color: var(--al-400); max-width: 760px; margin: 4px auto 0; line-height: 1.5;">Conversion percentages are estimates for illustration only and vary by offer, audience, and market. Not a guarantee of results.</p></div>
+      <div class="rv d5"><p style="font-size: 11px; color: var(--al-400); max-width: 760px; margin: 4px auto 0; line-height: 1.5;">Conversion percentages are based on data from our own internal business only, not an estimate or a guarantee of client results. Your results will depend on your industry, audience, and will likely vary.</p></div>
     </div>
   </div>
   <!-- Phase 2, Validate (Cover) -->
@@ -2807,29 +2807,23 @@
         </div>
       </div>
 
-      <!-- break-even: editable high ticket -->
-      <div class="rv d3" style="max-width: 420px; margin: 0 auto; width: 100%;">
-        <div class="glass--strong" style="text-align: center; padding: 12px 22px;">
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Your High Ticket — drag or type to edit</div>
-          <div style="display: flex; align-items: baseline; justify-content: center; gap: 1px; margin-top: 4px;">
-            <span style="font-family: var(--font-hero); font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; line-height: 1;">$</span>
-            <input id="beInput" type="text" inputmode="numeric" value="15,000" aria-label="Your high ticket price"
-              style="font-family: var(--font-hero); font-size: clamp(24px, 3vw, 32px); font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; line-height: 1; border: none; background: transparent; text-align: left; width: 4.4ch; padding: 0 2px; outline: none; border-bottom: 2px dashed var(--brand-300);">
+      <!-- proof: Kodara's own numbers -->
+      <div class="rv d3" style="max-width: 560px; margin: 0 auto; width: 100%;">
+        <div class="glass--strong" style="text-align: center; padding: 18px 26px;">
+          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">June 2025 → June 2026 · Kodara's own business</div>
+          <div style="display: flex; align-items: baseline; justify-content: center; gap: 14px; margin-top: 12px;">
+            <div style="flex-shrink: 0;">
+              <div style="font-family: var(--font-hero); font-size: clamp(38px, 5vw, 54px); font-weight: 700; color: var(--brand-950); letter-spacing: -1px; line-height: 1;">82</div>
+              <div style="font-size: 11px; color: var(--al-600); font-weight: 600; margin-top: 4px;">high-ticket clients</div>
+            </div>
+            <div style="font-family: var(--font-hero); font-size: clamp(18px, 2.2vw, 24px); font-weight: 600; color: var(--al-400); align-self: center;">from</div>
+            <div style="flex-shrink: 0;">
+              <div style="font-family: var(--font-hero); font-size: clamp(38px, 5vw, 54px); font-weight: 700; color: var(--al-900); letter-spacing: -1px; line-height: 1;">3,000</div>
+              <div style="font-size: 11px; color: var(--al-600); font-weight: 600; margin-top: 4px;">leads</div>
+            </div>
           </div>
-          <input id="beSlider" type="range" min="3000" max="100000" step="1000" value="15000" aria-label="High ticket slider"
-            style="width: 100%; margin-top: 8px; accent-color: var(--brand-950); cursor: pointer;">
+          <div style="font-size: clamp(13px, 1.4vw, 16px); color: var(--al-900); font-weight: 500; margin-top: 14px; line-height: 1.5;">Acquired with this exact same system, in our own business.</div>
         </div>
-      </div>
-
-      <!-- break-even result -->
-      <div class="rv d4" style="max-width: 640px; margin: 0 auto; width: 100%; text-align: center;">
-        <div style="display: flex; align-items: baseline; justify-content: center; gap: 8px;">
-          <span id="beClients" style="font-family: var(--font-hero); font-size: clamp(38px, 5vw, 54px); font-weight: 700; color: var(--al-900); letter-spacing: -1px; line-height: 1;">2</span>
-          <span id="beClientsWord" style="font-family: var(--font-hero); font-size: clamp(18px, 2.2vw, 25px); font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">clients</span>
-        </div>
-        <div style="font-size: clamp(13px, 1.4vw, 16px); color: var(--al-900); font-weight: 500; margin-top: 6px;">to earn back your entire <strong style="font-weight: 700;">$30,000</strong> investment</div>
-        <div style="font-size: clamp(12px, 1.3vw, 15px); color: var(--al-600); font-weight: 500; margin-top: 4px;">That's <strong id="bePct" style="font-weight: 700; color: var(--al-900);">0.07%</strong> of your 3,000 completed assessments</div>
-        <p class="slide-disclaimer" style="position: static; max-width: 560px; margin: 10px auto 0;">For illustrative and educational purposes only. This is not a guarantee of results, and your results will vary based on your offer, effort, and factors outside our control.</p>
       </div>
     </div>
   </div>
@@ -3080,61 +3074,6 @@
   });
 
   goTo(0);
-</script>
-
-<script>
-  // Break-even calculator (embedded in The Investment slide).
-  // Live slide only; thumbnail clones have their IDs stripped, so they keep the static defaults.
-  (function () {
-    var INVEST = 30000; // matches the $30,000 pay-in-full price
-    var input = document.getElementById('beInput');
-    var slider = document.getElementById('beSlider');
-    if (!input || !slider) return;
-    var clEl = document.getElementById('beClients');
-    var wordEl = document.getElementById('beClientsWord');
-    var pctEl = document.getElementById('bePct');
-    function sizeInput() { input.style.width = (input.value.length + 0.5) + 'ch'; }
-
-    function render(v) {
-      var clients = Math.max(1, Math.ceil(INVEST / v));
-      clEl.textContent = clients;
-      wordEl.textContent = clients === 1 ? 'client' : 'clients';
-      if (pctEl) {
-        // percent of 3,000 completed assessments those break-even deals represent
-        var pct = clients / 3000 * 100;
-        pctEl.textContent = (pct < 0.1 ? pct.toFixed(3) : pct.toFixed(2)) + '%';
-      }
-    }
-
-    function commit(v) {
-      v = Math.min(100000, Math.max(3000, v));
-      slider.value = v;
-      input.value = v.toLocaleString('en-US');
-      sizeInput();
-      render(v);
-    }
-
-    slider.addEventListener('input', function () {
-      var v = parseInt(slider.value, 10);
-      input.value = v.toLocaleString('en-US');
-      sizeInput();
-      render(v);
-    });
-
-    input.addEventListener('input', function () {
-      sizeInput();
-      var v = parseInt(input.value.replace(/[^0-9]/g, ''), 10);
-      if (!isNaN(v) && v > 0) { slider.value = Math.min(100000, Math.max(3000, v)); render(v); }
-    });
-
-    input.addEventListener('blur', function () {
-      var v = parseInt(input.value.replace(/[^0-9]/g, ''), 10);
-      commit(isNaN(v) ? 15000 : v);
-    });
-    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') input.blur(); });
-
-    commit(15000);
-  })();
 </script>
 
 </body>
