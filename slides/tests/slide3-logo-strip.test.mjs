@@ -76,3 +76,22 @@ test('embedded PNG logos contain a complete PNG trailer', () => {
     assert.equal(bytes.subarray(-12).toString('hex'), '0000000049454e44ae426082');
   });
 });
+
+test('slide 3 uses the approved smaller cards and larger logos', () => {
+  assert.match(deck, /\.love-reasons\s*\{[^}]*max-width:\s*690px/s);
+  assert.match(deck, /\.love-reason\s*\{[^}]*padding:\s*14px/s);
+  assert.match(deck, /\.love-reason__num\s*\{[^}]*width:\s*20px;[^}]*height:\s*20px/s);
+  assert.match(deck, /\.love-reason__title\s*\{[^}]*font-size:\s*13px/s);
+  assert.match(deck, /\.love-reason__body\s*\{[^}]*font-size:\s*11px;[^}]*line-height:\s*1\.4/s);
+  assert.match(deck, /\.client-logo-strip\s*\{[^}]*max-width:\s*1040px/s);
+  assert.match(deck, /\.client-logo-strip__row\s*\{[^}]*gap:\s*8px/s);
+  assert.match(deck, /\.client-logo-strip__logo\s*\{[^}]*max-width:\s*148px/s);
+  assert.match(deck, /\.client-logo-strip__wordmark\s*\{[^}]*font-size:\s*15px/s);
+  const logoHeights = [
+    ['mayo', 35], ['jh', 29], ['ghl', 19], ['fid', 18],
+    ['st', 18], ['tr', 11], ['hrb', 16], ['ram', 18],
+  ];
+  logoHeights.forEach(([name, height]) => {
+    assert.match(deck, new RegExp(`\\.client-logo-strip__logo--${name}\\s*\\{[^}]*height:\\s*${height}px`, 's'));
+  });
+});
