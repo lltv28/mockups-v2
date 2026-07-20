@@ -133,7 +133,7 @@ Apply these exact class changes to the copied block while preserving every embed
 | `class="lgimg lgimg-hrb"` | `class="client-logo-strip__logo client-logo-strip__logo--hrb"` |
 | `class="lgimg lgimg-ram"` | `class="client-logo-strip__logo client-logo-strip__logo--ram"` |
 
-Preserve the caption and alternative-text values from the source. The resulting order is Mayo Clinic, ClickFunnels, Johns Hopkins, HighLevel, Fidelity Investments, ServiceTitan, Tony Robbins, H&R Block, and Ramsey Solutions.
+Preserve the caption and source alternative-text values, except change `alt="Fidelity"` to `alt="Fidelity Investments"` to match the approved company name. The resulting order is Mayo Clinic, ClickFunnels, Johns Hopkins, HighLevel, Fidelity Investments, ServiceTitan, Tony Robbins, H&R Block, and Ramsey Solutions.
 
 Change the existing reason-card wrapper from `class="rv d4 love-reasons"` to `class="rv d5 love-reasons"` so it reveals after the logo band.
 
