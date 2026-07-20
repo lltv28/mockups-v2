@@ -95,3 +95,8 @@ test('slide 3 uses the approved smaller cards and larger logos', () => {
     assert.match(deck, new RegExp(`\\.client-logo-strip__logo--${name}\\s*\\{[^}]*height:\\s*${height}px`, 's'));
   });
 });
+
+test('slide 3 tightens the logo row gap at the 900px breakpoint', () => {
+  assert.match(deck, /@media\s*\(max-width:\s*900px\)\s*\{(?:[^{}]|\{[^{}]*\})*\.client-logo-strip__row\s*\{[^}]*gap:\s*4px/s);
+  assert.match(deck, /\.client-logo-strip__row\s*\{[^}]*flex-wrap:\s*nowrap/s);
+});
