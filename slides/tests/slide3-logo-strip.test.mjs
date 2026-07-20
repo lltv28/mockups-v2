@@ -100,3 +100,7 @@ test('slide 3 tightens the logo row gap at the 900px breakpoint', () => {
   assert.match(deck, /@media\s*\(max-width:\s*900px\)\s*\{(?:[^{}]|\{[^{}]*\})*\.client-logo-strip__row\s*\{[^}]*gap:\s*4px/s);
   assert.match(deck, /\.client-logo-strip__row\s*\{[^}]*flex-wrap:\s*nowrap/s);
 });
+
+test('slide 3 scales the logo row at the 800px breakpoint', () => {
+  assert.match(deck, /@media\s*\(max-width:\s*800px\)\s*\{[^}]*\.client-logo-strip__row\s*\{[^}]*transform:\s*scale\(\.84\);[^}]*transform-origin:\s*center/s);
+});
