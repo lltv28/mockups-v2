@@ -101,6 +101,15 @@ test('slide 3 tightens the logo row gap at the 900px breakpoint', () => {
   assert.match(deck, /\.client-logo-strip__row\s*\{[^}]*flex-wrap:\s*nowrap/s);
 });
 
-test('slide 3 scales the logo row at the 800px breakpoint', () => {
-  assert.match(deck, /@media\s*\(max-width:\s*800px\)\s*\{[^}]*\.client-logo-strip__row\s*\{[^}]*transform:\s*scale\(\.84\);[^}]*transform-origin:\s*center/s);
+test('slide 3 fluidly scales the logo row at and below 850px', () => {
+  assert.match(deck, /@media\s*\(max-width:\s*850px\)\s*\{[^}]*\.client-logo-strip__row\s*\{[^}]*transform:\s*scale\(clamp\(\.3,\s*calc\(\(100vw - 56px\) \/ 842px\),\s*\.84\)\);[^}]*transform-origin:\s*center/s);
+
+  const contentWidth = 842;
+  const maxScale = 0.84;
+  const minScale = 0.3;
+  [850, 801, 768, 430].forEach((viewport) => {
+    const availableWidth = viewport - 56;
+    const scale = Math.max(minScale, Math.min(maxScale, availableWidth / contentWidth));
+    assert.ok(contentWidth * scale <= availableWidth, `${viewport}px viewport must fit the logo row`);
+  });
 });
