@@ -66,12 +66,12 @@ test('AI credibility slide contains four verified products and local images', ()
 });
 
 test('obsolete pre-pitch slides are removed', () => {
-  const obsoleteMarkers = [
-    '<!-- INTRO 1.4, Why This Model Works',
-    '<!-- INTRO 1.6, The Three Questions',
-    '<!-- NICHES, breadth of clients',
-    '<!-- Testimonial · Sandra (High Ticket)',
+  const obsoleteHeadings = [
+    'Why a $17 AI beats a free lead magnet every time.',
+    'The three things everyone asks before they say yes.',
+    "We've built AI products for niches you'd never expect.",
+    'Same coaching calls. The empty hours now sell on their own.',
   ];
-  const remainingMarkers = obsoleteMarkers.filter((marker) => deck.includes(marker));
-  assert.deepEqual(remainingMarkers, [], 'obsolete pre-pitch slide markers must be removed');
+  const remainingHeadings = obsoleteHeadings.filter((heading) => deck.includes(heading));
+  assert.deepEqual(remainingHeadings, [], 'obsolete pre-pitch slide content must be removed');
 });
