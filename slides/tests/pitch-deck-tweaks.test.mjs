@@ -20,6 +20,21 @@ function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function assertInOrder(content, copies, label) {
+  let cursor = -1;
+  copies.forEach((copy) => {
+    const next = content.indexOf(copy, cursor + 1);
+    assert.ok(next > cursor, `${label}: ${copy} must appear in order`);
+    cursor = next;
+  });
+}
+
+function assertOneVisibleSlide(content, label) {
+  const slideStarts = content.match(/<div class="slide(?: [^"]*)?"[^>]*>/g) ?? [];
+  assert.equal(slideStarts.length, 1, `${label} must contain exactly one slide`);
+  assert.doesNotMatch(slideStarts[0], /\shidden(?:\s|=|>)/, `${label} must remain visible`);
+}
+
 function readPngInfo(imagePath) {
   const bytes = readFileSync(imagePath);
   assert.ok(bytes.length >= 24, `${imagePath} must contain a PNG header`);
@@ -141,21 +156,81 @@ test('obsolete pre-pitch slides are removed', () => {
   assert.deepEqual(remainingHeadings, [], 'obsolete pre-pitch slide content must be removed');
 });
 
-test('deck uses two stages and preserves the Build sequence', () => {
-  assert.match(deck, /The Kodara System/);
-  assert.match(deck, /Build and launch\./);
-  assert.doesNotMatch(deck, /Build, launch, monetize\./i);
-  ['Lucas Onboarding Call', 'Your Entry Level AI', 'Your AI Pocket Coach', 'Three products, all ready to launch', 'We prove it works before the world sees it']
-    .forEach((copy) => assert.match(deck, new RegExp(copy)));
+test('overview uses exactly the approved Build and Launch stages', () => {
+  const overview = section('<!-- S5, 2 Stages Overview -->', '<!-- Phase 1, AI Build (Cover) -->');
+  assert.match(overview, /The Kodara System/);
+  assert.match(overview, /Build and launch\./);
+  assert.doesNotMatch(overview, /Build, launch, monetize\./i);
+  assert.equal((overview.match(/class="phase-col /g) ?? []).length, 2);
+  assertInOrder(overview, ['Build', '4 weeks', 'Launch', '2 weeks'], 'two-stage overview');
 });
 
-test('Launch contains authority branding plus organic and paid flows', () => {
+test('Build contains seven visible slides in the approved order', () => {
+  const buildMarkers = [
+    '<!-- Phase 1, AI Build (Cover) -->',
+    '<!-- Phase 1, Slide 1, Lucas Onboarding Call -->',
+    '<!-- Phase 1, Slide 2, The AI Plan + Connector Grid -->',
+    '<!-- Phase 1, Mid-Ticket Demo',
+    '<!-- Phase 1, AI Product Library Recap',
+    '<!-- Phase 1, Test',
+    '<!-- Phase 1 · Validate · Combined Orbit demo',
+    '<!-- Phase 2, Launch (Cover) -->',
+  ];
+  const buildHeadings = [
+    '>Build</h2>',
+    'Lucas Onboarding Call',
+    'Your Entry Level AI',
+    'Your AI Pocket Coach',
+    'Three products, all ready to launch',
+    'We prove it works before the world sees it.',
+    'Validate — Command Center Orbit',
+  ];
+  const build = section(buildMarkers[0], buildMarkers.at(-1));
+  assertInOrder(build, buildHeadings, 'Build slides');
+  buildHeadings.forEach((heading, index) => {
+    const slide = section(buildMarkers[index], buildMarkers[index + 1]);
+    assertOneVisibleSlide(slide, `Build slide ${index + 1}`);
+    assert.ok(slide.includes(heading), `Build slide ${index + 1} must contain ${heading}`);
+  });
+});
+
+test('Launch contains four visible slides with the three detail slides in approved order', () => {
+  const launch = section('<!-- Phase 2, Launch (Cover) -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  const slideStarts = launch.match(/<div class="slide(?: [^"]*)?"[^>]*>/g) ?? [];
+  assert.equal(slideStarts.length, 4);
+  slideStarts.forEach((slideStart) => assert.doesNotMatch(slideStart, /\shidden(?:\s|=|>)/));
+  assertInOrder(launch, [
+    '<!-- Phase 2, Authority Branding Overview -->',
+    '<!-- Phase 2, Organic Launch Flow -->',
+    '<!-- Phase 2, Paid Ads Launch Flow -->',
+  ], 'Launch detail slides');
+
+  const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Organic Launch Flow -->');
+  assertOneVisibleSlide(authority, 'authority branding slide');
   ['Personal branded website', 'Done-for-you posting', 'ManyChat comment and DM automation']
-    .forEach((copy) => assert.match(deck, new RegExp(escapeRegex(copy), 'i')));
-  ['Content created', 'Content posted consistently', 'ManyChat starts the conversation', 'Lead enters the AI assessment and funnel']
-    .forEach((copy) => assert.match(deck, new RegExp(escapeRegex(copy), 'i')));
-  ['Ads created and configured', 'Traffic reaches the funnel', 'Buyer completes the $17 assessment', 'remaining buyers receive the Pocket Coach offer']
-    .forEach((copy) => assert.match(deck, new RegExp(escapeRegex(copy), 'i')));
+    .forEach((copy) => assert.match(authority, new RegExp(escapeRegex(copy), 'i')));
+});
+
+test('organic and paid Launch flows keep four steps in their own approved order', () => {
+  const organic = section('<!-- Phase 2, Organic Launch Flow -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
+  const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  assertOneVisibleSlide(organic, 'organic Launch flow');
+  assertOneVisibleSlide(paid, 'paid Launch flow');
+  assertInOrder(organic, ['Content created', 'Content posted consistently', 'ManyChat starts the conversation', 'Lead enters the AI assessment and funnel'], 'organic Launch flow');
+  assertInOrder(paid, ['Ads created and configured', 'Traffic reaches the funnel', 'Buyer completes the $17 assessment', 'remaining buyers receive the Pocket Coach offer'], 'paid Launch flow');
+});
+
+test('organic and paid Launch flows use accessible ordered-list semantics', () => {
+  const organic = section('<!-- Phase 2, Organic Launch Flow -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
+  const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  [organic, paid].forEach((flow) => {
+    assert.match(flow, /<ol class="upsell-flow rv d4">/);
+    assert.equal((flow.match(/<li class="upsell-step(?: upsell-final)?">/g) ?? []).length, 4);
+    assert.equal((flow.match(/class="upsell-arrow"/g) ?? []).length, 3);
+    assert.equal((flow.match(/<li class="upsell-arrow" aria-hidden="true">→<\/li>/g) ?? []).length, 3);
+    assert.match(flow, /<\/ol>/);
+  });
+  assert.match(deck, /\.upsell-flow \{[^}]*list-style: none;[^}]*padding: 0;/);
 });
 
 test('obsolete marketing and Monetize slides are removed', () => {
