@@ -3126,6 +3126,7 @@
 
     const wrapper = document.createElement('div');
     wrapper.className = 'thumb-clone';
+    wrapper.setAttribute('aria-hidden', 'true');
 
     // Clone the full slide element so it keeps its own classes + styles
     const clonedSlide = slide.cloneNode(true);

@@ -118,6 +118,14 @@ test('AI proof source manifest records exact official provenance without asserti
   assert.match(sources, /does not assert or grant reuse permission/i);
 });
 
+test('thumbnail slide clones are hidden from assistive technology', () => {
+  const thumbnailCode = section("wrapper.className = 'thumb-clone';", 'wrapper.appendChild(clonedSlide);');
+  const hidden = thumbnailCode.indexOf("wrapper.setAttribute('aria-hidden', 'true');");
+  const clone = thumbnailCode.indexOf('const clonedSlide = slide.cloneNode(true);');
+  assert.ok(hidden >= 0, 'thumbnail clone wrapper must be aria-hidden');
+  assert.ok(hidden < clone, 'thumbnail clone wrapper must be hidden before the slide is cloned');
+});
+
 test('obsolete pre-pitch slides are removed', () => {
   const obsoleteHeadings = [
     'Why a $17 AI beats a free lead magnet every time.',
