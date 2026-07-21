@@ -16,6 +16,10 @@ function section(startMarker, endMarker) {
   return deck.slice(start, end);
 }
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function readPngInfo(imagePath) {
   const bytes = readFileSync(imagePath);
   assert.ok(bytes.length >= 24, `${imagePath} must contain a PNG header`);
@@ -57,7 +61,7 @@ test('offer ladder sends qualified buyers to high ticket before the Pocket Coach
 });
 
 test('product library keeps high ticket before the Pocket Coach downsell', () => {
-  const library = section('<!-- Phase 1, AI Product Library Recap', '<!-- Phase 2, Test');
+  const library = section('<!-- Phase 1, AI Product Library Recap', '<!-- Phase 1, Test');
   const assessment = library.indexOf('AI Assessment');
   const highTicket = library.indexOf('1-on-1 Service');
   const pocketCoach = library.indexOf('AI Pocket Coach');
@@ -135,4 +139,26 @@ test('obsolete pre-pitch slides are removed', () => {
   ];
   const remainingHeadings = obsoleteHeadings.filter((heading) => deck.includes(heading));
   assert.deepEqual(remainingHeadings, [], 'obsolete pre-pitch slide content must be removed');
+});
+
+test('deck uses two stages and preserves the Build sequence', () => {
+  assert.match(deck, /The Kodara System/);
+  assert.match(deck, /Build and launch\./);
+  assert.doesNotMatch(deck, /Build, launch, monetize\./i);
+  ['Lucas Onboarding Call', 'Your Entry Level AI', 'Your AI Pocket Coach', 'Three products, all ready to launch', 'We prove it works before the world sees it']
+    .forEach((copy) => assert.match(deck, new RegExp(copy)));
+});
+
+test('Launch contains authority branding plus organic and paid flows', () => {
+  ['Personal branded website', 'Done-for-you posting', 'ManyChat comment and DM automation']
+    .forEach((copy) => assert.match(deck, new RegExp(escapeRegex(copy), 'i')));
+  ['Content created', 'Content posted consistently', 'ManyChat starts the conversation', 'Lead enters the AI assessment and funnel']
+    .forEach((copy) => assert.match(deck, new RegExp(escapeRegex(copy), 'i')));
+  ['Ads created and configured', 'Traffic reaches the funnel', 'Buyer completes the $17 assessment', 'remaining buyers receive the Pocket Coach offer']
+    .forEach((copy) => assert.match(deck, new RegExp(escapeRegex(copy), 'i')));
+});
+
+test('obsolete marketing and Monetize slides are removed', () => {
+  ['Done-For-You Pipeline Activation', 'Phase 3 · Ascension', 'Back-End Ecosystem', 'How the AI upsells every lead']
+    .forEach((copy) => assert.doesNotMatch(deck, new RegExp(copy, 'i')));
 });
