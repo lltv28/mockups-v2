@@ -237,3 +237,45 @@ test('obsolete marketing and Monetize slides are removed', () => {
   ['Done-For-You Pipeline Activation', 'Phase 3 · Ascension', 'Back-End Ecosystem', 'How the AI upsells every lead']
     .forEach((copy) => assert.doesNotMatch(deck, new RegExp(copy, 'i')));
 });
+
+test('closing uses the logo stack and removes internal business numbers', () => {
+  const closing = section('<!-- S11, Your Knowledge Becomes An Asset', '<!-- S10b, Payment Plans');
+  assert.match(closing, /class="closing-logo-stack"/);
+  ['Mayo Clinic', 'Johns Hopkins', 'HighLevel', 'Fidelity Investments', 'ServiceTitan', 'Tony Robbins', 'H&amp;R Block', 'Ramsey Solutions']
+    .forEach((name) => assert.match(closing, new RegExp(name)));
+  assert.match(closing, /ClickFunnels/);
+  assert.doesNotMatch(closing, />\s*34\s*</);
+  ['\\$612K\\+', 'APRIL – JUNE 2026', 'out of 1,000 leads with this exact same system']
+    .forEach((copy) => assert.doesNotMatch(closing, new RegExp(copy, 'i')));
+});
+
+test('investment deliverables match the approved Build and Launch offer', () => {
+  [
+    'Lucas Onboarding Call', 'Done-For-You AI Build', 'Your AI Avatar', 'AI Sales Team',
+    'Personal Branded Website', 'Done-For-You Posting', 'ManyChat Automation',
+    'Done-For-You Funnel', 'Paid Ads Setup',
+  ].forEach((copy) => assert.match(deck, new RegExp(copy, 'i')));
+  assert.match(deck, /Requires at least \$5,000 in ad spend/);
+  assert.match(deck, /\$6,800 ×3/);
+});
+
+test('deck contains the approved 20 visible slides in order', () => {
+  const visibleSlideStarts = [...deck.matchAll(/<div class="slide(?: [^"]*)?"(?![^>]*\shidden)[^>]*>/g)];
+  assert.equal(visibleSlideStarts.length, 20);
+  const orderedCopy = [
+    'You can only sell one person at a time',
+    'Meet the version of you that never stops selling',
+    'Why our clients love the Kodara model',
+    'The biggest experts are already turning their knowledge into AI',
+    'Build and launch',
+    "Your life's work finally working without you",
+    'Your entire AI system, built and launched for you',
+    'Two ways to pay',
+  ];
+  let cursor = -1;
+  orderedCopy.forEach((copy) => {
+    const next = deck.indexOf(copy, cursor + 1);
+    assert.ok(next > cursor, `${copy} must appear in order`);
+    cursor = next;
+  });
+});
