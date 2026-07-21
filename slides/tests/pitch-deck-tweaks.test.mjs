@@ -238,15 +238,45 @@ test('obsolete marketing and Monetize slides are removed', () => {
     .forEach((copy) => assert.doesNotMatch(deck, new RegExp(copy, 'i')));
 });
 
-test('closing uses the logo stack and removes internal business numbers', () => {
+test('closing uses a captioned 5 plus 4 logo stack and removes internal business numbers', () => {
   const closing = section('<!-- S11, Your Knowledge Becomes An Asset', '<!-- S10b, Payment Plans');
-  assert.match(closing, /class="closing-logo-stack"/);
-  ['Mayo Clinic', 'Johns Hopkins', 'HighLevel', 'Fidelity Investments', 'ServiceTitan', 'Tony Robbins', 'H&amp;R Block', 'Ramsey Solutions']
-    .forEach((name) => assert.match(closing, new RegExp(name)));
-  assert.match(closing, /ClickFunnels/);
+  assert.match(closing, /<figure class="closing-logo-stack">/);
+  assert.match(closing, /<figcaption class="closing-logo-stack__caption">We've built AI products used and loved by people at:<\/figcaption>/);
+  assert.deepEqual(
+    [...closing.matchAll(/<div class="closing-logo-stack__row closing-logo-stack__row--(five|four)"><\/div>/g)]
+      .map((match) => match[1]),
+    ['five', 'four'],
+  );
+  assert.doesNotMatch(closing, /closing-logo-stack__slot/);
+  assert.doesNotMatch(closing, /Organizations using AI products built by Kodara clients/);
   assert.doesNotMatch(closing, />\s*34\s*</);
   ['\\$612K\\+', 'APRIL – JUNE 2026', 'out of 1,000 leads with this exact same system']
     .forEach((copy) => assert.doesNotMatch(closing, new RegExp(copy, 'i')));
+});
+
+test('closing clones the nine real slide 3 logos in approved order before the 5 plus 4 split', () => {
+  const runtime = section('const approvedClosingLogoOrder = [', '// Build thumbnail panel');
+  const approvedOrder = [
+    'Mayo Clinic', 'ClickFunnels', 'Johns Hopkins', 'HighLevel', 'Fidelity Investments',
+    'ServiceTitan', 'Tony Robbins', 'H&R Block', 'Ramsey Solutions',
+  ];
+  assertInOrder(runtime, approvedOrder.map((name) => `'${name}'`), 'closing runtime logo order');
+  assert.match(runtime, /approvedClosingLogoOrder\.map/);
+  assert.match(runtime, /sourceLogoElements\.find/);
+  assert.match(runtime, /logo\.cloneNode\(true\)/);
+  assert.match(runtime, /item\.appendChild\(logo\)/);
+  assert.match(runtime, /approvedClosingLogos\.slice\(0, 5\)/);
+  assert.match(runtime, /approvedClosingLogos\.slice\(5\)/);
+});
+
+test('closing logo rows use closing-specific fluid fit rules without horizontal overflow', () => {
+  assert.match(deck, /\.closing-logo-stack \{[^}]*overflow: hidden;[^}]*\}/);
+  assert.match(deck, /\.closing-logo-stack__row \{[^}]*grid-template-columns: repeat\(var\(--closing-logo-count\), minmax\(0, 1fr\)\);[^}]*gap: clamp\([^;]+\);[^}]*\}/);
+  assert.match(deck, /\.closing-logo-stack__row--five \{ --closing-logo-count: 5; \}/);
+  assert.match(deck, /\.closing-logo-stack__row--four \{ --closing-logo-count: 4; \}/);
+  assert.match(deck, /\.closing-logo-stack__item \{[^}]*min-width: 0;[^}]*\}/);
+  assert.match(deck, /\.closing-logo-stack__item > \.client-logo-strip__logo \{[^}]*order: initial;[^}]*max-width: 100%;[^}]*height: auto;[^}]*\}/);
+  assert.match(deck, /@media \(max-width: 520px\) \{[^}]*\.closing-logo-stack \{[^}]*padding-inline: 10px;[^}]*\}/s);
 });
 
 test('investment deliverables match the approved Build and Launch offer', () => {

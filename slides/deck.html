@@ -1852,9 +1852,14 @@
   .client-logo-strip__logo--tr { height: 11px; order: 7; }
   .client-logo-strip__logo--hrb { height: 16px; order: 8; }
   .client-logo-strip__logo--ram { height: 18px; order: 9; }
-  .closing-logo-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 18px; padding: 16px 20px; background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; box-shadow: var(--shadow-card); }
-  .closing-logo-stack__row { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 35px; }
-  .closing-logo-stack__slot { color: var(--al-500); font-size: 11px; font-weight: 700; text-align: center; }
+  .closing-logo-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 18px; padding: 16px clamp(10px, 2.5vw, 20px); overflow: hidden; background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; box-shadow: var(--shadow-card); }
+  .closing-logo-stack__caption { font-size: 10.5px; font-weight: 600; color: var(--al-500); text-align: center; }
+  .closing-logo-stack__row { display: grid; grid-template-columns: repeat(var(--closing-logo-count), minmax(0, 1fr)); align-items: center; gap: clamp(3px, .6vw, 10px); width: 100%; min-width: 0; min-height: 35px; }
+  .closing-logo-stack__row--five { --closing-logo-count: 5; }
+  .closing-logo-stack__row--four { --closing-logo-count: 4; }
+  .closing-logo-stack__item { display: flex; align-items: center; justify-content: center; min-width: 0; overflow: hidden; }
+  .closing-logo-stack__item > .client-logo-strip__logo { order: initial; max-width: 100%; height: auto; max-height: 35px; object-fit: contain; }
+  .closing-logo-stack__item > .client-logo-strip__wordmark { order: initial; max-width: 100%; overflow: hidden; font-size: clamp(7px, .75vw, 12px); text-align: center; }
   .ai-proof-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; width: 100%; }
   .ai-proof-card { background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 14px; box-shadow: var(--shadow-card); text-align: left; }
   .ai-proof-card img { width: 100%; height: 112px; border-radius: 12px; object-fit: cover; object-position: center top; }
@@ -1878,6 +1883,8 @@
   }
   @media (max-width: 850px) { .client-logo-strip__row { transform: scale(clamp(.3, calc((100vw - 56px) / 842px), .84)); transform-origin: center; } }
   @media (max-width: 520px) {
+    .closing-logo-stack { padding-inline: 10px; }
+    .closing-logo-stack__row { gap: 3px; }
     .ai-proof-grid, .ai-proof-benefits { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) { .love-track { animation: none; } }
@@ -2709,21 +2716,11 @@
           </div>
         </div>
 
-        <div class="closing-logo-stack" aria-label="Organizations using AI products built by Kodara clients">
-          <div class="closing-logo-stack__row">
-            <span class="closing-logo-stack__slot">Mayo Clinic</span>
-            <span class="closing-logo-stack__slot">ClickFunnels</span>
-            <span class="closing-logo-stack__slot">Johns Hopkins</span>
-            <span class="closing-logo-stack__slot">HighLevel</span>
-            <span class="closing-logo-stack__slot">Fidelity Investments</span>
-          </div>
-          <div class="closing-logo-stack__row">
-            <span class="closing-logo-stack__slot">ServiceTitan</span>
-            <span class="closing-logo-stack__slot">Tony Robbins</span>
-            <span class="closing-logo-stack__slot">H&amp;R Block</span>
-            <span class="closing-logo-stack__slot">Ramsey Solutions</span>
-          </div>
-        </div>
+        <figure class="closing-logo-stack">
+          <figcaption class="closing-logo-stack__caption">We've built AI products used and loved by people at:</figcaption>
+          <div class="closing-logo-stack__row closing-logo-stack__row--five"></div>
+          <div class="closing-logo-stack__row closing-logo-stack__row--four"></div>
+        </figure>
       </div>
     </div>
   </div>
@@ -2856,10 +2853,35 @@
   const total = slides.length;
   let current = 0;
 
-  const approvedLogoElements = Array.from(document.querySelector('.client-logo-strip__row').children);
-  const closingLogoSlots = document.querySelectorAll('.closing-logo-stack__slot');
-  if (approvedLogoElements.length === closingLogoSlots.length) {
-    closingLogoSlots.forEach((slot, index) => slot.replaceWith(approvedLogoElements[index].cloneNode(true)));
+  const approvedClosingLogoOrder = [
+    'Mayo Clinic',
+    'ClickFunnels',
+    'Johns Hopkins',
+    'HighLevel',
+    'Fidelity Investments',
+    'ServiceTitan',
+    'Tony Robbins',
+    'H&R Block',
+    'Ramsey Solutions',
+  ];
+  const sourceLogoElements = Array.from(document.querySelector('.client-logo-strip__row').children);
+  const approvedClosingLogos = approvedClosingLogoOrder.map((name) => {
+    const logo = sourceLogoElements.find((element) => (element.getAttribute('alt') || element.textContent.trim()) === name);
+    if (!logo) throw new Error('Missing approved closing logo: ' + name);
+    return logo.cloneNode(true);
+  });
+  const closingLogoRows = document.querySelectorAll('.closing-logo-stack__row');
+  const appendClosingLogos = (row, logos) => {
+    logos.forEach((logo) => {
+      const item = document.createElement('span');
+      item.className = 'closing-logo-stack__item';
+      item.appendChild(logo);
+      row.appendChild(item);
+    });
+  };
+  if (closingLogoRows.length === 2) {
+    appendClosingLogos(closingLogoRows[0], approvedClosingLogos.slice(0, 5));
+    appendClosingLogos(closingLogoRows[1], approvedClosingLogos.slice(5));
   }
 
   // Build thumbnail panel from actual slide clones
