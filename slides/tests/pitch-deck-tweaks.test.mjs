@@ -16,6 +16,15 @@ function section(startMarker, endMarker) {
   return deck.slice(start, end);
 }
 
+function readPngInfo(imagePath) {
+  const bytes = readFileSync(imagePath);
+  assert.ok(bytes.length >= 24, `${imagePath} must contain a PNG header`);
+  assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', `${imagePath} must have a PNG signature`);
+  assert.equal(bytes.readUInt32BE(8), 13, `${imagePath} must begin with a 13-byte IHDR chunk`);
+  assert.equal(bytes.subarray(12, 16).toString('ascii'), 'IHDR', `${imagePath} must begin with an IHDR chunk`);
+  return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+}
+
 test('opening uses the approved AI scale message', () => {
   const opening = section('<!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->', '<!-- INTRO 1.1,');
   assert.match(opening, /You can only sell one person at a time\./);
@@ -25,11 +34,24 @@ test('opening uses the approved AI scale message', () => {
   assert.doesNotMatch(opening, /Your business can't grow past how many hours you work/);
 });
 
+test('opening slides use headings as their accessible names', () => {
+  const opening = section('<!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->', '<!-- INTRO 1.1,');
+  const ladder = section('<!-- INTRO 1.1,', '<!-- INTRO 1.2,');
+  assert.match(opening, /<div class="slide active" role="group" aria-roledescription="slide" aria-labelledby="opening-title">/);
+  assert.match(opening, /<h2 id="opening-title" class="h-hero">/);
+  assert.match(ladder, /<div class="slide" role="group" aria-roledescription="slide" aria-labelledby="offer-ladder-title">/);
+  assert.match(ladder, /<h2 id="offer-ladder-title" class="h-hero"/);
+  assert.doesNotMatch(ladder, /<div class="slide" aria-label=/);
+});
+
 test('offer ladder sends qualified buyers to high ticket before the Pocket Coach downsell', () => {
   const ladder = section('<!-- INTRO 1.1,', '<!-- INTRO 1.2,');
-  const assessment = ladder.indexOf('AI Assessment');
-  const highTicket = ladder.indexOf('1-on-1 Service');
-  const pocketCoach = ladder.indexOf('AI Pocket Coach');
+  const cardGridStart = ladder.indexOf('<div class="rv d3"');
+  assert.ok(cardGridStart >= 0, 'offer ladder card grid must exist');
+  const cards = ladder.slice(cardGridStart);
+  const assessment = cards.indexOf('AI Assessment');
+  const highTicket = cards.indexOf('1-on-1 Service');
+  const pocketCoach = cards.indexOf('AI Pocket Coach');
   assert.ok(assessment >= 0 && assessment < highTicket && highTicket < pocketCoach);
   assert.match(ladder, /not ready for a call/i);
 });
@@ -63,6 +85,37 @@ test('AI credibility slide contains four verified products and local images', ()
   });
   ['Available 24/7', 'Automated nurturing', 'Recurring monthly revenue', 'Scale without adding calendar time']
     .forEach((benefit) => assert.match(proof, new RegExp(benefit)));
+});
+
+test('AI credibility slide uses scoped short-viewport scrolling and slide semantics', () => {
+  const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
+  assert.match(proof, /<div class="slide slide--ai-proof" role="group" aria-roledescription="slide" aria-labelledby="ai-proof-title">/);
+  assert.match(proof, /<h2 id="ai-proof-title" class="h-lg"/);
+  assert.match(deck, /@media \(max-width: 900px\) \{\s*\.slide--ai-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}\s*\.slide--ai-proof > \.content--wide \{[^}]*justify-content: flex-start !important;[^}]*align-items: stretch;[^}]*\}/s);
+});
+
+test('local AI proof images are valid 800 by 450 PNG files', () => {
+  ['tony-robbins.png', 'alex-hormozi.png', 'grant-cardone.png', 'mark-hyman.png'].forEach((file) => {
+    const dimensions = readPngInfo(resolve(slidesDir, 'ai-proof', file));
+    assert.deepEqual(dimensions, { width: 800, height: 450 }, `${file} must be 800 by 450 pixels`);
+  });
+});
+
+test('AI proof source manifest records exact official provenance without asserting permission', () => {
+  const manifestPath = resolve(slidesDir, 'ai-proof', 'SOURCES.md');
+  assert.ok(existsSync(manifestPath), 'SOURCES.md must exist');
+  const sources = readFileSync(manifestPath, 'utf8');
+  assert.match(sources, /Retrieved: 2026-07-21/);
+  [
+    ['tony-robbins.png', 'https://www.tonyrobbins.com/programs/tony-ai'],
+    ['alex-hormozi.png', 'https://ai.acquisition.com/'],
+    ['grant-cardone.png', 'https://10xgc.grantcardone.com/blt-offer'],
+    ['mark-hyman.png', 'https://drhyman.com/products/ai-mark'],
+  ].forEach(([file, url]) => {
+    assert.match(sources, new RegExp(file.replace('.', '\\.')));
+    assert.ok(sources.includes(url), `${file} must list ${url}`);
+  });
+  assert.match(sources, /does not assert or grant reuse permission/i);
 });
 
 test('obsolete pre-pitch slides are removed', () => {

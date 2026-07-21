@@ -1861,6 +1861,15 @@
   .ai-proof-benefit { background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 12px; color: var(--brand-950); font-size: 12px; font-weight: 700; padding: 11px 8px; text-align: center; }
   @media (max-width: 900px) { .love-track { animation-duration: 32s; } .love-reasons { grid-template-columns: 1fr; max-width: 380px; } .client-logo-strip__row { gap: 4px; } }
   @media (max-width: 900px) {
+    .slide--ai-proof {
+      overflow-y: auto;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .slide--ai-proof > .content--wide {
+      justify-content: flex-start !important;
+      align-items: stretch;
+    }
     .ai-proof-grid, .ai-proof-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .ai-proof-card img { height: 140px; }
   }
@@ -1907,7 +1916,7 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide active">
+  <div class="slide active" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
@@ -1915,7 +1924,7 @@
       <div class="flex-col gap-16">
         <div class="rv d1"><span class="label-tag">Kodara</span></div>
         <div class="rv d2">
-          <h2 class="h-hero">You can only sell one person at a time.<br>Your AI can sell a thousand, all at once.</h2>
+          <h2 id="opening-title" class="h-hero">You can only sell one person at a time.<br>Your AI can sell a thousand, all at once.</h2>
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 760px; margin: 0 auto;">
@@ -1929,13 +1938,13 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- INTRO 1.1, Meet The Version (never stops selling + offer ladder) -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide" aria-label="AI Assessment, 1-on-1 Service, AI Pocket Coach">
+  <div class="slide" role="group" aria-roledescription="slide" aria-labelledby="offer-ladder-title">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
     <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
       <div class="flex-col gap-16">
-        <div class="rv d1"><h2 class="h-hero" style="max-width: 660px; margin: 0 auto; text-wrap: balance;">Meet the version of you that never stops selling.</h2></div>
+        <div class="rv d1"><h2 id="offer-ladder-title" class="h-hero" style="max-width: 660px; margin: 0 auto; text-wrap: balance;">Meet the version of you that never stops selling.</h2></div>
         <div class="rv d2"><p class="body-lg" style="max-width: 640px; margin: 0 auto; text-wrap: pretty;">We build an AI version of you. It sells a $17 assessment, identifies the buyers ready for your highest level of service, and offers everyone else your $297/month AI Pocket Coach.</p></div>
       </div>
 
@@ -2092,14 +2101,14 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- INTRO 1.3, Big-Name AI Credibility -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
+  <div class="slide slide--ai-proof" role="group" aria-roledescription="slide" aria-labelledby="ai-proof-title">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
     <div class="content--wide text-center flex-col gap-18" style="justify-content: center;">
       <div class="flex-col gap-10">
         <div class="rv d1"><span class="label-tag">The Shift Is Already Here</span></div>
-        <div class="rv d2"><h2 class="h-lg" style="max-width: 900px; margin: 0 auto;">The biggest experts are already turning their knowledge into AI.</h2></div>
+        <div class="rv d2"><h2 id="ai-proof-title" class="h-lg" style="max-width: 900px; margin: 0 auto;">The biggest experts are already turning their knowledge into AI.</h2></div>
       </div>
 
       <div class="ai-proof-grid rv d3">
