@@ -256,7 +256,7 @@ test('investment deliverables match the approved Build and Launch offer', () => 
     'Done-For-You Funnel', 'Paid Ads Setup',
   ].forEach((copy) => assert.match(deck, new RegExp(copy, 'i')));
   assert.match(deck, /Requires at least \$5,000 in ad spend/);
-  assert.match(deck, /\$6,800 ×3/);
+  assert.match(deck, /\$6,800<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
 });
 
 test('deck contains the approved 20 visible slides in order', () => {
