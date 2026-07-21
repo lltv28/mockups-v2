@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -17,11 +17,12 @@ function section(startMarker, endMarker) {
 }
 
 test('opening uses the approved AI scale message', () => {
-  assert.match(deck, /You can only sell one person at a time\./);
-  assert.match(deck, /Your AI can sell a thousand, all at once\./);
-  assert.match(deck, /cloned, automated version of you that works 24\/7/);
-  assert.match(deck, /only ready buyers ever land on your calendar/);
-  assert.doesNotMatch(deck, /Your business can't grow past how many hours you work/);
+  const opening = section('<!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->', '<!-- INTRO 1.1,');
+  assert.match(opening, /You can only sell one person at a time\./);
+  assert.match(opening, /Your AI can sell a thousand, all at once\./);
+  assert.match(opening, /cloned, automated version of you that works 24\/7/);
+  assert.match(opening, /only ready buyers ever land on your calendar/);
+  assert.doesNotMatch(opening, /Your business can't grow past how many hours you work/);
 });
 
 test('offer ladder sends qualified buyers to high ticket before the Pocket Coach downsell', () => {
@@ -33,8 +34,20 @@ test('offer ladder sends qualified buyers to high ticket before the Pocket Coach
   assert.match(ladder, /not ready for a call/i);
 });
 
+test('product library keeps high ticket before the Pocket Coach downsell', () => {
+  const library = section('<!-- Phase 1, AI Product Library Recap', '<!-- Phase 2, Test');
+  const assessment = library.indexOf('AI Assessment');
+  const highTicket = library.indexOf('1-on-1 Service');
+  const pocketCoach = library.indexOf('AI Pocket Coach');
+  assert.ok(assessment >= 0 && assessment < highTicket && highTicket < pocketCoach);
+});
+
 test('AI credibility slide contains four verified products and local images', () => {
   const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
+  const proofCards = [...proof.matchAll(/<[^>]+\bclass=["'][^"']*\bai-proof-card\b[^"']*["'][^>]*>/g)];
+  const imageSources = [...proof.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)]
+    .map((match) => match[1]);
+  assert.equal(proofCards.length, 4);
   [
     ['Tony Robbins', 'Tony Robbins AI', 'tony-robbins.png'],
     ['Alex Hormozi', 'ACQ AI', 'alex-hormozi.png'],
@@ -43,9 +56,22 @@ test('AI credibility slide contains four verified products and local images', ()
   ].forEach(([person, product, file]) => {
     assert.match(proof, new RegExp(person));
     assert.match(proof, new RegExp(product));
-    assert.match(proof, new RegExp(`ai-proof/${file}`));
-    assert.ok(existsSync(resolve(slidesDir, 'ai-proof', file)), `${file} must exist`);
+    assert.ok(imageSources.includes(`ai-proof/${file}`), `${file} must be referenced by a local image`);
+    const imagePath = resolve(slidesDir, 'ai-proof', file);
+    assert.ok(existsSync(imagePath), `${file} must exist`);
+    assert.ok(statSync(imagePath).size > 10 * 1024, `${file} must be larger than 10 KB`);
   });
   ['Available 24/7', 'Automated nurturing', 'Recurring monthly revenue', 'Scale without adding calendar time']
     .forEach((benefit) => assert.match(proof, new RegExp(benefit)));
+});
+
+test('obsolete pre-pitch slides are removed', () => {
+  const obsoleteMarkers = [
+    '<!-- INTRO 1.4, Why This Model Works',
+    '<!-- INTRO 1.6, The Three Questions',
+    '<!-- NICHES, breadth of clients',
+    '<!-- Testimonial · Sandra (High Ticket)',
+  ];
+  const remainingMarkers = obsoleteMarkers.filter((marker) => deck.includes(marker));
+  assert.deepEqual(remainingMarkers, [], 'obsolete pre-pitch slide markers must be removed');
 });
