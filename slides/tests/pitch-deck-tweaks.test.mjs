@@ -309,9 +309,13 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   [
     'Personal branded website',
     'Done-for-you posting',
-    'ManyChat comment and DM automation',
-  ].forEach((copy) => assert.match(proofGrid, new RegExp(escapeRegex(copy), 'i')));
-  assertInOrder(organicFlow, [
+  'Comment + DM Automation',
+].forEach((copy) => assert.match(proofGrid, new RegExp(escapeRegex(copy), 'i')));
+assert.doesNotMatch(
+  proofGrid,
+  /class="launch-proof-card__title">ManyChat comment and DM automation<\/div>/i,
+);
+assertInOrder(organicFlow, [
     'Content created',
     'Content posted consistently',
     'ManyChat starts the conversation',
