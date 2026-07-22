@@ -420,6 +420,14 @@ test('investment deliverables match the approved Build and Launch offer', () => 
   assert.match(deck, /\$6,800<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
 });
 
+test('price card balances ten deliverables with the approved DFY paid ads copy', () => {
+  const investment = section('<!-- S10a, The Investment', '<!-- S10b, Payment Plans');
+  assert.match(investment, />Done-For-You Paid Ads Setup<\/span>/);
+  assert.match(investment, />6 Months Launch Optimization<\/span>/);
+  assert.doesNotMatch(investment, />Paid Ads Setup<\/span>/);
+  assert.equal((investment.match(/<polyline points="2,6 5,9 10,3"\/>/g) ?? []).length, 10);
+});
+
 test('Expert AIs moves before client proof before navigation initializes', () => {
   assert.match(deck, /id="clients-love-slide"/);
   assert.match(deck, /id="expert-ai-slide"/);
