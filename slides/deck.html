@@ -713,6 +713,17 @@
     border: 1px solid rgba(16,104,68,0.06);
   }
 
+  .offer-ladder-card {
+    background: var(--white);
+    border: 1px solid var(--al-100);
+    border-radius: 16px;
+    padding: 22px 18px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .choice-org {
     width: 100%;
     display: flex;
@@ -1143,10 +1154,10 @@
     border: 1px solid rgba(16,104,68,0.08);
   }
 
-  /* ── Three Phases Grid ── */
+  /* ── Build and Launch Grid ── */
   .phases-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
@@ -1169,6 +1180,21 @@
   .phase-col:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-modal);
+  }
+
+  .program-timeline-bar {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    border-radius: 16px;
+    background: var(--brand-950);
+    color: white;
+    box-shadow: var(--shadow-card);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
   }
 
   .phase-week-tag {
@@ -1852,12 +1878,74 @@
   .client-logo-strip__logo--tr { height: 11px; order: 7; }
   .client-logo-strip__logo--hrb { height: 16px; order: 8; }
   .client-logo-strip__logo--ram { height: 18px; order: 9; }
+  .closing-logo-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 18px; padding: 16px clamp(10px, 2.5vw, 20px); overflow: hidden; background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; box-shadow: var(--shadow-card); }
+  .closing-logo-stack__caption { font-size: 10.5px; font-weight: 600; color: var(--al-500); text-align: center; }
+  .closing-logo-stack__row { display: grid; grid-template-columns: repeat(var(--closing-logo-count), minmax(0, 1fr)); align-items: center; gap: clamp(3px, .6vw, 10px); width: 100%; min-width: 0; min-height: 35px; }
+  .closing-logo-stack__row--five { --closing-logo-count: 5; }
+  .closing-logo-stack__row--four { --closing-logo-count: 4; }
+  .closing-logo-stack__item { display: flex; align-items: center; justify-content: center; min-width: 0; overflow: hidden; }
+  .closing-logo-stack__item > .client-logo-strip__logo { order: initial; max-width: 100%; height: auto; max-height: 35px; object-fit: contain; }
+  .closing-logo-stack__item > .client-logo-strip__wordmark { order: initial; max-width: 100%; overflow: hidden; font-size: clamp(7px, .75vw, 12px); text-align: center; }
+  .ai-proof-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; width: 100%; }
+  .ai-proof-card { background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 14px; box-shadow: var(--shadow-card); text-align: left; }
+  .ai-proof-card img { width: 100%; height: 112px; border-radius: 12px; object-fit: cover; object-position: center top; }
+  .ai-proof-card__person { margin-top: 12px; color: var(--al-500); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ai-proof-card__product { margin-top: 3px; color: var(--al-900); font-family: var(--font-hero); font-size: 18px; font-weight: 700; line-height: 1.2; }
+  .ai-proof-benefits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; width: 100%; }
+  .ai-proof-benefit { background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 12px; color: var(--brand-950); font-size: 12px; font-weight: 700; padding: 11px 8px; text-align: center; }
   @media (max-width: 900px) { .love-track { animation-duration: 32s; } .love-reasons { grid-template-columns: 1fr; max-width: 380px; } .client-logo-strip__row { gap: 4px; } }
+  @media (max-width: 900px) {
+    .slide--program-overview {
+      overflow-y: auto;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .slide--program-overview > .content--wide {
+      justify-content: flex-start !important;
+      align-items: stretch;
+    }
+    .program-timeline-bar {
+      padding: 14px 18px;
+      font-size: 15px;
+    }
+    .slide--ai-proof {
+      overflow-y: auto;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .slide--ai-proof > .content--wide {
+      justify-content: flex-start !important;
+      align-items: stretch;
+    }
+    .ai-proof-grid, .ai-proof-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ai-proof-card img { height: 140px; }
+  }
   @media (max-width: 850px) { .client-logo-strip__row { transform: scale(clamp(.3, calc((100vw - 56px) / 842px), .84)); transform-origin: center; } }
+  @media (max-width: 520px) {
+    .closing-logo-stack { padding-inline: 10px; }
+    .closing-logo-stack__row { gap: 3px; }
+    .ai-proof-grid, .ai-proof-benefits { grid-template-columns: 1fr; }
+  }
   @media (prefers-reduced-motion: reduce) { .love-track { animation: none; } }
 
-  /* ── Monetize: lead-upsell flow + repackage cards ── */
-  .upsell-flow { display: flex; align-items: stretch; justify-content: center; gap: 8px; max-width: 1060px; margin: 0 auto; width: 100%; }
+  /* ── Launch flow components ── */
+  .launch-flow-layout { justify-content: center; gap: 8px; }
+  .launch-flow-layout .h-lg { font-size: clamp(26px, 3vw, 38px); }
+  .launch-proof-media { position: relative; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100); border-radius: 14px; box-shadow: var(--shadow-card); }
+  .launch-proof-media iframe, .launch-proof-media img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; object-position: center top; }
+  .launch-proof-grid { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 1060px; width: 100%; text-align: left; }
+  .launch-proof-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; background: var(--white); border: 1px solid var(--al-100); border-radius: 14px; box-shadow: var(--shadow-card); }
+  .launch-proof-card .launch-proof-media { min-height: 0; aspect-ratio: 1 / 1; border: 0; border-radius: 0; box-shadow: none; }
+  .launch-proof-copy { padding: 8px 10px 9px; }
+  .launch-proof-card__title { color: var(--al-900); font-size: 12px; font-weight: 700; line-height: 1.2; }
+  .launch-proof-card__body { margin-top: 2px; color: var(--al-600); font-size: 9px; line-height: 1.25; }
+  .manychat-preview { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 10px; padding: 18px; background: linear-gradient(145deg, #f4efff 0%, #ffffff 62%, #edf8f3 100%); }
+  .manychat-preview__header { display: flex; align-items: center; gap: 7px; color: #5b2aa5; font-size: 12px; font-weight: 700; }
+  .manychat-preview__dot { width: 9px; height: 9px; border-radius: 50%; background: #6d34bd; box-shadow: 0 0 0 4px rgba(109,52,189,.12); }
+  .manychat-preview__thread { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 9px; }
+  .manychat-preview__bubble { max-width: 82%; padding: 9px 11px; border-radius: 11px; background: #e8ddff; color: #4a2a74; font-size: 9px; line-height: 1.3; box-shadow: 0 4px 12px rgba(74,42,116,.08); }
+  .manychat-preview__bubble--reply { align-self: flex-end; background: var(--brand-950); color: var(--white); }
+  .upsell-flow { list-style: none; padding: 0; display: flex; align-items: stretch; justify-content: center; gap: 8px; max-width: 1060px; margin: 0 auto; width: 100%; }
   .upsell-step { flex: 1 1 0; min-width: 0; position: relative; background: var(--white); border: 1px solid var(--al-100); border-radius: 14px; padding: 16px 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 6px; text-align: left; }
   .upsell-step__tag { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); }
   .upsell-step__title { font-size: 14px; font-weight: 700; color: var(--al-900); line-height: 1.25; }
@@ -1867,9 +1955,34 @@
   .upsell-final { background: var(--brand-950); color: #fff; border: none; }
   .upsell-final .upsell-step__tag, .upsell-final .upsell-step__title, .upsell-final .upsell-step__price { color: #fff; }
   .upsell-final .upsell-step__body { color: rgba(255,255,255,0.82); }
+  .launch-flow-layout .upsell-step { padding: 8px 9px; gap: 2px; }
+  .launch-flow-layout .upsell-step__title { font-size: 11px; }
+  .launch-flow-layout .upsell-step__body { font-size: 8.5px; line-height: 1.3; }
+  .launch-flow-layout .upsell-step__price { font-size: 14px; }
+  .launch-flow-label { margin-top: 2px; color: var(--al-500); font-size: 8px; font-weight: 700; letter-spacing: 0.14em; text-align: center; text-transform: uppercase; }
+  .upsell-flow--launch-rail { gap: 8px; overflow: visible; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+  .upsell-flow--launch-rail .upsell-step { min-height: 72px; padding: 10px 12px; gap: 3px; background: var(--brand-950); border: 0; border-radius: 12px; box-shadow: none; }
+  .upsell-flow--launch-rail .upsell-step__tag { color: rgba(255,255,255,0.72); }
+  .upsell-flow--launch-rail .upsell-step__title { color: var(--white); font-size: 12px; letter-spacing: 0.01em; }
+  .upsell-flow--launch-rail .upsell-step__price { color: var(--white); font-size: 18px; letter-spacing: 0.04em; }
+  .upsell-flow--launch-rail .upsell-arrow { align-self: center; width: 24px; height: 24px; padding: 0; background: transparent; color: var(--brand-950); border-radius: 0; font-size: 18px; }
   @media (max-width: 900px) {
+    .slide--launch-proof { overflow-x: hidden; overflow-y: auto; justify-content: flex-start; align-items: flex-start; }
+    .slide--launch-proof > .bg-orb { display: none; }
+    .slide--launch-proof > .content--wide { justify-content: flex-start !important; align-items: stretch; }
+    .launch-proof-grid { grid-template-columns: 1fr; }
+    .launch-proof-card { width: min(100%, 420px); justify-self: center; }
+    .launch-proof-card__title { font-size: 14px; }
+    .launch-proof-card__body { font-size: 12px; line-height: 1.4; }
+    .launch-flow-layout .upsell-step__title { font-size: 13px; }
+    .launch-flow-layout .upsell-step__body { font-size: 12px; line-height: 1.4; }
+    .launch-flow-layout .upsell-step__price { font-size: 16px; }
     .upsell-flow { flex-direction: column; }
     .upsell-arrow { transform: rotate(90deg); height: 22px; }
+    .upsell-flow--launch-rail { flex-direction: column; gap: 8px; }
+    .upsell-flow--launch-rail .upsell-step { width: 100%; min-height: 0; padding: 12px 14px; }
+    .upsell-flow--launch-rail .upsell-step__price { font-size: 18px; }
+    .upsell-flow--launch-rail .upsell-arrow { width: 24px; height: 24px; padding: 0; transform: rotate(90deg); }
   }
 
   /* deck-wide: balance line widths so no 1-2 word orphans */
@@ -1893,7 +2006,7 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide active">
+  <div class="slide active" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
@@ -1901,11 +2014,11 @@
       <div class="flex-col gap-16">
         <div class="rv d1"><span class="label-tag">Kodara</span></div>
         <div class="rv d2">
-          <h2 class="h-hero">Your business can't grow past how many hours you work.</h2>
+          <h2 id="opening-title" class="h-hero">You can only sell one person at a time.<br>Your AI can sell a thousand, all at once.</h2>
         </div>
         <div class="rv d3">
-          <p class="body-lg" style="max-width: 720px; margin: 0 auto;">
-            You're the bottleneck. Your expertise only pays when you show up in person, so you're stuck on the hamster wheel, trading hours for dollars.
+          <p class="body-lg" style="max-width: 760px; margin: 0 auto;">
+            It's a cloned, automated version of you that works 24/7, pre-selling and qualifying leads so only hot-and-ready buyers ever land on your calendar.
           </p>
         </div>
       </div>
@@ -1915,18 +2028,18 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- INTRO 1.1, Meet The Version (never stops selling + offer ladder) -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
+  <div class="slide" role="group" aria-roledescription="slide" aria-labelledby="offer-ladder-title">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
     <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
       <div class="flex-col gap-16">
-        <div class="rv d1"><h2 class="h-hero" style="max-width: 660px; margin: 0 auto; text-wrap: balance;">Meet the version of you that never stops selling.</h2></div>
-        <div class="rv d2"><p class="body-lg" style="max-width: 600px; margin: 0 auto; text-wrap: pretty;">We build an AI version of you. It sells $17 AI assessments, then upgrades buyers to a $297/month AI Pocket Coach, and books your hottest leads onto sales calls for your highest level of service.</p></div>
+        <div class="rv d1"><h2 id="offer-ladder-title" class="h-hero" style="max-width: 660px; margin: 0 auto; text-wrap: balance;">Meet the version of you that never stops selling.</h2></div>
+        <div class="rv d2"><p class="body-lg" style="max-width: 640px; margin: 0 auto; text-wrap: pretty;">We build an AI version of you. It sells a $17 assessment, identifies the buyers ready for your highest level of service, and offers everyone else your $297/month AI Pocket Coach.</p></div>
       </div>
 
       <div class="rv d3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; width: 100%; align-items: stretch;">
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
+        <div class="offer-ladder-card">
           <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">ENTRY · $17 ONE-TIME</div>
           <div>
             <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">AI Assessment</div>
@@ -1940,31 +2053,31 @@
           </div>
         </div>
 
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">COACH · MONTHLY</div>
-          <div>
-            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">AI Pocket Coach</div>
-            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px;">Your expertise as an on-demand AI coach, available 24/7.</div>
-          </div>
-          <div style="flex: 1;"></div>
-          <div style="border-top: 1px solid var(--al-50); padding-top: 12px; text-align: left;">
-            <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$297<span style="font-size: 14px; font-weight: 500; color: var(--al-500);">/month</span></div>
-            <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">recurring</div>
-            <div style="font-size: 10px; color: var(--al-500); margin-top: 6px;"><span style="font-weight: 700; color: var(--brand-950);">15–30%</span> of our $17 buyers</div>
-          </div>
-        </div>
-
-        <div style="background: var(--al-25); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px; opacity: 0.5;">
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-400);">High Ticket Service</div>
+        <div class="offer-ladder-card">
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">HIGH TICKET SERVICE</div>
           <div>
             <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">1-on-1 Service</div>
-            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px;">Direct access, custom implementation, and 1-on-1 access to you (the expert).</div>
+            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px;">Qualified buyers book a call for direct access and custom implementation.</div>
           </div>
           <div style="flex: 1;"></div>
           <div style="border-top: 1px solid var(--al-50); padding-top: 12px; text-align: left;">
             <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$$$</div>
             <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">full service</div>
             <div style="font-size: 10px; color: var(--al-500); margin-top: 6px;"><span style="font-weight: 700; color: var(--brand-950);">3–5%</span> of our buyers</div>
+          </div>
+        </div>
+
+        <div class="offer-ladder-card">
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">DOWNSELL · $297 MONTHLY</div>
+          <div>
+            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">AI Pocket Coach</div>
+            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px;">Not ready for a call? They get your expertise as an on-demand AI coach.</div>
+          </div>
+          <div style="flex: 1;"></div>
+          <div style="border-top: 1px solid var(--al-50); padding-top: 12px; text-align: left;">
+            <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$297<span style="font-size: 14px; font-weight: 500; color: var(--al-500);">/month</span></div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">recurring</div>
+            <div style="font-size: 10px; color: var(--al-500); margin-top: 6px;"><span style="font-weight: 700; color: var(--brand-950);">15–30%</span> of our $17 buyers</div>
           </div>
         </div>
       </div>
@@ -1976,7 +2089,7 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- INTRO 1.2, Why Clients Love The Kodara Model (floating avatars) -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
+  <div class="slide" id="clients-love-slide">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
@@ -2076,191 +2189,61 @@
   </div>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- INTRO 1.4, Why This Model Works (Free lead magnet vs $17 AI) -->
+  <!-- INTRO 1.3, Big-Name AI Credibility -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
+  <div class="slide slide--ai-proof" id="expert-ai-slide" role="group" aria-roledescription="slide" aria-labelledby="ai-proof-title">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
-    <div class="content--wide flex-col gap-24" style="justify-content: center;">
-      <div class="text-center flex-col gap-12">
-        <div class="rv d1"><span class="label-tag">Why This Model Works</span></div>
-        <div class="rv d2"><h2 class="h-lg">Why a $17 AI beats a free lead magnet every time.</h2></div>
+    <div class="content--wide text-center flex-col gap-18" style="justify-content: center;">
+      <div class="flex-col gap-10">
+        <div class="rv d1"><span class="label-tag">The Shift Is Already Here</span></div>
+        <div class="rv d2"><h2 id="ai-proof-title" class="h-lg" style="max-width: 900px; margin: 0 auto;">The biggest experts are already turning their knowledge into AI.</h2></div>
       </div>
 
-      <div class="rv d3" style="max-width: 920px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 44px 1fr; gap: 28px; align-items: stretch; text-align: left;">
-
-        <!-- LEFT: Free lead magnet -->
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 22px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 16px;">
-          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-400);">Free lead magnet</div>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; flex: 1;">
-            <li style="font-size: 18px; color: var(--al-500); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--al-300); flex-shrink: 0;">✕</span> The same content for everyone</li>
-            <li style="font-size: 18px; color: var(--al-500); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--al-300); flex-shrink: 0;">✕</span> Frozen the day you created it</li>
-            <li style="font-size: 18px; color: var(--al-500); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--al-300); flex-shrink: 0;">✕</span> Forgotten the moment it's downloaded</li>
-            <li style="font-size: 18px; color: var(--al-500); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--al-300); flex-shrink: 0;">✕</span> Overwhelms with information</li>
-            <li style="font-size: 18px; color: var(--al-500); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--al-300); flex-shrink: 0;">✕</span> A marriage proposal to a stranger</li>
-          </ul>
-          <div style="border-top: 1px solid var(--al-50); padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 6px;">
-            <span style="font-size: 14px; font-weight: 600; color: var(--al-500); background: var(--al-25); border-radius: 999px; padding: 9px 18px; white-space: nowrap;">Free PDF</span>
-            <span style="color: var(--al-300); font-size: 26px; flex: 1; text-align: center;">→</span>
-            <span style="font-size: 14px; font-weight: 600; color: var(--al-500); background: var(--al-25); border-radius: 999px; padding: 9px 18px; white-space: nowrap;">Cold list</span>
-            <span style="color: var(--al-300); font-size: 26px; flex: 1; text-align: center;">→</span>
-            <span style="font-size: 14px; font-weight: 600; color: var(--al-400); background: var(--al-25); border-radius: 999px; padding: 9px 18px; white-space: nowrap;">Dead end</span>
-          </div>
+      <div class="ai-proof-grid rv d3">
+        <div class="ai-proof-card">
+          <img src="ai-proof/tony-robbins.png?v=20260722c" alt="Tony Robbins AI" loading="lazy">
+          <div class="ai-proof-card__person">Tony Robbins</div>
+          <div class="ai-proof-card__product">Tony Robbins AI</div>
         </div>
-
-        <!-- VS badge -->
-        <div style="display: flex; align-items: center; justify-content: center;">
-          <div style="width: 38px; height: 38px; border-radius: 999px; background: var(--white); border: 1px solid var(--al-100); box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: center; font-family: var(--font-hero); font-size: 14px; font-weight: 700; color: var(--al-400);">vs</div>
+        <div class="ai-proof-card">
+          <img src="ai-proof/alex-hormozi.png?v=20260722c" alt="ACQ AI" loading="lazy">
+          <div class="ai-proof-card__person">Alex Hormozi</div>
+          <div class="ai-proof-card__product">ACQ AI</div>
         </div>
-
-        <!-- RIGHT: The $17 AI -->
-        <div style="background: var(--white); border: 1px solid var(--brand-200); border-radius: 16px; padding: 22px 22px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 16px;">
-          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">The $17 AI</div>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; flex: 1;">
-            <li style="font-size: 18px; color: var(--al-900); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--brand-950); flex-shrink: 0;">✓</span> Personalized for each person</li>
-            <li style="font-size: 18px; color: var(--al-900); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--brand-950); flex-shrink: 0;">✓</span> Trained on you, so it sounds like you</li>
-            <li style="font-size: 18px; color: var(--al-900); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--brand-950); flex-shrink: 0;">✓</span> Nurtures and ascends your customers</li>
-            <li style="font-size: 18px; color: var(--al-900); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--brand-950); flex-shrink: 0;">✓</span> Helps with step-by-step implementation</li>
-            <li style="font-size: 18px; color: var(--al-900); display: flex; gap: 12px; align-items: baseline;"><span style="color: var(--brand-950); flex-shrink: 0;">✓</span> Warms them up before the big question</li>
-          </ul>
-          <div style="border-top: 1px solid var(--al-50); padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 6px;">
-            <span style="font-size: 14px; font-weight: 600; color: var(--brand-950); background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 999px; padding: 9px 18px; white-space: nowrap;">$17 buyer</span>
-            <span style="color: var(--brand-600); font-size: 26px; flex: 1; text-align: center;">→</span>
-            <span style="font-size: 14px; font-weight: 600; color: var(--brand-950); background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 999px; padding: 9px 18px; white-space: nowrap;">$297/mo</span>
-            <span style="color: var(--brand-600); font-size: 26px; flex: 1; text-align: center;">→</span>
-            <span style="font-size: 14px; font-weight: 600; color: var(--brand-950); background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 999px; padding: 9px 18px; white-space: nowrap;">High-ticket</span>
-          </div>
+        <div class="ai-proof-card">
+          <img src="ai-proof/grant-cardone.png" alt="10X AI Revenue Coach" loading="lazy">
+          <div class="ai-proof-card__person">Grant Cardone</div>
+          <div class="ai-proof-card__product">10X AI Revenue Coach</div>
         </div>
+        <div class="ai-proof-card">
+          <img src="ai-proof/mark-hyman.png?v=20260722b" alt="AI Mark" loading="lazy">
+          <div class="ai-proof-card__person">Dr. Mark Hyman</div>
+          <div class="ai-proof-card__product">AI Mark</div>
+        </div>
+      </div>
+
+      <div class="ai-proof-benefits rv d4">
+        <div class="ai-proof-benefit">Available 24/7</div>
+        <div class="ai-proof-benefit">Automated nurturing</div>
+        <div class="ai-proof-benefit">Recurring monthly revenue</div>
+        <div class="ai-proof-benefit">Scale without adding calendar time</div>
       </div>
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- INTRO 1.6, The Three Questions (objection handler) -->
+  <!-- S5, 2 Stages Overview -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -120px; right: -90px;"></div>
-    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
-
-    <div class="content--wide flex-col gap-24" style="justify-content: center;">
-      <div class="text-center flex-col gap-12">
-        <div class="rv d1"><span class="label-tag">The Questions Everyone Asks</span></div>
-        <div class="rv d2"><h2 class="h-lg">The three things everyone asks before they say yes.</h2></div>
-      </div>
-
-      <div class="rv d3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; width: 100%; align-items: stretch; text-align: left;">
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 20px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 14px;">
-          <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-200); line-height: 1;">01</div>
-          <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); line-height: 1.3;">"Will this actually sound like me, or some generic bot?"</div>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-600); display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> Built from your own calls, content, and frameworks</li>
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-900); font-weight: 700; display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> You review and approve everything in your weekly hour</li>
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-600); display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> Proven on your real clients before a stranger sees it</li>
-          </ul>
-        </div>
-
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 20px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 14px;">
-          <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-200); line-height: 1;">02</div>
-          <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); line-height: 1.3;">"How is this different from my clients just using ChatGPT?"</div>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-600); display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> Trained only on your expertise, not the whole internet</li>
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-900); font-weight: 700; display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> Proactively walks them from problem to outcome, not open-ended Q&amp;A</li>
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-600); display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> A product you own and sell, not a subscription they pay elsewhere</li>
-          </ul>
-        </div>
-
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 20px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 14px;">
-          <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-200); line-height: 1;">03</div>
-          <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); line-height: 1.3;">"How do I know it'll sell, and why so cheap at $17?"</div>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-600); display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> It pays back your ad cost, so traffic funds itself</li>
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-900); font-weight: 700; display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> $17 filters for real buyers, not freebie-seekers</li>
-            <li style="font-size: 13px; line-height: 1.5; color: var(--al-600); display: flex; gap: 8px;"><span style="color: var(--brand-950); flex-shrink: 0;">•</span> We pinpoint your message to the people whose problem only your expertise solves</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- NICHES, breadth of clients (green-check, two-column list) -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -120px; right: -90px;"></div>
-    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
-
-    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
-      <div class="flex-col gap-12">
-        <div class="rv d1"><span class="label-tag">Who We've Helped</span></div>
-        <div class="rv d2"><h2 class="h-lg">We've built AI products for niches you'd never expect.</h2></div>
-      </div>
-
-      <div class="rv d3" style="width: 100%;">
-        <div style="display: grid; grid-template-columns: repeat(4, max-content); justify-content: center; gap: 16px 56px; text-align: left;">
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Leadership coaches</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Lawyers</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Mental health therapists</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Mindset coaches</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Tax planners</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Nutritionists</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Operations consultants</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Retirement planners</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Personal trainers</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Singing coaches</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Financial advisors</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Chiropractors</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Sobriety coaches</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Mortgage brokers</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Med spa owners</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Body image coaches</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Real estate agents</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Med spa consultants</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Painting business coaches</p></div>
-        <div class="check-row" style="padding: 0; align-items: center;"><div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><p style="color: var(--al-900); font-weight: 500; font-size: 15px;">Real estate investors</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ═══════════════════════════════════════ -->
-  <!-- Testimonial · Sandra (High Ticket), Before/After (SIMPLIFIED, row-aligned) -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="slide slide--tallcal">
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -80px;"></div>
-
-    <div class="content--wide text-center flex-col gap-16" style="justify-content: center;">
-      <div class="flex-col gap-6">
-        <div class="rv d1"><span class="label-tag">Client Results · Sandra</span></div>
-        <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(24px, 2.6vw, 36px);">Same coaching calls. The empty hours now sell on their own.</h2></div>
-        <div class="rv d3" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 16px 0 18px;">
-          <div style="width: 50px; height: 50px; border-radius: 999px; overflow: hidden; border: 2px solid var(--white); box-shadow: var(--shadow-card); flex-shrink: 0;">
-            <img src="sandra-photo.jpg" alt="Sandra Parker" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-          </div>
-          <div style="text-align: left;">
-            <div style="font-size: 14px; font-weight: 700; color: var(--al-900); line-height: 1.2;">Sandra Parker</div>
-            <div style="font-size: 12px; color: var(--al-500); line-height: 1.3;">Just The Tonic Coaching</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rv d4 sandra-cal" style="max-width: 820px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;"><div><div style="text-align:center; color: var(--al-500); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; margin-bottom:8px;">Before</div><div class="gcal"><div class="gcal-head"><div></div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div></div><div class="gcal-body"><div class="gcal-time"><span>8a</span><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5p</span></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:48px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--call" style="top:144px;height:24px;">Coaching</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:24px;height:48px;">Coaching</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:120px;height:48px;">Coaching</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:48px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--call" style="top:168px;height:24px;">Coaching</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:24px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--call" style="top:120px;height:24px;">Coaching</div></div></div></div><div class="gcal-cap">Empty hours, no income</div></div><div><div style="text-align:center; color: var(--brand-950); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; margin-bottom:8px;">After</div><div class="gcal"><div class="gcal-head"><div></div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div></div><div class="gcal-body"><div class="gcal-time"><span>8a</span><span>9</span><span>10</span><span>11</span><span>12</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5p</span></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:48px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--call" style="top:144px;height:24px;">Coaching</div><div class="gcal-ev gcal-ev--sale" style="top:192px;height:20px;">+£297/mo</div><div class="gcal-ev gcal-ev--sale" style="top:0px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:24px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:96px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:120px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:168px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:216px;height:20px;">+£17</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:24px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--sale" style="top:96px;height:20px;">+£297/mo</div><div class="gcal-ev gcal-ev--sale" style="top:0px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:72px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:120px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:144px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:168px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:192px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:216px;height:20px;">+£17</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:120px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--sale" style="top:72px;height:20px;">+£297/mo</div><div class="gcal-ev gcal-ev--sale" style="top:0px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:24px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:48px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:96px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:168px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:192px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:216px;height:20px;">+£17</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:48px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--call" style="top:168px;height:24px;">Coaching</div><div class="gcal-ev gcal-ev--sale" style="top:120px;height:20px;">+£297/mo</div><div class="gcal-ev gcal-ev--sale" style="top:0px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:24px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:96px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:144px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:192px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:216px;height:20px;">+£17</div></div><div class="gcal-col"><div class="gcal-ev gcal-ev--call" style="top:24px;height:48px;">Coaching</div><div class="gcal-ev gcal-ev--call" style="top:120px;height:24px;">Coaching</div><div class="gcal-ev gcal-ev--sale" style="top:168px;height:20px;">+£297/mo</div><div class="gcal-ev gcal-ev--sale" style="top:0px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:72px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:96px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:144px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:192px;height:20px;">+£17</div><div class="gcal-ev gcal-ev--sale" style="top:216px;height:20px;">+£17</div></div></div></div><div class="gcal-cap" style="color: var(--brand-950);">Same coaching, the gaps now sell for her</div></div></div>
-
-      <div class="rv d5"><p class="slide-disclaimer" style="position: static;">Any individual experiences presented are not typical. The information shared is for example purposes and is not a guarantee of a rate of return or a specific result. Your results may vary.</p></div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- S5, 3 Phases Overview -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="slide" data-slide="4">
+  <div class="slide slide--program-overview" data-slide="4">
     <div class="bg-orb bg-orb--green" style="bottom: -150px; right: -100px;"></div>
     <div class="bg-orb bg-orb--cyan" style="top: -100px; left: -80px;"></div>
 
     <div class="content--wide text-center flex-col gap-40">
       <div class="flex-col gap-12">
         <div class="rv d1"><span class="label-tag">The Kodara System</span></div>
-        <div class="rv d2"><h2 class="h-lg">Build, launch, monetize.</h2></div>
+        <div class="rv d2"><h2 class="h-lg">Build and launch.</h2></div>
       </div>
       <div class="phases-grid">
         <div class="phase-col rv d3">
@@ -2268,23 +2251,17 @@
 
           <div class="h-md" style="font-size: 20px;">Build</div>
           <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin: 2px 0 6px;">4 weeks</div>
-          <p class="body" style="font-size: 15px; line-height: 22px;">We build your AI product library and prove it on real clients, so it's validated before you launch to strangers.</p>
+          <p class="body" style="font-size: 15px; line-height: 22px;">Your expertise becomes a proven AI product.</p>
         </div>
         <div class="phase-col rv d4">
           <div class="phase-num phase-num--brand">2</div>
 
           <div class="h-md" style="font-size: 20px;">Launch</div>
           <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin: 2px 0 6px;">2 weeks</div>
-          <p class="body" style="font-size: 15px; line-height: 22px;">We launch you to the audience you already have, then grow it with content, paid angles, and a clear guarantee.</p>
-        </div>
-        <div class="phase-col rv d5">
-          <div class="phase-num phase-num--brand">3</div>
-
-          <div class="h-md" style="font-size: 20px;">Monetize</div>
-          <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin: 2px 0 6px;">6 months+</div>
-          <p class="body" style="font-size: 15px; line-height: 22px;">We optimize your back end so every lead is worth more, turning buyers into recurring and high-ticket revenue.</p>
+          <p class="body" style="font-size: 15px; line-height: 22px;">Your AI product becomes a predictable growth engine.</p>
         </div>
       </div>
+      <div class="program-timeline-bar rv d5">6 weeks to go live. 6 months of selling.</div>
     </div>
   </div>
 
@@ -2447,37 +2424,37 @@
           </div>
         </div>
 
-        <!-- MID TICKET -->
-        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">COACH · MONTHLY</div>
-          <div>
-            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">AI Pocket Coach</div>
-            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px; min-height: 38px;">Your expertise as an on-demand AI coach, available 24/7.</div>
-          </div>
-          <div style="flex: 1; background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 12px; padding: 18px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <div style="font-family: var(--font-hero); font-size: 46px; font-weight: 700; color: var(--brand-950); letter-spacing: -1.5px; line-height: 1;">~15–30%</div>
-            <div style="font-size: 11px; color: var(--brand-950); font-weight: 600; margin-top: 6px;">of our $17 buyers ascend here</div>
-          </div>
-          <div style="border-top: 1px solid var(--al-50); padding-top: 12px;">
-            <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$297<span style="font-size: 14px; font-weight: 500; color: var(--al-500);">/month</span></div>
-            <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">recurring</div>
-          </div>
-        </div>
-
         <!-- HIGH TICKET -->
         <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">High Ticket Service</div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">HIGH TICKET SERVICE</div>
           <div>
             <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">1-on-1 Service</div>
             <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px; min-height: 38px;">Direct access. AI books the call automatically.</div>
           </div>
           <div style="flex: 1; background: var(--brand-50); border: 1px solid rgba(16,104,68,0.10); border-radius: 12px; padding: 18px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <div style="font-family: var(--font-hero); font-size: 46px; font-weight: 700; color: var(--brand-950); letter-spacing: -1.5px; line-height: 1;">~3–5%</div>
-            <div style="font-size: 11px; color: var(--brand-950); margin-top: 6px;">of our buyers ascend to high ticket</div>
+            <div style="font-size: 11px; color: var(--brand-950); margin-top: 6px;">of our buyers qualify for high ticket</div>
           </div>
           <div style="border-top: 1px solid var(--al-50); padding-top: 12px;">
             <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$$$</div>
             <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">full service</div>
+          </div>
+        </div>
+
+        <!-- DOWNSELL -->
+        <div style="background: var(--white); border: 1px solid var(--al-100); border-radius: 16px; padding: 22px 18px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">DOWNSELL · $297 MONTHLY</div>
+          <div>
+            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">AI Pocket Coach</div>
+            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px; min-height: 38px;">Not ready for a call? They can start with your on-demand AI coach.</div>
+          </div>
+          <div style="flex: 1; background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 12px; padding: 18px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="font-family: var(--font-hero); font-size: 46px; font-weight: 700; color: var(--brand-950); letter-spacing: -1.5px; line-height: 1;">~15–30%</div>
+            <div style="font-size: 11px; color: var(--brand-950); font-weight: 600; margin-top: 6px;">of our $17 buyers start here</div>
+          </div>
+          <div style="border-top: 1px solid var(--al-50); padding-top: 12px;">
+            <div style="font-family: var(--font-hero); font-size: 26px; font-weight: 700; color: var(--al-900); letter-spacing: -0.6px; line-height: 1;">$297<span style="font-size: 14px; font-weight: 500; color: var(--al-500);">/month</span></div>
+            <div style="font-size: 11px; color: var(--al-500); margin-top: 4px;">recurring</div>
           </div>
         </div>
       </div>
@@ -2487,7 +2464,7 @@
   </div>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- Phase 2, Test (1-week validation timeline; recreated from approved design, guarantee card removed) -->
+  <!-- Phase 1, Test (1-week validation timeline; recreated from approved design, guarantee card removed) -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
@@ -2539,7 +2516,7 @@
   </div>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- Phase 2 · Validate · Combined Orbit demo (full command center + live cohort) -->
+  <!-- Phase 1 · Validate · Combined Orbit demo (full command center + live cohort) -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide">
     <div class="content--wide flex-col" style="justify-content: center; align-items: center; max-width: 1180px;">
@@ -2548,7 +2525,7 @@
       </div>
     </div>
   </div>
-  <!-- Phase 3, Market It (Cover) -->
+  <!-- Phase 2, Launch (Cover) -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide" data-slide="7">
     <div class="bg-orb bg-orb--green" style="top: 50%; right: -80px; transform: translateY(-50%);"></div>
@@ -2568,358 +2545,147 @@
     </div>
   </div>
 
-  <!-- Phase 3, Slide 1, Done-For-You Funnel (Leanne's) -->
-  <div class="slide">
+  <!-- Phase 2, Authority Branding Overview -->
+  <div class="slide slide--launch-proof">
     <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-    <div class="content--wide split-layout">
-      <div class="flex-col gap-24">
-        <div class="rv d1"><span class="label-tag">Phase 2</span></div>
-        <div class="rv d2"><h2 class="h-lg">Done-For-You Funnel</h2></div>
-        <div class="rv d3">
-          <p class="body-lg">
-            A complete sales funnel designed to sell your AI product to your existing audience, ready to launch from day one.
-          </p>
-        </div>
-        <div class="rv d4">
-          <p class="body" style="color: var(--al-500); font-style: italic;">
-            Example: Leanne Ellington's AI funnel, Teenager Brain.
-          </p>
-        </div>
-      </div>
-      <div class="rv d3">
-        <div class="split-image" style="aspect-ratio: 4/3;">
-          <img src="leanne-landing.jpg" alt="Leanne Ellington's Teenager Brain AI funnel example">
-        </div>
-      </div>
-    </div>
-  </div>
+    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -80px;"></div>
 
-  <!-- Phase 3, Slide 2, DFY Organic Marketing -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--cyan" style="top: -100px; right: -80px;"></div>
-
-    <div class="content--wide split-layout">
-      <div class="flex-col gap-24">
-        <div class="rv d1"><span class="label-tag">Phase 2</span></div>
-        <div class="rv d2"><h2 class="h-lg">Done-For-You Organic Marketing</h2></div>
-        <div class="rv d3">
-          <p class="body-lg">
-            A delivered content library of short videos, posts, and captions, all created in your voice using your AI 2nd Brain.
-          </p>
-        </div>
-        <div class="rv d4 flex-col gap-12">
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>Short videos &amp; reels</strong> generated in your voice, ready to post</p>
-          </div>
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>Posts &amp; captions</strong> written and scheduled across platforms</p>
-          </div>
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>Filmed, designed, and published</strong> by us, you stay in your zone of genius</p>
-          </div>
-        </div>
-      </div>
-      <div class="rv d3">
-        <div class="split-image" style="aspect-ratio: 1/1; overflow: hidden;">
-          <iframe
-            src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/16369f811f94556e674955011d506194/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false"
-            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-            allowfullscreen="true"
-          ></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 3, Slide 3, DFY Pipeline Activation -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="bottom: -100px; left: -60px;"></div>
-
-    <div class="content--wide split-layout">
-      <div class="flex-col gap-24">
-        <div class="rv d1"><span class="label-tag">Phase 2</span></div>
-        <div class="rv d2"><h2 class="h-lg">Done-For-You Pipeline Activation</h2></div>
-        <div class="rv d3">
-          <p class="body-lg">
-            Email and SMS sequences written to wake up every lead already sitting in your CRM, the fastest path to revenue on day one.
-          </p>
-        </div>
-        <div class="rv d4 flex-col gap-12">
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>Email sequences</strong> written for your existing list in your voice</p>
-          </div>
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>SMS drafts</strong> to re-engage stalled buyers on the device they actually check</p>
-          </div>
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>Activation flow</strong> that books calls from leads you already paid for</p>
-          </div>
-        </div>
-      </div>
-      <div class="rv d3">
-        <div class="split-image" style="aspect-ratio: 1/1; overflow: hidden;">
-          <img src="pipeline-activation-email.png" alt="Email draft sequence for pipeline activation" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 3, Slide 4, DWY Paid Ads -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-
-    <div class="content--wide split-layout">
-      <div class="flex-col gap-24">
-        <div class="rv d1"><span class="label-tag">Phase 2</span></div>
-        <div class="rv d2"><h2 class="h-lg">Done-For-You Paid Ads Setup</h2></div>
-        <div class="rv d3">
-          <p class="body-lg">
-            Our team hands you the ad creative, the targeting, and all optimized settings, while you still control budget and scale.
-          </p>
-        </div>
-        <div class="rv d4 flex-col gap-12">
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>Hooks, angles &amp; ad creative</strong> done-for-you by our team at launch</p>
-          </div>
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>You control budget &amp; scale</strong> while we keep refreshing creative</p>
-          </div>
-          <div class="check-row">
-            <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>Plugs into the funnel</strong> that's already proven on organic and pipeline traffic</p>
-          </div>
-        </div>
-      </div>
-      <div class="rv d3">
-        <div class="split-image" style="aspect-ratio: 1/1; overflow: hidden;">
-          <iframe
-            src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cf012831e12dd92855000b85e12a60db/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false"
-            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-            allowfullscreen="true"
-          ></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 3, Slide 5, Everything We Do To Fill Your Funnel -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 30%;"></div>
-    <div class="content--wide flex-col gap-10" style="justify-content: center; max-width: 1188px;">
-      <div class="text-center flex-col gap-8">
-        <div class="rv d1"><span class="label-tag">Phase 2</span></div>
-        <div class="rv d2"><h2 class="h-lg" style="font-size: clamp(25px, 3vw, 42px);">Everything we do to fill your funnel</h2></div>
+    <div class="content--wide text-center flex-col launch-flow-layout">
+      <div class="flex-col gap-10">
+        <div class="rv d1"><span class="label-tag">Phase 2 · Authority Branding</span></div>
+        <div class="rv d2"><h2 class="h-lg">Your authority system, built for you.</h2></div>
+        <div class="rv d3"><p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500); font-size: 12px; line-height: 1.35;">A consistent brand presence turns attention into conversations before a lead ever reaches your calendar.</p></div>
       </div>
 
-      <div class="rv d3" style="max-width: 1188px; margin: 20px auto 0; width: 100%; display: flex; flex-direction: column; gap: 6px; align-items: center;">
-        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; width: 100%;">
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100);">
-              <div style="position: relative; padding-top: 100%;">
-                <iframe
-                  src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/16369f811f94556e674955011d506194/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F16369f811f94556e674955011d506194%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-                  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                  allowfullscreen="true"
-                ></iframe>
+      <ul class="launch-proof-grid rv d3" role="list">
+        <li class="launch-proof-card">
+          <div class="launch-proof-media"><img src="authority-website-cheryl-hunter-tedx.jpeg" alt="Cheryl Hunter personal branded website homepage featuring her TEDx talk"></div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Personal branded website</div>
+            <div class="launch-proof-card__body">A credible home for your expertise, offers, and AI products.</div>
+          </div>
+        </li>
+        <li class="launch-proof-card">
+          <div class="launch-proof-media">
+            <iframe
+              src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/393d729a00e6a20de5e23ae1665153da/iframe?preload=true&amp;loop=true&amp;autoplay=true&amp;muted=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F393d729a00e6a20de5e23ae1665153da%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+              title="Done-for-you posting video preview"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Done-for-you posting</div>
+            <div class="launch-proof-card__body">Consistent content keeps your ideas visible to the right audience.</div>
+          </div>
+        </li>
+        <li class="launch-proof-card">
+          <div class="launch-proof-media" role="img" aria-label="Automated comment-to-DM conversation preview">
+            <div class="manychat-preview" aria-hidden="true">
+              <div class="manychat-preview__header"><span class="manychat-preview__dot"></span>Comment + DM</div>
+              <div class="manychat-preview__thread">
+                <div class="manychat-preview__bubble">Comment “GUIDE” below and I’ll send it to you.</div>
+                <div class="manychat-preview__bubble manychat-preview__bubble--reply">GUIDE</div>
+                <div class="manychat-preview__bubble">Sent to your DMs ✓</div>
               </div>
             </div>
-            <div style="text-align: left;">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-For-You Organic Marketing</div>
-              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">A delivered content library of short videos, posts, and captions in your voice.</div>
-            </div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; background: #f8faf9; border: 1px solid var(--al-100); overflow: hidden;">
-              <img src="pipeline-activation-email.png" alt="Email draft sequence for pipeline activation" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            </div>
-            <div style="text-align: left;">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-For-You Pipeline Activation</div>
-              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Email and SMS drafts written to wake up every lead already sitting in your CRM.</div>
-            </div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Comment + DM Automation</div>
+            <div class="launch-proof-card__body">Every response can become a direct, automated sales conversation.</div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100);">
-              <div style="position: relative; padding-top: 100%;">
-                <iframe
-                  src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cf012831e12dd92855000b85e12a60db/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcf012831e12dd92855000b85e12a60db%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-                  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                  allowfullscreen="true"
-                ></iframe>
-              </div>
-            </div>
-            <div style="text-align: left;">
-              <div style="font-weight: 700; color: var(--al-900); font-size: 13px;">Done-For-You Paid Ads Setup</div>
-              <div style="font-size: 10px; color: var(--al-500); line-height: 1.35; margin-top: 2px;">Our team hands you hooks, angles, and ad creative while you control the spend.</div>
-            </div>
-          </div>
-        </div>
+        </li>
+      </ul>
 
-        <svg viewBox="0 0 1000 60" style="width: 82%; height: 24px;" preserveAspectRatio="none">
-          <line x1="165" y1="0" x2="165" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="500" y1="0" x2="500" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="835" y1="0" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="165" y1="34" x2="835" y2="34" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <line x1="500" y1="34" x2="500" y2="54" stroke="var(--brand-950)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-          <polygon points="492,52 500,60 508,52" fill="var(--brand-950)"/>
-        </svg>
-
-        <div style="background: var(--brand-950); color: white; border-radius: 16px; padding: 12px 42px; text-align: center; box-shadow: var(--shadow-card); min-width: 300px;">
-          <div style="font-weight: 700; font-size: 17px;">Your AI Product</div>
-          <div style="font-size: 11px; opacity: 0.82; margin-top: 4px; line-height: 1.3;">traffic, trust, buyers, booked calls</div>
-        </div>
-      </div>
+      <div class="launch-flow-label rv d4">How it works</div>
+      <ol class="upsell-flow upsell-flow--launch-rail rv d4">
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 1</div>
+          <div class="upsell-step__title">Content created</div>
+          <div class="upsell-step__price">Create</div>
+        </li>
+        <li class="upsell-arrow" aria-hidden="true">→</li>
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 2</div>
+          <div class="upsell-step__title">Content posted consistently</div>
+          <div class="upsell-step__price">Publish</div>
+        </li>
+        <li class="upsell-arrow" aria-hidden="true">→</li>
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 3</div>
+          <div class="upsell-step__title">Automation starts the conversation</div>
+          <div class="upsell-step__price">Engage</div>
+        </li>
+        <li class="upsell-arrow" aria-hidden="true">→</li>
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 4</div>
+          <div class="upsell-step__title">Lead enters the AI assessment and funnel</div>
+          <div class="upsell-step__price">Convert</div>
+        </li>
+      </ol>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- Phase 3, Monetize (Cover) -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: 50%; right: -80px; transform: translateY(-50%);"></div>
-
-    <div class="content--wide detail-grid">
-      <div class="flex-col gap-20">
-        <div class="rv d1"><span class="label-tag">Phase 3</span></div>
-        <div class="rv d2">
-          <h2 class="h-lg">Monetize</h2>
-        </div>
-        <div class="rv d3">
-          <p class="body-lg" style="max-width: 560px;">
-            We set up your back end so every lead that comes in the front door is worth more, turning one-time buyers into recurring and high-ticket revenue.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 3, Monetize · Ascension diagram (percentages) -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-    <div class="bg-orb bg-orb--cyan" style="bottom: -100px; left: -60px;"></div>
-
-    <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
-      <div class="flex-col gap-10">
-        <div class="rv d1"><span class="label-tag">Phase 3 · Ascension</span></div>
-        <div class="rv d2"><h2 class="h-lg">Every lead is worth more.</h2></div>
-        <div class="rv d3"><p class="body" style="max-width: 680px; margin: 0 auto; color: var(--al-500);">The same buyer who enters at $17 ascends into recurring and high-ticket revenue. Here's how it breaks down in our own business.</p></div>
-      </div>
-
-      <div class="rv d4 asc-pyramid-wrap">
-        <!-- Jump arrows: entry buyers ascend to Mid or High, shown on both sides -->
-        <svg class="asc-arrows" viewBox="0 0 680 228" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-          <defs>
-            <marker id="ascArrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8.5" markerHeight="8.5" orient="auto">
-              <path d="M0,0 L10,5 L0,10 z" fill="#106844"></path>
-            </marker>
-          </defs>
-          <path d="M82 206 C 68 190, 52 172, 46 150 C 44 124, 100 132, 150 114" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
-          <path d="M82 206 C 68 190, 52 172, 46 150 C 44 120, 78 56, 202 40" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
-          <path d="M598 206 C 612 190, 628 172, 634 150 C 636 124, 580 132, 530 114" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
-          <path d="M598 206 C 612 190, 628 172, 634 150 C 636 120, 602 56, 478 40" fill="none" stroke="#106844" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#ascArrowHead)"></path>
-        </svg>
-        <div class="asc-pyramid">
-          <div class="asc-tier asc-tier--top">
-            <div><div class="asc-tier__label">High-Ticket Service</div><div class="asc-tier__sub">1:1 or group coaching</div></div>
-            <div style="text-align: right;"><div class="asc-tier__pct">3–5%</div><div class="asc-tier__count">ascend to high ticket</div></div>
-          </div>
-          <div class="asc-tier asc-tier--mid">
-            <div><div class="asc-tier__label">AI Pocket Coach</div><div class="asc-tier__sub">$297/mo recurring</div></div>
-            <div style="text-align: right;"><div class="asc-tier__pct">15–30%</div><div class="asc-tier__count">ascend to recurring</div></div>
-          </div>
-          <div class="asc-tier asc-tier--low">
-            <div><div class="asc-tier__label">AI Assessment</div><div class="asc-tier__sub">$17 one-time entry</div></div>
-            <div style="text-align: right;"><div class="asc-tier__pct">100%</div><div class="asc-tier__count">of buyers enter here</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rv d5"><p style="font-size: 11px; color: var(--al-400); max-width: 760px; margin: 0 auto; line-height: 1.5;">Conversion percentages are based on data from our own internal business only, not an estimate or a guarantee of client results. Your results will depend on your industry, audience, and will likely vary.</p></div>
-    </div>
-  </div>
-
-  <!-- Phase 3, Monetize · Back-end ecosystem / repackage -->
-  <div class="slide">
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-
-    <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
-      <div class="flex-col gap-10">
-        <div class="rv d1"><span class="label-tag">Phase 3 · Back-End Ecosystem</span></div>
-        <div class="rv d2"><h2 class="h-lg">We optimize your entire back end.</h2></div>
-        <div class="rv d3"><p class="body" style="max-width: 700px; margin: 0 auto; color: var(--al-500);">We repackage and reposition everything you sell so your offers ladder cleanly and every buyer has a clear next step.</p></div>
-      </div>
-
-      <div class="rv d4" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; width: 100%; text-align: left;">
-        <div style="background: var(--ad-800); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid var(--al-50); border-radius: 16px; padding: 22px 20px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
-          <div class="detail-icon" style="width: 34px; height: 34px; font-size: 16px;">📦</div>
-          <div style="font-family: var(--font-hero); font-size: 19px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">Mid-ticket, dialed in</div>
-          <p style="font-size: 13px; line-height: 1.5; color: var(--al-600);">We structure your recurring offer so buyers stay, ascend, and keep getting results month after month.</p>
-        </div>
-        <div style="background: var(--ad-800); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid var(--al-50); border-radius: 16px; padding: 22px 20px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
-          <div class="detail-icon" style="width: 34px; height: 34px; font-size: 16px;">👑</div>
-          <div style="font-family: var(--font-hero); font-size: 19px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">High-ticket, done right</div>
-          <p style="font-size: 13px; line-height: 1.5; color: var(--al-600);">We help you stand up a premium 1:1 or group coaching offer, priced and positioned to convert.</p>
-        </div>
-        <div style="background: var(--ad-800); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid var(--al-50); border-radius: 16px; padding: 22px 20px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px;">
-          <div class="detail-icon" style="width: 34px; height: 34px; font-size: 16px;">🪜</div>
-          <div style="font-family: var(--font-hero); font-size: 19px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">Everything in between</div>
-          <p style="font-size: 13px; line-height: 1.5; color: var(--al-600);">We orient every other product and service so the ladder is clean and nothing is left on the table.</p>
-        </div>
-      </div>
-
-      <div class="rv d5"><p style="font-size: 11px; color: var(--al-400); max-width: 700px; margin: 0 auto; line-height: 1.5;">We help you maximize the value and revenue from every lead that comes in the front door.</p></div>
-    </div>
-  </div>
-
-  <!-- Phase 3, Monetize · Upsell engine demo -->
-  <div class="slide">
+  <!-- Phase 2, Paid Ads Launch Flow -->
+  <div class="slide slide--launch-proof">
     <div class="bg-orb bg-orb--cyan" style="top: -80px; left: 30%;"></div>
 
-    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+    <div class="content--wide text-center flex-col launch-flow-layout">
       <div class="flex-col gap-10">
-        <div class="rv d1"><span class="label-tag">Phase 3 · The Upsell Engine</span></div>
-        <div class="rv d2"><h2 class="h-lg">How the AI upsells every lead.</h2></div>
-        <div class="rv d3"><p class="body" style="max-width: 700px; margin: 0 auto; color: var(--al-500);">Your AI carries each buyer up the ladder automatically, with no manual follow-up and no leads left on the table.</p></div>
+        <div class="rv d1"><span class="label-tag">Phase 2 · Paid Ads Launch</span></div>
+        <div class="rv d2"><h2 class="h-lg">Turn paid traffic into buyers and booked calls.</h2></div>
       </div>
 
-      <div class="rv d4 upsell-flow">
-        <div class="upsell-step">
-          <div class="upsell-step__tag">Step 1 · Enter</div>
-          <div class="upsell-step__title">Buys the $17 AI Assessment</div>
-          <div class="upsell-step__body">A new lead pays $17 for an instant, personalized action plan in your own voice.</div>
+      <ul class="launch-proof-grid rv d3" role="list">
+        <li class="launch-proof-card">
+          <div class="launch-proof-media"><img src="paid-ads-facebook-library.jpeg" alt="Facebook Ad Library showing multiple Kodara ad creative examples"></div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Ad Creative</div>
+            <div class="launch-proof-card__body">Hooks, angles, and launch-ready creative built by our team.</div>
+          </div>
+        </li>
+        <li class="launch-proof-card">
+          <div class="launch-proof-media"><img src="leanne-landing.jpg" alt="Leanne Ellington's AI sales funnel"></div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Funnel</div>
+            <div class="launch-proof-card__body">A focused sales experience built to turn traffic into buyers.</div>
+          </div>
+        </li>
+        <li class="launch-proof-card">
+          <div class="launch-proof-media"><img src="pipeline-activation-email.png" alt="Pipeline activation email sequence"></div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Pipeline Activation</div>
+            <div class="launch-proof-card__body">Email and SMS sequences wake up the leads already in your CRM.</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="launch-flow-label rv d4">How it works</div>
+      <ol class="upsell-flow upsell-flow--launch-rail rv d4">
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 1</div>
+          <div class="upsell-step__title">Ads created and configured</div>
+          <div class="upsell-step__price">Create</div>
+        </li>
+        <li class="upsell-arrow" aria-hidden="true">→</li>
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 2</div>
+          <div class="upsell-step__title">Traffic reaches the funnel</div>
+          <div class="upsell-step__price">Attract</div>
+        </li>
+        <li class="upsell-arrow" aria-hidden="true">→</li>
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 3</div>
+          <div class="upsell-step__title">Buyer completes the $17 assessment</div>
           <div class="upsell-step__price">$17</div>
-        </div>
-        <div class="upsell-arrow">→</div>
-        <div class="upsell-step">
-          <div class="upsell-step__tag">Step 2 · Qualify</div>
-          <div class="upsell-step__title">Spots your hottest leads</div>
-          <div class="upsell-step__body">It watches replies for buying signals and flags the clients ready to go deeper.</div>
-          <div class="upsell-step__price">Ready</div>
-        </div>
-        <div class="upsell-arrow">→</div>
-        <div class="upsell-step upsell-final">
-          <div class="upsell-step__tag">Step 3 · Ascend</div>
-          <div class="upsell-step__title">Books the high-ticket call</div>
-          <div class="upsell-step__body">It books your qualified, ready-to-buy leads onto your calendar for your top offer.</div>
-          <div class="upsell-step__price">$$$</div>
-        </div>
-        <div class="upsell-arrow">→</div>
-        <div class="upsell-step">
-          <div class="upsell-step__tag">Step 4 · Downsell</div>
-          <div class="upsell-step__title">Offers the Pocket Coach</div>
-          <div class="upsell-step__body">Leads who aren't ready for the call get invited into the Pocket Coach, so no one leaves empty-handed.</div>
-          <div class="upsell-step__price">$297/mo</div>
-        </div>
-      </div>
+        </li>
+        <li class="upsell-arrow" aria-hidden="true">→</li>
+        <li class="upsell-step">
+          <div class="upsell-step__tag">Step 4</div>
+          <div class="upsell-step__title">Hot buyers book calls; not qualified get offered AI Pocket Coach</div>
+          <div class="upsell-step__price">Ascend</div>
+        </li>
+      </ol>
     </div>
   </div>
 
@@ -2928,17 +2694,17 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- Offer Stack, Simple Phase Recap -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
+  <div class="slide slide--program-overview">
     <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -60px;"></div>
 
     <div class="content--wide text-center flex-col gap-32" style="justify-content: center;">
       <div class="flex-col gap-12">
         <div class="rv d1"><span class="label-tag">Offer Summary</span></div>
-        <div class="rv d2"><h2 class="h-lg">Build, launch, monetize.</h2></div>
+        <div class="rv d2"><h2 class="h-lg">Build and launch.</h2></div>
       </div>
 
-      <div class="rv d3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 980px; margin: 0 auto;">
+      <div class="rv d3" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 980px; margin: 0 auto;">
         <div class="brand-card" style="padding: 24px 18px; text-align: center;">
           <div class="phase-num phase-num--brand" style="margin: 0 auto 14px;">1</div>
           <div class="h-md" style="font-size: 19px;">Build</div>
@@ -2949,14 +2715,11 @@
           <div class="h-md" style="font-size: 19px;">Launch</div>
           <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-top: 6px;">2 weeks</div>
         </div>
-        <div class="brand-card" style="padding: 24px 18px; text-align: center;">
-          <div class="phase-num phase-num--brand" style="margin: 0 auto 14px;">3</div>
-          <div class="h-md" style="font-size: 19px;">Monetize</div>
-          <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-top: 6px;">6 months+</div>
-        </div>
       </div>
 
-      <div class="rv d4" style="max-width: 980px; margin: 0 auto; width: 100%; background: var(--brand-950); color: white; border-radius: 16px; padding: 18px 26px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: center; gap: 14px; text-align: center;">
+      <div class="program-timeline-bar rv d4">6 weeks to go live. 6 months of selling.</div>
+
+      <div class="rv d5" style="max-width: 980px; margin: 0 auto; width: 100%; background: var(--brand-950); color: white; border-radius: 16px; padding: 18px 26px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: center; gap: 14px; text-align: center;">
         <span style="width: 30px; height: 30px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex: 0 0 auto;">✓</span>
         <span style="font-size: 17px; font-weight: 700; line-height: 1.3;">1,000 completed AI assessments in 6 months, or every penny refunded.<span style="font-weight: 500; vertical-align: super; font-size: 11px;">*</span></span>
       </div>
@@ -3064,11 +2827,11 @@
           </div>
         </div>
 
-        <!-- Quote -->
-        <div class="rv d4" style="background: var(--brand-950); color: white; border-radius: 16px; padding: 16px 20px; box-shadow: var(--shadow-card); margin-top: 18px;">
-          <p style="font-family: var(--font-hero); font-style: normal; font-size: 18px; line-height: 1.4; color: white;">"I've spent 20 years figuring this out. Now it helps people while I sleep, and they actually pay for it."</p>
-          <p style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 8px;">The moment it clicks for every client who joins</p>
-        </div>
+        <figure class="closing-logo-stack">
+          <figcaption class="closing-logo-stack__caption">We've built AI products used and loved by people at:</figcaption>
+          <div class="closing-logo-stack__row closing-logo-stack__row--five"></div>
+          <div class="closing-logo-stack__row closing-logo-stack__row--four"></div>
+        </figure>
       </div>
     </div>
   </div>
@@ -3113,44 +2876,31 @@
             </div>
             <div style="display: flex; gap: 7px; align-items: flex-start;">
               <div style="width: 15px; height: 15px; border-radius: 999px; background: var(--brand-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;"><svg viewBox="0 0 12 12" style="width: 8px; height: 8px; stroke: var(--brand-950); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">Personal Branded Website</span>
+            </div>
+            <div style="display: flex; gap: 7px; align-items: flex-start;">
+              <div style="width: 15px; height: 15px; border-radius: 999px; background: var(--brand-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;"><svg viewBox="0 0 12 12" style="width: 8px; height: 8px; stroke: var(--brand-950); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">Done-For-You Posting</span>
+            </div>
+            <div style="display: flex; gap: 7px; align-items: flex-start;">
+              <div style="width: 15px; height: 15px; border-radius: 999px; background: var(--brand-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;"><svg viewBox="0 0 12 12" style="width: 8px; height: 8px; stroke: var(--brand-950); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;"><polyline points="2,6 5,9 10,3"/></svg></div>
+              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">ManyChat Automation</span>
+            </div>
+            <div style="display: flex; gap: 7px; align-items: flex-start;">
+              <div style="width: 15px; height: 15px; border-radius: 999px; background: var(--brand-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;"><svg viewBox="0 0 12 12" style="width: 8px; height: 8px; stroke: var(--brand-950); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;"><polyline points="2,6 5,9 10,3"/></svg></div>
               <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">Done-For-You Funnel</span>
             </div>
             <div style="display: flex; gap: 7px; align-items: flex-start;">
               <div style="width: 15px; height: 15px; border-radius: 999px; background: var(--brand-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;"><svg viewBox="0 0 12 12" style="width: 8px; height: 8px; stroke: var(--brand-950); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;"><polyline points="2,6 5,9 10,3"/></svg></div>
-              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">Done-For-You Organic Marketing</span>
+              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">Done-For-You Paid Ads Setup</span>
             </div>
             <div style="display: flex; gap: 7px; align-items: flex-start;">
               <div style="width: 15px; height: 15px; border-radius: 999px; background: var(--brand-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;"><svg viewBox="0 0 12 12" style="width: 8px; height: 8px; stroke: var(--brand-950); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;"><polyline points="2,6 5,9 10,3"/></svg></div>
-              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">Done-For-You Pipeline Activation</span>
-            </div>
-            <div style="display: flex; gap: 7px; align-items: flex-start;">
-              <div style="width: 15px; height: 15px; border-radius: 999px; background: var(--brand-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;"><svg viewBox="0 0 12 12" style="width: 8px; height: 8px; stroke: var(--brand-950); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;"><polyline points="2,6 5,9 10,3"/></svg></div>
-              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">Done-With-You Paid Ads</span>
+              <span style="font-size: 11px; line-height: 1.3; color: var(--al-900); font-weight: 600;">6 Months Launch Optimization</span>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- proof: Kodara's own numbers -->
-      <div class="rv d3" style="max-width: 560px; margin: 0 auto; width: 100%;">
-        <div class="glass--strong" style="text-align: center; padding: 20px 28px;">
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">April – June 2026 · Our own business</div>
-          <div style="display: grid; grid-template-columns: 1fr 1px 1fr; align-items: baseline; gap: 22px; margin-top: 14px;">
-            <div>
-              <div style="font-family: var(--font-hero); font-size: clamp(52px, 7vw, 76px); font-weight: 700; color: var(--brand-950); letter-spacing: -2px; line-height: 1;">34</div>
-              <div style="font-size: clamp(11px, 1.3vw, 13px); color: var(--al-600); font-weight: 600; margin-top: 6px;">high-ticket clients</div>
-            </div>
-            <div style="width: 1px; height: 58px; background: var(--al-100); justify-self: center; align-self: center;"></div>
-            <div>
-              <div style="font-family: var(--font-hero); font-size: clamp(38px, 5vw, 54px); font-weight: 700; color: var(--brand-950); letter-spacing: -1.5px; line-height: 1;">$612K+</div>
-              <div style="font-size: clamp(11px, 1.3vw, 13px); color: var(--al-600); font-weight: 600; margin-top: 6px;">contracted revenue</div>
-            </div>
-          </div>
-          <div style="font-size: clamp(12px, 1.3vw, 14px); color: var(--al-600); font-weight: 500; margin-top: 14px; line-height: 1.5;">out of 1,000 leads with this exact same system.</div>
-        </div>
-      </div>
-
-      <div class="rv d4"><p style="font-size: 11px; color: var(--al-400); max-width: 560px; margin: 0 auto; line-height: 1.5;">Figures reflect data from our own internal business only, not a guarantee of client results. Your results will depend on your industry, audience, and will likely vary.</p></div>
     </div>
   </div>
 
@@ -3210,6 +2960,11 @@
 <div class="counter" id="counter"><span class="cur">01</span> / 11</div>
 
 <script>
+  const deckElement = document.getElementById('deck');
+  const clientsLoveSlide = document.getElementById('clients-love-slide');
+  const expertAiSlide = document.getElementById('expert-ai-slide');
+  deckElement.insertBefore(expertAiSlide, clientsLoveSlide);
+
   const slides = document.querySelectorAll('.slide:not([hidden])');
   const panel = document.getElementById('panel');
   const progress = document.getElementById('progress');
@@ -3217,6 +2972,37 @@
   const toggle = document.getElementById('panelToggle');
   const total = slides.length;
   let current = 0;
+
+  const approvedClosingLogoOrder = [
+    'Mayo Clinic',
+    'ClickFunnels',
+    'Johns Hopkins',
+    'HighLevel',
+    'Fidelity Investments',
+    'ServiceTitan',
+    'Tony Robbins',
+    'H&R Block',
+    'Ramsey Solutions',
+  ];
+  const sourceLogoElements = Array.from(document.querySelector('.client-logo-strip__row').children);
+  const approvedClosingLogos = approvedClosingLogoOrder.map((name) => {
+    const logo = sourceLogoElements.find((element) => (element.getAttribute('alt') || element.textContent.trim()) === name);
+    if (!logo) throw new Error('Missing approved closing logo: ' + name);
+    return logo.cloneNode(true);
+  });
+  const closingLogoRows = document.querySelectorAll('.closing-logo-stack__row');
+  const appendClosingLogos = (row, logos) => {
+    logos.forEach((logo) => {
+      const item = document.createElement('span');
+      item.className = 'closing-logo-stack__item';
+      item.appendChild(logo);
+      row.appendChild(item);
+    });
+  };
+  if (closingLogoRows.length === 2) {
+    appendClosingLogos(closingLogoRows[0], approvedClosingLogos.slice(0, 5));
+    appendClosingLogos(closingLogoRows[1], approvedClosingLogos.slice(5));
+  }
 
   // Build thumbnail panel from actual slide clones
   slides.forEach((slide, i) => {
@@ -3233,6 +3019,7 @@
 
     const wrapper = document.createElement('div');
     wrapper.className = 'thumb-clone';
+    wrapper.setAttribute('aria-hidden', 'true');
 
     // Clone the full slide element so it keeps its own classes + styles
     const clonedSlide = slide.cloneNode(true);
@@ -3288,6 +3075,7 @@
   function goTo(i) {
     if (i < 0 || i >= total) return;
     slides[current].classList.remove('active');
+    slides[current].setAttribute('tabindex', '-1');
     thumbs[current].classList.remove('active');
     current = i;
 
@@ -3303,6 +3091,8 @@
     // 3. Re-add 'rv' class (elements snap to opacity:0, translateY:20px)
     // 4. Next frame: add 'active' which triggers transition to opacity:1, translateY:0)
     const slide = slides[current];
+    slide.scrollTop = 0;
+    slide.setAttribute('tabindex', '0');
     const rvEls = slide.querySelectorAll('.rv');
     const rvData = [];
     rvEls.forEach(el => {
@@ -3380,14 +3170,45 @@
     panel.classList.toggle('collapsed');
   });
 
+  function handleVerticalNavigation(direction) {
+    const slide = slides[current];
+    const overflowY = window.getComputedStyle(slide).overflowY;
+    const isScrollable = window.innerWidth <= 900
+      && (overflowY === 'auto' || overflowY === 'scroll')
+      && slide.scrollHeight > slide.clientHeight;
+    if (!isScrollable) return false;
+
+    const atTop = slide.scrollTop <= 0;
+    const atBottom = slide.scrollTop + slide.clientHeight >= slide.scrollHeight;
+    if ((direction < 0 && atTop) || (direction > 0 && atBottom)) return false;
+
+    slide.scrollBy({
+      top: direction * Math.max(slide.clientHeight * 0.75, 1),
+      behavior: 'smooth',
+    });
+    return true;
+  }
+
   // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && videoModal.classList.contains('open')) { closeVideoModal(); return; }
     if (videoModal.classList.contains('open')) return; // don't navigate while modal is open
     const activeTag = document.activeElement ? document.activeElement.tagName : '';
     if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(activeTag) || (document.activeElement && document.activeElement.isContentEditable)) return;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); return; }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); return; }
+    const movesDown = e.key === 'ArrowDown' || (e.key === ' ' && !e.shiftKey);
+    const movesUp = e.key === 'ArrowUp' || (e.key === ' ' && e.shiftKey);
+    if (movesDown) {
+      e.preventDefault();
+      if (!handleVerticalNavigation(1)) goTo(current + 1);
+      return;
+    }
+    if (movesUp) {
+      e.preventDefault();
+      if (!handleVerticalNavigation(-1)) goTo(current - 1);
+      return;
+    }
     if (e.key === 'Home') { e.preventDefault(); goTo(0); }
     if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
   });
@@ -3405,4 +3226,3 @@
 
 </body>
 </html>
-

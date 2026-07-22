@@ -49,6 +49,20 @@ function sha256(imagePath) {
   return createHash('sha256').update(readFileSync(imagePath)).digest('hex').toUpperCase();
 }
 
+test('deck.html promotes the July deck and archives the previous deck', () => {
+  const activePath = resolve(slidesDir, 'deck.html');
+  const versionedPath = resolve(slidesDir, 'deck-july-2026.html');
+  const archivedPath = resolve(slidesDir, 'deck-old-july-2026.html');
+
+  assert.ok(existsSync(archivedPath), 'the previous deck must be archived');
+  assert.equal(sha256(activePath), sha256(versionedPath), 'deck.html must match the approved July deck');
+  assert.equal(
+    sha256(archivedPath),
+    'FD2FC9B712C9E9C356EFD6070D29FA0359480D622F82643161442BB29B493449',
+    'the archived file must match the previous deck.html',
+  );
+});
+
 test('opening uses the approved AI scale message', () => {
   const opening = section('<!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->', '<!-- INTRO 1.1,');
   assert.match(opening, /You can only sell one person at a time\./);
@@ -366,6 +380,8 @@ test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   assert.match(paid, /src="leanne-landing\.jpg"/);
   assert.match(paid, /src="pipeline-activation-email\.png"/);
   assertInOrder(paid, ['Ad Creative', 'Funnel', 'Pipeline Activation'], 'Paid Ads proof cards');
+  assert.match(paid, />Hot buyers book calls; not qualified get offered AI Pocket Coach<\/div>/);
+  assert.doesNotMatch(paid, /Qualified buyers book calls; remaining buyers receive the Pocket Coach offer/);
   assert.match(deck, /:root\s*\{[^}]*--al-600:\s*[^;]+;/s);
   assert.match(deck, /\.launch-proof-card__body \{[^}]*color: var\(--al-600\);[^}]*font-size: 9px;[^}]*line-height: 1\.25;/);
 });
