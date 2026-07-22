@@ -420,6 +420,12 @@ test('investment deliverables match the approved Build and Launch offer', () => 
   assert.match(deck, /\$6,800<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
 });
 
+test('both launch proof rows match the flowchart width', () => {
+  assert.equal((deck.match(/<ul class="launch-proof-grid rv d3" role="list">/g) ?? []).length, 2);
+  assert.match(deck, /\.launch-proof-grid \{[^}]*max-width: 1060px;[^}]*\}/s);
+  assert.match(deck, /\.upsell-flow \{[^}]*max-width: 1060px;[^}]*\}/s);
+});
+
 test('price card balances ten deliverables with the approved DFY paid ads copy', () => {
   const investment = section('<!-- S10a, The Investment', '<!-- S10b, Payment Plans');
   assert.match(investment, />Done-For-You Paid Ads Setup<\/span>/);
