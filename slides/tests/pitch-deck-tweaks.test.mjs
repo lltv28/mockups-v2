@@ -109,7 +109,7 @@ test('AI credibility slide contains four verified products and local images', ()
   const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
   const proofCards = [...proof.matchAll(/<[^>]+\bclass=["'][^"']*\bai-proof-card\b[^"']*["'][^>]*>/g)];
   const imageSources = [...proof.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)]
-    .map((match) => match[1]);
+    .map((match) => match[1].split('?')[0]);
   assert.equal(proofCards.length, 4);
   [
     ['Tony Robbins', 'Tony Robbins AI', 'tony-robbins.png'],
@@ -135,11 +135,10 @@ test('AI credibility slide uses scoped short-viewport scrolling and slide semant
   assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.slide--ai-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}\s*\.slide--ai-proof > \.content--wide \{[^}]*justify-content: flex-start !important;[^}]*align-items: stretch;[^}]*\}/);
 });
 
-test('local AI proof images use the three approved user screenshots', () => {
+test('local AI proof images use the approved screenshots and original Hyman image', () => {
   const approved = [
     ['tony-robbins.png', { width: 1563, height: 785 }, '15B27BFEBA9BA2F12E83AF8B8FB8D0DBD7F1C836702A842CFCDE984470113782'],
     ['alex-hormozi.png', { width: 2083, height: 1203 }, '3C902C71C57ED03D7FE7C2794F9472B90566AAC72E1D9DDB7F45AC40E5FEEE92'],
-    ['mark-hyman.png', { width: 1325, height: 724 }, 'F45DE93CF6B66883CFC5204F076CECD6775DF92BEEEFA2D9BDF3D106A24410B8'],
   ];
 
   approved.forEach(([file, dimensions, hash]) => {
@@ -148,6 +147,10 @@ test('local AI proof images use the three approved user screenshots', () => {
     assert.equal(sha256(imagePath), hash, `${file} must match the approved screenshot`);
   });
 
+  const hymanPath = resolve(slidesDir, 'ai-proof', 'mark-hyman.png');
+  assert.deepEqual(readPngInfo(hymanPath), { width: 800, height: 450 }, 'Mark Hyman must use the original image dimensions');
+  assert.equal(sha256(hymanPath), 'A3E41555D4FAC20946AFFDF5479799D198687EB9C468E8D85027B4A7A49FDAB4', 'Mark Hyman must use the original deck image');
+
   assert.deepEqual(
     readPngInfo(resolve(slidesDir, 'ai-proof', 'grant-cardone.png')),
     { width: 800, height: 450 },
@@ -155,15 +158,25 @@ test('local AI proof images use the three approved user screenshots', () => {
   );
 });
 
-test('AI proof source manifest records the three user-provided replacements', () => {
+test('ACQ AI is zoomed 30 percent from the top and Hyman bypasses stale caches', () => {
+  const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
+  assert.match(proof, /<div class="ai-proof-card__media ai-proof-card__media--zoom">\s*<img src="ai-proof\/alex-hormozi\.png" alt="ACQ AI" loading="lazy">\s*<\/div>/);
+  assert.match(proof, /<img src="ai-proof\/mark-hyman\.png\?v=20260722b" alt="AI Mark" loading="lazy">/);
+  assert.match(deck, /\.ai-proof-card__media \{[^}]*height: 112px;[^}]*overflow: hidden;[^}]*\}/s);
+  assert.match(deck, /\.ai-proof-card__media--zoom img \{[^}]*transform: scale\(1\.3\);[^}]*transform-origin: center top;[^}]*\}/s);
+  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.ai-proof-card__media \{ height: 140px; \}/);
+});
+
+test('AI proof source manifest records the user replacements and original Hyman source', () => {
   const manifestPath = resolve(slidesDir, 'ai-proof', 'SOURCES.md');
   assert.ok(existsSync(manifestPath), 'SOURCES.md must exist');
   const sources = readFileSync(manifestPath, 'utf8');
   assert.match(sources, /Replacements received: 2026-07-22/);
-  ['tony-robbins.png', 'alex-hormozi.png', 'mark-hyman.png'].forEach((file) => {
+  ['tony-robbins.png', 'alex-hormozi.png'].forEach((file) => {
     assert.match(sources, new RegExp(`${file.replace('.', '\\.')}.*User-provided screenshot`, 'i'));
   });
   assert.ok(sources.includes('https://10xgc.grantcardone.com/blt-offer'));
+  assert.ok(sources.includes('https://drhyman.com/cdn/shop/files/aimark.gif?v=1763763004'));
   assert.match(sources, /does not assert or grant reuse permission/i);
 });
 
