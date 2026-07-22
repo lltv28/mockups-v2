@@ -302,20 +302,24 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   assert.match(authority, /<ul class="launch-proof-grid rv d3" role="list">/);
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Authority proof cards must appear above the Organic flow');
   assert.equal((proofGrid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
-  assert.match(proofGrid, /src="website-bonus\.png"/);
-  assert.match(proofGrid, /src="dfy-marketing\.png"/);
+  assert.match(proofGrid, /src="authority-website-cheryl-hunter\.jpeg"/);
+  assert.match(proofGrid, /<iframe[\s\S]*393d729a00e6a20de5e23ae1665153da[\s\S]*<\/iframe>/);
+  assert.match(proofGrid, /title="Done-for-you posting video preview"/);
+  assert.doesNotMatch(proofGrid, /src="website-bonus\.png"/);
+  assert.doesNotMatch(proofGrid, /src="dfy-marketing\.png"/);
+  assert.ok(existsSync(resolve(slidesDir, 'authority-website-cheryl-hunter.jpeg')));
   assert.match(proofGrid, /class="manychat-preview"/);
   assert.match(proofGrid, /role="img" aria-label="ManyChat automated comment-to-DM conversation preview"/);
   [
     'Personal branded website',
     'Done-for-you posting',
-  'Comment + DM Automation',
-].forEach((copy) => assert.match(proofGrid, new RegExp(escapeRegex(copy), 'i')));
-assert.doesNotMatch(
-  proofGrid,
-  /class="launch-proof-card__title">ManyChat comment and DM automation<\/div>/i,
-);
-assertInOrder(organicFlow, [
+    'Comment + DM Automation',
+  ].forEach((copy) => assert.match(proofGrid, new RegExp(escapeRegex(copy), 'i')));
+  assert.doesNotMatch(
+    proofGrid,
+    /class="launch-proof-card__title">ManyChat comment and DM automation<\/div>/i,
+  );
+  assertInOrder(organicFlow, [
     'Content created',
     'Content posted consistently',
     'ManyChat starts the conversation',
