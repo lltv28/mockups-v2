@@ -1182,6 +1182,21 @@
     box-shadow: var(--shadow-modal);
   }
 
+  .program-timeline-bar {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    border-radius: 16px;
+    background: var(--brand-950);
+    color: white;
+    box-shadow: var(--shadow-card);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+  }
+
   .phase-week-tag {
     display: inline-flex;
     padding: 4px 8px;
@@ -1880,6 +1895,19 @@
   .ai-proof-benefit { background: var(--brand-50); border: 1px solid var(--brand-200); border-radius: 12px; color: var(--brand-950); font-size: 12px; font-weight: 700; padding: 11px 8px; text-align: center; }
   @media (max-width: 900px) { .love-track { animation-duration: 32s; } .love-reasons { grid-template-columns: 1fr; max-width: 380px; } .client-logo-strip__row { gap: 4px; } }
   @media (max-width: 900px) {
+    .slide--program-overview {
+      overflow-y: auto;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .slide--program-overview > .content--wide {
+      justify-content: flex-start !important;
+      align-items: stretch;
+    }
+    .program-timeline-bar {
+      padding: 14px 18px;
+      font-size: 15px;
+    }
     .slide--ai-proof {
       overflow-y: auto;
       justify-content: flex-start;
@@ -2197,7 +2225,7 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- S5, 2 Stages Overview -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide" data-slide="4">
+  <div class="slide slide--program-overview" data-slide="4">
     <div class="bg-orb bg-orb--green" style="bottom: -150px; right: -100px;"></div>
     <div class="bg-orb bg-orb--cyan" style="top: -100px; left: -80px;"></div>
 
@@ -2222,6 +2250,7 @@
           <p class="body" style="font-size: 15px; line-height: 22px;">Your AI product becomes a predictable growth engine.</p>
         </div>
       </div>
+      <div class="program-timeline-bar rv d5">6 weeks to go live. 6 months of selling.</div>
     </div>
   </div>
 
@@ -2660,7 +2689,7 @@
   <!-- ═══════════════════════════════════════ -->
   <!-- Offer Stack, Simple Phase Recap -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide">
+  <div class="slide slide--program-overview">
     <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -60px;"></div>
 
@@ -2683,7 +2712,9 @@
         </div>
       </div>
 
-      <div class="rv d4" style="max-width: 980px; margin: 0 auto; width: 100%; background: var(--brand-950); color: white; border-radius: 16px; padding: 18px 26px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: center; gap: 14px; text-align: center;">
+      <div class="program-timeline-bar rv d4">6 weeks to go live. 6 months of selling.</div>
+
+      <div class="rv d5" style="max-width: 980px; margin: 0 auto; width: 100%; background: var(--brand-950); color: white; border-radius: 16px; padding: 18px 26px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: center; gap: 14px; text-align: center;">
         <span style="width: 30px; height: 30px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex: 0 0 auto;">✓</span>
         <span style="font-size: 17px; font-weight: 700; line-height: 1.3;">1,000 completed AI assessments in 6 months, or every penny refunded.<span style="font-weight: 500; vertical-align: super; font-size: 11px;">*</span></span>
       </div>
