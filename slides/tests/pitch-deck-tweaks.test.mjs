@@ -264,9 +264,13 @@ test('Organic Launch keeps the third bullet comma inside the emphasized phrase',
 });
 
 test('Launch proof slides hide horizontal overflow at the responsive breakpoint', () => {
-  const responsiveRule = deck.match(/@media \(max-width: 900px\) \{[\s\S]*?\.slide--launch-proof \{(?<styles>[^}]*)\}/)?.groups?.styles ?? '';
-  assert.match(responsiveRule, /overflow-x: hidden;/);
-  assert.match(responsiveRule, /overflow-y: auto;/);
+  const launchCss = section('/* ── Launch flow components ── */', '/* deck-wide: balance line widths');
+  const responsiveBlocks = launchCss.match(/@media \(max-width: 900px\) \{[\s\S]*?\n  \}/g) ?? [];
+  assert.equal(responsiveBlocks.length, 1, 'Launch CSS must contain one responsive block at 900px');
+  const launchProofRules = responsiveBlocks[0].match(/\.slide--launch-proof \{[^}]*\}/g) ?? [];
+  assert.equal(launchProofRules.length, 1, 'Launch responsive block must contain one slide overflow rule');
+  assert.match(launchProofRules[0], /overflow-x: hidden;/);
+  assert.match(launchProofRules[0], /overflow-y: auto;/);
 });
 
 test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
