@@ -414,6 +414,7 @@ test('merged Authority and Paid Ads flows keep accessible ordered-list semantics
   assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step__price \{[^}]*font-size: 18px;[^}]*letter-spacing: 0\.04em;/);
   assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-arrow \{[^}]*background: var\(--brand-950\);[^}]*color: var\(--white\);[^}]*border-radius: 50%;/);
   assert.match(responsiveBlock, /\.upsell-flow--launch-rail \{[^}]*flex-direction: column;/);
+  assert.match(responsiveBlock, /\.upsell-flow--launch-rail \.upsell-step__price \{[^}]*font-size: 18px;/);
 });
 
 test('obsolete marketing and Monetize slides are removed', () => {
