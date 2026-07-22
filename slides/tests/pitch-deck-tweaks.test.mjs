@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -42,6 +43,10 @@ function readPngInfo(imagePath) {
   assert.equal(bytes.readUInt32BE(8), 13, `${imagePath} must begin with a 13-byte IHDR chunk`);
   assert.equal(bytes.subarray(12, 16).toString('ascii'), 'IHDR', `${imagePath} must begin with an IHDR chunk`);
   return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+}
+
+function sha256(imagePath) {
+  return createHash('sha256').update(readFileSync(imagePath)).digest('hex').toUpperCase();
 }
 
 test('opening uses the approved AI scale message', () => {
@@ -104,7 +109,7 @@ test('AI credibility slide contains four verified products and local images', ()
   const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
   const proofCards = [...proof.matchAll(/<[^>]+\bclass=["'][^"']*\bai-proof-card\b[^"']*["'][^>]*>/g)];
   const imageSources = [...proof.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)]
-    .map((match) => match[1]);
+    .map((match) => match[1].split('?')[0]);
   assert.equal(proofCards.length, 4);
   [
     ['Tony Robbins', 'Tony Robbins AI', 'tony-robbins.png'],
@@ -125,32 +130,53 @@ test('AI credibility slide contains four verified products and local images', ()
 
 test('AI credibility slide uses scoped short-viewport scrolling and slide semantics', () => {
   const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
-  assert.match(proof, /<div class="slide slide--ai-proof" role="group" aria-roledescription="slide" aria-labelledby="ai-proof-title">/);
+  assert.match(proof, /<div class="slide slide--ai-proof"[^>]*role="group" aria-roledescription="slide" aria-labelledby="ai-proof-title">/);
   assert.match(proof, /<h2 id="ai-proof-title" class="h-lg"/);
-  assert.match(deck, /@media \(max-width: 900px\) \{\s*\.slide--ai-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}\s*\.slide--ai-proof > \.content--wide \{[^}]*justify-content: flex-start !important;[^}]*align-items: stretch;[^}]*\}/s);
+  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.slide--ai-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}\s*\.slide--ai-proof > \.content--wide \{[^}]*justify-content: flex-start !important;[^}]*align-items: stretch;[^}]*\}/);
 });
 
-test('local AI proof images are valid 800 by 450 PNG files', () => {
-  ['tony-robbins.png', 'alex-hormozi.png', 'grant-cardone.png', 'mark-hyman.png'].forEach((file) => {
-    const dimensions = readPngInfo(resolve(slidesDir, 'ai-proof', file));
-    assert.deepEqual(dimensions, { width: 800, height: 450 }, `${file} must be 800 by 450 pixels`);
+test('local AI proof images use the original Tony, ACQ, and Hyman files', () => {
+  const originals = [
+    ['tony-robbins.png', { width: 800, height: 450 }, '5C2724D6826627C2CFCB40C80CBB013BD2F69C2CBD88E39B17A4B5EE85BA8967'],
+    ['alex-hormozi.png', { width: 800, height: 450 }, '23B7F7454B2555557B5788892D59F999D3C36C23E2D2255C54132B60619EF427'],
+  ];
+
+  originals.forEach(([file, dimensions, hash]) => {
+    const imagePath = resolve(slidesDir, 'ai-proof', file);
+    assert.deepEqual(readPngInfo(imagePath), dimensions, `${file} must keep its original dimensions`);
+    assert.equal(sha256(imagePath), hash, `${file} must match the original deck image`);
   });
+
+  const hymanPath = resolve(slidesDir, 'ai-proof', 'mark-hyman.png');
+  assert.deepEqual(readPngInfo(hymanPath), { width: 800, height: 450 }, 'Mark Hyman must use the original image dimensions');
+  assert.equal(sha256(hymanPath), 'A3E41555D4FAC20946AFFDF5479799D198687EB9C468E8D85027B4A7A49FDAB4', 'Mark Hyman must use the original deck image');
+
+  assert.deepEqual(
+    readPngInfo(resolve(slidesDir, 'ai-proof', 'grant-cardone.png')),
+    { width: 800, height: 450 },
+    'Grant Cardone must remain unchanged',
+  );
 });
 
-test('AI proof source manifest records exact official provenance without asserting permission', () => {
+test('Tony and ACQ use original unzoomed images with cache versions', () => {
+  const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
+  assert.match(proof, /<img src="ai-proof\/tony-robbins\.png\?v=20260722c" alt="Tony Robbins AI" loading="lazy">/);
+  assert.match(proof, /<img src="ai-proof\/alex-hormozi\.png\?v=20260722c" alt="ACQ AI" loading="lazy">/);
+  assert.match(proof, /<img src="ai-proof\/mark-hyman\.png\?v=20260722b" alt="AI Mark" loading="lazy">/);
+  assert.doesNotMatch(proof, /ai-proof-card__media/);
+  assert.doesNotMatch(deck, /\.ai-proof-card__media/);
+});
+
+test('AI proof source manifest records the original official sources', () => {
   const manifestPath = resolve(slidesDir, 'ai-proof', 'SOURCES.md');
   assert.ok(existsSync(manifestPath), 'SOURCES.md must exist');
   const sources = readFileSync(manifestPath, 'utf8');
   assert.match(sources, /Retrieved: 2026-07-21/);
-  [
-    ['tony-robbins.png', 'https://www.tonyrobbins.com/programs/tony-ai'],
-    ['alex-hormozi.png', 'https://ai.acquisition.com/'],
-    ['grant-cardone.png', 'https://10xgc.grantcardone.com/blt-offer'],
-    ['mark-hyman.png', 'https://drhyman.com/products/ai-mark'],
-  ].forEach(([file, url]) => {
-    assert.match(sources, new RegExp(file.replace('.', '\\.')));
-    assert.ok(sources.includes(url), `${file} must list ${url}`);
-  });
+  assert.ok(sources.includes('https://cdn.sanity.io/images/nyyhaljw/production/38ed6c58a38e407309195f11353effdb29c940fa-4073x2293.png'));
+  assert.ok(sources.includes('https://ai.acq.com/api/og'));
+  assert.ok(sources.includes('https://10xgc.grantcardone.com/blt-offer'));
+  assert.ok(sources.includes('https://drhyman.com/cdn/shop/files/aimark.gif?v=1763763004'));
+  assert.doesNotMatch(sources, /User-provided screenshot/i);
   assert.match(sources, /does not assert or grant reuse permission/i);
 });
 
@@ -211,6 +237,16 @@ test('overview uses exactly the approved Build and Launch stages', () => {
   assertInOrder(overview, ['Build', '4 weeks', 'Launch', '2 weeks'], 'two-stage overview');
 });
 
+test('both two-phase overview slides show the six-month program timeline', () => {
+  const overview = section('<!-- S5, 2 Stages Overview -->', '<!-- Phase 1, AI Build (Cover) -->');
+  const summary = section('<!-- Offer Stack, Simple Phase Recap -->', '<!-- S9, Fast Action Bonus');
+  [overview, summary].forEach((slide) => {
+    assert.match(slide, /class="program-timeline-bar/);
+    assert.match(slide, /6 weeks to go live\. 6 months of selling\./);
+  });
+  assert.equal((deck.match(/6 weeks to go live\. 6 months of selling\./g) ?? []).length, 2);
+});
+
 test('Build contains seven visible slides in the approved order', () => {
   const buildMarkers = [
     '<!-- Phase 1, AI Build (Cover) -->',
@@ -256,7 +292,7 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
   const proofGridOpening = '<ul class="launch-proof-grid rv d3" role="list">';
   const proofIndex = authority.indexOf(proofGridOpening);
-  const flowIndex = authority.indexOf('<ol class="upsell-flow rv d4">');
+  const flowIndex = authority.indexOf('<ol class="upsell-flow upsell-flow--launch-rail rv d4">');
   const proofGridEnd = authority.indexOf('</ul>', proofIndex) + '</ul>'.length;
   const proofGrid = authority.slice(proofIndex, proofGridEnd);
   const organicFlowEnd = authority.indexOf('</ol>', flowIndex) + '</ol>'.length;
@@ -266,21 +302,32 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   assert.match(authority, /<ul class="launch-proof-grid rv d3" role="list">/);
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Authority proof cards must appear above the Organic flow');
   assert.equal((proofGrid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
-  assert.match(proofGrid, /src="website-bonus\.png"/);
-  assert.match(proofGrid, /src="dfy-marketing\.png"/);
+  assert.match(proofGrid, /src="authority-website-cheryl-hunter-tedx\.jpeg"/);
+  assert.match(proofGrid, /<iframe[\s\S]*393d729a00e6a20de5e23ae1665153da[\s\S]*<\/iframe>/);
+  assert.match(proofGrid, /title="Done-for-you posting video preview"/);
+  assert.doesNotMatch(proofGrid, /src="website-bonus\.png"/);
+  assert.doesNotMatch(proofGrid, /src="dfy-marketing\.png"/);
+  assert.ok(existsSync(resolve(slidesDir, 'authority-website-cheryl-hunter-tedx.jpeg')));
   assert.match(proofGrid, /class="manychat-preview"/);
-  assert.match(proofGrid, /role="img" aria-label="ManyChat automated comment-to-DM conversation preview"/);
+  assert.match(proofGrid, /role="img" aria-label="Automated comment-to-DM conversation preview"/);
+  assert.match(proofGrid, /manychat-preview__header"><span class="manychat-preview__dot"><\/span>Comment \+ DM<\/div>/);
   [
     'Personal branded website',
     'Done-for-you posting',
-    'ManyChat comment and DM automation',
+    'Comment + DM Automation',
   ].forEach((copy) => assert.match(proofGrid, new RegExp(escapeRegex(copy), 'i')));
+  assert.doesNotMatch(
+    proofGrid,
+    /class="launch-proof-card__title">ManyChat comment and DM automation<\/div>/i,
+  );
   assertInOrder(organicFlow, [
     'Content created',
     'Content posted consistently',
-    'ManyChat starts the conversation',
+    'Automation starts the conversation',
     'Lead enters the AI assessment and funnel',
   ], 'merged Organic flow');
+  assert.doesNotMatch(authority, />[^<]*ManyChat[^<]*</i);
+  assert.doesNotMatch(authority, /aria-label="[^"]*ManyChat/i);
   assert.doesNotMatch(authority, /16369f811f94556e674955011d506194/);
   assert.doesNotMatch(authority, /launch-organic-proof|launch-bullet-stack|launch-bullet-card/);
 });
@@ -309,11 +356,13 @@ test('Launch proof slides remove decorative orbs at the responsive breakpoint', 
 test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
   const proofIndex = paid.indexOf('class="launch-proof-grid');
-  const flowIndex = paid.indexOf('<ol class="upsell-flow rv d4">');
+  const flowIndex = paid.indexOf('<ol class="upsell-flow upsell-flow--launch-rail rv d4">');
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Paid Ads proof must appear above the flow');
   assert.match(paid, /<ul class="launch-proof-grid rv d3" role="list">/);
   assert.equal((paid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
-  assert.match(paid, /cf012831e12dd92855000b85e12a60db/);
+  assert.match(paid, /src="paid-ads-facebook-library\.jpeg"/);
+  assert.ok(existsSync(resolve(slidesDir, 'paid-ads-facebook-library.jpeg')));
+  assert.doesNotMatch(paid, /cf012831e12dd92855000b85e12a60db/);
   assert.match(paid, /src="leanne-landing\.jpg"/);
   assert.match(paid, /src="pipeline-activation-email\.png"/);
   assertInOrder(paid, ['Ad Creative', 'Funnel', 'Pipeline Activation'], 'Paid Ads proof cards');
@@ -340,18 +389,36 @@ test('both launch detail slides use full square proof previews with visible desc
 test('merged Authority and Paid Ads flows keep accessible ordered-list semantics', () => {
   const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  const launchCss = section('/* ── Launch flow components ── */', '/* deck-wide: balance line widths');
+  const responsiveBlock = launchCss.match(/@media \(max-width: 900px\) \{[\s\S]*?\n  \}/)?.[0] ?? '';
   [authority, paid].forEach((flow) => {
-    const orderedFlowOpening = '<ol class="upsell-flow rv d4">';
+    const orderedFlowOpening = '<ol class="upsell-flow upsell-flow--launch-rail rv d4">';
     const orderedFlowStart = flow.indexOf(orderedFlowOpening);
     const orderedFlowEnd = flow.indexOf('</ol>', orderedFlowStart) + '</ol>'.length;
     const orderedFlow = flow.slice(orderedFlowStart, orderedFlowEnd);
 
     assertOneVisibleSlide(flow, 'launch detail slide');
-    assert.match(flow, /<ol class="upsell-flow rv d4">/);
-    assert.equal((orderedFlow.match(/<li class="upsell-step(?: upsell-final)?">/g) ?? []).length, 4);
+    assert.match(flow, /class="launch-flow-label rv d4">How it works<\/div>/);
+    assert.match(flow, /<ol class="upsell-flow upsell-flow--launch-rail rv d4">/);
+    assert.equal((orderedFlow.match(/class="upsell-step__body"/g) ?? []).length, 0);
+    assert.equal((orderedFlow.match(/<li class="upsell-step">/g) ?? []).length, 4);
     assert.equal((orderedFlow.match(/<li class="upsell-arrow" aria-hidden="true">→<\/li>/g) ?? []).length, 3);
+    assert.doesNotMatch(orderedFlow, /upsell-final/);
     assert.match(orderedFlow, /<\/ol>/);
   });
+  const railRule = launchCss.match(/\.upsell-flow--launch-rail \{[^}]*\}/)?.[0] ?? '';
+  assert.match(railRule, /gap: 8px;/);
+  assert.match(railRule, /overflow: visible;/);
+  assert.match(railRule, /background: transparent;/);
+  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step \{[^}]*background: var\(--brand-950\);[^}]*border-radius: 12px;/);
+  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step__price \{[^}]*font-size: 18px;[^}]*letter-spacing: 0\.04em;/);
+  const launchArrowRule = launchCss.match(/\.upsell-flow--launch-rail \.upsell-arrow \{[^}]*\}/)?.[0] ?? '';
+  assert.match(launchArrowRule, /background: transparent;/);
+  assert.match(launchArrowRule, /color: var\(--brand-950\);/);
+  assert.match(launchArrowRule, /border-radius: 0;/);
+  assert.match(launchArrowRule, /font-size: 18px;/);
+  assert.match(responsiveBlock, /\.upsell-flow--launch-rail \{[^}]*flex-direction: column;/);
+  assert.match(responsiveBlock, /\.upsell-flow--launch-rail \.upsell-step__price \{[^}]*font-size: 18px;/);
 });
 
 test('obsolete marketing and Monetize slides are removed', () => {
@@ -410,14 +477,34 @@ test('investment deliverables match the approved Build and Launch offer', () => 
   assert.match(deck, /\$6,800<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
 });
 
+test('both launch proof rows match the flowchart width', () => {
+  assert.equal((deck.match(/<ul class="launch-proof-grid rv d3" role="list">/g) ?? []).length, 2);
+  assert.match(deck, /\.launch-proof-grid \{[^}]*max-width: 1060px;[^}]*\}/s);
+  assert.match(deck, /\.upsell-flow \{[^}]*max-width: 1060px;[^}]*\}/s);
+});
+
+test('price card balances ten deliverables with the approved DFY paid ads copy', () => {
+  const investment = section('<!-- S10a, The Investment', '<!-- S10b, Payment Plans');
+  assert.match(investment, />Done-For-You Paid Ads Setup<\/span>/);
+  assert.match(investment, />6 Months Launch Optimization<\/span>/);
+  assert.doesNotMatch(investment, />Paid Ads Setup<\/span>/);
+  assert.equal((investment.match(/<polyline points="2,6 5,9 10,3"\/>/g) ?? []).length, 10);
+});
+
+test('Expert AIs moves before client proof before navigation initializes', () => {
+  assert.match(deck, /id="clients-love-slide"/);
+  assert.match(deck, /id="expert-ai-slide"/);
+  const reorder = deck.indexOf("deckElement.insertBefore(expertAiSlide, clientsLoveSlide)");
+  const navigation = deck.indexOf("const slides = document.querySelectorAll('.slide:not([hidden])')");
+  assert.ok(reorder >= 0 && reorder < navigation, 'intro slides must reorder before navigation captures slide order');
+});
+
 test('deck contains the approved 19 visible slides in order', () => {
   const visibleSlideStarts = [...deck.matchAll(/<div class="slide(?: [^"]*)?"(?![^>]*\shidden)[^>]*>/g)];
   assert.equal(visibleSlideStarts.length, 19);
   const orderedCopy = [
     'You can only sell one person at a time',
     'Meet the version of you that never stops selling',
-    'Why our clients love the Kodara model',
-    'The biggest experts are already turning their knowledge into AI',
     'Build and launch',
     "Your life's work finally working without you",
     'Your entire AI system, built and launched for you',
