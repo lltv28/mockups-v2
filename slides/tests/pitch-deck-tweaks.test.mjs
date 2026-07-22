@@ -292,7 +292,7 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
   const proofGridOpening = '<ul class="launch-proof-grid rv d3" role="list">';
   const proofIndex = authority.indexOf(proofGridOpening);
-  const flowIndex = authority.indexOf('<ol class="upsell-flow rv d4">');
+  const flowIndex = authority.indexOf('<ol class="upsell-flow upsell-flow--launch-rail rv d4">');
   const proofGridEnd = authority.indexOf('</ul>', proofIndex) + '</ul>'.length;
   const proofGrid = authority.slice(proofIndex, proofGridEnd);
   const organicFlowEnd = authority.indexOf('</ol>', flowIndex) + '</ol>'.length;
@@ -356,7 +356,7 @@ test('Launch proof slides remove decorative orbs at the responsive breakpoint', 
 test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
   const proofIndex = paid.indexOf('class="launch-proof-grid');
-  const flowIndex = paid.indexOf('<ol class="upsell-flow rv d4">');
+  const flowIndex = paid.indexOf('<ol class="upsell-flow upsell-flow--launch-rail rv d4">');
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Paid Ads proof must appear above the flow');
   assert.match(paid, /<ul class="launch-proof-grid rv d3" role="list">/);
   assert.equal((paid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
@@ -389,18 +389,33 @@ test('both launch detail slides use full square proof previews with visible desc
 test('merged Authority and Paid Ads flows keep accessible ordered-list semantics', () => {
   const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  const launchCss = section('/* ── Launch flow components ── */', '/* deck-wide: balance line widths');
+  const responsiveBlock = launchCss.match(/@media \(max-width: 900px\) \{[\s\S]*?\n  \}/)?.[0] ?? '';
   [authority, paid].forEach((flow) => {
-    const orderedFlowOpening = '<ol class="upsell-flow rv d4">';
+    const orderedFlowOpening = '<ol class="upsell-flow upsell-flow--launch-rail rv d4">';
     const orderedFlowStart = flow.indexOf(orderedFlowOpening);
     const orderedFlowEnd = flow.indexOf('</ol>', orderedFlowStart) + '</ol>'.length;
     const orderedFlow = flow.slice(orderedFlowStart, orderedFlowEnd);
+    const finalStepStart = orderedFlow.indexOf('<li class="upsell-step upsell-final">');
+    const finalStepEnd = orderedFlow.indexOf('</li>', finalStepStart) + '</li>'.length;
+    const finalStep = orderedFlow.slice(finalStepStart, finalStepEnd);
 
     assertOneVisibleSlide(flow, 'launch detail slide');
-    assert.match(flow, /<ol class="upsell-flow rv d4">/);
+    assert.match(flow, /class="launch-flow-label rv d4">How it works<\/div>/);
+    assert.match(flow, /<ol class="upsell-flow upsell-flow--launch-rail rv d4">/);
+    assert.equal((orderedFlow.match(/class="upsell-step__body"/g) ?? []).length, 0);
     assert.equal((orderedFlow.match(/<li class="upsell-step(?: upsell-final)?">/g) ?? []).length, 4);
     assert.equal((orderedFlow.match(/<li class="upsell-arrow" aria-hidden="true">→<\/li>/g) ?? []).length, 3);
+    assert.match(finalStep, /<div class="upsell-step__tag">Step 4<\/div>/);
     assert.match(orderedFlow, /<\/ol>/);
   });
+  const railRule = launchCss.match(/\.upsell-flow--launch-rail \{[^}]*\}/)?.[0] ?? '';
+  assert.match(railRule, /background: var\(--brand-950\);/);
+  assert.match(railRule, /border-radius: 14px;/);
+  assert.match(railRule, /overflow: hidden;/);
+  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step \{[^}]*background: transparent;[^}]*box-shadow: none;/);
+  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step__title \{[^}]*color: var\(--white\);/);
+  assert.match(responsiveBlock, /\.upsell-flow--launch-rail \{[^}]*flex-direction: column;/);
 });
 
 test('obsolete marketing and Monetize slides are removed', () => {
