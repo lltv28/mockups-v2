@@ -49,7 +49,8 @@ test('opening uses the approved AI scale message', () => {
   assert.match(opening, /You can only sell one person at a time\./);
   assert.match(opening, /Your AI can sell a thousand, all at once\./);
   assert.match(opening, /cloned, automated version of you that works 24\/7/);
-  assert.match(opening, /only ready buyers ever land on your calendar/);
+  assert.match(opening, /only hot-and-ready buyers ever land on your calendar/);
+  assert.doesNotMatch(opening, /only ready buyers ever land on your calendar/);
   assert.doesNotMatch(opening, /Your business can't grow past how many hours you work/);
 });
 
@@ -73,6 +74,13 @@ test('offer ladder sends qualified buyers to high ticket before the Pocket Coach
   const pocketCoach = cards.indexOf('AI Pocket Coach');
   assert.ok(assessment >= 0 && assessment < highTicket && highTicket < pocketCoach);
   assert.match(ladder, /not ready for a call/i);
+});
+
+test('offer ladder uses one neutral card shell for all three offers', () => {
+  const ladder = section('<!-- INTRO 1.1,', '<!-- INTRO 1.2,');
+  assert.equal((ladder.match(/class="offer-ladder-card"/g) ?? []).length, 3);
+  assert.doesNotMatch(ladder, /background: var\(--brand-50\)/);
+  assert.doesNotMatch(ladder, /border: 1px solid var\(--brand-200\)/);
 });
 
 test('product library keeps high ticket before the Pocket Coach downsell', () => {
@@ -161,6 +169,10 @@ test('overview uses exactly the approved Build and Launch stages', () => {
   assert.match(overview, /The Kodara System/);
   assert.match(overview, /Build and launch\./);
   assert.doesNotMatch(overview, /Build, launch, monetize\./i);
+  assert.match(overview, /Your expertise becomes a proven AI product\./);
+  assert.match(overview, /Your AI product becomes a predictable growth engine\./);
+  assert.doesNotMatch(overview, /We build and prove your AI product on real clients\./);
+  assert.doesNotMatch(overview, /We build your authority system and turn on organic and paid acquisition\./);
   assert.equal((overview.match(/class="phase-col /g) ?? []).length, 2);
   assertInOrder(overview, ['Build', '4 weeks', 'Launch', '2 weeks'], 'two-stage overview');
 });
