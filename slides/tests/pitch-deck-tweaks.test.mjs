@@ -366,6 +366,8 @@ test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   assert.match(paid, /src="leanne-landing\.jpg"/);
   assert.match(paid, /src="pipeline-activation-email\.png"/);
   assertInOrder(paid, ['Ad Creative', 'Funnel', 'Pipeline Activation'], 'Paid Ads proof cards');
+  assert.match(paid, />Hot buyers book calls; not qualified get offered AI Pocket Coach<\/div>/);
+  assert.doesNotMatch(paid, /Qualified buyers book calls; remaining buyers receive the Pocket Coach offer/);
   assert.match(deck, /:root\s*\{[^}]*--al-600:\s*[^;]+;/s);
   assert.match(deck, /\.launch-proof-card__body \{[^}]*color: var\(--al-600\);[^}]*font-size: 9px;[^}]*line-height: 1\.25;/);
 });
