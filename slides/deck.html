@@ -3038,6 +3038,7 @@
   function goTo(i) {
     if (i < 0 || i >= total) return;
     slides[current].classList.remove('active');
+    slides[current].setAttribute('tabindex', '-1');
     thumbs[current].classList.remove('active');
     current = i;
 
@@ -3053,6 +3054,8 @@
     // 3. Re-add 'rv' class (elements snap to opacity:0, translateY:20px)
     // 4. Next frame: add 'active' which triggers transition to opacity:1, translateY:0)
     const slide = slides[current];
+    slide.scrollTop = 0;
+    slide.setAttribute('tabindex', '0');
     const rvEls = slide.querySelectorAll('.rv');
     const rvData = [];
     rvEls.forEach(el => {
@@ -3130,14 +3133,45 @@
     panel.classList.toggle('collapsed');
   });
 
+  function handleVerticalNavigation(direction) {
+    const slide = slides[current];
+    const overflowY = window.getComputedStyle(slide).overflowY;
+    const isScrollable = window.innerWidth <= 900
+      && (overflowY === 'auto' || overflowY === 'scroll')
+      && slide.scrollHeight > slide.clientHeight;
+    if (!isScrollable) return false;
+
+    const atTop = slide.scrollTop <= 0;
+    const atBottom = slide.scrollTop + slide.clientHeight >= slide.scrollHeight;
+    if ((direction < 0 && atTop) || (direction > 0 && atBottom)) return false;
+
+    slide.scrollBy({
+      top: direction * Math.max(slide.clientHeight * 0.75, 1),
+      behavior: 'smooth',
+    });
+    return true;
+  }
+
   // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && videoModal.classList.contains('open')) { closeVideoModal(); return; }
     if (videoModal.classList.contains('open')) return; // don't navigate while modal is open
     const activeTag = document.activeElement ? document.activeElement.tagName : '';
     if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(activeTag) || (document.activeElement && document.activeElement.isContentEditable)) return;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); return; }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); return; }
+    const movesDown = e.key === 'ArrowDown' || (e.key === ' ' && !e.shiftKey);
+    const movesUp = e.key === 'ArrowUp' || (e.key === ' ' && e.shiftKey);
+    if (movesDown) {
+      e.preventDefault();
+      if (!handleVerticalNavigation(1)) goTo(current + 1);
+      return;
+    }
+    if (movesUp) {
+      e.preventDefault();
+      if (!handleVerticalNavigation(-1)) goTo(current - 1);
+      return;
+    }
     if (e.key === 'Home') { e.preventDefault(); goTo(0); }
     if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
   });

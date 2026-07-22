@@ -162,6 +162,31 @@ test('thumbnail slide clones are hidden from assistive technology', () => {
   assert.ok(hidden < clone, 'thumbnail clone wrapper must be hidden before the slide is cloned');
 });
 
+test('keyboard navigation scrolls narrow active slides with roving tabindex', () => {
+  const goToSource = section('function goTo(i) {', "document.querySelectorAll('[data-demo-carousel]')");
+  assert.match(goToSource, /slides\[current\]\.setAttribute\('tabindex', '-1'\);/);
+  assert.match(goToSource, /slide\.setAttribute\('tabindex', '0'\);/);
+  assert.match(goToSource, /slide\.scrollTop = 0;/);
+  assert.doesNotMatch(goToSource, /\.focus\(/);
+
+  const verticalSource = section('function handleVerticalNavigation(direction) {', '// Keyboard');
+  assert.match(verticalSource, /window\.innerWidth <= 900/);
+  assert.match(verticalSource, /slide\.scrollHeight > slide\.clientHeight/);
+  assert.match(verticalSource, /slide\.scrollTop <= 0/);
+  assert.match(verticalSource, /slide\.scrollTop \+ slide\.clientHeight >= slide\.scrollHeight/);
+  assert.match(verticalSource, /slide\.scrollBy\(\{/);
+
+  const keyboardSource = section('// Keyboard', 'let tx = 0;');
+  assert.match(keyboardSource, /if \(e\.key === 'ArrowRight'\) \{/);
+  assert.match(keyboardSource, /if \(e\.key === 'ArrowLeft'\) \{/);
+  assert.match(keyboardSource, /e\.key === 'ArrowDown'/);
+  assert.match(keyboardSource, /e\.key === 'ArrowUp'/);
+  assert.match(keyboardSource, /e\.key === ' ' && !e\.shiftKey/);
+  assert.match(keyboardSource, /e\.key === ' ' && e\.shiftKey/);
+  assert.match(keyboardSource, /videoModal\.classList\.contains\('open'\)/);
+  assert.match(keyboardSource, /document\.activeElement\.isContentEditable/);
+});
+
 test('obsolete pre-pitch slides are removed', () => {
   const obsoleteHeadings = [
     'Why a $17 AI beats a free lead magnet every time.',
