@@ -269,7 +269,8 @@ test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   assert.match(paid, /src="leanne-landing\.jpg"/);
   assert.match(paid, /src="pipeline-activation-email\.png"/);
   assertInOrder(paid, ['Ad Creative', 'Funnel', 'Pipeline Activation'], 'Paid Ads proof cards');
-  assert.match(deck, /\.launch-proof-card__body \{[^}]*color: var\(--al-700\);[^}]*font-size: 9\.5px;[^}]*line-height: 1\.3;/);
+  assert.match(deck, /:root\s*\{[^}]*--al-600:\s*[^;]+;/s);
+  assert.match(deck, /\.launch-proof-card__body \{[^}]*color: var\(--al-600\);[^}]*font-size: 9\.5px;[^}]*line-height: 1\.3;/);
 });
 
 test('organic and paid Launch flows use accessible ordered-list semantics', () => {
