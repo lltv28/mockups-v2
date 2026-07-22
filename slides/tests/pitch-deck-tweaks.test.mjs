@@ -211,6 +211,16 @@ test('overview uses exactly the approved Build and Launch stages', () => {
   assertInOrder(overview, ['Build', '4 weeks', 'Launch', '2 weeks'], 'two-stage overview');
 });
 
+test('both two-phase overview slides show the six-month program timeline', () => {
+  const overview = section('<!-- S5, 2 Stages Overview -->', '<!-- Phase 1, AI Build (Cover) -->');
+  const summary = section('<!-- Offer Stack, Simple Phase Recap -->', '<!-- S9, Fast Action Bonus');
+  [overview, summary].forEach((slide) => {
+    assert.match(slide, /class="program-timeline-bar/);
+    assert.match(slide, /6 weeks to go live\. 6 months of selling\./);
+  });
+  assert.equal((deck.match(/6 weeks to go live\. 6 months of selling\./g) ?? []).length, 2);
+});
+
 test('Build contains seven visible slides in the approved order', () => {
   const buildMarkers = [
     '<!-- Phase 1, AI Build (Cover) -->',
@@ -410,14 +420,20 @@ test('investment deliverables match the approved Build and Launch offer', () => 
   assert.match(deck, /\$6,800<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
 });
 
+test('Expert AIs moves before client proof before navigation initializes', () => {
+  assert.match(deck, /id="clients-love-slide"/);
+  assert.match(deck, /id="expert-ai-slide"/);
+  const reorder = deck.indexOf("deckElement.insertBefore(expertAiSlide, clientsLoveSlide)");
+  const navigation = deck.indexOf("const slides = document.querySelectorAll('.slide:not([hidden])')");
+  assert.ok(reorder >= 0 && reorder < navigation, 'intro slides must reorder before navigation captures slide order');
+});
+
 test('deck contains the approved 19 visible slides in order', () => {
   const visibleSlideStarts = [...deck.matchAll(/<div class="slide(?: [^"]*)?"(?![^>]*\shidden)[^>]*>/g)];
   assert.equal(visibleSlideStarts.length, 19);
   const orderedCopy = [
     'You can only sell one person at a time',
     'Meet the version of you that never stops selling',
-    'Why our clients love the Kodara model',
-    'The biggest experts are already turning their knowledge into AI',
     'Build and launch',
     "Your life's work finally working without you",
     'Your entire AI system, built and launched for you',
