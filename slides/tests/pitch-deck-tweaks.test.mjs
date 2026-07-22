@@ -78,9 +78,18 @@ test('offer ladder sends qualified buyers to high ticket before the Pocket Coach
 
 test('offer ladder uses one neutral card shell for all three offers', () => {
   const ladder = section('<!-- INTRO 1.1,', '<!-- INTRO 1.2,');
+  const shell = deck.match(/\.offer-ladder-card\s*\{(?<styles>[^}]*)\}/s)?.groups?.styles ?? '';
   assert.equal((ladder.match(/class="offer-ladder-card"/g) ?? []).length, 3);
   assert.doesNotMatch(ladder, /background: var\(--brand-50\)/);
   assert.doesNotMatch(ladder, /border: 1px solid var\(--brand-200\)/);
+  assert.match(shell, /background: var\(--white\)/);
+  assert.match(shell, /border: 1px solid var\(--al-100\)/);
+  assert.match(shell, /border-radius: 16px/);
+  assert.match(shell, /padding: 22px 18px/);
+  assert.match(shell, /box-shadow: var\(--shadow-card\)/);
+  assert.match(shell, /display: flex/);
+  assert.match(shell, /flex-direction: column/);
+  assert.match(shell, /gap: 12px/);
 });
 
 test('product library keeps high ticket before the Pocket Coach downsell', () => {
