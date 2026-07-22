@@ -258,6 +258,17 @@ test('Organic Launch restores proof content above its four-step flow', () => {
   assert.equal((organic.match(/<li class="launch-bullet-card">/g) ?? []).length, 3);
 });
 
+test('Organic Launch keeps the third bullet comma inside the emphasized phrase', () => {
+  const organic = section('<!-- Phase 2, Organic Launch Flow -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
+  assert.match(organic, /<strong>Filmed, designed, and published by us,<\/strong> so you stay in your zone of genius/);
+});
+
+test('Launch proof slides hide horizontal overflow at the responsive breakpoint', () => {
+  const responsiveRule = deck.match(/@media \(max-width: 900px\) \{[\s\S]*?\.slide--launch-proof \{(?<styles>[^}]*)\}/)?.groups?.styles ?? '';
+  assert.match(responsiveRule, /overflow-x: hidden;/);
+  assert.match(responsiveRule, /overflow-y: auto;/);
+});
+
 test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
   const proofIndex = paid.indexOf('class="launch-proof-grid');
