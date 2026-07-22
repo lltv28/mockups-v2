@@ -125,7 +125,7 @@ test('AI credibility slide contains four verified products and local images', ()
 
 test('AI credibility slide uses scoped short-viewport scrolling and slide semantics', () => {
   const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
-  assert.match(proof, /<div class="slide slide--ai-proof" role="group" aria-roledescription="slide" aria-labelledby="ai-proof-title">/);
+  assert.match(proof, /<div class="slide slide--ai-proof"[^>]*role="group" aria-roledescription="slide" aria-labelledby="ai-proof-title">/);
   assert.match(proof, /<h2 id="ai-proof-title" class="h-lg"/);
   assert.match(deck, /@media \(max-width: 900px\) \{\s*\.slide--ai-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}\s*\.slide--ai-proof > \.content--wide \{[^}]*justify-content: flex-start !important;[^}]*align-items: stretch;[^}]*\}/s);
 });
