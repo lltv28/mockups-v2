@@ -254,22 +254,28 @@ test('Launch contains three visible slides with Authority and Paid Ads in order'
 
 test('Authority Branding combines three proof cards with the Organic flow', () => {
   const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
-  const proofIndex = authority.indexOf('class="launch-proof-grid');
+  const proofGridOpening = '<ul class="launch-proof-grid rv d3" role="list">';
+  const proofIndex = authority.indexOf(proofGridOpening);
   const flowIndex = authority.indexOf('<ol class="upsell-flow rv d4">');
+  const proofGridEnd = authority.indexOf('</ul>', proofIndex) + '</ul>'.length;
+  const proofGrid = authority.slice(proofIndex, proofGridEnd);
+  const organicFlowEnd = authority.indexOf('</ol>', flowIndex) + '</ol>'.length;
+  const organicFlow = authority.slice(flowIndex, organicFlowEnd);
 
   assertOneVisibleSlide(authority, 'merged Authority Branding slide');
+  assert.match(authority, /<ul class="launch-proof-grid rv d3" role="list">/);
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Authority proof cards must appear above the Organic flow');
-  assert.equal((authority.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
-  assert.match(authority, /src="website-bonus\.png"/);
-  assert.match(authority, /src="dfy-marketing\.png"/);
-  assert.match(authority, /class="manychat-preview"/);
-  assert.match(authority, /role="img" aria-label="ManyChat automated comment-to-DM conversation preview"/);
+  assert.equal((proofGrid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
+  assert.match(proofGrid, /src="website-bonus\.png"/);
+  assert.match(proofGrid, /src="dfy-marketing\.png"/);
+  assert.match(proofGrid, /class="manychat-preview"/);
+  assert.match(proofGrid, /role="img" aria-label="ManyChat automated comment-to-DM conversation preview"/);
   [
     'Personal branded website',
     'Done-for-you posting',
     'ManyChat comment and DM automation',
-  ].forEach((copy) => assert.match(authority, new RegExp(escapeRegex(copy), 'i')));
-  assertInOrder(authority, [
+  ].forEach((copy) => assert.match(proofGrid, new RegExp(escapeRegex(copy), 'i')));
+  assertInOrder(organicFlow, [
     'Content created',
     'Content posted consistently',
     'ManyChat starts the conversation',
@@ -308,11 +314,16 @@ test('merged Authority and Paid Ads flows keep accessible ordered-list semantics
   const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
   [authority, paid].forEach((flow) => {
+    const orderedFlowOpening = '<ol class="upsell-flow rv d4">';
+    const orderedFlowStart = flow.indexOf(orderedFlowOpening);
+    const orderedFlowEnd = flow.indexOf('</ol>', orderedFlowStart) + '</ol>'.length;
+    const orderedFlow = flow.slice(orderedFlowStart, orderedFlowEnd);
+
     assertOneVisibleSlide(flow, 'launch detail slide');
     assert.match(flow, /<ol class="upsell-flow rv d4">/);
-    assert.equal((flow.match(/<li class="upsell-step(?: upsell-final)?">/g) ?? []).length, 4);
-    assert.equal((flow.match(/<li class="upsell-arrow" aria-hidden="true">→<\/li>/g) ?? []).length, 3);
-    assert.match(flow, /<\/ol>/);
+    assert.equal((orderedFlow.match(/<li class="upsell-step(?: upsell-final)?">/g) ?? []).length, 4);
+    assert.equal((orderedFlow.match(/<li class="upsell-arrow" aria-hidden="true">→<\/li>/g) ?? []).length, 3);
+    assert.match(orderedFlow, /<\/ol>/);
   });
 });
 
