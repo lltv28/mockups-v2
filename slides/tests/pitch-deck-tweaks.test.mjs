@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -42,6 +43,10 @@ function readPngInfo(imagePath) {
   assert.equal(bytes.readUInt32BE(8), 13, `${imagePath} must begin with a 13-byte IHDR chunk`);
   assert.equal(bytes.subarray(12, 16).toString('ascii'), 'IHDR', `${imagePath} must begin with an IHDR chunk`);
   return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+}
+
+function sha256(imagePath) {
+  return createHash('sha256').update(readFileSync(imagePath)).digest('hex').toUpperCase();
 }
 
 test('opening uses the approved AI scale message', () => {
@@ -130,27 +135,35 @@ test('AI credibility slide uses scoped short-viewport scrolling and slide semant
   assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.slide--ai-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}\s*\.slide--ai-proof > \.content--wide \{[^}]*justify-content: flex-start !important;[^}]*align-items: stretch;[^}]*\}/);
 });
 
-test('local AI proof images are valid 800 by 450 PNG files', () => {
-  ['tony-robbins.png', 'alex-hormozi.png', 'grant-cardone.png', 'mark-hyman.png'].forEach((file) => {
-    const dimensions = readPngInfo(resolve(slidesDir, 'ai-proof', file));
-    assert.deepEqual(dimensions, { width: 800, height: 450 }, `${file} must be 800 by 450 pixels`);
+test('local AI proof images use the three approved user screenshots', () => {
+  const approved = [
+    ['tony-robbins.png', { width: 1563, height: 785 }, '15B27BFEBA9BA2F12E83AF8B8FB8D0DBD7F1C836702A842CFCDE984470113782'],
+    ['alex-hormozi.png', { width: 2083, height: 1203 }, '3C902C71C57ED03D7FE7C2794F9472B90566AAC72E1D9DDB7F45AC40E5FEEE92'],
+    ['mark-hyman.png', { width: 1325, height: 724 }, 'F45DE93CF6B66883CFC5204F076CECD6775DF92BEEEFA2D9BDF3D106A24410B8'],
+  ];
+
+  approved.forEach(([file, dimensions, hash]) => {
+    const imagePath = resolve(slidesDir, 'ai-proof', file);
+    assert.deepEqual(readPngInfo(imagePath), dimensions, `${file} must keep its approved dimensions`);
+    assert.equal(sha256(imagePath), hash, `${file} must match the approved screenshot`);
   });
+
+  assert.deepEqual(
+    readPngInfo(resolve(slidesDir, 'ai-proof', 'grant-cardone.png')),
+    { width: 800, height: 450 },
+    'Grant Cardone must remain unchanged',
+  );
 });
 
-test('AI proof source manifest records exact official provenance without asserting permission', () => {
+test('AI proof source manifest records the three user-provided replacements', () => {
   const manifestPath = resolve(slidesDir, 'ai-proof', 'SOURCES.md');
   assert.ok(existsSync(manifestPath), 'SOURCES.md must exist');
   const sources = readFileSync(manifestPath, 'utf8');
-  assert.match(sources, /Retrieved: 2026-07-21/);
-  [
-    ['tony-robbins.png', 'https://www.tonyrobbins.com/programs/tony-ai'],
-    ['alex-hormozi.png', 'https://ai.acquisition.com/'],
-    ['grant-cardone.png', 'https://10xgc.grantcardone.com/blt-offer'],
-    ['mark-hyman.png', 'https://drhyman.com/products/ai-mark'],
-  ].forEach(([file, url]) => {
-    assert.match(sources, new RegExp(file.replace('.', '\\.')));
-    assert.ok(sources.includes(url), `${file} must list ${url}`);
+  assert.match(sources, /Replacements received: 2026-07-22/);
+  ['tony-robbins.png', 'alex-hormozi.png', 'mark-hyman.png'].forEach((file) => {
+    assert.match(sources, new RegExp(`${file.replace('.', '\\.')}.*User-provided screenshot`, 'i'));
   });
+  assert.ok(sources.includes('https://10xgc.grantcardone.com/blt-offer'));
   assert.match(sources, /does not assert or grant reuse permission/i);
 });
 
