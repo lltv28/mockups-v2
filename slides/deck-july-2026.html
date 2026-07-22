@@ -1959,6 +1959,14 @@
   .launch-flow-layout .upsell-step__title { font-size: 11px; }
   .launch-flow-layout .upsell-step__body { font-size: 8.5px; line-height: 1.3; }
   .launch-flow-layout .upsell-step__price { font-size: 14px; }
+  .launch-flow-label { margin-top: 2px; color: var(--al-500); font-size: 8px; font-weight: 700; letter-spacing: 0.14em; text-align: center; text-transform: uppercase; }
+  .upsell-flow--launch-rail { gap: 0; overflow: hidden; background: var(--brand-950); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; box-shadow: 0 12px 28px rgba(5,65,47,0.16); }
+  .upsell-flow--launch-rail .upsell-step { min-height: 72px; padding: 10px 12px; gap: 3px; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+  .upsell-flow--launch-rail .upsell-step__tag { color: rgba(255,255,255,0.64); }
+  .upsell-flow--launch-rail .upsell-step__title { color: var(--white); font-size: 11px; }
+  .upsell-flow--launch-rail .upsell-step__price { color: #bfe7d6; font-size: 13px; }
+  .upsell-flow--launch-rail .upsell-arrow { padding: 0 3px; color: rgba(255,255,255,0.56); font-size: 14px; }
+  .upsell-flow--launch-rail .upsell-final { background: rgba(0,0,0,0.18); }
   @media (max-width: 900px) {
     .slide--launch-proof { overflow-x: hidden; overflow-y: auto; justify-content: flex-start; align-items: flex-start; }
     .slide--launch-proof > .bg-orb { display: none; }
@@ -1972,6 +1980,9 @@
     .launch-flow-layout .upsell-step__price { font-size: 16px; }
     .upsell-flow { flex-direction: column; }
     .upsell-arrow { transform: rotate(90deg); height: 22px; }
+    .upsell-flow--launch-rail { flex-direction: column; gap: 0; }
+    .upsell-flow--launch-rail .upsell-step { width: 100%; min-height: 0; padding: 12px 14px; }
+    .upsell-flow--launch-rail .upsell-arrow { height: 20px; padding: 0; transform: rotate(90deg); }
   }
 
   /* deck-wide: balance line widths so no 1-2 word orphans */
@@ -2586,32 +2597,29 @@
         </li>
       </ul>
 
-      <ol class="upsell-flow rv d4">
+      <div class="launch-flow-label rv d4">How it works</div>
+      <ol class="upsell-flow upsell-flow--launch-rail rv d4">
         <li class="upsell-step">
           <div class="upsell-step__tag">Step 1</div>
           <div class="upsell-step__title">Content created</div>
-          <div class="upsell-step__body">We turn your expertise into clear, useful content designed for your audience.</div>
           <div class="upsell-step__price">Create</div>
         </li>
         <li class="upsell-arrow" aria-hidden="true">→</li>
         <li class="upsell-step">
           <div class="upsell-step__tag">Step 2</div>
           <div class="upsell-step__title">Content posted consistently</div>
-          <div class="upsell-step__body">Your brand stays visible without adding another task to your calendar.</div>
           <div class="upsell-step__price">Publish</div>
         </li>
         <li class="upsell-arrow" aria-hidden="true">→</li>
         <li class="upsell-step">
           <div class="upsell-step__tag">Step 3</div>
           <div class="upsell-step__title">Automation starts the conversation</div>
-          <div class="upsell-step__body">Comments and direct messages trigger an automated, personal response.</div>
           <div class="upsell-step__price">Engage</div>
         </li>
         <li class="upsell-arrow" aria-hidden="true">→</li>
         <li class="upsell-step upsell-final">
           <div class="upsell-step__tag">Step 4</div>
           <div class="upsell-step__title">Lead enters the AI assessment and funnel</div>
-          <div class="upsell-step__body">Interested people move into the sales experience while their attention is fresh.</div>
           <div class="upsell-step__price">Convert</div>
         </li>
       </ol>
@@ -2652,32 +2660,29 @@
         </li>
       </ul>
 
-      <ol class="upsell-flow rv d4">
+      <div class="launch-flow-label rv d4">How it works</div>
+      <ol class="upsell-flow upsell-flow--launch-rail rv d4">
         <li class="upsell-step">
           <div class="upsell-step__tag">Step 1</div>
           <div class="upsell-step__title">Ads created and configured</div>
-          <div class="upsell-step__body">We build the campaign, creative, targeting, and tracking for launch.</div>
           <div class="upsell-step__price">Create</div>
         </li>
         <li class="upsell-arrow" aria-hidden="true">→</li>
         <li class="upsell-step">
           <div class="upsell-step__tag">Step 2</div>
           <div class="upsell-step__title">Traffic reaches the funnel</div>
-          <div class="upsell-step__body">The right audience lands in a focused sales experience built around your expertise.</div>
           <div class="upsell-step__price">Attract</div>
         </li>
         <li class="upsell-arrow" aria-hidden="true">→</li>
-        <li class="upsell-step upsell-final">
+        <li class="upsell-step">
           <div class="upsell-step__tag">Step 3</div>
           <div class="upsell-step__title">Buyer completes the $17 assessment</div>
-          <div class="upsell-step__body">The entry offer creates a buyer and identifies what support they need next.</div>
           <div class="upsell-step__price">$17</div>
         </li>
         <li class="upsell-arrow" aria-hidden="true">→</li>
-        <li class="upsell-step">
+        <li class="upsell-step upsell-final">
           <div class="upsell-step__tag">Step 4</div>
           <div class="upsell-step__title">Qualified buyers book calls; remaining buyers receive the Pocket Coach offer</div>
-          <div class="upsell-step__body">Every buyer gets the next step that matches their readiness.</div>
           <div class="upsell-step__price">Ascend</div>
         </li>
       </ol>
