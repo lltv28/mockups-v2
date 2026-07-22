@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const slidesDir = resolve(here, '..');
-const deck = readFileSync(resolve(slidesDir, 'deck.html'), 'utf8');
+const deck = readFileSync(resolve(slidesDir, 'deck-july-2026.html'), 'utf8');
 
 function section(startMarker, endMarker) {
   const start = deck.indexOf(startMarker);

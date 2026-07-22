@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const deck = readFileSync(resolve(here, '..', 'deck.html'), 'utf8');
+const deck = readFileSync(resolve(here, '..', 'deck-july-2026.html'), 'utf8');
 const start = deck.indexOf('<!-- INTRO 1.2, Why Clients Love The Kodara Model');
 const end = deck.indexOf('<!-- INTRO 1.3, Big-Name AI Credibility');
 const slide = deck.slice(start, end);
