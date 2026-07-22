@@ -293,6 +293,11 @@ test('Launch proof slides hide horizontal overflow at the responsive breakpoint'
   assert.equal(launchProofRules.length, 1, 'Launch responsive block must contain one slide overflow rule');
   assert.match(launchProofRules[0], /overflow-x: hidden;/);
   assert.match(launchProofRules[0], /overflow-y: auto;/);
+  assert.match(responsiveBlocks[0], /\.launch-proof-card__title \{ font-size: 14px; \}/);
+  assert.match(responsiveBlocks[0], /\.launch-proof-card__body \{ font-size: 12px; line-height: 1\.4; \}/);
+  assert.match(responsiveBlocks[0], /\.launch-flow-layout \.upsell-step__title \{ font-size: 13px; \}/);
+  assert.match(responsiveBlocks[0], /\.launch-flow-layout \.upsell-step__body \{ font-size: 12px; line-height: 1\.4; \}/);
+  assert.match(responsiveBlocks[0], /\.launch-flow-layout \.upsell-step__price \{ font-size: 16px; \}/);
 });
 
 test('Launch proof slides remove decorative orbs at the responsive breakpoint', () => {
