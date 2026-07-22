@@ -309,7 +309,8 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   assert.doesNotMatch(proofGrid, /src="dfy-marketing\.png"/);
   assert.ok(existsSync(resolve(slidesDir, 'authority-website-cheryl-hunter.jpeg')));
   assert.match(proofGrid, /class="manychat-preview"/);
-  assert.match(proofGrid, /role="img" aria-label="ManyChat automated comment-to-DM conversation preview"/);
+  assert.match(proofGrid, /role="img" aria-label="Automated comment-to-DM conversation preview"/);
+  assert.match(proofGrid, /manychat-preview__header"><span class="manychat-preview__dot"><\/span>Comment \+ DM<\/div>/);
   [
     'Personal branded website',
     'Done-for-you posting',
@@ -322,9 +323,11 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   assertInOrder(organicFlow, [
     'Content created',
     'Content posted consistently',
-    'ManyChat starts the conversation',
+    'Automation starts the conversation',
     'Lead enters the AI assessment and funnel',
   ], 'merged Organic flow');
+  assert.doesNotMatch(authority, />[^<]*ManyChat[^<]*</i);
+  assert.doesNotMatch(authority, /aria-label="[^"]*ManyChat/i);
   assert.doesNotMatch(authority, /16369f811f94556e674955011d506194/);
   assert.doesNotMatch(authority, /launch-organic-proof|launch-bullet-stack|launch-bullet-card/);
 });
