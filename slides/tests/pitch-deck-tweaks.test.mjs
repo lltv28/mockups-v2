@@ -135,16 +135,16 @@ test('AI credibility slide uses scoped short-viewport scrolling and slide semant
   assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.slide--ai-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}\s*\.slide--ai-proof > \.content--wide \{[^}]*justify-content: flex-start !important;[^}]*align-items: stretch;[^}]*\}/);
 });
 
-test('local AI proof images use the approved screenshots and original Hyman image', () => {
-  const approved = [
-    ['tony-robbins.png', { width: 1563, height: 785 }, '15B27BFEBA9BA2F12E83AF8B8FB8D0DBD7F1C836702A842CFCDE984470113782'],
-    ['alex-hormozi.png', { width: 2083, height: 1203 }, '3C902C71C57ED03D7FE7C2794F9472B90566AAC72E1D9DDB7F45AC40E5FEEE92'],
+test('local AI proof images use the original Tony, ACQ, and Hyman files', () => {
+  const originals = [
+    ['tony-robbins.png', { width: 800, height: 450 }, '5C2724D6826627C2CFCB40C80CBB013BD2F69C2CBD88E39B17A4B5EE85BA8967'],
+    ['alex-hormozi.png', { width: 800, height: 450 }, '23B7F7454B2555557B5788892D59F999D3C36C23E2D2255C54132B60619EF427'],
   ];
 
-  approved.forEach(([file, dimensions, hash]) => {
+  originals.forEach(([file, dimensions, hash]) => {
     const imagePath = resolve(slidesDir, 'ai-proof', file);
-    assert.deepEqual(readPngInfo(imagePath), dimensions, `${file} must keep its approved dimensions`);
-    assert.equal(sha256(imagePath), hash, `${file} must match the approved screenshot`);
+    assert.deepEqual(readPngInfo(imagePath), dimensions, `${file} must keep its original dimensions`);
+    assert.equal(sha256(imagePath), hash, `${file} must match the original deck image`);
   });
 
   const hymanPath = resolve(slidesDir, 'ai-proof', 'mark-hyman.png');
@@ -158,25 +158,25 @@ test('local AI proof images use the approved screenshots and original Hyman imag
   );
 });
 
-test('ACQ AI is zoomed 30 percent from the top and Hyman bypasses stale caches', () => {
+test('Tony and ACQ use original unzoomed images with cache versions', () => {
   const proof = section('<!-- INTRO 1.3, Big-Name AI Credibility', '<!-- S5, 2 Stages Overview');
-  assert.match(proof, /<div class="ai-proof-card__media ai-proof-card__media--zoom">\s*<img src="ai-proof\/alex-hormozi\.png" alt="ACQ AI" loading="lazy">\s*<\/div>/);
+  assert.match(proof, /<img src="ai-proof\/tony-robbins\.png\?v=20260722c" alt="Tony Robbins AI" loading="lazy">/);
+  assert.match(proof, /<img src="ai-proof\/alex-hormozi\.png\?v=20260722c" alt="ACQ AI" loading="lazy">/);
   assert.match(proof, /<img src="ai-proof\/mark-hyman\.png\?v=20260722b" alt="AI Mark" loading="lazy">/);
-  assert.match(deck, /\.ai-proof-card__media \{[^}]*height: 112px;[^}]*overflow: hidden;[^}]*\}/s);
-  assert.match(deck, /\.ai-proof-card__media--zoom img \{[^}]*transform: scale\(1\.3\);[^}]*transform-origin: center top;[^}]*\}/s);
-  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.ai-proof-card__media \{ height: 140px; \}/);
+  assert.doesNotMatch(proof, /ai-proof-card__media/);
+  assert.doesNotMatch(deck, /\.ai-proof-card__media/);
 });
 
-test('AI proof source manifest records the user replacements and original Hyman source', () => {
+test('AI proof source manifest records the original official sources', () => {
   const manifestPath = resolve(slidesDir, 'ai-proof', 'SOURCES.md');
   assert.ok(existsSync(manifestPath), 'SOURCES.md must exist');
   const sources = readFileSync(manifestPath, 'utf8');
-  assert.match(sources, /Replacements received: 2026-07-22/);
-  ['tony-robbins.png', 'alex-hormozi.png'].forEach((file) => {
-    assert.match(sources, new RegExp(`${file.replace('.', '\\.')}.*User-provided screenshot`, 'i'));
-  });
+  assert.match(sources, /Retrieved: 2026-07-21/);
+  assert.ok(sources.includes('https://cdn.sanity.io/images/nyyhaljw/production/38ed6c58a38e407309195f11353effdb29c940fa-4073x2293.png'));
+  assert.ok(sources.includes('https://ai.acq.com/api/og'));
   assert.ok(sources.includes('https://10xgc.grantcardone.com/blt-offer'));
   assert.ok(sources.includes('https://drhyman.com/cdn/shop/files/aimark.gif?v=1763763004'));
+  assert.doesNotMatch(sources, /User-provided screenshot/i);
   assert.match(sources, /does not assert or grant reuse permission/i);
 });
 
