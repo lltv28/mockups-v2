@@ -1901,6 +1901,15 @@
   @media (prefers-reduced-motion: reduce) { .love-track { animation: none; } }
 
   /* ── Launch flow components ── */
+  .launch-flow-layout { justify-content: center; gap: 14px; }
+  .launch-flow-layout .h-lg { font-size: clamp(28px, 3.4vw, 44px); }
+  .launch-organic-proof { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; max-width: 1060px; width: 100%; margin: 0 auto; align-items: stretch; text-align: left; }
+  .launch-proof-media { position: relative; min-height: 160px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100); border-radius: 14px; box-shadow: var(--shadow-card); }
+  .launch-proof-media iframe, .launch-proof-media img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+  .launch-bullet-stack { display: grid; grid-template-rows: repeat(3, 1fr); gap: 8px; }
+  .launch-bullet-card { display: flex; align-items: flex-start; gap: 9px; padding: 10px 12px; background: var(--white); border: 1px solid var(--al-100); border-radius: 12px; box-shadow: var(--shadow-card); color: var(--al-700); font-size: 11px; line-height: 1.35; }
+  .launch-bullet-card strong { color: var(--al-900); }
+  .launch-bullet-card::before { content: '✓'; color: var(--brand-950); font-weight: 700; }
   .upsell-flow { list-style: none; padding: 0; display: flex; align-items: stretch; justify-content: center; gap: 8px; max-width: 1060px; margin: 0 auto; width: 100%; }
   .upsell-step { flex: 1 1 0; min-width: 0; position: relative; background: var(--white); border: 1px solid var(--al-100); border-radius: 14px; padding: 16px 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 6px; text-align: left; }
   .upsell-step__tag { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); }
@@ -1911,7 +1920,15 @@
   .upsell-final { background: var(--brand-950); color: #fff; border: none; }
   .upsell-final .upsell-step__tag, .upsell-final .upsell-step__title, .upsell-final .upsell-step__price { color: #fff; }
   .upsell-final .upsell-step__body { color: rgba(255,255,255,0.82); }
+  .launch-flow-layout .upsell-step { padding: 10px; gap: 3px; }
+  .launch-flow-layout .upsell-step__title { font-size: 12px; }
+  .launch-flow-layout .upsell-step__body { font-size: 9.5px; line-height: 1.35; }
+  .launch-flow-layout .upsell-step__price { font-size: 16px; }
   @media (max-width: 900px) {
+    .slide--launch-proof { overflow-y: auto; justify-content: flex-start; align-items: flex-start; }
+    .slide--launch-proof > .content--wide { justify-content: flex-start !important; align-items: stretch; }
+    .launch-organic-proof { grid-template-columns: 1fr; }
+    .launch-proof-media { min-height: 220px; }
     .upsell-flow { flex-direction: column; }
     .upsell-arrow { transform: rotate(90deg); height: 22px; }
   }
@@ -2508,13 +2525,29 @@
   </div>
 
   <!-- Phase 2, Organic Launch Flow -->
-  <div class="slide">
+  <div class="slide slide--launch-proof">
     <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
 
-    <div class="content--wide text-center flex-col gap-24" style="justify-content: center;">
+    <div class="content--wide text-center flex-col launch-flow-layout">
       <div class="flex-col gap-10">
         <div class="rv d1"><span class="label-tag">Phase 2 · Organic Launch</span></div>
         <div class="rv d2"><h2 class="h-lg">Turn consistent content into qualified leads.</h2></div>
+      </div>
+
+      <div class="launch-organic-proof rv d3">
+        <div class="launch-proof-media">
+          <iframe
+            src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/16369f811f94556e674955011d506194/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false"
+            title="Done-for-you Organic Marketing example"
+            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+            allowfullscreen="true"
+          ></iframe>
+        </div>
+        <div class="launch-bullet-stack">
+          <div class="launch-bullet-card"><strong>Short videos &amp; reels</strong> generated in your voice, ready to post</div>
+          <div class="launch-bullet-card"><strong>Posts &amp; captions</strong> written and scheduled across platforms</div>
+          <div class="launch-bullet-card"><strong>Filmed, designed, and published by us</strong>, so you stay in your zone of genius</div>
+        </div>
       </div>
 
       <ol class="upsell-flow rv d4">
