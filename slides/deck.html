@@ -1906,7 +1906,7 @@
   .launch-organic-proof { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; max-width: 1060px; width: 100%; margin: 0 auto; align-items: stretch; text-align: left; }
   .launch-proof-media { position: relative; min-height: 160px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100); border-radius: 14px; box-shadow: var(--shadow-card); }
   .launch-proof-media iframe, .launch-proof-media img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
-  .launch-bullet-stack { display: grid; grid-template-rows: repeat(3, 1fr); gap: 8px; }
+  .launch-bullet-stack { list-style: none; margin: 0; padding: 0; display: grid; grid-template-rows: repeat(3, 1fr); gap: 8px; }
   .launch-bullet-card { display: flex; align-items: flex-start; gap: 9px; padding: 10px 12px; background: var(--white); border: 1px solid var(--al-100); border-radius: 12px; box-shadow: var(--shadow-card); color: var(--al-700); font-size: 11px; line-height: 1.35; }
   .launch-bullet-card strong { color: var(--al-900); }
   .launch-bullet-card::before { content: '✓'; color: var(--brand-950); font-weight: 700; }
@@ -2537,17 +2537,17 @@
       <div class="launch-organic-proof rv d3">
         <div class="launch-proof-media">
           <iframe
-            src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/16369f811f94556e674955011d506194/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false"
+            src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/16369f811f94556e674955011d506194/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=true"
             title="Done-for-you Organic Marketing example"
             allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-            allowfullscreen="true"
+            allowfullscreen
           ></iframe>
         </div>
-        <div class="launch-bullet-stack">
-          <div class="launch-bullet-card"><strong>Short videos &amp; reels</strong> generated in your voice, ready to post</div>
-          <div class="launch-bullet-card"><strong>Posts &amp; captions</strong> written and scheduled across platforms</div>
-          <div class="launch-bullet-card"><strong>Filmed, designed, and published by us</strong>, so you stay in your zone of genius</div>
-        </div>
+        <ul class="launch-bullet-stack">
+          <li class="launch-bullet-card"><strong>Short videos &amp; reels</strong> generated in your voice, ready to post</li>
+          <li class="launch-bullet-card"><strong>Posts &amp; captions</strong> written and scheduled across platforms</li>
+          <li class="launch-bullet-card"><strong>Filmed, designed, and published by us</strong>, so you stay in your zone of genius</li>
+        </ul>
       </div>
 
       <ol class="upsell-flow rv d4">

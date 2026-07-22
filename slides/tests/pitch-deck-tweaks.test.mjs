@@ -247,12 +247,15 @@ test('Organic Launch restores proof content above its four-step flow', () => {
   const flowIndex = organic.indexOf('<ol class="upsell-flow rv d4">');
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Organic proof must appear above the flow');
   assert.match(organic, /16369f811f94556e674955011d506194/);
+  assert.match(organic, /controls=true/);
+  assert.match(organic, /\ballowfullscreen\b(?!\s*=)/);
   [
     'Short videos &amp; reels',
     'Posts &amp; captions',
     'Filmed, designed, and published by us',
   ].forEach((copy) => assert.match(organic, new RegExp(escapeRegex(copy))));
-  assert.equal((organic.match(/class="launch-bullet-card"/g) ?? []).length, 3);
+  assert.match(organic, /<ul class="launch-bullet-stack">/);
+  assert.equal((organic.match(/<li class="launch-bullet-card">/g) ?? []).length, 3);
 });
 
 test('organic and paid Launch flows use accessible ordered-list semantics', () => {
