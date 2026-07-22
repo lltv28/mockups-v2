@@ -295,6 +295,12 @@ test('Launch proof slides hide horizontal overflow at the responsive breakpoint'
   assert.match(launchProofRules[0], /overflow-y: auto;/);
 });
 
+test('Launch proof slides remove decorative orbs at the responsive breakpoint', () => {
+  const launchCss = section('/* ── Launch flow components ── */', '/* deck-wide: balance line widths');
+  const responsiveBlock = launchCss.match(/@media \(max-width: 900px\) \{[\s\S]*?\n  \}/)?.[0] ?? '';
+  assert.match(responsiveBlock, /\.slide--launch-proof > \.bg-orb \{[^}]*display: none;[^}]*\}/);
+});
+
 test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
   const proofIndex = paid.indexOf('class="launch-proof-grid');
