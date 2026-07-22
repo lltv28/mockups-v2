@@ -396,25 +396,23 @@ test('merged Authority and Paid Ads flows keep accessible ordered-list semantics
     const orderedFlowStart = flow.indexOf(orderedFlowOpening);
     const orderedFlowEnd = flow.indexOf('</ol>', orderedFlowStart) + '</ol>'.length;
     const orderedFlow = flow.slice(orderedFlowStart, orderedFlowEnd);
-    const finalStepStart = orderedFlow.indexOf('<li class="upsell-step upsell-final">');
-    const finalStepEnd = orderedFlow.indexOf('</li>', finalStepStart) + '</li>'.length;
-    const finalStep = orderedFlow.slice(finalStepStart, finalStepEnd);
 
     assertOneVisibleSlide(flow, 'launch detail slide');
     assert.match(flow, /class="launch-flow-label rv d4">How it works<\/div>/);
     assert.match(flow, /<ol class="upsell-flow upsell-flow--launch-rail rv d4">/);
     assert.equal((orderedFlow.match(/class="upsell-step__body"/g) ?? []).length, 0);
-    assert.equal((orderedFlow.match(/<li class="upsell-step(?: upsell-final)?">/g) ?? []).length, 4);
+    assert.equal((orderedFlow.match(/<li class="upsell-step">/g) ?? []).length, 4);
     assert.equal((orderedFlow.match(/<li class="upsell-arrow" aria-hidden="true">→<\/li>/g) ?? []).length, 3);
-    assert.match(finalStep, /<div class="upsell-step__tag">Step 4<\/div>/);
+    assert.doesNotMatch(orderedFlow, /upsell-final/);
     assert.match(orderedFlow, /<\/ol>/);
   });
   const railRule = launchCss.match(/\.upsell-flow--launch-rail \{[^}]*\}/)?.[0] ?? '';
-  assert.match(railRule, /background: var\(--brand-950\);/);
-  assert.match(railRule, /border-radius: 14px;/);
-  assert.match(railRule, /overflow: hidden;/);
-  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step \{[^}]*background: transparent;[^}]*box-shadow: none;/);
-  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step__title \{[^}]*color: var\(--white\);/);
+  assert.match(railRule, /gap: 8px;/);
+  assert.match(railRule, /overflow: visible;/);
+  assert.match(railRule, /background: transparent;/);
+  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step \{[^}]*background: var\(--brand-950\);[^}]*border-radius: 12px;/);
+  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step__price \{[^}]*font-size: 18px;[^}]*letter-spacing: 0\.04em;/);
+  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-arrow \{[^}]*background: var\(--brand-950\);[^}]*color: var\(--white\);[^}]*border-radius: 50%;/);
   assert.match(responsiveBlock, /\.upsell-flow--launch-rail \{[^}]*flex-direction: column;/);
 });
 
