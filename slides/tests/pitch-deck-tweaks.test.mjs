@@ -258,6 +258,19 @@ test('Organic Launch restores proof content above its four-step flow', () => {
   assert.equal((organic.match(/<li class="launch-bullet-card">/g) ?? []).length, 3);
 });
 
+test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
+  const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  const proofIndex = paid.indexOf('class="launch-proof-grid');
+  const flowIndex = paid.indexOf('<ol class="upsell-flow rv d4">');
+  assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Paid Ads proof must appear above the flow');
+  assert.match(paid, /<ul class="launch-proof-grid rv d3">/);
+  assert.equal((paid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
+  assert.match(paid, /cf012831e12dd92855000b85e12a60db/);
+  assert.match(paid, /src="leanne-landing\.jpg"/);
+  assert.match(paid, /src="pipeline-activation-email\.png"/);
+  assertInOrder(paid, ['Ad Creative', 'Funnel', 'Pipeline Activation'], 'Paid Ads proof cards');
+});
+
 test('organic and paid Launch flows use accessible ordered-list semantics', () => {
   const organic = section('<!-- Phase 2, Organic Launch Flow -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
   const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
