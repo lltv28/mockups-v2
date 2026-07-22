@@ -307,7 +307,22 @@ test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   assert.match(paid, /src="pipeline-activation-email\.png"/);
   assertInOrder(paid, ['Ad Creative', 'Funnel', 'Pipeline Activation'], 'Paid Ads proof cards');
   assert.match(deck, /:root\s*\{[^}]*--al-600:\s*[^;]+;/s);
-  assert.match(deck, /\.launch-proof-card__body \{[^}]*color: var\(--al-600\);[^}]*font-size: 9\.5px;[^}]*line-height: 1\.3;/);
+  assert.match(deck, /\.launch-proof-card__body \{[^}]*color: var\(--al-600\);[^}]*font-size: 9px;[^}]*line-height: 1\.25;/);
+});
+
+test('both launch detail slides use full square proof previews with visible descriptions', () => {
+  const authority = section('<!-- Phase 2, Authority Branding Overview -->', '<!-- Phase 2, Paid Ads Launch Flow -->');
+  const paid = section('<!-- Phase 2, Paid Ads Launch Flow -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  const launchCss = section('/* ── Launch flow components ── */', '/* deck-wide: balance line widths');
+
+  [authority, paid].forEach((slide) => {
+    assert.equal((slide.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
+    assert.equal((slide.match(/class="launch-proof-copy"/g) ?? []).length, 3);
+    assert.equal((slide.match(/class="launch-proof-card__body"/g) ?? []).length, 3);
+  });
+  assert.match(launchCss, /\.launch-proof-card \.launch-proof-media \{[^}]*aspect-ratio: 1 \/ 1;/);
+  assert.doesNotMatch(launchCss, /grid-template-rows:\s*112px auto/);
+  assert.doesNotMatch(launchCss, /grid-template-rows:\s*200px auto/);
 });
 
 test('merged Authority and Paid Ads flows keep accessible ordered-list semantics', () => {
