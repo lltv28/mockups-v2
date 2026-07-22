@@ -321,6 +321,7 @@ test('both launch detail slides use full square proof previews with visible desc
     assert.equal((slide.match(/class="launch-proof-card__body"/g) ?? []).length, 3);
   });
   assert.match(launchCss, /\.launch-proof-card \.launch-proof-media \{[^}]*aspect-ratio: 1 \/ 1;/);
+  assert.match(launchCss, /\.launch-proof-card \{[^}]*grid-template-rows: auto 1fr;/);
   assert.doesNotMatch(launchCss, /grid-template-rows:\s*112px auto/);
   assert.doesNotMatch(launchCss, /grid-template-rows:\s*200px auto/);
 });
