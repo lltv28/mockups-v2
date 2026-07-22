@@ -1903,7 +1903,6 @@
   /* ── Launch flow components ── */
   .launch-flow-layout { justify-content: center; gap: 14px; }
   .launch-flow-layout .h-lg { font-size: clamp(28px, 3.4vw, 44px); }
-  .launch-organic-proof { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; max-width: 1060px; width: 100%; margin: 0 auto; align-items: stretch; text-align: left; }
   .launch-proof-media { position: relative; min-height: 160px; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100); border-radius: 14px; box-shadow: var(--shadow-card); }
   .launch-proof-media iframe, .launch-proof-media img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
   .launch-proof-grid { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 1060px; width: 100%; text-align: left; }
@@ -1912,10 +1911,12 @@
   .launch-proof-copy { padding: 8px 10px 9px; }
   .launch-proof-card__title { color: var(--al-900); font-size: 12px; font-weight: 700; }
   .launch-proof-card__body { margin-top: 2px; color: var(--al-600); font-size: 9.5px; line-height: 1.3; }
-  .launch-bullet-stack { list-style: none; margin: 0; padding: 0; display: grid; grid-template-rows: repeat(3, 1fr); gap: 8px; }
-  .launch-bullet-card { display: flex; align-items: flex-start; gap: 9px; padding: 10px 12px; background: var(--white); border: 1px solid var(--al-100); border-radius: 12px; box-shadow: var(--shadow-card); color: var(--al-700); font-size: 11px; line-height: 1.35; }
-  .launch-bullet-card strong { color: var(--al-900); }
-  .launch-bullet-card::before { content: '✓'; color: var(--brand-950); font-weight: 700; }
+  .manychat-preview { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 10px; padding: 18px; background: linear-gradient(145deg, #f4efff 0%, #ffffff 62%, #edf8f3 100%); }
+  .manychat-preview__header { display: flex; align-items: center; gap: 7px; color: #5b2aa5; font-size: 12px; font-weight: 700; }
+  .manychat-preview__dot { width: 9px; height: 9px; border-radius: 50%; background: #6d34bd; box-shadow: 0 0 0 4px rgba(109,52,189,.12); }
+  .manychat-preview__thread { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 9px; }
+  .manychat-preview__bubble { max-width: 82%; padding: 9px 11px; border-radius: 11px; background: #e8ddff; color: #4a2a74; font-size: 9px; line-height: 1.3; box-shadow: 0 4px 12px rgba(74,42,116,.08); }
+  .manychat-preview__bubble--reply { align-self: flex-end; background: var(--brand-950); color: var(--white); }
   .upsell-flow { list-style: none; padding: 0; display: flex; align-items: stretch; justify-content: center; gap: 8px; max-width: 1060px; margin: 0 auto; width: 100%; }
   .upsell-step { flex: 1 1 0; min-width: 0; position: relative; background: var(--white); border: 1px solid var(--al-100); border-radius: 14px; padding: 16px 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 6px; text-align: left; }
   .upsell-step__tag { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); }
@@ -1933,7 +1934,6 @@
   @media (max-width: 900px) {
     .slide--launch-proof { overflow-x: hidden; overflow-y: auto; justify-content: flex-start; align-items: flex-start; }
     .slide--launch-proof > .content--wide { justify-content: flex-start !important; align-items: stretch; }
-    .launch-organic-proof { grid-template-columns: 1fr; }
     .launch-proof-media { min-height: 220px; }
     .launch-proof-grid { grid-template-columns: 1fr; }
     .launch-proof-card { grid-template-rows: 200px auto; }
@@ -2501,62 +2501,49 @@
   </div>
 
   <!-- Phase 2, Authority Branding Overview -->
-  <div class="slide">
+  <div class="slide slide--launch-proof">
     <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -80px;"></div>
 
-    <div class="content--wide text-center flex-col gap-28" style="justify-content: center;">
+    <div class="content--wide text-center flex-col launch-flow-layout">
       <div class="flex-col gap-10">
         <div class="rv d1"><span class="label-tag">Phase 2 · Authority Branding</span></div>
         <div class="rv d2"><h2 class="h-lg">Your authority system, built for you.</h2></div>
-        <div class="rv d3"><p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500);">A consistent brand presence turns attention into conversations before a lead ever reaches your calendar.</p></div>
+        <div class="rv d3"><p class="body" style="max-width: 720px; margin: 0 auto; color: var(--al-500); font-size: 12px; line-height: 1.35;">A consistent brand presence turns attention into conversations before a lead ever reaches your calendar.</p></div>
       </div>
 
-      <div class="rv d4" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; width: 100%; text-align: left;">
-        <div class="phase-col" style="align-items: flex-start; text-align: left;">
-          <div class="detail-icon">⌂</div>
-          <div class="h-md" style="font-size: 20px;">Personal branded website</div>
-          <p class="body" style="font-size: 14px; line-height: 1.5;">A credible home for your expertise, offers, and AI products.</p>
-        </div>
-        <div class="phase-col" style="align-items: flex-start; text-align: left;">
-          <div class="detail-icon">✦</div>
-          <div class="h-md" style="font-size: 20px;">Done-for-you posting</div>
-          <p class="body" style="font-size: 14px; line-height: 1.5;">Consistent content keeps your ideas visible to the right audience.</p>
-        </div>
-        <div class="phase-col" style="align-items: flex-start; text-align: left;">
-          <div class="detail-icon">↗</div>
-          <div class="h-md" style="font-size: 20px;">ManyChat comment and DM automation</div>
-          <p class="body" style="font-size: 14px; line-height: 1.5;">Every response can become a direct, automated sales conversation.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Phase 2, Organic Launch Flow -->
-  <div class="slide slide--launch-proof">
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-
-    <div class="content--wide text-center flex-col launch-flow-layout">
-      <div class="flex-col gap-10">
-        <div class="rv d1"><span class="label-tag">Phase 2 · Organic Launch</span></div>
-        <div class="rv d2"><h2 class="h-lg">Turn consistent content into qualified leads.</h2></div>
-      </div>
-
-      <div class="launch-organic-proof rv d3">
-        <div class="launch-proof-media">
-          <iframe
-            src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/16369f811f94556e674955011d506194/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=true"
-            title="Done-for-you Organic Marketing example"
-            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <ul class="launch-bullet-stack">
-          <li class="launch-bullet-card"><strong>Short videos &amp; reels</strong> generated in your voice, ready to post</li>
-          <li class="launch-bullet-card"><strong>Posts &amp; captions</strong> written and scheduled across platforms</li>
-          <li class="launch-bullet-card"><strong>Filmed, designed, and published by us,</strong> so you stay in your zone of genius</li>
-        </ul>
-      </div>
+      <ul class="launch-proof-grid rv d3" role="list">
+        <li class="launch-proof-card">
+          <div class="launch-proof-media"><img src="website-bonus.png" alt="Examples of personal branded websites"></div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Personal branded website</div>
+            <div class="launch-proof-card__body">A credible home for your expertise, offers, and AI products.</div>
+          </div>
+        </li>
+        <li class="launch-proof-card">
+          <div class="launch-proof-media"><img src="dfy-marketing.png" alt="Done-for-you content library"></div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">Done-for-you posting</div>
+            <div class="launch-proof-card__body">Consistent content keeps your ideas visible to the right audience.</div>
+          </div>
+        </li>
+        <li class="launch-proof-card">
+          <div class="launch-proof-media" role="img" aria-label="ManyChat automated comment-to-DM conversation preview">
+            <div class="manychat-preview" aria-hidden="true">
+              <div class="manychat-preview__header"><span class="manychat-preview__dot"></span>ManyChat</div>
+              <div class="manychat-preview__thread">
+                <div class="manychat-preview__bubble">Comment “GUIDE” below and I’ll send it to you.</div>
+                <div class="manychat-preview__bubble manychat-preview__bubble--reply">GUIDE</div>
+                <div class="manychat-preview__bubble">Sent to your DMs ✓</div>
+              </div>
+            </div>
+          </div>
+          <div class="launch-proof-copy">
+            <div class="launch-proof-card__title">ManyChat comment and DM automation</div>
+            <div class="launch-proof-card__body">Every response can become a direct, automated sales conversation.</div>
+          </div>
+        </li>
+      </ul>
 
       <ol class="upsell-flow rv d4">
         <li class="upsell-step">
