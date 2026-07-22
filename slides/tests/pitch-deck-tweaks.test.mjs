@@ -302,12 +302,12 @@ test('Authority Branding combines three proof cards with the Organic flow', () =
   assert.match(authority, /<ul class="launch-proof-grid rv d3" role="list">/);
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Authority proof cards must appear above the Organic flow');
   assert.equal((proofGrid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
-  assert.match(proofGrid, /src="authority-website-cheryl-hunter\.jpeg"/);
+  assert.match(proofGrid, /src="authority-website-cheryl-hunter-tedx\.jpeg"/);
   assert.match(proofGrid, /<iframe[\s\S]*393d729a00e6a20de5e23ae1665153da[\s\S]*<\/iframe>/);
   assert.match(proofGrid, /title="Done-for-you posting video preview"/);
   assert.doesNotMatch(proofGrid, /src="website-bonus\.png"/);
   assert.doesNotMatch(proofGrid, /src="dfy-marketing\.png"/);
-  assert.ok(existsSync(resolve(slidesDir, 'authority-website-cheryl-hunter.jpeg')));
+  assert.ok(existsSync(resolve(slidesDir, 'authority-website-cheryl-hunter-tedx.jpeg')));
   assert.match(proofGrid, /class="manychat-preview"/);
   assert.match(proofGrid, /role="img" aria-label="Automated comment-to-DM conversation preview"/);
   assert.match(proofGrid, /manychat-preview__header"><span class="manychat-preview__dot"><\/span>Comment \+ DM<\/div>/);
@@ -360,7 +360,9 @@ test('Paid Ads Launch shows three proof cards above its four-step flow', () => {
   assert.ok(proofIndex >= 0 && proofIndex < flowIndex, 'Paid Ads proof must appear above the flow');
   assert.match(paid, /<ul class="launch-proof-grid rv d3" role="list">/);
   assert.equal((paid.match(/<li class="launch-proof-card">/g) ?? []).length, 3);
-  assert.match(paid, /cf012831e12dd92855000b85e12a60db/);
+  assert.match(paid, /src="paid-ads-facebook-library\.jpeg"/);
+  assert.ok(existsSync(resolve(slidesDir, 'paid-ads-facebook-library.jpeg')));
+  assert.doesNotMatch(paid, /cf012831e12dd92855000b85e12a60db/);
   assert.match(paid, /src="leanne-landing\.jpg"/);
   assert.match(paid, /src="pipeline-activation-email\.png"/);
   assertInOrder(paid, ['Ad Creative', 'Funnel', 'Pipeline Activation'], 'Paid Ads proof cards');
