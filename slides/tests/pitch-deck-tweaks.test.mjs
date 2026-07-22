@@ -412,7 +412,11 @@ test('merged Authority and Paid Ads flows keep accessible ordered-list semantics
   assert.match(railRule, /background: transparent;/);
   assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step \{[^}]*background: var\(--brand-950\);[^}]*border-radius: 12px;/);
   assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-step__price \{[^}]*font-size: 18px;[^}]*letter-spacing: 0\.04em;/);
-  assert.match(launchCss, /\.upsell-flow--launch-rail \.upsell-arrow \{[^}]*background: var\(--brand-950\);[^}]*color: var\(--white\);[^}]*border-radius: 50%;/);
+  const launchArrowRule = launchCss.match(/\.upsell-flow--launch-rail \.upsell-arrow \{[^}]*\}/)?.[0] ?? '';
+  assert.match(launchArrowRule, /background: transparent;/);
+  assert.match(launchArrowRule, /color: var\(--brand-950\);/);
+  assert.match(launchArrowRule, /border-radius: 0;/);
+  assert.match(launchArrowRule, /font-size: 18px;/);
   assert.match(responsiveBlock, /\.upsell-flow--launch-rail \{[^}]*flex-direction: column;/);
   assert.match(responsiveBlock, /\.upsell-flow--launch-rail \.upsell-step__price \{[^}]*font-size: 18px;/);
 });
