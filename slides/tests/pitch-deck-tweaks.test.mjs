@@ -517,7 +517,7 @@ test('investment deliverables match the approved Build and Launch offer', () => 
     'Done-For-You Funnel', 'Paid Ads Setup',
   ].forEach((copy) => assert.match(deck, new RegExp(copy, 'i')));
   assert.match(deck, /Requires at least \$5,000 in ad spend/);
-  assert.match(deck, /\$6,800<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
+  assert.match(deck, /\$7,000<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
 });
 
 test('both launch proof rows match the flowchart width', () => {
@@ -532,6 +532,75 @@ test('price card balances ten deliverables with the approved DFY paid ads copy',
   assert.match(investment, />6 Months Launch Optimization<\/span>/);
   assert.doesNotMatch(investment, />Paid Ads Setup<\/span>/);
   assert.equal((investment.match(/<polyline points="2,6 5,9 10,3"\/>/g) ?? []).length, 10);
+});
+
+test('pricing presents the approved standard investment and three payment options', () => {
+  const investment = section('<!-- S10a, The Investment', '<!-- S10b, Payment Plans');
+  const paymentOptions = section('<!-- S10b, Payment Plans', '<!-- Video Modal -->');
+
+  assert.match(investment, />Standard Investment<\/div>\s*<div[^>]*>\$21,000<\/div>/);
+  assert.match(investment, />for your six-month build and launch program<\/div>/);
+
+  assert.match(paymentOptions, />Three ways to pay\.<\/h2>/);
+  assertInOrder(paymentOptions, [
+    '>Financing Partner</div>',
+    '>$21,000</div>',
+    '>~$1,500/month</div>',
+    '>3-Pay</div>',
+    '>$7,000',
+    '×3</span>',
+    '>Pay In Full</div>',
+    '>$18,000</div>',
+    '>Card or wire</div>',
+  ], 'payment option order');
+  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 3);
+  assert.doesNotMatch(paymentOptions, /Two ways to pay|\$6,800|\$20,400/);
+});
+
+test('payment options stay equal on desktop and stack on mobile', () => {
+  assert.match(deck, /\.payment-options-grid \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);[^}]*max-width: 720px;[^}]*\}/s);
+  assert.equal((deck.match(/class="payment-option-card"/g) ?? []).length, 3);
+  assert.match(deck, /@media \(max-width: 640px\) \{[^}]*\.payment-options-grid \{[^}]*grid-template-columns: 1fr;[^}]*max-width: 300px;[^}]*\}/s);
+});
+
+test('payment options use compact centered cards without a repeated total', () => {
+  const paymentOptions = section('<!-- S10b, Payment Plans', '<!-- Video Modal -->');
+
+  assert.doesNotMatch(paymentOptions, /\$21,000 total/);
+  assert.match(deck, /\.payment-option-card \{[^}]*height: 105px;[^}]*padding: 10px 16px;[^}]*display: flex;[^}]*flex-direction: column;[^}]*align-items: center;[^}]*justify-content: center;[^}]*\}/s);
+  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 3);
+  assert.equal((paymentOptions.match(/margin-top: 8px/g) ?? []).length, 3);
+});
+
+test('all payment cards share neutral styling while helper notes stay out of the center flow', () => {
+  const paymentOptions = section('<!-- S10b, Payment Plans', '<!-- Video Modal -->');
+
+  assert.equal(
+    (paymentOptions.match(/class="payment-option-card">\s*<div class="payment-option-card__center">/g) ?? []).length,
+    3,
+  );
+  assert.doesNotMatch(paymentOptions, /Best value/i);
+  assert.doesNotMatch(paymentOptions, /border:\s*2px solid var\(--brand-950\)/);
+  assert.match(
+    paymentOptions,
+    /<div class="payment-option-card__note">~\$1,500\/month<\/div>/,
+  );
+  assert.match(
+    paymentOptions,
+    /<div class="payment-option-card__note">Card or wire<\/div>/,
+  );
+  assert.match(
+    deck,
+    /\.payment-option-card \{[^}]*position: relative;[^}]*background: white;[^}]*border: 2px solid var\(--al-100\);[^}]*\}/s,
+  );
+  assert.match(
+    deck,
+    /\.payment-option-card__center \{[^}]*display: inline-flex;[^}]*flex-direction: column;[^}]*align-items: center;[^}]*\}/s,
+  );
+  assert.match(
+    deck,
+    /\.payment-option-card__note \{[^}]*position: absolute;[^}]*bottom: 8px;[^}]*\}/s,
+  );
 });
 
 test('Expert AIs and internal proof move before client proof before navigation initializes', () => {
@@ -618,7 +687,7 @@ test('deck contains the approved 20 visible slides in order', () => {
     'Build and launch',
     "Your life's work finally working without you",
     'Your entire AI system, built and launched for you',
-    'Two ways to pay',
+    'Three ways to pay',
   ];
   let cursor = -1;
   orderedCopy.forEach((copy) => {
