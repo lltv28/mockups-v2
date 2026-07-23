@@ -200,7 +200,7 @@ Expected: no output and exit code 0.
 Run:
 
 ```powershell
-npm test
+node --test slides/tests/*.test.mjs
 ```
 
 Expected: all tests pass.
