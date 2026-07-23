@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kodara Roadmap — First 30 Days</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --headline-font: "Instrument Serif", serif;
+    --body-font: "Instrument Sans", sans-serif;
+    --green-ink: #138658;
+    --green-bright: #16a46c;
+    --green-grad: linear-gradient(var(--green-bright), var(--green-ink));
+    --ink-headline: #2c201e;
+    --ink-strong: #1a1a1acc;
+    --ink-body: #1a1a1a99;
+    --lane-fill: #f4f3f1;
+    --hairline: #1a1a1a14;
+    --approve: #b5832e;
+    --r: 16px;
+    --r-panel: 24px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { margin: 0; background: #fff; color: var(--ink-body); font-family: var(--body-font); letter-spacing: -0.25px; line-height: 1.45; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+  /* ponytail: native balanced wrapping, no JS line-fitter */
+  h1, h2, p, .ct, .cs, .ptitle, .pin, .pdesc, .bt, .bs, .gt, .eyebrow, .yourpart li { text-wrap: balance; }
+
+  /* ---------- Layout ---------- */
+  .layout { zoom: 1.5; display: flex; gap: 56px; max-width: 1320px; margin: 0 auto; padding: 28px 32px 32px; align-items: flex-start; width: 100%; }
+  /* ponytail: card pushed down to line up with the packs row; magic number is verified visually */
+  .rail { flex: 0 0 360px; display: flex; flex-direction: column; justify-content: flex-start; gap: 14px; margin-top: 166px; }
+  .chart { flex: 1; min-width: 0; }
+
+  /* ---------- Header ---------- */
+  .eyebrow { font-size: 14px; letter-spacing: .05em; text-transform: uppercase; color: var(--green-ink); font-weight: 600; margin: 0 0 12px; }
+  .hero h1 { font-family: var(--headline-font); font-weight: 400; color: var(--ink-headline); font-size: 59px; line-height: 1.06; margin: 0 0 16px; white-space: nowrap; }
+  .hero p { font-size: 18px; line-height: 1.5; color: var(--ink-body); margin: 0; text-wrap: pretty; }
+  .hero .accent { color: var(--ink-strong); }
+
+  /* ---------- Your part ---------- */
+  .yourpart { border-radius: var(--r-panel); background: #b5832e0a; border: 1.5px solid #b5832e55; padding: 22px 24px; }
+  .yourpart h2 { font-family: var(--headline-font); font-weight: 400; color: var(--approve); font-size: 27px; margin: 0 0 8px; }
+  .yourpart p { margin: 0 0 14px; font-size: 16.5px; line-height: 1.5; }
+  .yourpart ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .yourpart li { font-size: 16.5px; line-height: 1.5; }
+  .yourpart b { color: var(--ink-strong); font-weight: 600; }
+
+  /* ---------- Flow ---------- */
+  .vstack { display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 720px; margin: 0 auto; }
+  .card { border: 1px solid var(--hairline); background: #fff; border-radius: var(--r); padding: 11px 18px; box-shadow: 0 1px 2px #2c201e0f; }
+  .card .ct { font-family: var(--headline-font); font-size: 24px; line-height: 1.08; color: var(--ink-headline); }
+  .card .cs { font-size: 15.5px; line-height: 1.4; color: var(--ink-body); margin-top: 4px; }
+  .card.approve { border: 2.5px solid var(--approve); background: #b5832e09; }
+  .card.launch { background: var(--green-grad); border-color: transparent; box-shadow: 0 12px 26px -12px #13865899; }
+  .card.launch .ct, .card.launch .cs { color: #fff; } .card.launch .cs { color: #ffffffcc; }
+  .arrow { color: var(--green-ink); font-size: 20px; display: flex; align-items: center; justify-content: center; line-height: 1; }
+
+  .pair { display: flex; gap: 18px; justify-content: center; width: 100%; }
+  .pair .card { flex: 1; text-align: center; }
+  .narrow { width: 100%; text-align: center; }
+
+  .buildhead { text-align: center; }
+  .buildhead .bt { font-family: var(--headline-font); font-size: 25px; color: var(--ink-headline); }
+  .buildhead .bs { font-size: 15px; color: var(--ink-body); margin-top: 3px; }
+
+  .packs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 100%; }
+  .pack { border: 1px solid var(--hairline); border-radius: 16px; padding: 18px 20px; background: #fff; box-shadow: 0 1px 2px #2c201e0f; }
+  .pack .ptitle { font-family: var(--headline-font); font-size: 24px; color: var(--ink-headline); margin-bottom: 12px; }
+  .pitem { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-top: 1px solid var(--hairline); }
+  .pitem:first-of-type { border-top: none; }
+  .pitem .chk { color: var(--green-ink); font-weight: 700; font-size: 15.5px; line-height: 1.35; flex: none; }
+  .pitem .pin { font-size: 16.5px; color: var(--ink-strong); font-weight: 500; }
+  .pitem .pdesc { font-size: 14px; color: var(--ink-body); }
+
+  @media (max-width: 920px) {
+    .layout { flex-direction: column; gap: 36px; padding: 32px 20px 48px; }
+    .rail { flex: none; }
+    .hero h1 { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+  <div class="layout">
+
+    <aside class="rail">
+      <div class="hero">
+        <h1>Your Launch Plan</h1>
+      </div>
+
+      <section class="yourpart">
+        <h2>Your part: the 5% only you can do</h2>
+        <p>This build is done for you, about <b>95% us and 5% you</b>. Your 5% is small, but the launch can't happen without it:</p>
+        <ol>
+          <li><b>Approve 2 things:</b> your Marketing Plan and Offer Stack. That unlocks the full build.</li>
+          <li><b>Give us 3 testers.</b> 3 of your current clients or team members put your AI through real conversations before launch.</li>
+        </ol>
+      </section>
+    </aside>
+
+    <main class="chart">
+      <div class="vstack">
+
+        <div class="pair">
+          <div class="card approve"><div class="ct">Marketing Plan</div></div>
+          <div class="card approve"><div class="ct">Offer Stack</div></div>
+        </div>
+
+        <div class="arrow">&#8595;</div>
+
+        <div class="buildhead"><div class="bt">Everything we build for you</div><div class="bs">Done for you, start to finish.</div></div>
+        <div class="packs">
+          <div class="pack">
+            <div class="ptitle">Marketing Assets</div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">Video Sales Letter (VSL)</span> <span class="pdesc">&middot; your sales video</span></div></div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">Ads</span> <span class="pdesc">&middot; paid traffic creative</span></div></div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">Organic Content</span> <span class="pdesc">&middot; social posts</span></div></div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">Marketing Emails</span> <span class="pdesc">&middot; nurture sequence</span></div></div>
+          </div>
+          <div class="pack">
+            <div class="ptitle">AI 1.0</div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">AI Brain</span> <span class="pdesc">&middot; the knowledge base</span></div></div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">AI Avatar</span> <span class="pdesc">&middot; your AI persona</span></div></div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">AI Assessment</span> <span class="pdesc">&middot; qualifying quiz</span></div></div>
+            <div class="pitem"><span class="chk">&#10003;</span><div><span class="pin">AI Coach</span> <span class="pdesc">&middot; always-on coaching</span></div></div>
+          </div>
+        </div>
+
+        <div class="arrow">&#8595;</div>
+        <div class="card narrow"><div class="ct">Test with 3 people</div><div class="cs">3 of your clients or team members give quick, real-world feedback.</div></div>
+        <div class="arrow">&#8595;</div>
+        <div class="card launch narrow"><div class="ct">Launch</div><div class="cs">You go live and the leads start coming in!</div></div>
+
+      </div>
+    </main>
+
+  </div>
+</body>
+</html>
