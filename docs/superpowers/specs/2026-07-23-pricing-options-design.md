@@ -21,7 +21,6 @@ Show three equal-width cards in this order:
    - No monthly estimate, term, or extra financing copy
 2. 3-Pay
    - 3 × $7,000
-   - $21,000 total
 3. Pay In Full
    - $18,000
    - Card or wire
@@ -34,8 +33,18 @@ Show three equal-width cards in this order:
 - Keep Pay In Full visually emphasized as the best value.
 - Maintain the existing mobile stacking behavior.
 
+## Payment Card Refinement
+
+- Remove “$21,000 total” from the 3-Pay card.
+- Set all three payment cards to a fixed 150px height, about 30% shorter than the current cards.
+- Center each card’s content vertically and horizontally.
+- Keep all three cards equal in height on desktop and mobile.
+- Preserve the Best Value badge and one-card-per-row mobile layout.
+
 ## Verification
 
 - Add automated checks for the new standard price and all three payment options.
 - Confirm the old “Two ways to pay” and “$6,800 ×3” copy is removed.
+- Confirm “$21,000 total” is removed.
+- Confirm all three payment cards use the shared 150px centered layout.
 - Run the complete slide test suite and production build.
