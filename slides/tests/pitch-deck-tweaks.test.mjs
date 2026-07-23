@@ -84,6 +84,10 @@ test('the July deck remains available and the previous deck stays archived', () 
   );
 });
 
+test('active and versioned July decks remain synchronized', () => {
+  assert.equal(versionedDeck, deck);
+});
+
 test('opening uses the approved AI scale message', () => {
   const opening = section('<!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->', '<!-- INTRO 1.1,');
   assert.match(opening, /You can only sell one person at a time\./);
