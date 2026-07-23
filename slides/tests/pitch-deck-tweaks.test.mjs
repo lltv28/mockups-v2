@@ -46,6 +46,28 @@ function readPngInfo(imagePath) {
   return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
 }
 
+function cssBlock(content, startMarker, requiredMarker = '') {
+  let cursor = 0;
+  while (cursor < content.length) {
+    const start = content.indexOf(startMarker, cursor);
+    if (start < 0) break;
+    const openingBrace = content.indexOf('{', start + startMarker.length);
+    assert.ok(openingBrace >= 0, `missing opening brace for: ${startMarker}`);
+    let depth = 1;
+    let end = openingBrace + 1;
+    while (end < content.length && depth > 0) {
+      if (content[end] === '{') depth += 1;
+      if (content[end] === '}') depth -= 1;
+      end += 1;
+    }
+    assert.equal(depth, 0, `missing closing brace for: ${startMarker}`);
+    const block = content.slice(start, end);
+    if (!requiredMarker || block.includes(requiredMarker)) return block;
+    cursor = end;
+  }
+  assert.fail(`missing CSS block: ${startMarker} containing ${requiredMarker}`);
+}
+
 function sha256(imagePath) {
   return createHash('sha256').update(readFileSync(imagePath)).digest('hex').toUpperCase();
 }
@@ -552,12 +574,33 @@ test('internal proof slide contains the approved copy and ordered paths', () => 
     .map((match) => match[1]);
   assertInOrder(paths[0], ['Ad', 'Booked call', '35%', 'Shows up', '20%', 'Closes'], 'Model A sequence');
   assertInOrder(paths[1], ['Ad', 'AI assessment', 'Booked call', '60%', 'Shows up', '33%', 'Closes'], 'Model B sequence');
+  const modelB = proof.slice(
+    proof.indexOf('<section class="internal-proof-model internal-proof-model--highlight'),
+    proof.indexOf('</section>', proof.indexOf('<section class="internal-proof-model internal-proof-model--highlight')),
+  );
+  assertInOrder(modelB, [
+    '<h3 id="internal-proof-model-b">MODEL B · AD TO ASSESSMENT TO CALL</h3>',
+    '<span class="internal-proof-model__badge">what we run internally</span>',
+    '<ol class="internal-proof-path internal-proof-path--five">',
+  ], 'Model B badge placement');
+  const result = proof.slice(proof.indexOf('<div class="internal-proof-result'), proof.indexOf('</div>', proof.indexOf('<div class="internal-proof-result')));
+  assert.doesNotMatch(result, /what we run internally/);
+});
+
+test('internal proof desktop composition stays compact at deck zoom', () => {
+  const slideRule = cssBlock(deck, '.slide--internal-proof');
+  const compositionRule = cssBlock(deck, '.internal-proof-composition');
+  assert.match(slideRule, /padding-block: 30px;/);
+  assert.match(compositionRule, /gap: 10px;/);
+  assert.match(deck, /\.internal-proof-model__badge \{[^}]*background: var\(--brand-950\);[^}]*color: var\(--white\);[^}]*\}/);
 });
 
 test('internal proof slide stacks paths and uses downward arrows on narrow screens', () => {
-  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.slide--internal-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}/);
-  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.internal-proof-path \{[^}]*grid-template-columns: 1fr;[^}]*\}/);
-  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.internal-proof-step:not\(:last-child\)::after \{[^}]*content: '↓';[^}]*\}/);
+  const responsive = cssBlock(deck, '@media (max-width: 900px)', '.slide--internal-proof');
+  assert.match(responsive, /\.slide--internal-proof \{[^}]*overflow-y: auto;[^}]*overflow-x: hidden;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}/);
+  assert.match(responsive, /\.internal-proof-path \{[^}]*grid-template-columns: 1fr;[^}]*\}/);
+  assert.match(responsive, /\.internal-proof-step:not\(:last-child\)::after \{[^}]*content: '↓';[^}]*\}/);
+  assert.match(responsive, /\.internal-proof-result \{[^}]*grid-template-columns: 1fr;[^}]*\}/);
 });
 
 test('deck contains the approved 20 visible slides in order', () => {
