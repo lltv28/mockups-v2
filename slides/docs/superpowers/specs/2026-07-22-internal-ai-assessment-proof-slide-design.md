@@ -16,7 +16,7 @@ Use the final approved comparison copy:
 - Remove `what we run internally` entirely.
 - Proof card intro: `From 1,000 completed AI assessments`
 - Proof figure: `$612,000+ contracted revenue`
-- Proof detail: `34 high-ticket clients, our own business`
+- Proof detail: `34 high-ticket clients`
 - Supporting statement: `We didn’t just build this for clients. We ran it on ourselves first, and it’s what took our own show and close rates from Model A to Model B.`
 - Disclaimer: `Figures reflect internal Kodara data, not a guarantee of client results.`
 
@@ -26,7 +26,8 @@ Use the final approved comparison copy:
 - Center the eyebrow and headline at the top.
 - Present the two paths as separate, aligned five-card comparison rows without visible row labels.
 - Use neutral white cards, gray text, and gray connectors for the first row.
-- Use pale-green cards and Kodara green accents for the second row. Emphasize `AI assessment`, `60% Shows up`, and `33% Closes`.
+- Use the same pale-green background, green border, and green text treatment for every card in the second row.
+- Do not give `AI assessment` a special dark-green treatment.
 - Keep arrows between cards as simple standalone connectors.
 - Use a full-width pale-green proof card below the comparison rows. Make `$612,000+` the dominant visual element.
 - Place the supporting statement and disclaimer below the proof card with lower visual weight.
@@ -48,6 +49,6 @@ Use the final approved comparison copy:
 
 - Automated checks confirm the new slide appears after `Expert AIs` and before `Why our clients love the Kodara model`.
 - Automated checks confirm the deck now has 20 visible slides.
-- Automated checks confirm every approved figure and sentence is present and the removed row-label strings and `what we run internally` are absent.
+- Automated checks confirm every approved figure and sentence is present and the removed row-label strings, `what we run internally`, and `our own business` are absent.
 - Automated checks confirm both five-card paths contain their required steps in order.
 - Desktop and phone-size previews confirm the slide is readable, contained, and consistent with the surrounding deck.
