@@ -545,23 +545,21 @@ test('Expert AIs and internal proof move before client proof before navigation i
   ], 'intro slide runtime ordering');
 });
 
-test('internal proof slide contains the approved copy and ordered paths', () => {
+test('internal proof slide compares aligned VSL and AI Assessment paths', () => {
   const proof = section('id="internal-proof-slide"', '<!-- S5, 2 Stages Overview -->');
   const approvedCopy = [
     'WE RAN THIS ON OURSELVES',
     'One extra step changes everything.',
-    'MODEL A · AD TO CALL',
     'Ad',
+    'VSL',
     'Booked call',
     '35%',
     'Shows up',
     '20%',
     'Closes',
-    'MODEL B · AD TO ASSESSMENT TO CALL',
     'AI assessment',
     '60%',
     '33%',
-    'what we run internally',
     'From 1,000 completed AI assessments',
     '$612,000+',
     'contracted revenue',
@@ -570,27 +568,15 @@ test('internal proof slide contains the approved copy and ordered paths', () => 
     'Figures reflect internal Kodara data, not a guarantee of client results.',
   ];
   approvedCopy.forEach((copy) => assert.match(proof, new RegExp(escapeRegex(copy))));
-  assert.equal((proof.match(/<ol class="internal-proof-path[^"\n]*"/g) ?? []).length, 2);
-  assert.equal((proof.match(/<li class="internal-proof-step[^"\n]*"/g) ?? []).length, 9);
-  assertInOrder(proof, [
-    '<ol class="internal-proof-path internal-proof-path--four',
-    '<ol class="internal-proof-path internal-proof-path--five',
-  ], 'internal proof paths');
+  assert.doesNotMatch(proof, /MODEL A · AD TO CALL/);
+  assert.doesNotMatch(proof, /MODEL B · AD TO ASSESSMENT TO CALL/);
+  assert.doesNotMatch(proof, /what we run internally/);
+  assert.equal((proof.match(/<ol class="internal-proof-path internal-proof-path--five">/g) ?? []).length, 2);
+  assert.equal((proof.match(/<li class="internal-proof-step[^"\n]*"/g) ?? []).length, 10);
   const paths = [...proof.matchAll(/<ol class="internal-proof-path[^>]*>([\s\S]*?)<\/ol>/g)]
     .map((match) => match[1]);
-  assertInOrder(paths[0], ['Ad', 'Booked call', '35%', 'Shows up', '20%', 'Closes'], 'Model A sequence');
-  assertInOrder(paths[1], ['Ad', 'AI assessment', 'Booked call', '60%', 'Shows up', '33%', 'Closes'], 'Model B sequence');
-  const modelB = proof.slice(
-    proof.indexOf('<section class="internal-proof-model internal-proof-model--highlight'),
-    proof.indexOf('</section>', proof.indexOf('<section class="internal-proof-model internal-proof-model--highlight')),
-  );
-  assertInOrder(modelB, [
-    '<h3 id="internal-proof-model-b">MODEL B · AD TO ASSESSMENT TO CALL</h3>',
-    '<span class="internal-proof-model__badge">what we run internally</span>',
-    '<ol class="internal-proof-path internal-proof-path--five">',
-  ], 'Model B badge placement');
-  const result = proof.slice(proof.indexOf('<div class="internal-proof-result'), proof.indexOf('</div>', proof.indexOf('<div class="internal-proof-result')));
-  assert.doesNotMatch(result, /what we run internally/);
+  assertInOrder(paths[0], ['Ad', 'VSL', 'Booked call', '35%', 'Shows up', '20%', 'Closes'], 'VSL sequence');
+  assertInOrder(paths[1], ['Ad', 'AI assessment', 'Booked call', '60%', 'Shows up', '33%', 'Closes'], 'AI Assessment sequence');
 });
 
 test('internal proof desktop composition stays compact at deck zoom', () => {
@@ -598,7 +584,9 @@ test('internal proof desktop composition stays compact at deck zoom', () => {
   const compositionRule = cssBlock(deck, '.internal-proof-composition');
   assert.match(slideRule, /padding-block: 30px;/);
   assert.match(compositionRule, /gap: 10px;/);
-  assert.match(deck, /\.internal-proof-model__badge \{[^}]*background: var\(--brand-950\);[^}]*color: var\(--white\);[^}]*\}/);
+  assert.match(deck, /\.internal-proof-path--five \{[^}]*grid-template-columns: repeat\(5, minmax\(0, 1fr\)\);[^}]*\}/);
+  assert.doesNotMatch(deck, /\.internal-proof-model__badge \{/);
+  assert.doesNotMatch(deck, /\.internal-proof-path--four \{/);
 });
 
 test('internal proof slide stacks paths and uses downward arrows on narrow screens', () => {

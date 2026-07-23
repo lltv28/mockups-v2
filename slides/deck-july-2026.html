@@ -1898,11 +1898,7 @@
   .internal-proof-header { display: flex; flex-direction: column; gap: 6px; }
   .internal-proof-header .h-lg { font-size: clamp(31px, 3.2vw, 44px); }
   .internal-proof-model { display: flex; flex-direction: column; gap: 7px; }
-  .internal-proof-model h3 { color: var(--al-500); font-size: 11px; font-weight: 700; letter-spacing: 0.11em; line-height: 1.3; text-transform: uppercase; }
-  .internal-proof-model--highlight h3 { color: var(--brand-950); }
-  .internal-proof-model__badge { align-self: center; padding: 4px 10px; background: var(--brand-950); color: var(--white); border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; line-height: 1; text-transform: uppercase; }
   .internal-proof-path { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px; width: 100%; }
-  .internal-proof-path--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .internal-proof-path--five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .internal-proof-step { position: relative; min-height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 10px 8px; background: var(--white); border: 1px solid var(--al-100); border-radius: 12px; box-shadow: var(--shadow-card); color: var(--al-600); font-size: 12px; font-weight: 700; line-height: 1.2; }
   .internal-proof-step:not(:last-child)::after { content: '→'; position: absolute; top: 50%; right: -20px; width: 16px; transform: translateY(-50%); color: var(--al-300); font-size: 15px; line-height: 1; }
@@ -2287,19 +2283,17 @@
         <div class="rv d2"><h2 id="internal-proof-title" class="h-lg">One extra step changes everything.</h2></div>
       </header>
 
-      <section class="internal-proof-model rv d3" aria-labelledby="internal-proof-model-a">
-        <h3 id="internal-proof-model-a">MODEL A · AD TO CALL</h3>
-        <ol class="internal-proof-path internal-proof-path--four">
+      <section class="internal-proof-model rv d3" aria-label="Ad to VSL to booked call">
+        <ol class="internal-proof-path internal-proof-path--five">
           <li class="internal-proof-step">Ad</li>
+          <li class="internal-proof-step">VSL</li>
           <li class="internal-proof-step">Booked call</li>
           <li class="internal-proof-step internal-proof-step--rate"><strong>35%</strong><span>Shows up</span></li>
           <li class="internal-proof-step internal-proof-step--rate"><strong>20%</strong><span>Closes</span></li>
         </ol>
       </section>
 
-      <section class="internal-proof-model internal-proof-model--highlight rv d4" aria-labelledby="internal-proof-model-b">
-        <h3 id="internal-proof-model-b">MODEL B · AD TO ASSESSMENT TO CALL</h3>
-        <span class="internal-proof-model__badge">what we run internally</span>
+      <section class="internal-proof-model internal-proof-model--highlight rv d4" aria-label="Ad to AI Assessment to booked call">
         <ol class="internal-proof-path internal-proof-path--five">
           <li class="internal-proof-step">Ad</li>
           <li class="internal-proof-step internal-proof-step--key">AI assessment</li>
