@@ -548,12 +548,11 @@ test('pricing presents the approved standard investment and three payment option
     '>3-Pay</div>',
     '>$7,000',
     '×3</span>',
-    '>$21,000 total</div>',
     '>Pay In Full</div>',
     '>$18,000</div>',
     '>Card or wire</div>',
   ], 'payment option order');
-  assert.equal((paymentOptions.match(/border-radius: 14px; padding: 24px 16px/g) ?? []).length, 3);
+  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 3);
   assert.doesNotMatch(paymentOptions, /Two ways to pay|\$6,800|\$20,400/);
 });
 
@@ -561,6 +560,15 @@ test('payment options stay equal on desktop and stack on mobile', () => {
   assert.match(deck, /\.payment-options-grid \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);[^}]*max-width: 720px;[^}]*\}/s);
   assert.equal((deck.match(/class="payment-option-card"/g) ?? []).length, 3);
   assert.match(deck, /@media \(max-width: 640px\) \{[^}]*\.payment-options-grid \{[^}]*grid-template-columns: 1fr;[^}]*max-width: 300px;[^}]*\}/s);
+});
+
+test('payment options use compact centered cards without a repeated total', () => {
+  const paymentOptions = section('<!-- S10b, Payment Plans', '<!-- Video Modal -->');
+
+  assert.doesNotMatch(paymentOptions, /\$21,000 total/);
+  assert.match(deck, /\.payment-option-card \{[^}]*height: 105px;[^}]*padding: 10px 16px;[^}]*display: flex;[^}]*flex-direction: column;[^}]*align-items: center;[^}]*justify-content: center;[^}]*\}/s);
+  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 3);
+  assert.equal((paymentOptions.match(/margin-top: 8px/g) ?? []).length, 3);
 });
 
 test('Expert AIs and internal proof move before client proof before navigation initializes', () => {

@@ -36,7 +36,7 @@ Show three equal-width cards in this order:
 ## Payment Card Refinement
 
 - Remove “$21,000 total” from the 3-Pay card.
-- Set all three payment cards to a fixed 150px height, about 30% shorter than the current cards.
+- Set all three payment cards to a 105px CSS height, which renders at about 158px under the deck’s 150% desktop scaling and is about 30% shorter than the current cards.
 - Center each card’s content vertically and horizontally.
 - Keep all three cards equal in height on desktop and mobile.
 - Preserve the Best Value badge and one-card-per-row mobile layout.
@@ -46,5 +46,5 @@ Show three equal-width cards in this order:
 - Add automated checks for the new standard price and all three payment options.
 - Confirm the old “Two ways to pay” and “$6,800 ×3” copy is removed.
 - Confirm “$21,000 total” is removed.
-- Confirm all three payment cards use the shared 150px centered layout.
+- Confirm all three payment cards use the shared 105px centered layout.
 - Run the complete slide test suite and production build.
