@@ -545,6 +545,7 @@ test('pricing presents the approved standard investment and three payment option
   assertInOrder(paymentOptions, [
     '>Financing Partner</div>',
     '>$21,000</div>',
+    '>~$1,500/month</div>',
     '>3-Pay</div>',
     '>$7,000',
     '×3</span>',
@@ -569,6 +570,37 @@ test('payment options use compact centered cards without a repeated total', () =
   assert.match(deck, /\.payment-option-card \{[^}]*height: 105px;[^}]*padding: 10px 16px;[^}]*display: flex;[^}]*flex-direction: column;[^}]*align-items: center;[^}]*justify-content: center;[^}]*\}/s);
   assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 3);
   assert.equal((paymentOptions.match(/margin-top: 8px/g) ?? []).length, 3);
+});
+
+test('all payment cards share neutral styling while helper notes stay out of the center flow', () => {
+  const paymentOptions = section('<!-- S10b, Payment Plans', '<!-- Video Modal -->');
+
+  assert.equal(
+    (paymentOptions.match(/class="payment-option-card">\s*<div class="payment-option-card__center">/g) ?? []).length,
+    3,
+  );
+  assert.doesNotMatch(paymentOptions, /Best value/i);
+  assert.doesNotMatch(paymentOptions, /border:\s*2px solid var\(--brand-950\)/);
+  assert.match(
+    paymentOptions,
+    /<div class="payment-option-card__note">~\$1,500\/month<\/div>/,
+  );
+  assert.match(
+    paymentOptions,
+    /<div class="payment-option-card__note">Card or wire<\/div>/,
+  );
+  assert.match(
+    deck,
+    /\.payment-option-card \{[^}]*position: relative;[^}]*background: white;[^}]*border: 2px solid var\(--al-100\);[^}]*\}/s,
+  );
+  assert.match(
+    deck,
+    /\.payment-option-card__center \{[^}]*display: inline-flex;[^}]*flex-direction: column;[^}]*align-items: center;[^}]*\}/s,
+  );
+  assert.match(
+    deck,
+    /\.payment-option-card__note \{[^}]*position: absolute;[^}]*bottom: 8px;[^}]*\}/s,
+  );
 });
 
 test('Expert AIs and internal proof move before client proof before navigation initializes', () => {
