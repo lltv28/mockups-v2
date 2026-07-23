@@ -1349,6 +1349,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    background: white;
+    border: 2px solid var(--al-100);
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+  }
+
+  .payment-option-card__center {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .payment-option-card__note {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 8px;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--al-500);
   }
 
   .hr {
@@ -3029,21 +3052,27 @@
 
       <div class="payment-options-grid rv d2">
         <!-- Financing -->
-        <div class="payment-option-card" style="background: white; border: 2px solid var(--al-100); border-radius: 14px; text-align: center; box-shadow: var(--shadow-card);">
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Financing Partner</div>
-          <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; margin-top: 8px;">$21,000</div>
+        <div class="payment-option-card">
+          <div class="payment-option-card__center">
+            <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Financing Partner</div>
+            <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; margin-top: 8px;">$21,000</div>
+          </div>
+          <div class="payment-option-card__note">~$1,500/month</div>
         </div>
         <!-- 3-Pay -->
-        <div class="payment-option-card" style="background: white; border: 2px solid var(--al-100); border-radius: 14px; text-align: center; box-shadow: var(--shadow-card);">
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">3-Pay</div>
-          <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; margin-top: 8px;">$7,000<span style="font-size: 14px; color: var(--al-500); font-weight: 400;"> ×3</span></div>
+        <div class="payment-option-card">
+          <div class="payment-option-card__center">
+            <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">3-Pay</div>
+            <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; margin-top: 8px;">$7,000<span style="font-size: 14px; color: var(--al-500); font-weight: 400;"> ×3</span></div>
+          </div>
         </div>
         <!-- Pay In Full -->
-        <div class="payment-option-card" style="background: white; border: 2px solid var(--brand-950); border-radius: 14px; text-align: center; box-shadow: var(--shadow-card); position: relative;">
-          <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--brand-950); color: white; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap;">Best value</div>
-          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Pay In Full</div>
-          <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; margin-top: 8px;">$18,000</div>
-          <div style="font-size: 11px; color: var(--al-500); margin-top: 2px;">Card or wire</div>
+        <div class="payment-option-card">
+          <div class="payment-option-card__center">
+            <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">Pay In Full</div>
+            <div style="font-family: var(--font-hero); font-size: 30px; font-weight: 700; color: var(--al-900); letter-spacing: -0.5px; margin-top: 8px;">$18,000</div>
+          </div>
+          <div class="payment-option-card__note">Card or wire</div>
         </div>
       </div>
     </div>
