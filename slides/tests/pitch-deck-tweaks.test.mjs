@@ -7,7 +7,8 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const slidesDir = resolve(here, '..');
-const deck = readFileSync(resolve(slidesDir, 'deck-july-2026.html'), 'utf8');
+const deck = readFileSync(resolve(slidesDir, 'deck.html'), 'utf8');
+const versionedDeck = readFileSync(resolve(slidesDir, 'deck-july-2026.html'), 'utf8');
 
 function section(startMarker, endMarker) {
   const start = deck.indexOf(startMarker);
@@ -49,13 +50,11 @@ function sha256(imagePath) {
   return createHash('sha256').update(readFileSync(imagePath)).digest('hex').toUpperCase();
 }
 
-test('deck.html promotes the July deck and archives the previous deck', () => {
-  const activePath = resolve(slidesDir, 'deck.html');
-  const versionedPath = resolve(slidesDir, 'deck-july-2026.html');
+test('the July deck remains available and the previous deck stays archived', () => {
   const archivedPath = resolve(slidesDir, 'deck-old-july-2026.html');
 
+  assert.match(versionedDeck, /<!DOCTYPE html>/i, 'the versioned July deck must remain readable');
   assert.ok(existsSync(archivedPath), 'the previous deck must be archived');
-  assert.equal(sha256(activePath), sha256(versionedPath), 'deck.html must match the approved July deck');
   assert.equal(
     sha256(archivedPath),
     'FD2FC9B712C9E9C356EFD6070D29FA0359480D622F82643161442BB29B493449',
@@ -507,17 +506,63 @@ test('price card balances ten deliverables with the approved DFY paid ads copy',
   assert.equal((investment.match(/<polyline points="2,6 5,9 10,3"\/>/g) ?? []).length, 10);
 });
 
-test('Expert AIs moves before client proof before navigation initializes', () => {
+test('Expert AIs and internal proof move before client proof before navigation initializes', () => {
   assert.match(deck, /id="clients-love-slide"/);
   assert.match(deck, /id="expert-ai-slide"/);
-  const reorder = deck.indexOf("deckElement.insertBefore(expertAiSlide, clientsLoveSlide)");
-  const navigation = deck.indexOf("const slides = document.querySelectorAll('.slide:not([hidden])')");
-  assert.ok(reorder >= 0 && reorder < navigation, 'intro slides must reorder before navigation captures slide order');
+  assert.match(deck, /id="internal-proof-slide"/);
+  assertInOrder(deck, [
+    'deckElement.insertBefore(expertAiSlide, clientsLoveSlide)',
+    'deckElement.insertBefore(internalProofSlide, clientsLoveSlide)',
+    "const slides = document.querySelectorAll('.slide:not([hidden])')",
+  ], 'intro slide runtime ordering');
 });
 
-test('deck contains the approved 19 visible slides in order', () => {
+test('internal proof slide contains the approved copy and ordered paths', () => {
+  const proof = section('id="internal-proof-slide"', '<!-- S5, 2 Stages Overview -->');
+  const approvedCopy = [
+    'WE RAN THIS ON OURSELVES',
+    'One extra step changes everything.',
+    'MODEL A · AD TO CALL',
+    'Ad',
+    'Booked call',
+    '35%',
+    'Shows up',
+    '20%',
+    'Closes',
+    'MODEL B · AD TO ASSESSMENT TO CALL',
+    'AI assessment',
+    '60%',
+    '33%',
+    'what we run internally',
+    'From 1,000 completed AI assessments',
+    '$612,000+',
+    'contracted revenue',
+    '34 high-ticket clients, our own business',
+    'We didn’t just build this for clients. We ran it on ourselves first, and it’s what took our own show and close rates from Model A to Model B.',
+    'Figures reflect internal Kodara data, not a guarantee of client results.',
+  ];
+  approvedCopy.forEach((copy) => assert.match(proof, new RegExp(escapeRegex(copy))));
+  assert.equal((proof.match(/<ol class="internal-proof-path[^"\n]*"/g) ?? []).length, 2);
+  assert.equal((proof.match(/<li class="internal-proof-step[^"\n]*"/g) ?? []).length, 9);
+  assertInOrder(proof, [
+    '<ol class="internal-proof-path internal-proof-path--four',
+    '<ol class="internal-proof-path internal-proof-path--five',
+  ], 'internal proof paths');
+  const paths = [...proof.matchAll(/<ol class="internal-proof-path[^>]*>([\s\S]*?)<\/ol>/g)]
+    .map((match) => match[1]);
+  assertInOrder(paths[0], ['Ad', 'Booked call', '35%', 'Shows up', '20%', 'Closes'], 'Model A sequence');
+  assertInOrder(paths[1], ['Ad', 'AI assessment', 'Booked call', '60%', 'Shows up', '33%', 'Closes'], 'Model B sequence');
+});
+
+test('internal proof slide stacks paths and uses downward arrows on narrow screens', () => {
+  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.slide--internal-proof \{[^}]*overflow-y: auto;[^}]*justify-content: flex-start;[^}]*align-items: flex-start;[^}]*\}/);
+  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.internal-proof-path \{[^}]*grid-template-columns: 1fr;[^}]*\}/);
+  assert.match(deck, /@media \(max-width: 900px\) \{[\s\S]*?\.internal-proof-step:not\(:last-child\)::after \{[^}]*content: '↓';[^}]*\}/);
+});
+
+test('deck contains the approved 20 visible slides in order', () => {
   const visibleSlideStarts = [...deck.matchAll(/<div class="slide(?: [^"]*)?"(?![^>]*\shidden)[^>]*>/g)];
-  assert.equal(visibleSlideStarts.length, 19);
+  assert.equal(visibleSlideStarts.length, 20);
   const orderedCopy = [
     'You can only sell one person at a time',
     'Meet the version of you that never stops selling',
