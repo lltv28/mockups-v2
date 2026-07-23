@@ -9,6 +9,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const slidesDir = resolve(here, '..');
 const deck = readFileSync(resolve(slidesDir, 'deck.html'), 'utf8');
 const versionedDeck = readFileSync(resolve(slidesDir, 'deck-july-2026.html'), 'utf8');
+const deckBytes = readFileSync(resolve(slidesDir, 'deck.html'));
+const versionedDeckBytes = readFileSync(resolve(slidesDir, 'deck-july-2026.html'));
 
 function section(startMarker, endMarker) {
   const start = deck.indexOf(startMarker);
@@ -85,7 +87,7 @@ test('the July deck remains available and the previous deck stays archived', () 
 });
 
 test('active and versioned July decks remain synchronized', () => {
-  assert.equal(versionedDeck, deck);
+  assert.deepEqual(versionedDeckBytes, deckBytes);
 });
 
 test('opening uses the approved AI scale message', () => {
