@@ -2,9 +2,9 @@
 
 > **For Lucas:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Make all three payment cards on slide 20 use the same neutral styling while keeping “Card or wire” pinned to the bottom of the Pay In Full card.
+**Goal:** Make all three payment cards on slide 20 use the same neutral styling while keeping the financing estimate and “Card or wire” pinned to their card bottoms.
 
-**Architecture:** Move the shared visual treatment into the existing `.payment-option-card` CSS class. Add a centered inner wrapper to every card and an absolutely positioned helper class for the Pay In Full note so the centered price group does not move.
+**Architecture:** Move the shared visual treatment into the existing `.payment-option-card` CSS class. Add a centered inner wrapper to every card and an absolutely positioned helper class for the Financing Partner and Pay In Full notes so the centered price groups do not move.
 
 **Tech Stack:** HTML, CSS, Node test runner, Vite
 
@@ -21,7 +21,7 @@
 Add this test beside the existing payment-option tests:
 
 ```js
-test('all payment cards share neutral styling while the pay-in-full note stays out of the center flow', () => {
+test('all payment cards share neutral styling while helper notes stay out of the center flow', () => {
   const paymentOptions = section('<!-- S10b, Payment Plans', '<!-- Video Modal -->');
 
   assert.equal(
@@ -30,6 +30,10 @@ test('all payment cards share neutral styling while the pay-in-full note stays o
   );
   assert.doesNotMatch(paymentOptions, /Best value/i);
   assert.doesNotMatch(paymentOptions, /border:\s*2px solid var\(--brand-950\)/);
+  assert.match(
+    paymentOptions,
+    /<div class="payment-option-card__note">~\$1,500\/month<\/div>/,
+  );
   assert.match(
     paymentOptions,
     /<div class="payment-option-card__note">Card or wire<\/div>/,
@@ -134,7 +138,13 @@ Delete the absolutely positioned `Best value` badge element.
 
 Remove the green border and every other one-off wrapper style from the Pay In Full card.
 
-**Step 4: Pin the payment-method note**
+**Step 4: Pin the financing and payment-method notes**
+
+Add this immediately after the Financing Partner center wrapper:
+
+```html
+<div class="payment-option-card__note">~$1,500/month</div>
+```
 
 Replace the existing helper text with:
 
@@ -142,7 +152,7 @@ Replace the existing helper text with:
 <div class="payment-option-card__note">Card or wire</div>
 ```
 
-Keep it outside `.payment-option-card__center`.
+Keep both notes outside their `.payment-option-card__center` wrappers.
 
 **Step 5: Synchronize the versioned deck**
 
@@ -218,8 +228,9 @@ Verify:
 1. All three cards use the same white background, gray border, and shadow.
 2. The Best Value badge is gone.
 3. Each heading and price stays centered vertically and horizontally.
-4. “Card or wire” sits near the bottom of the third card without moving `$18,000`.
-5. The cards remain equal height on desktop and stacked mobile layouts.
+4. “~$1,500/month” sits near the bottom of the first card without moving `$21,000`.
+5. “Card or wire” sits near the bottom of the third card without moving `$18,000`.
+6. The cards remain equal height on desktop and stacked mobile layouts.
 
 **Step 5: Check the final diff**
 

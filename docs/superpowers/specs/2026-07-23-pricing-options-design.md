@@ -18,7 +18,7 @@ Show three equal-width cards in this order:
 
 1. Financing Partner
    - $21,000
-   - No monthly estimate, term, or extra financing copy
+   - ~$1,500/month
 2. 3-Pay
    - 3 × $7,000
 3. Pay In Full
@@ -40,6 +40,7 @@ Show three equal-width cards in this order:
 - Keep all three cards equal in height on desktop and mobile.
 - Remove the Best Value badge.
 - Keep “Pay In Full” and “$18,000” centered as one inline content group.
+- Pin “~$1,500/month” near the bottom of the Financing Partner card so it does not affect the centered price group.
 - Pin “Card or wire” near the bottom of the card so it does not affect the centered price group.
 - Preserve the one-card-per-row mobile layout.
 
@@ -50,5 +51,6 @@ Show three equal-width cards in this order:
 - Confirm “$21,000 total” is removed.
 - Confirm all three payment cards use the shared 105px centered layout.
 - Confirm all three cards use the same neutral styling.
+- Confirm “~$1,500/month” is pinned near the bottom without shifting the centered financing price.
 - Confirm “Card or wire” is pinned near the bottom without shifting the centered price.
 - Run the complete slide test suite and production build.
