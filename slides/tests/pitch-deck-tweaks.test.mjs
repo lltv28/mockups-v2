@@ -563,7 +563,7 @@ test('internal proof slide compares aligned VSL and AI Assessment paths', () => 
     'From 1,000 completed AI assessments',
     '$612,000+',
     'contracted revenue',
-    '34 high-ticket clients, our own business',
+    '34 high-ticket clients',
     'We didn’t just build this for clients. We ran it on ourselves first, and it’s what took our own show and close rates from Model A to Model B.',
     'Figures reflect internal Kodara data, not a guarantee of client results.',
   ];
@@ -577,6 +577,18 @@ test('internal proof slide compares aligned VSL and AI Assessment paths', () => 
     .map((match) => match[1]);
   assertInOrder(paths[0], ['Ad', 'VSL', 'Booked call', '35%', 'Shows up', '20%', 'Closes'], 'VSL sequence');
   assertInOrder(paths[1], ['Ad', 'AI assessment', 'Booked call', '60%', 'Shows up', '33%', 'Closes'], 'AI Assessment sequence');
+});
+
+test('internal proof uses one pale-green card treatment and concise client proof', () => {
+  const proof = section('id="internal-proof-slide"', '<!-- S5, 2 Stages Overview -->');
+  const highlightedRowRule = cssBlock(deck, '.internal-proof-model--highlight .internal-proof-step');
+  assert.match(highlightedRowRule, /background: var\(--brand-50\);/);
+  assert.match(highlightedRowRule, /border-color: var\(--brand-200\);/);
+  assert.match(highlightedRowRule, /color: var\(--brand-950\);/);
+  assert.doesNotMatch(proof, /internal-proof-step--key/);
+  assert.doesNotMatch(deck, /\.internal-proof-step--key \{/);
+  assert.match(proof, />34 high-ticket clients</);
+  assert.doesNotMatch(proof, /our own business/);
 });
 
 test('internal proof desktop composition stays compact at deck zoom', () => {
