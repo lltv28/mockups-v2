@@ -94,8 +94,10 @@ test('client proof presents the approved AI whitelabel advantage', () => {
   assert.match(deck, /Your Own AI Whitelabel App/);
   assert.match(
     deck,
-    /Give your audience a first-of-its-kind AI experience<br>no one else in your industry offers<br>and create a category of your own\./,
+    /Offer an industry-first AI<br>your competitors do not offer<br>and create a category of your own\./,
   );
+  assert.doesNotMatch(deck, /Give your audience an industry-first AI/);
+  assert.doesNotMatch(deck, /Give your audience a first-of-its-kind AI experience/);
   assert.doesNotMatch(deck, /Innovative and hard to copy/);
 });
 

@@ -22,7 +22,7 @@ test('client proof presents the approved AI whitelabel advantage', () => {
   assert.match(deck, /Your Own AI Whitelabel App/);
   assert.match(
     deck,
-    /Give your audience a first-of-its-kind AI experience<br>no one else in your industry offers<br>and create a category of your own\./,
+    /Offer an industry-first AI<br>your competitors do not offer<br>and create a category of your own\./,
   );
   assert.doesNotMatch(deck, /Innovative and hard to copy/);
 });
@@ -50,7 +50,7 @@ Use this exact markup in card 3 of both files:
 
 ```html
 <div class="love-reason__title">Your Own AI Whitelabel App</div>
-<div class="love-reason__body">Give your audience a first-of-its-kind AI experience<br>no one else in your industry offers<br>and create a category of your own.</div>
+<div class="love-reason__body">Offer an industry-first AI<br>your competitors do not offer<br>and create a category of your own.</div>
 ```
 
 - [ ] **Step 2: Run the full slide test suite**
