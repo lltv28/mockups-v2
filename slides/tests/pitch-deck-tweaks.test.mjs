@@ -683,7 +683,7 @@ test('deck contains the approved 20 visible slides in order', () => {
     'Build and launch',
     "Your life's work finally working without you",
     'Your entire AI system, built and launched for you',
-    'Three ways to pay',
+    'Two ways to pay',
   ];
   let cursor = -1;
   orderedCopy.forEach((copy) => {

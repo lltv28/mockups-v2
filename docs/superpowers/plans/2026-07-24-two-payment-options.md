@@ -81,7 +81,21 @@ assert.equal(
 );
 ```
 
-- [ ] **Step 6: Run the focused test and confirm failure**
+- [ ] **Step 6: Update the visible-slide order fixture**
+
+In the `orderedCopy` array, replace:
+
+```js
+'Three ways to pay',
+```
+
+With:
+
+```js
+'Two ways to pay',
+```
+
+- [ ] **Step 7: Run the focused test and confirm failure**
 
 Run:
 
@@ -91,7 +105,7 @@ node --test slides/tests/pitch-deck-tweaks.test.mjs
 
 Expected: FAIL because the HTML still says “Three ways to pay,” includes the 3-Pay card, and uses a three-column grid.
 
-- [ ] **Step 7: Commit the failing test**
+- [ ] **Step 8: Commit the failing test**
 
 ```powershell
 git add slides/tests/pitch-deck-tweaks.test.mjs
