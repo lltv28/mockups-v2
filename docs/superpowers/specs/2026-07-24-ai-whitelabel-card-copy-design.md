@@ -12,8 +12,8 @@ Title:
 
 Description:
 
-> Give your audience a first-of-its-kind AI experience<br>
-> no one else in your industry offers<br>
+> Offer an industry-first AI<br>
+> your competitors do not offer<br>
 > and create a category of your own.
 
 ## Layout
