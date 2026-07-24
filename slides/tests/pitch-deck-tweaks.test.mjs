@@ -90,6 +90,15 @@ test('active and versioned July decks remain synchronized', () => {
   assert.deepEqual(versionedDeckBytes, deckBytes);
 });
 
+test('client proof presents the approved AI whitelabel advantage', () => {
+  assert.match(deck, /Your Own AI Whitelabel App/);
+  assert.match(
+    deck,
+    /Give your audience a first-of-its-kind AI experience<br>no one else in your industry offers<br>and create a category of your own\./,
+  );
+  assert.doesNotMatch(deck, /Innovative and hard to copy/);
+});
+
 test('opening uses the approved AI scale message', () => {
   const opening = section('<!-- INTRO 1, Bottleneck (4-combo intro from sales manager) -->', '<!-- INTRO 1.1,');
   assert.match(opening, /You can only sell one person at a time\./);
