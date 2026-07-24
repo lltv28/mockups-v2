@@ -517,7 +517,6 @@ test('investment deliverables match the approved Build and Launch offer', () => 
     'Done-For-You Funnel', 'Paid Ads Setup',
   ].forEach((copy) => assert.match(deck, new RegExp(copy, 'i')));
   assert.match(deck, /Requires at least \$5,000 in ad spend/);
-  assert.match(deck, /\$7,000<span style="font-size: 14px; color: var\(--al-500\); font-weight: 400;"> ×3<\/span>/);
 });
 
 test('both launch proof rows match the flowchart width', () => {
@@ -534,32 +533,29 @@ test('price card balances ten deliverables with the approved DFY paid ads copy',
   assert.equal((investment.match(/<polyline points="2,6 5,9 10,3"\/>/g) ?? []).length, 10);
 });
 
-test('pricing presents the approved standard investment and three payment options', () => {
+test('pricing presents the approved standard investment and two payment options', () => {
   const investment = section('<!-- S10a, The Investment', '<!-- S10b, Payment Plans');
   const paymentOptions = section('<!-- S10b, Payment Plans', '<!-- Video Modal -->');
 
   assert.match(investment, />Standard Investment<\/div>\s*<div[^>]*>\$21,000<\/div>/);
   assert.match(investment, />for your six-month build and launch program<\/div>/);
 
-  assert.match(paymentOptions, />Three ways to pay\.<\/h2>/);
+  assert.match(paymentOptions, />Two ways to pay\.<\/h2>/);
   assertInOrder(paymentOptions, [
     '>Financing Partner</div>',
     '>$21,000</div>',
     '>~$1,500/month</div>',
-    '>3-Pay</div>',
-    '>$7,000',
-    '×3</span>',
     '>Pay In Full</div>',
     '>$18,000</div>',
     '>Card or wire</div>',
   ], 'payment option order');
-  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 3);
-  assert.doesNotMatch(paymentOptions, /Two ways to pay|\$6,800|\$20,400/);
+  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 2);
+  assert.doesNotMatch(paymentOptions, /Three ways to pay|3-Pay|\$7,000|×3|\$6,800|\$20,400/);
 });
 
 test('payment options stay equal on desktop and stack on mobile', () => {
-  assert.match(deck, /\.payment-options-grid \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);[^}]*max-width: 720px;[^}]*\}/s);
-  assert.equal((deck.match(/class="payment-option-card"/g) ?? []).length, 3);
+  assert.match(deck, /\.payment-options-grid \{[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);[^}]*max-width: 500px;[^}]*\}/s);
+  assert.equal((deck.match(/class="payment-option-card"/g) ?? []).length, 2);
   assert.match(deck, /@media \(max-width: 640px\) \{[^}]*\.payment-options-grid \{[^}]*grid-template-columns: 1fr;[^}]*max-width: 300px;[^}]*\}/s);
 });
 
@@ -568,8 +564,8 @@ test('payment options use compact centered cards without a repeated total', () =
 
   assert.doesNotMatch(paymentOptions, /\$21,000 total/);
   assert.match(deck, /\.payment-option-card \{[^}]*height: 105px;[^}]*padding: 10px 16px;[^}]*display: flex;[^}]*flex-direction: column;[^}]*align-items: center;[^}]*justify-content: center;[^}]*\}/s);
-  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 3);
-  assert.equal((paymentOptions.match(/margin-top: 8px/g) ?? []).length, 3);
+  assert.equal((paymentOptions.match(/class="payment-option-card"/g) ?? []).length, 2);
+  assert.equal((paymentOptions.match(/margin-top: 8px/g) ?? []).length, 2);
 });
 
 test('all payment cards share neutral styling while helper notes stay out of the center flow', () => {
@@ -577,7 +573,7 @@ test('all payment cards share neutral styling while helper notes stay out of the
 
   assert.equal(
     (paymentOptions.match(/class="payment-option-card">\s*<div class="payment-option-card__center">/g) ?? []).length,
-    3,
+    2,
   );
   assert.doesNotMatch(paymentOptions, /Best value/i);
   assert.doesNotMatch(paymentOptions, /border:\s*2px solid var\(--brand-950\)/);
