@@ -2172,6 +2172,21 @@
     transform: scale(1.12);
     transform-origin: center;
   }
+  #sales-department-slide .sales-demo-layout > .flex-col,
+  #sales-department-slide .sales-demo-role-strip {
+    position: relative;
+    z-index: 3;
+  }
+  #sales-department-slide .sales-demo-media {
+    position: relative;
+    z-index: 1;
+  }
+  #sales-department-slide .sales-demo-shell--roles iframe {
+    z-index: 0;
+    pointer-events: none;
+    transform: scale(1.3);
+    transform-origin: center;
+  }
   .sales-demo-media { width: 100%; display: flex; justify-content: center; }
   .sales-demo-caption {
     max-width: 960px;
@@ -2281,12 +2296,12 @@
     border: 0;
   }
   .triager-sales-video--triager iframe {
-    left: -58%;
-    width: 216%;
+    left: 0;
+    width: 100%;
   }
   .triager-sales-video--salesperson iframe {
-    left: -11%;
-    width: 122%;
+    left: 0;
+    width: 100%;
   }
   .guarantee-grid {
     display: grid;
@@ -2651,7 +2666,7 @@
 
   <!-- INTRO 1.1, Meet The Version (never stops selling + offer ladder) -->
   <!-- ═══════════════════════════════════════ -->
-  <div class="slide" role="group" aria-roledescription="slide" aria-labelledby="offer-ladder-title">
+  <div class="slide" id="sales-department-slide" role="group" aria-roledescription="slide" aria-labelledby="offer-ladder-title">
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
@@ -2946,25 +2961,25 @@
 
     <div class="content--wide split-layout">
       <div class="flex-col gap-24">
-        <div class="rv d1"><span class="label-tag">Phase 1 · Build</span></div>
-        <div class="rv d2"><h2 class="h-lg">Lucas maps the system with you.</h2></div>
+        <div class="rv d1"><span class="label-tag">Phase 1</span></div>
+        <div class="rv d2"><h2 class="h-lg">Lucas Onboarding Call</h2></div>
         <div class="rv d3">
           <p class="body-lg">
-            In a private session, Lucas turns your offer, audience and expertise into the build plan.
+            A personal strategy session with our Founder &amp; Head Of Marketing Lucas to map out your entire launch. You walk away with a clear plan to make money from day one.
           </p>
         </div>
         <div class="rv d4 flex-col gap-12">
           <div class="check-row">
             <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p>Map the assessment, main offer and downsell path.</p>
+            <p><strong>Marketing Plan</strong>: the exact strategy to launch and sell your AI</p>
           </div>
           <div class="check-row">
             <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p>Decide what the Brain needs to learn to represent you accurately.</p>
+            <p><strong>AI Assessment + AI Pocket Coach</strong>: the two AI products we build for your tier ladder</p>
           </div>
           <div class="check-row">
             <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p>Set the rules for revenue, marketing and reinvestment.</p>
+            <p><strong>Pricing Roadmap</strong>: your low, mid, and high-ticket offer structure</p>
           </div>
         </div>
       </div>
@@ -2973,7 +2988,7 @@
           <img src="lucas-photo.jpg" alt="Lucas Lee-Tyson" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <p style="text-align: center; font-size: 13px; color: var(--al-600); font-weight: 600; line-height: 1.5;">
-          Helped clients market and sell more than $100M in high-ticket offers.
+          Helped Clients Market &amp; Sell $100M+ In High Ticket Offers
         </p>
       </div>
     </div>
@@ -2992,7 +3007,7 @@
         <div class="brand-card" style="padding: 14px;">
           <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-bottom: 10px;">Triager demo</div>
           <div class="triager-sales-video triager-sales-video--triager">
-            <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/10a053df290fbc99ca3eb741fcfcb419/iframe?muted=true&amp;preload=true" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
+            <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/10a053df290fbc99ca3eb741fcfcb419/iframe?muted=true&amp;preload=true&amp;letterboxColor=transparent" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
           </div>
           <div class="h-md" style="font-size: 18px; margin-top: 12px;">Quiz → personalized plan → &lt;$20 assessment</div>
           <p class="body" style="font-size: 12px; margin-top: 6px; color: var(--al-600);">The assessment gives buyers immediate value and shows what they need, how urgent it is and whether they are ready to buy.</p>
@@ -3000,7 +3015,7 @@
         <div class="brand-card" style="padding: 14px;">
           <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-bottom: 10px;">Salesperson demo</div>
           <div class="triager-sales-video triager-sales-video--salesperson">
-            <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/dda7d6b54baa18b5487b73233648182b/iframe?preload=true" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
+            <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/dda7d6b54baa18b5487b73233648182b/iframe?preload=true&amp;letterboxColor=transparent" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
           </div>
           <div class="h-md" style="font-size: 18px; margin-top: 12px;">Main offer → best-fit downsell</div>
           <p class="body" style="font-size: 12px; margin-top: 6px; color: var(--al-600);">Qualified buyers book a call. Anyone who is not ready gets the AI Pocket Coach or another offer that fits.</p>
@@ -3139,7 +3154,7 @@
         <div class="triager-example-column">
           <div class="triager-example" role="listitem">
             <div class="triager-example__niche">Peptide clinic</div>
-            <div class="triager-example__assessment">Personalized peptide stack recommendation</div>
+            <div class="triager-example__assessment">Peptide stack</div>
           </div>
           <div class="triager-example" role="listitem">
             <div class="triager-example__niche">Real estate</div>
@@ -3433,7 +3448,7 @@
         </div>
       </div>
 
-      <div class="guarantee-grid__terms rv d5">Requires active participation and at least $5,000 in ad spend. Final terms depend on the program agreement.</div>
+      <div class="guarantee-grid__terms rv d5">Final terms depend on the program agreement.</div>
     </div>
   </div>
 
