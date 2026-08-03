@@ -7,9 +7,9 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const slidesDir = resolve(here, '..');
-const deck = readFileSync(resolve(slidesDir, 'deck.html'), 'utf8');
+const deck = readFileSync(resolve(slidesDir, 'deck-old-8-2-2026.html'), 'utf8');
 const versionedDeck = readFileSync(resolve(slidesDir, 'deck-july-2026.html'), 'utf8');
-const deckBytes = readFileSync(resolve(slidesDir, 'deck.html'));
+const deckBytes = readFileSync(resolve(slidesDir, 'deck-old-8-2-2026.html'));
 const versionedDeckBytes = readFileSync(resolve(slidesDir, 'deck-july-2026.html'));
 
 function section(startMarker, endMarker) {
@@ -86,7 +86,7 @@ test('the July deck remains available and the previous deck stays archived', () 
   );
 });
 
-test('active and versioned July decks remain synchronized', () => {
+test('archived 8-2 deck and versioned July deck remain synchronized', () => {
   assert.deepEqual(versionedDeckBytes, deckBytes);
 });
 
