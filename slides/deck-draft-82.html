@@ -2140,6 +2140,16 @@
     position: relative;
     max-width: 860px;
   }
+  #opening-demo {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  #opening-demo .sales-demo-shell--flywheel { max-width: 620px; }
+  #opening-demo .sales-demo-shell--flywheel iframe {
+    transform: scale(1.35);
+    transform-origin: center;
+  }
   .sales-demo-shell--live iframe:not([src]) { display: none; }
   .sales-demo-shell--live {
     overflow: visible;
@@ -2283,7 +2293,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
     width: 100%;
-    max-width: 900px;
+    max-width: 520px;
     margin: 0 auto;
   }
   .guarantee-grid__metric,
@@ -2357,9 +2367,9 @@
   .triager-example-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 28px;
+    gap: 0 34px;
     width: 100%;
-    max-width: 920px;
+    max-width: 1100px;
     margin: 0 auto;
   }
   .triager-example-column {
@@ -2367,10 +2377,10 @@
   }
   .triager-example {
     display: grid;
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: 12px;
-    min-height: 43px;
-    padding: 8px 0;
+    grid-template-columns: 134px minmax(0, 1fr);
+    gap: 14px;
+    min-height: 52px;
+    padding: 10px 0;
     border-bottom: 1px solid var(--al-100);
     align-items: center;
     text-align: left;
@@ -2380,7 +2390,7 @@
   }
   .triager-example__niche {
     color: var(--brand-950);
-    font-size: 9px;
+    font-size: 10.8px;
     font-weight: 800;
     letter-spacing: 0.08em;
     line-height: 1.25;
@@ -2388,7 +2398,7 @@
   }
   .triager-example__assessment {
     color: var(--al-900);
-    font-size: 12.5px;
+    font-size: 15px;
     font-weight: 600;
     line-height: 1.3;
   }
@@ -2441,6 +2451,10 @@
     line-height: 1.25;
     text-align: center;
   }
+  #real-problem-slide > .content--wide { gap: 28px; }
+  #real-problem-slide > .content--wide > .flex-col { gap: 14px; }
+  #organic-slide .sales-demo-layout,
+  #paid-slide .sales-demo-layout { transform: translateY(28px); }
   @media (max-width: 900px) {
     .sales-demo-build-grid { grid-template-columns: 1fr; max-width: 650px; }
     .sales-demo-role-strip { grid-template-columns: 1fr; }
@@ -2494,15 +2508,7 @@
         </div>
         <div class="rv d4" style="font-size: 13px; font-weight: 700; color: var(--brand-950);">They never complain. They never ask for a raise. They never take a break.</div>
       </div>
-      <div class="rv d3 ai-brain-visual" aria-label="AI Brain coordinating six AI employees">
-        <div class="ai-brain-core"><strong>AI Brain</strong><span>Trained on you</span></div>
-        <div class="ai-brain-worker ai-brain-worker--1"><strong>Creates</strong><span>Sales content</span></div>
-        <div class="ai-brain-worker ai-brain-worker--2"><strong>Educates</strong><span>Answers questions</span></div>
-        <div class="ai-brain-worker ai-brain-worker--3"><strong>Downsells</strong><span>Matches offers</span></div>
-        <div class="ai-brain-worker ai-brain-worker--4"><strong>Optimizes</strong><span>Learns from results</span></div>
-        <div class="ai-brain-worker ai-brain-worker--5"><strong>Follows up</strong><span>Keeps leads moving</span></div>
-        <div class="ai-brain-worker ai-brain-worker--6"><strong>Qualifies</strong><span>Finds buyer intent</span></div>
-      </div>
+      <div class="rv d3" id="opening-demo" aria-label="Self-funding sales flywheel demo"></div>
     </div>
   </div>
 
@@ -2910,7 +2916,6 @@
           <p class="body" style="font-size: 15px; line-height: 22px;">Organic content and paid ads feed the flywheel while we improve it each week.</p>
         </div>
       </div>
-      <div class="program-timeline-bar rv d6">We build for four weeks, launch by week six and manage growth for six months.</div>
     </div>
   </div>
 
@@ -3394,12 +3399,6 @@
         </div>
       </div>
 
-      <div class="program-timeline-bar rv d4">AI Brain and Avatar, Triager and Salesperson, plus organic and paid marketing.</div>
-
-      <div class="rv d5" style="max-width: 980px; margin: 0 auto; width: 100%; background: var(--brand-950); color: white; border-radius: 16px; padding: 18px 26px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: center; gap: 14px; text-align: center;">
-        <span style="width: 30px; height: 30px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex: 0 0 auto;">✓</span>
-        <span style="font-size: 17px; font-weight: 700; line-height: 1.3;">We build for four weeks, launch by week six and manage your growth for six months.</span>
-      </div>
     </div>
   </div>
 
@@ -3653,6 +3652,7 @@
   function installSalesDemos() {
     const rolesSlide = document.querySelector('[aria-labelledby="offer-ladder-title"]');
     const approvedLogoSource = clientsLoveSlide.querySelector('.client-logo-strip__row')?.cloneNode(true);
+    document.getElementById('opening-demo').innerHTML = salesDemoLive('self-funding-flywheel', 'sales-demo-shell--flywheel', 'Self-funding sales flywheel');
     rolesSlide.querySelector('.content--wide').innerHTML = `
       <div class="sales-demo-layout">
         <div class="flex-col gap-10 text-center">
