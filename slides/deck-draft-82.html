@@ -2028,7 +2028,8 @@
   .ad-loop-demo iframe.is-loaded { opacity: 1; }
   .ad-loop-demo iframe:not([src]) { display: none; }
   .slide--infinite-profit { padding: 0; background: var(--white); }
-  .infinite-profit-final { width: 100%; height: 100%; display: block; object-fit: contain; }
+  .slide > .infinite-profit-demo { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; background: var(--white); }
+  .infinite-profit-demo iframe { width: 100%; height: 100%; display: block; border: 0; background: var(--white); pointer-events: none; }
   .launch-flow-layout { justify-content: center; gap: 8px; }
   .launch-flow-layout .h-lg { font-size: clamp(26px, 3vw, 38px); }
   .launch-proof-media { position: relative; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100); border-radius: 14px; box-shadow: var(--shadow-card); }
@@ -3413,11 +3414,12 @@
 
   <!-- Phase 3, Infinite Profit Marketing Final State -->
   <div class="slide slide--infinite-profit" id="infinite-profit-slide">
-    <img
-      class="infinite-profit-final"
-      src="infinite-profit-final.png"
-      alt="Infinite Profit Marketing example showing 1,000 clicks, 100 AI assessment buyers, one high-ticket client, 40 downsells, 5,000 dollars in ad cost, and 31,000 dollars in revenue."
-    >
+    <div class="infinite-profit-demo">
+      <iframe
+        src="infinite-profit-demo/index.html"
+        title="Infinite Profit Marketing example showing 1,000 clicks, 100 AI assessment buyers, one high-ticket client, 40 downsells, 5,000 dollars in ad cost, and 31,000 dollars in revenue"
+      ></iframe>
+    </div>
   </div>
 
 

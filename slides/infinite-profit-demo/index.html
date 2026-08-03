@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infinite Profit Marketing — The Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Base */
+    --white: #FFFFFF;
+
+    /* Alpha Light (rgba 26,26,26) */
+    --al-25: rgba(26,26,26,0.04);
+    --al-50: rgba(26,26,26,0.06);
+    --al-100: rgba(26,26,26,0.09);
+    --al-200: rgba(26,26,26,0.20);
+    --al-300: rgba(26,26,26,0.28);
+    --al-400: rgba(26,26,26,0.36);
+    --al-500: rgba(26,26,26,0.48);
+    --al-600: rgba(26,26,26,0.60);
+    --al-900: rgba(26,26,26,0.80);
+
+    /* Alpha Dark (rgba 255,255,255) */
+    --ad-300: rgba(255,255,255,0.28);
+    --ad-600: rgba(255,255,255,0.60);
+    --ad-800: rgba(255,255,255,0.75);
+    --ad-900: rgba(255,255,255,0.80);
+
+    /* Brand (rgba 16,104,68) */
+    --brand-50: rgba(16,104,68,0.06);
+    --brand-100: rgba(16,104,68,0.08);
+    --brand-200: rgba(16,104,68,0.12);
+    --brand-300: rgba(16,104,68,0.18);
+    --brand-600: rgba(16,104,68,0.55);
+    --brand-950: rgba(16,104,68,0.92);
+
+    /* Neutrals */
+    --n50: #FAFAFA;
+    --n200: #E5E5E5;
+    --n300: #D4D4D4;
+    --n500: #737373;
+    --n700: #404040;
+
+    /* Shadows */
+    --shadow-card: 0px 22px 6px rgba(0,0,0,0), 0px 14px 6px rgba(0,0,0,0), 0px 8px 5px rgba(0,0,0,0.01), 0px 4px 4px rgba(0,0,0,0.02), 0px 1px 2px rgba(0,0,0,0.02);
+    --shadow-modal: 0px 67px 19px rgba(0,0,0,0), 0px 43px 17px rgba(0,0,0,0.01), 0px 24px 15px rgba(0,0,0,0.02), 0px 11px 11px rgba(0,0,0,0.03), 0px 3px 6px rgba(0,0,0,0.04);
+
+    /* Font */
+    --font: 'Instrument Sans', sans-serif;
+    --font-hero: 'Instrument Serif', serif;
+    --fvs: 'wdth' 100;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--white);
+    font-family: var(--font);
+    font-variation-settings: var(--fvs);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #stage {
+    width: 1920px; height: 1080px;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(var(--fit, 1));
+    transform-origin: center center;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--white);
+  }
+
+  /* ── Receipt card ── */
+  .receipt-wrap {
+    position: relative;
+  }
+
+  .receipt {
+    position: relative;
+    width: 1440px;
+    height: 810px;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--white);
+    box-shadow: var(--shadow-modal);
+    border: 1px solid var(--al-100);
+    border-radius: 20px;
+    padding: 48px 64px;
+  }
+
+  .r-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .r-label {
+    font-size: 31.2px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--al-500);
+  }
+
+  .badge {
+    font-size: 26px;
+    font-weight: 500;
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: var(--brand-100);
+    color: var(--brand-950);
+  }
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 49.4px;
+    padding: 9px 0;
+    color: var(--al-900);
+  }
+
+  .line span { font-weight: 400; }
+  .line b { font-weight: 600; }
+
+  .line.cost b {
+    color: var(--n700);
+  }
+
+  .rule {
+    border-top: 2px solid var(--al-900);
+    margin: 10px 0 3px;
+  }
+
+  .line.total {
+    padding-top: 8px;
+    align-items: center;
+  }
+  .line.total span {
+    font-size: 41.6px;
+    font-weight: 500;
+    color: var(--al-900);
+  }
+  .line.total b {
+    font-family: var(--font-hero);
+    font-size: 98.8px;
+    font-weight: 400;
+    color: var(--brand-950);
+  }
+
+  .perclick {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    border-radius: 0;
+    font-weight: 600;
+  }
+  .chip.small {
+    background: transparent;
+    color: var(--n700);
+    font-size: 36.4px;
+    border: 0;
+  }
+  .chip.big {
+    background: transparent;
+    color: var(--brand-950);
+    font-size: 46.8px;
+  }
+  .arrow {
+    color: var(--al-500);
+    font-size: 39px;
+  }
+
+  .disclaimer {
+    margin-top: 24px;
+    font-size: 18px;
+    line-height: 1.4;
+    text-align: center;
+    color: var(--al-500);
+  }
+
+  /* ── Closing ── */
+  .closing {
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .closing h1 {
+    font-family: var(--font-hero);
+    font-weight: 400;
+    font-size: 150px;
+    color: var(--al-900);
+    line-height: 1.05;
+  }
+  .closing p {
+    font-size: 34px;
+    color: var(--al-500);
+  }
+
+  /* ── Beat visibility ── */
+  [data-beat] { opacity: 0; pointer-events: none; }
+  [data-beat].shown { opacity: 1; }
+  [data-beat].landing { animation: beatIn 380ms cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+  @keyframes beatIn {
+    from { opacity: 0; transform: scale(1.03) translateY(-4px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .closing.landing {
+    animation: closingIn 600ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  }
+  @keyframes closingIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  body.closing-active .receipt {
+    opacity: 0;
+    transform: scale(0.96);
+    transition: 500ms;
+  }
+  body.debug-all [data-beat] { visibility: visible !important; opacity: 1 !important; }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <div class="receipt-wrap">
+      <div class="receipt">
+        <div class="r-head">
+          <div class="r-label">THE MATH</div>
+        </div>
+        <div class="line" data-beat="1"><span>Clicks</span><b>1,000</b></div>
+        <div class="line" data-beat="2"><span>100 AI assessment buyers × $10</span>
+            <b data-count-to="1000" data-prefix="$">$1,000</b></div>
+        <div class="line" data-beat="3"><span>1 high-ticket client × $20,000</span>
+            <b data-count-to="20000" data-prefix="$">$20,000</b></div>
+        <div class="line" data-beat="4"><span>40 downsells × ~$250</span>
+            <b data-count-to="10000" data-prefix="$">$10,000</b></div>
+        <div class="line cost" data-beat="5"><span>Ad cost</span><b>−$5,000</b></div>
+        <div class="rule" data-beat="6"></div>
+        <div class="line total" data-beat="6"><span>Revenue</span>
+            <b data-count-to="31000" data-prefix="$">$31,000</b></div>
+        <div class="perclick" data-beat="7">
+          <span class="chip small">$5,000 in</span>
+          <span class="arrow">=</span>
+          <span class="chip big">$31,000 out</span>
+        </div>
+        <p class="disclaimer" data-beat="7">Figures shown reflect averages from our own business and are not a promise or guarantee of results.</p>
+      </div>
+    </div>
+    <div class="closing" data-beat="8">
+      <h1>Infinite Profit Marketing</h1>
+      <p>marketing that never came out of pocket</p>
+    </div>
+  </div>
+<script>
+  function fit() {
+    const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    document.getElementById('stage').style.setProperty('--fit', s);
+  }
+  addEventListener('resize', fit); fit();
+
+  const MAX_BEAT = 8;
+  const state = { beat: 0 };
+
+  function applyBeat(n, { animate }) {
+    state.beat = n;
+    document.body.dataset.currentBeat = n;
+    document.querySelectorAll('[data-beat]').forEach(el => {
+      const b = +el.dataset.beat;
+      el.classList.toggle('shown', b <= n);
+      el.classList.toggle('landing', animate && b === n);
+    });
+    document.body.classList.toggle('closing-active', n >= 8);
+    if (animate) runCounters(n); else settleCounters(n);
+  }
+
+  let running = [];
+  function runCounters(beat) {
+    document.querySelectorAll(`[data-beat="${beat}"] [data-count-to], [data-beat="${beat}"][data-count-to]`)
+      .forEach(el => {
+        const to = +el.dataset.countTo, pre = el.dataset.prefix || '';
+        const dur = 700;
+        let t0 = null;
+        const id = { el, to, pre, raf: 0 };
+        const tick = now => {
+          if (t0 === null) t0 = now;
+          const p = Math.max(0, Math.min(1, (now - t0) / dur)), e = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + Math.round(to * e).toLocaleString('en-US');
+          if (p < 1) id.raf = requestAnimationFrame(tick);
+        };
+        id.raf = requestAnimationFrame(tick);
+        running.push(id);
+      });
+  }
+  function finishAnimations() {
+    running.forEach(({ el, to, pre, raf }) => {
+      cancelAnimationFrame(raf);
+      el.textContent = pre + to.toLocaleString('en-US');
+    });
+    running = [];
+    document.querySelectorAll('.landing').forEach(el => el.classList.remove('landing'));
+  }
+  function settleCounters(n) {
+    document.querySelectorAll('[data-count-to]').forEach(el => {
+      el.textContent = (el.dataset.prefix || '') + (+el.dataset.countTo).toLocaleString('en-US');
+    });
+  }
+
+  applyBeat(7, { animate: false });
+</script>
+</body>
+</html>
