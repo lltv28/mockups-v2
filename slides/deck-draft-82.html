@@ -2019,6 +2019,16 @@
   @media (prefers-reduced-motion: reduce) { .love-track { animation: none; } }
 
   /* ── Launch flow components ── */
+  .slide--ad-loop { padding: 0; background: var(--white); }
+  .slide > .ad-loop-demo { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; background: var(--white); }
+  .ad-loop-demo__poster,
+  .ad-loop-demo iframe { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; }
+  .ad-loop-demo__poster { object-fit: contain; }
+  .ad-loop-demo iframe { background: transparent; opacity: 0; transition: opacity 160ms ease-out; }
+  .ad-loop-demo iframe.is-loaded { opacity: 1; }
+  .ad-loop-demo iframe:not([src]) { display: none; }
+  .slide--infinite-profit { padding: 0; background: var(--white); }
+  .infinite-profit-final { width: 100%; height: 100%; display: block; object-fit: contain; }
   .launch-flow-layout { justify-content: center; gap: 8px; }
   .launch-flow-layout .h-lg { font-size: clamp(26px, 3vw, 38px); }
   .launch-proof-media { position: relative; overflow: hidden; background: var(--al-25); border: 1px solid var(--al-100); border-radius: 14px; box-shadow: var(--shadow-card); }
@@ -2244,7 +2254,7 @@
     text-transform: uppercase;
   }
   .sales-demo-build-panel .sales-demo-shell { border-radius: 0; box-shadow: none; }
-  .sales-demo-shell--avatar video { object-fit: contain; background: #050505; }
+  .sales-demo-shell--avatar iframe { background: #050505; }
   .sales-demo-client-row {
     display: flex;
     align-items: center;
@@ -3386,6 +3396,30 @@
     </div>
   </div>
 
+  <!-- Ad Reinvestment Loop Wall, repeated at two narrative beats -->
+  <div class="slide slide--ad-loop" id="ad-loop-reinvestment-slide">
+    <div class="ad-loop-demo">
+      <img class="ad-loop-demo__poster" src="ad-loop-wall/poster.png" alt="" aria-hidden="true">
+      <iframe data-live-demo-src="ad-loop-wall/index.html" title="Ad reinvestment loop expanding from one AI assessment funnel to five" onload="if (this.hasAttribute('src')) this.classList.add('is-loaded')"></iframe>
+    </div>
+  </div>
+
+  <div class="slide slide--ad-loop" id="ad-loop-sales-slide">
+    <div class="ad-loop-demo">
+      <img class="ad-loop-demo__poster" src="ad-loop-wall/poster.png" alt="" aria-hidden="true">
+      <iframe data-live-demo-src="ad-loop-wall/index.html" title="Ad reinvestment loop expanding from one AI assessment funnel to five" onload="if (this.hasAttribute('src')) this.classList.add('is-loaded')"></iframe>
+    </div>
+  </div>
+
+  <!-- Phase 3, Infinite Profit Marketing Final State -->
+  <div class="slide slide--infinite-profit" id="infinite-profit-slide">
+    <img
+      class="infinite-profit-final"
+      src="infinite-profit-final.png"
+      alt="Infinite Profit Marketing example showing 1,000 clicks, 100 AI assessment buyers, one high-ticket client, 40 downsells, 5,000 dollars in ad cost, and 31,000 dollars in revenue."
+    >
+  </div>
+
 
 
   <!-- ═══════════════════════════════════════ -->
@@ -3641,7 +3675,7 @@
 <div class="progress" id="progress"></div>
 
 <!-- Counter -->
-<div class="counter" id="counter"><span class="cur">01</span> / 20</div>
+<div class="counter" id="counter"><span class="cur">01</span> / 24</div>
 
 <script>
   const deckElement = document.getElementById('deck');
@@ -3657,6 +3691,8 @@
   const phase3CoverSlide = document.getElementById('phase-3-cover-slide');
   const organicSlide = document.getElementById('organic-slide');
   const paidSlide = document.getElementById('paid-slide');
+  const adLoopReinvestmentSlide = document.getElementById('ad-loop-reinvestment-slide');
+  const adLoopSalesSlide = document.getElementById('ad-loop-sales-slide');
   const ownershipSlide = document.getElementById('ownership-slide');
   const offerRecapSlide = document.getElementById('offer-recap-slide');
 
@@ -3712,9 +3748,12 @@
           <section class="sales-demo-build-panel" aria-label="AI Avatar demo">
             <div class="sales-demo-build-panel__label">04 · AI Avatar</div>
             <div class="sales-demo-shell sales-demo-shell--avatar">
-              <video autoplay muted loop playsinline preload="auto" aria-label="AI Avatar client content example">
-                <source src="sales-demos/04-ai-avatar.mp4" type="video/mp4">
-              </video>
+              <iframe
+                data-live-demo-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cd8203fbb01b4827b7216f6ccdaa0a68/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcd8203fbb01b4827b7216f6ccdaa0a68%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;startTime=9s"
+                title="AI Avatar client content example"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowfullscreen="true"
+              ></iframe>
             </div>
             <div class="sales-demo-client-row">
               <img src="clients/joe-kessi.jpg" alt="Joe Kessi">
@@ -3777,6 +3816,8 @@
   deckElement.insertBefore(triagerExamplesSlide, triagerCloserSlide);
   deckElement.insertBefore(phase3CoverSlide, organicSlide);
   deckElement.insertBefore(ownershipSlide, offerRecapSlide);
+  deckElement.insertBefore(adLoopReinvestmentSlide, internalProofSlide.nextElementSibling);
+  deckElement.insertBefore(adLoopSalesSlide, triagerCloserSlide);
 
   const slides = document.querySelectorAll('.slide:not([hidden])');
   const panel = document.getElementById('panel');
@@ -3841,6 +3882,10 @@
     if (clonedSlide.id) clonedSlide.removeAttribute('id');
     clonedSlide.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
     clonedSlide.querySelectorAll('iframe, video').forEach(el => {
+      if (el.closest('.ad-loop-demo')) {
+        el.remove();
+        return;
+      }
       const placeholder = document.createElement('div');
       placeholder.style.width = '100%';
       placeholder.style.height = '100%';
@@ -3934,6 +3979,7 @@
           if (!frame.hasAttribute('src')) frame.setAttribute('src', frame.dataset.liveDemoSrc);
         } else {
           frame.removeAttribute('src');
+          frame.classList.remove('is-loaded');
         }
       });
     });

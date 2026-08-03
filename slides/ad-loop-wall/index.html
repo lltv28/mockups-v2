@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lucas AI · Ad Reinvestment Loop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: #ffffff;
+      --al-25: rgba(26, 26, 26, 0.04);
+      --al-50: rgba(26, 26, 26, 0.06);
+      --al-100: rgba(26, 26, 26, 0.09);
+      --al-200: rgba(26, 26, 26, 0.20);
+      --al-500: rgba(26, 26, 26, 0.48);
+      --al-600: rgba(26, 26, 26, 0.60);
+      --al-900: rgba(26, 26, 26, 0.80);
+      --brand: #106844;
+      --brand-50: rgba(16, 104, 68, 0.06);
+      --brand-100: rgba(16, 104, 68, 0.08);
+      --brand-200: rgba(16, 104, 68, 0.12);
+      --brand-300: rgba(16, 104, 68, 0.18);
+      --brand-600: rgba(16, 104, 68, 0.55);
+      --brand-950: rgba(16, 104, 68, 0.92);
+      --shadow-card: 0 22px 6px rgba(0,0,0,0), 0 14px 6px rgba(0,0,0,0), 0 8px 5px rgba(0,0,0,0.01), 0 4px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.02);
+      --shadow-modal: 0 67px 19px rgba(0,0,0,0), 0 43px 17px rgba(0,0,0,0.01), 0 24px 15px rgba(0,0,0,0.02), 0 11px 11px rgba(0,0,0,0.03), 0 3px 6px rgba(0,0,0,0.04);
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --motion-fast: 150ms;
+      --motion-normal: 250ms;
+      --motion-slow: 600ms;
+      --motion-phone-reveal: 1200ms;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--white);
+      font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #stage-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #stage {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      flex: none;
+      background: var(--white);
+      transform-origin: center center;
+    }
+
+    #wire-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    #ads-node {
+      position: absolute;
+      top: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 6; /* above #fx-layer, and the orb still lands on top of the card via DOM order */
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--al-100);
+      border-radius: 24px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(6px);
+      transition: box-shadow var(--motion-normal) var(--ease),
+                  transform var(--motion-normal) var(--ease);
+    }
+
+    #ads-node.node-pulse {
+      box-shadow: 0 0 0 8px var(--brand-100), var(--shadow-modal);
+      transform: translateX(-50%) scale(1.02);
+    }
+
+    .node-glyph {
+      width: 44px;
+      height: 44px;
+      flex: none;
+      border-radius: 12px;
+      background: var(--brand-950);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .node-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .node-port {
+      position: absolute;
+      left: 50%;
+      bottom: -7px;
+      width: 12px;
+      height: 12px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 4px var(--white);
+      pointer-events: none;
+    }
+
+    .node-label {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--al-900);
+      line-height: 1.2;
+    }
+
+    #reinvested-counter {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--al-500);
+      line-height: 1.2;
+      transform-origin: left center;
+    }
+
+    #reinvested-counter.counter-pop {
+      animation: counter-pop var(--motion-slow) var(--ease);
+    }
+
+    @keyframes counter-pop {
+      0%   { color: var(--al-500); transform: scale(1); }
+      35%  { color: var(--brand-950); transform: scale(1.08); }
+      100% { color: var(--al-500); transform: scale(1); }
+    }
+
+    /* Landing credit: the arriving orb becomes a sale credit that floats into the counter */
+    .node-credit {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      z-index: 1;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--brand-950);
+      pointer-events: none;
+      animation: credit-float var(--motion-slow) var(--ease) forwards;
+    }
+
+    @keyframes credit-float {
+      0%   { transform: translate(-50%, -22px); opacity: 0; }
+      25%  { transform: translate(-50%, -8px); opacity: 1; }
+      70%  { transform: translate(-50%, 22px); opacity: 1; }
+      100% { transform: translate(-50%, 38px); opacity: 0; }
+    }
+
+    /* Effects layer: comet tails and wire surges, above the phones, below the orb itself */
+    #fx-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    #phone-row {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .phone {
+      position: absolute;
+      width: 270px;
+      height: 560px;
+      background: var(--al-900);
+      border-radius: 42px;
+      padding: 20px 10px;
+      box-shadow: var(--shadow-modal);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(var(--from-center-x, 0px)) translateY(18px) scale(0.86);
+      transition: opacity var(--motion-phone-reveal) var(--ease),
+                  transform var(--motion-phone-reveal) var(--ease);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+
+    .phone.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+
+    .traffic-wire {
+      opacity: 0;
+      transition: opacity 1000ms var(--ease);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .traffic-wire.is-active {
+      opacity: 1;
+    }
+
+    .phone .notch {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 16px;
+      background: var(--al-900);
+      border-radius: 8px;
+      z-index: 2;
+    }
+
+    .phone .screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid var(--al-50);
+      border-radius: 26px;
+      overflow: hidden;
+    }
+
+    .phone .app-status {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      right: 16px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--al-500);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .phone .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 9px;
+    }
+
+    .phone .signal-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 1px;
+      height: 7px;
+    }
+
+    .phone .signal-bars span {
+      width: 1.5px;
+      border-radius: 1px;
+      background: currentColor;
+    }
+
+    .phone .signal-bars span:nth-child(1) { height: 2px; }
+    .phone .signal-bars span:nth-child(2) { height: 4px; }
+    .phone .signal-bars span:nth-child(3) { height: 5.5px; }
+    .phone .signal-bars span:nth-child(4) { height: 7px; }
+
+    .phone .wifi-icon {
+      width: 10px;
+      height: 8px;
+      overflow: visible;
+    }
+
+    .phone .battery-icon {
+      position: relative;
+      width: 11px;
+      height: 6px;
+      padding: 1px;
+      border: 1px solid currentColor;
+      border-radius: 2px;
+    }
+
+    .phone .battery-icon::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 1px;
+      background: currentColor;
+    }
+
+    .phone .battery-icon::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      right: -2px;
+      width: 1px;
+      height: 2px;
+      border-radius: 0 1px 1px 0;
+      background: currentColor;
+    }
+
+    .phone .app-header {
+      position: absolute;
+      top: 31px;
+      left: 12px;
+      right: 12px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 48px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--al-50);
+      border-radius: 14px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(8px);
+    }
+
+    .phone .app-avatar {
+      width: 28px;
+      height: 28px;
+      flex: none;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid var(--al-100);
+    }
+
+    .phone .app-identity {
+      display: flex;
+      min-width: 0;
+      flex: 1;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+    }
+
+    .phone .app-name {
+      color: var(--al-900);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .phone .app-presence {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--al-500);
+      font-size: 8px;
+      font-weight: 600;
+    }
+
+    .phone .presence-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--brand-950);
+      box-shadow: 0 0 0 3px var(--brand-100);
+    }
+
+    .phone .secure-mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      flex: none;
+      border-radius: 999px;
+      background: var(--al-25);
+      color: var(--al-500);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .phone .home-bar {
+      position: absolute;
+      left: 50%;
+      bottom: 9px;
+      z-index: 4;
+      width: 72px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--al-200);
+      transform: translateX(-50%);
+    }
+
+    .phone .layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      padding: 112px 16px 34px;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      filter: opacity(var(--content-opacity, 1));
+      transform: translateY(12px) scale(0.99);
+      pointer-events: none;
+      transition: opacity 420ms var(--ease),
+                  transform 420ms var(--ease),
+                  visibility 0s linear 420ms;
+      will-change: opacity, filter, transform;
+    }
+
+    .phone .content-card {
+      width: 100%;
+      max-width: 214px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 13px;
+      padding: 18px 15px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--al-100);
+      border-radius: 16px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(8px);
+    }
+
+    .phone .eyebrow {
+      color: var(--al-500);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .phone .support-copy {
+      color: var(--al-500);
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .phone .primary-action {
+      min-width: 132px;
+      padding: 9px 14px;
+      border-radius: 10px;
+      background: var(--brand-950);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      box-shadow: var(--shadow-card);
+      transition: background var(--motion-fast) var(--ease),
+                  box-shadow var(--motion-fast) var(--ease),
+                  transform var(--motion-fast) var(--ease);
+    }
+
+    .phone .primary-action.pressed {
+      background: #0c5739;
+      box-shadow: none;
+      transform: scale(0.96);
+    }
+
+    .phone[data-beat="landing"] .layer[data-layer="landing"],
+    .phone[data-beat="reset"] .layer[data-layer="landing"],
+    .phone[data-beat="quiz1"] .layer[data-layer="quiz1"],
+    .phone[data-beat="quiz2"] .layer[data-layer="quiz2"],
+    .phone[data-beat="report"] .layer[data-layer="report"],
+    .phone[data-beat="checkout"] .layer[data-layer="checkout"],
+    .phone[data-beat="success"] .layer[data-layer="success"] {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+
+    .phone .layer[data-layer="checkout"] {
+      transform: translateY(28px) scale(0.99);
+    }
+
+    .phone .layer[data-layer="success"] {
+      transform: translateY(8px) scale(0.97);
+    }
+
+    .phone[data-beat="checkout"] .layer[data-layer="checkout"],
+    .phone[data-beat="success"] .layer[data-layer="success"] {
+      transform: translateY(0) scale(1);
+    }
+
+    .phone .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--al-100);
+      box-shadow: var(--shadow-card);
+    }
+
+    .phone .headline,
+    .phone .question {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--al-900);
+      line-height: 1.35;
+    }
+
+    .phone .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .phone .selection-state {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--brand-950);
+      font-size: 9px;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity var(--motion-fast) var(--ease),
+                  transform var(--motion-fast) var(--ease);
+    }
+
+    .phone .question-card.answered .selection-state {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .phone .chip {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--al-25);
+      border: 1px solid var(--al-100);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--al-600);
+      transition: background var(--motion-fast) var(--ease),
+                  color var(--motion-fast) var(--ease),
+                  border-color var(--motion-fast) var(--ease),
+                  transform var(--motion-fast) var(--ease);
+    }
+
+    .phone .chip.tapped {
+      background: var(--brand-950);
+      border-color: var(--brand-950);
+      color: #ffffff;
+    }
+
+    .phone .chip.pressed {
+      transform: scale(0.94);
+    }
+
+    .phone .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--al-900);
+    }
+
+    .phone .report-card {
+      position: relative;
+      min-height: 238px;
+      justify-content: flex-start;
+    }
+
+    .phone .analysis-state,
+    .phone .finding-list {
+      position: absolute;
+      top: 50px;
+      left: 15px;
+      right: 15px;
+      transition: opacity 360ms var(--ease),
+                  transform 360ms var(--ease),
+                  visibility 0s linear 360ms;
+    }
+
+    .phone .analysis-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+    }
+
+    .phone .report-card.is-analyzing .analysis-state {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition-delay: 0s;
+    }
+
+    .phone .report-card.is-analyzing .finding-list {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+    }
+
+    .phone .analysis-progress {
+      width: 100%;
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--al-100);
+    }
+
+    .phone .analysis-progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--brand-950);
+    }
+
+    .phone .finding-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition-delay: 0s;
+    }
+
+    .phone .finding-row {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid var(--al-50);
+      border-radius: 10px;
+      background: var(--al-25);
+      opacity: 0.16;
+      transform: translateY(6px);
+      transition: opacity var(--motion-normal) var(--ease),
+                  transform var(--motion-normal) var(--ease),
+                  border-color var(--motion-normal) var(--ease);
+    }
+
+    .phone .finding-row.revealed {
+      opacity: 1;
+      transform: translateY(0);
+      border-color: var(--brand-200);
+    }
+
+    .phone .finding-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--brand-100);
+      color: var(--brand-950);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .phone .finding-copy {
+      min-width: 0;
+    }
+
+    .phone .finding-title {
+      color: var(--al-900);
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .phone .finding-impact {
+      margin-top: 2px;
+      color: var(--al-500);
+      font-size: 8px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .phone .price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--al-900);
+    }
+
+    .phone .pay-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: var(--brand-950);
+      border: 1px solid var(--brand-950);
+      box-shadow: var(--shadow-card);
+      transition: background var(--motion-normal) var(--ease),
+                  border-color var(--motion-normal) var(--ease),
+                  box-shadow var(--motion-fast) var(--ease),
+                  transform var(--motion-fast) var(--ease);
+    }
+
+    .phone .checkout-details,
+    .phone .receipt-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 9px;
+      border-top: 1px solid var(--al-50);
+      color: var(--al-500);
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .phone .checkout-details strong,
+    .phone .receipt-row strong {
+      color: var(--al-900);
+      font-weight: 700;
+    }
+
+    .phone .pay-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .phone .pay-button.pressed {
+      background: #0c5739;
+      box-shadow: none;
+      transform: scale(0.97);
+    }
+
+    .phone .pay-spinner {
+      display: none;
+      width: 12px;
+      height: 12px;
+      flex: none;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+    }
+
+    .phone .pay-button.processing .pay-spinner {
+      display: block;
+      animation: pay-spin 700ms linear infinite;
+    }
+
+    @keyframes pay-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .phone .tick {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--brand-950);
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phone .success-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--al-900);
+    }
+
+    /* ── Sale chip → green orb (return-flight money loop) ── */
+    .sale-chip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 58px;
+      height: 30px;
+      margin-left: -29px;
+      margin-top: -15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: var(--chip-bg, var(--brand-950));
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 8px 18px var(--brand-200), var(--shadow-card);
+      z-index: 6;
+      pointer-events: none;
+      will-change: transform;
+      transition: width var(--motion-normal) var(--ease),
+                  height var(--motion-normal) var(--ease),
+                  margin var(--motion-normal) var(--ease),
+                  border-radius var(--motion-normal) var(--ease),
+                  background var(--motion-normal) var(--ease),
+                  box-shadow var(--motion-normal) var(--ease);
+    }
+
+    .sale-chip .chip-label {
+      transition: opacity var(--motion-normal) var(--ease);
+    }
+
+    .sale-chip.dropping {
+      animation: chip-drop 600ms var(--ease) forwards;
+    }
+
+    @keyframes chip-drop {
+      0%   { transform: translate(var(--sx), var(--sy)) scale(0.92); opacity: 0; }
+      30%  { opacity: 1; }
+      100% { transform: translate(var(--sx), calc(var(--sy) + 40px)) scale(1); }
+    }
+
+    .sale-chip.to-orb {
+      width: 22px;
+      height: 22px;
+      margin-left: -11px;
+      margin-top: -11px;
+      border-radius: 50%;
+      background: var(--orb-bg, var(--brand));
+      box-shadow: 0 0 0 5px var(--brand-100), 0 8px 18px var(--brand-200);
+    }
+
+    .sale-chip.to-orb .chip-label {
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+      }
+
+      .phone .layer,
+      .phone .analysis-state,
+      .phone .finding-list {
+        transform: none !important;
+        transition: opacity 180ms linear,
+                    visibility 0s linear 180ms !important;
+      }
+
+      .phone {
+        transform: none !important;
+        transition: opacity 850ms linear !important;
+        transition-delay: var(--reveal-delay, 0ms) !important;
+      }
+
+      .phone.is-active {
+        transform: none !important;
+      }
+
+      .traffic-wire {
+        transition: opacity 750ms linear !important;
+        transition-delay: var(--reveal-delay, 0ms) !important;
+      }
+
+      .phone[data-beat="landing"] .layer[data-layer="landing"],
+      .phone[data-beat="reset"] .layer[data-layer="landing"],
+      .phone[data-beat="quiz1"] .layer[data-layer="quiz1"],
+      .phone[data-beat="quiz2"] .layer[data-layer="quiz2"],
+      .phone[data-beat="report"] .layer[data-layer="report"],
+      .phone[data-beat="checkout"] .layer[data-layer="checkout"],
+      .phone[data-beat="success"] .layer[data-layer="success"],
+      .phone .report-card.is-analyzing .analysis-state,
+      .phone .finding-list {
+        transition-delay: 0s !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="stage-wrap">
+    <div id="stage">
+      <svg id="wire-layer" width="1920" height="1080" aria-hidden="true"></svg>
+      <div id="ads-node">
+        <div class="node-glyph">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 8.5H17V5.3C16.6 5.24 15.4 5.13 14 5.13C11.09 5.13 9.1 6.94 9.1 10.2V13H6V16.6H9.1V24H12.8V16.6H15.8L16.3 13H12.8V10.58C12.8 9.53 13.08 8.5 15 8.5Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="node-text">
+          <div class="node-label">Facebook Ads</div>
+          <div id="reinvested-counter">$0 reinvested</div>
+        </div>
+        <div class="node-port" aria-hidden="true"></div>
+      </div>
+      <div id="phone-row"></div>
+      <svg id="fx-layer" width="1920" height="1080" aria-hidden="true"></svg>
+    </div>
+  </div>
+  <script>
+    const CONFIG = {
+      SALE_AMOUNT: 8,
+      PHONE_COUNT: 5,
+      PHONE_LOOP_MS: 25000,
+      PHONE_STAGGER_MS: 5000,
+      SALE_AT_MS: 21000,
+      ORB_FLIGHT_MS: 6000,
+      COLORS: {
+        wire: 'rgba(16, 104, 68, 0.55)',
+        orb: '#106844',
+        chip: 'rgba(16, 104, 68, 0.92)',
+        nodeAccent: 'rgba(16, 104, 68, 0.92)'
+      }
+    };
+
+    // ── Master clock: single rAF; all state is a function of t ──
+    const renderers = [];
+    function registerRenderer(fn) { renderers.push(fn); }
+
+    const clock = (() => {
+      let paused = false;
+      let pausedAt = 0;
+      let pausedTotal = 0;
+      function now() {
+        return (paused ? pausedAt : performance.now()) - pausedTotal;
+      }
+      function toggle() {
+        if (paused) { pausedTotal += performance.now() - pausedAt; paused = false; }
+        else { pausedAt = performance.now(); paused = true; }
+      }
+      return { now, toggle, get paused() { return paused; } };
+    })();
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        if (e.repeat) return;
+        e.preventDefault();
+        clock.toggle();
+      }
+    });
+
+    function frame() {
+      const t = clock.now();
+      if (!clock.paused) renderers.forEach(fn => fn(t));
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    // ── Stage scaling to fit window ──
+    function fitStage() {
+      const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      document.getElementById('stage').style.transform = `scale(${s})`;
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+
+    // ── Ads node helpers ──
+    let reinvestedTotal = 0;
+    function setReinvested(total) {
+      reinvestedTotal = total;
+      document.getElementById('reinvested-counter').textContent =
+        `$${total.toLocaleString('en-US')} reinvested`;
+    }
+    function pulseAdsNode() {
+      const node = document.getElementById('ads-node');
+      node.classList.add('node-pulse');
+      setTimeout(() => node.classList.remove('node-pulse'), 600);
+    }
+
+    // ── Wire layer: bezier wires ──
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const adsNode = document.getElementById('ads-node');
+    const stage = document.getElementById('stage');
+    const NODE_BOTTOM = {
+      x: stage.clientWidth / 2,
+      y: adsNode.offsetTop + adsNode.offsetHeight
+    };
+    const wirePaths = []; // [{ path }] per phone, index = wire-<i>
+
+    function buildWires(anchors) {
+      const svg = document.getElementById('wire-layer');
+
+      // idempotent: clear any previously built wires before building
+      wirePaths.forEach(w => w.path.remove());
+      wirePaths.length = 0;
+
+      anchors.forEach((a, i) => {
+        const p = document.createElementNS(SVG_NS, 'path');
+        const midY = (NODE_BOTTOM.y + a.topY) / 2;
+        p.setAttribute('d',
+          `M ${NODE_BOTTOM.x} ${NODE_BOTTOM.y} C ${NODE_BOTTOM.x} ${midY}, ${a.x} ${midY}, ${a.x} ${a.topY}`);
+        p.setAttribute('id', `wire-${i}`);
+        p.setAttribute('class', 'traffic-wire');
+        p.setAttribute('fill', 'none');
+        p.setAttribute('stroke', CONFIG.COLORS.wire);
+        p.setAttribute('stroke-opacity', '0.28');
+        p.setAttribute('stroke-width', '2');
+        svg.appendChild(p);
+
+        wirePaths.push({ path: p });
+      });
+    }
+
+    // ── Phone row: five staggered mini-demo phones ──
+    const PHONE_SLOT_W = 1920 / CONFIG.PHONE_COUNT;
+    const PHONE_TOP_Y = 410;
+    const PHONE_FRAME_W = 270;
+    const PHONE_FRAME_H = 560;
+    const INITIAL_PHONE_INDEX = 2;
+
+    // These phases make the growth story happen quickly, then settle into one sale every
+    // five seconds once all five phones are active. The center phone sells first, the two
+    // inner phones sell next, and the two outer phones join after the second reinvestment.
+    const PHONE_PHASE_MS = [2, 1, 3, 0, 4].map(slot => slot * CONFIG.PHONE_STAGGER_MS);
+
+    function phoneLocalTime(i, t) {
+      return ((t + PHONE_PHASE_MS[i]) % CONFIG.PHONE_LOOP_MS + CONFIG.PHONE_LOOP_MS) % CONFIG.PHONE_LOOP_MS;
+    }
+
+    const BEATS = [
+      { name: 'landing',  from: 0,     to: 3500  },  // avatar photo + headline card
+      { name: 'quiz1',    from: 3500,  to: 8000  },  // 4 option chips, tap highlight at 6500
+      { name: 'quiz2',    from: 8000,  to: 12500 },  // tap highlight at 11000
+      { name: 'report',   from: 12500, to: 17500 },  // 3 progress lines fill in sequence
+      { name: 'checkout', from: 17500, to: 21000 },  // paywall card, pay flash from 20000
+      { name: 'success',  from: 21000, to: 23000 },  // green tick, "Payment received"
+      { name: 'reset',    from: 23000, to: 25000 }   // fade back to landing
+    ];
+    function beatFor(localT) {
+      return BEATS.find(b => localT >= b.from && localT < b.to) || BEATS[0];
+    }
+
+    const PHONE_SCENARIOS = [
+      {
+        quiz1: 0,
+        quiz2: 1,
+        findings: [['Ad targeting', 'High opportunity'], ['Landing page leak', 'Needs attention'], ['Slow follow-up', 'Revenue risk']]
+      },
+      {
+        quiz1: 1,
+        quiz2: 2,
+        findings: [['Lead leakage', 'Revenue risk'], ['Slow follow-up', 'Needs attention'], ['Offer mismatch', 'High opportunity']]
+      },
+      {
+        quiz1: 2,
+        quiz2: 1,
+        findings: [['Slow follow-up', 'Revenue risk'], ['Lead leakage', 'Needs attention'], ['Offer mismatch', 'High opportunity']]
+      },
+      {
+        quiz1: 3,
+        quiz2: 3,
+        findings: [['Tracking gaps', 'Needs attention'], ['Slow follow-up', 'Revenue risk'], ['Unclear offer', 'High opportunity']]
+      },
+      {
+        quiz1: 1,
+        quiz2: 0,
+        findings: [['Lead quality', 'Needs attention'], ['Sales handoff', 'Revenue risk'], ['Upsell path', 'High opportunity']]
+      }
+    ];
+
+    function buildPhone(anchor, i) {
+      const el = document.createElement('div');
+      // The opening phone is active before it enters the DOM, preventing an empty-frame
+      // flash while the page's first layout is being painted.
+      el.className = i === INITIAL_PHONE_INDEX ? 'phone is-active' : 'phone';
+      el.style.left = (anchor.x - PHONE_FRAME_W / 2) + 'px';
+      el.style.top = anchor.topY + 'px';
+      el.style.setProperty('--from-center-x', (960 - anchor.x) + 'px');
+      const scenario = PHONE_SCENARIOS[i];
+      const findings = scenario.findings.map((finding, findingIndex) => `
+        <div class="finding-row" data-finding="${findingIndex}">
+          <div class="finding-icon">${findingIndex + 1}</div>
+          <div class="finding-copy">
+            <div class="finding-title">${finding[0]}</div>
+            <div class="finding-impact">${finding[1]}</div>
+          </div>
+        </div>
+      `).join('');
+      el.innerHTML = `
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="app-status">
+            <span>9:41</span>
+            <span class="status-icons" aria-label="Cellular signal, Wi-Fi, battery full">
+              <span class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+              <svg class="wifi-icon" viewBox="0 0 12 9" fill="none" aria-hidden="true">
+                <path d="M1 3.2C3.9.8 8.1.8 11 3.2M3 5.3C4.7 3.9 7.3 3.9 9 5.3M5.1 7.3C5.6 6.9 6.4 6.9 6.9 7.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              <span class="battery-icon" aria-hidden="true"></span>
+            </span>
+          </div>
+          <div class="app-header">
+            <img class="app-avatar" src="assets/lucas-profile.jpg" alt="">
+            <div class="app-identity">
+              <div class="app-name">Lucas AI</div>
+              <div class="app-presence"><span class="presence-dot"></span>Online</div>
+            </div>
+            <div class="secure-mark" aria-label="Secure">✓</div>
+          </div>
+          <div class="layer" data-layer="landing">
+            <div class="content-card">
+              <img class="avatar" src="assets/lucas-profile.jpg" alt="Lucas">
+              <div class="eyebrow">Free marketing check</div>
+              <div class="headline">Where is your marketing leaking?</div>
+              <div class="support-copy">Answer two questions and get your priority fixes.</div>
+              <div class="primary-action">Start assessment</div>
+            </div>
+          </div>
+          <div class="layer" data-layer="quiz1">
+            <div class="content-card question-card" data-question-card="quiz1">
+              <div class="eyebrow">Question 1 of 2</div>
+              <div class="question">Where does it hurt most?</div>
+              <div class="chips">
+                <div class="chip" data-chip="0">Ads</div>
+                <div class="chip" data-chip="1">Leads</div>
+                <div class="chip" data-chip="2">Closing</div>
+                <div class="chip" data-chip="3">Guessing</div>
+              </div>
+              <div class="selection-state"><span>✓</span> Answer saved</div>
+            </div>
+          </div>
+          <div class="layer" data-layer="quiz2">
+            <div class="content-card question-card" data-question-card="quiz2">
+              <div class="eyebrow">Question 2 of 2</div>
+              <div class="question">How fast do you follow up with new leads?</div>
+              <div class="chips">
+                <div class="chip" data-chip="0">Same day</div>
+                <div class="chip" data-chip="1">Next day</div>
+                <div class="chip" data-chip="2">This week</div>
+                <div class="chip" data-chip="3">Eventually</div>
+              </div>
+              <div class="selection-state"><span>✓</span> Answer saved</div>
+            </div>
+          </div>
+          <div class="layer" data-layer="report">
+            <div class="content-card report-card is-analyzing">
+              <div class="eyebrow">Your analysis</div>
+              <div class="analysis-state">
+                <div class="card-title">Analyzing your answers</div>
+                <div class="support-copy">Matching your responses to proven growth patterns.</div>
+                <div class="analysis-progress"><div class="analysis-progress-fill"></div></div>
+              </div>
+              <div class="finding-list">
+                <div class="card-title">Your top 3 gaps</div>
+                ${findings}
+              </div>
+            </div>
+          </div>
+          <div class="layer" data-layer="checkout">
+            <div class="content-card checkout-card">
+              <div class="eyebrow">Secure checkout</div>
+              <div class="card-title">Marketing Gap Report</div>
+              <div class="price">$${CONFIG.SALE_AMOUNT}</div>
+              <div class="support-copy">Personalized findings and your three priority fixes.</div>
+              <div class="checkout-details"><span>Instant access</span><strong>One-time</strong></div>
+              <div class="pay-button"><span class="pay-spinner" aria-hidden="true"></span><span class="pay-label">Unlock my report</span></div>
+              <div class="support-copy">Secure payment · Receipt by email</div>
+            </div>
+          </div>
+          <div class="layer" data-layer="success">
+            <div class="content-card receipt-card">
+              <div class="eyebrow">Receipt</div>
+              <div class="tick">&#10003;</div>
+              <div class="success-text">Payment complete</div>
+              <div class="support-copy">Your report is unlocked and ready to view.</div>
+              <div class="receipt-row"><span>Receipt</span><strong>#KDR-08${i + 1}</strong></div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      `;
+      document.getElementById('phone-row').appendChild(el);
+      return {
+        el,
+        primaryAction: el.querySelector('.primary-action'),
+        quiz1Card: el.querySelector('[data-question-card="quiz1"]'),
+        quiz2Card: el.querySelector('[data-question-card="quiz2"]'),
+        quiz1Chip: el.querySelector(`[data-layer="quiz1"] [data-chip="${scenario.quiz1}"]`),
+        quiz2Chip: el.querySelector(`[data-layer="quiz2"] [data-chip="${scenario.quiz2}"]`),
+        reportCard: el.querySelector('.report-card'),
+        analysisFill: el.querySelector('.analysis-progress-fill'),
+        findingRows: Array.from(el.querySelectorAll('.finding-row')),
+        payButton: el.querySelector('.pay-button'),
+        payLabel: el.querySelector('.pay-label')
+      };
+    }
+
+    const phoneAnchors = Array.from({ length: CONFIG.PHONE_COUNT }, (_, i) => {
+      const x = PHONE_SLOT_W * i + PHONE_SLOT_W / 2;
+      return { x, topY: PHONE_TOP_Y, bottomY: PHONE_TOP_Y + PHONE_FRAME_H };
+    });
+    const phones = phoneAnchors.map(buildPhone);
+
+    buildWires(phoneAnchors.map(a => ({ x: a.x, topY: a.topY })));
+
+    // One phone becomes three, then five. Each step is unlocked by an orb arriving
+    // back at the ads node, so the visual growth is directly caused by reinvestment.
+    const PHONE_GROWTH_STAGES = [
+      [INITIAL_PHONE_INDEX],
+      [1, 2, 3],
+      [0, 1, 2, 3, 4]
+    ];
+    let phoneGrowthStage = 0;
+    const activePhoneIndices = new Set(PHONE_GROWTH_STAGES[0]);
+
+    function syncPhoneGrowth() {
+      phones.forEach((refs, i) => refs.el.classList.toggle('is-active', activePhoneIndices.has(i)));
+      wirePaths.forEach((wire, i) => wire.path.classList.toggle('is-active', activePhoneIndices.has(i)));
+      document.getElementById('stage').dataset.phoneCount = String(activePhoneIndices.size);
+    }
+
+    function growPhoneWall() {
+      if (phoneGrowthStage >= PHONE_GROWTH_STAGES.length - 1) return;
+      phoneGrowthStage += 1;
+      const newlyActive = PHONE_GROWTH_STAGES[phoneGrowthStage]
+        .filter(i => !activePhoneIndices.has(i));
+      newlyActive.forEach((i, revealOrder) => {
+        const delay = `${revealOrder * 220}ms`;
+        phones[i].el.style.setProperty('--reveal-delay', delay);
+        wirePaths[i].path.style.setProperty('--reveal-delay', delay);
+      });
+      activePhoneIndices.clear();
+      PHONE_GROWTH_STAGES[phoneGrowthStage].forEach(i => activePhoneIndices.add(i));
+      syncPhoneGrowth();
+    }
+
+    syncPhoneGrowth();
+
+    // ── Return-flight paths: invisible guide paths the orb travels along on its way
+    // back into the ads node. Kept in #wire-layer (fill/stroke none) per Task 4 brief.
+    // Geometry keeps every x-change confined to y > bottomY (below all phones) and every
+    // y-change confined to x outside every phone's horizontal footprint (x < 57 or x > 1863,
+    // since phones span anchor.x ± 135), so the orb never crosses a phone's rectangle.
+    const RETURN_RAIL_LEFT = 40;
+    const RETURN_RAIL_RIGHT = 1880;
+    const RETURN_TOP_Y = 60;
+    const RETURN_NODE = {
+      x: NODE_BOTTOM.x,
+      y: adsNode.offsetTop
+    };
+
+    function buildReturnPathD(ax, bottomY, side) {
+      const startX = ax, startY = bottomY + 40; // matches the chip landing point
+      const railX = side === 'left' ? RETURN_RAIL_LEFT : RETURN_RAIL_RIGHT;
+      const sign = side === 'left' ? -1 : 1;
+      const belowY = startY - 30; // still comfortably below every phone's bottomY
+      return [
+        `M ${startX} ${startY}`,
+        // Segment A: slide out to the rail column while staying below the phone row
+        `C ${startX + sign * 110} ${startY + 5}, ${railX - sign * 60} ${startY - 20}, ${railX} ${belowY}`,
+        // Segment B: climb the clear outside rail (x is outside every phone's footprint)
+        `C ${railX} ${belowY - 340}, ${railX} ${RETURN_TOP_Y + 220}, ${railX} ${RETURN_TOP_Y}`,
+        // Segment C: sweep inward, then turn vertical so the orb enters the exact
+        // top-center anchor of the Facebook Ads card without a sideways kink.
+        `C ${railX - sign * 140} ${RETURN_TOP_Y}, ${RETURN_NODE.x} ${RETURN_NODE.y - 36}, ${RETURN_NODE.x} ${RETURN_NODE.y}`
+      ].join(' ');
+    }
+
+    function buildReturnPaths(anchors) {
+      const svg = document.getElementById('wire-layer');
+      const sideFor = (i) => (i <= 1 ? 'left' : 'right');
+      anchors.forEach((a, i) => {
+        const sides = i === 2 ? ['left', 'right'] : [sideFor(i)];
+        sides.forEach(side => {
+          const p = document.createElementNS(SVG_NS, 'path');
+          p.setAttribute('id', i === 2 ? `return-2-${side}` : `return-${i}`);
+          p.setAttribute('d', buildReturnPathD(a.x, a.bottomY, side));
+          p.setAttribute('fill', 'none');
+          p.setAttribute('stroke', 'none');
+          svg.appendChild(p);
+        });
+      });
+    }
+    buildReturnPaths(phoneAnchors);
+
+    // Center phone (index 2) alternates left/right on successive sales.
+    let phone2SaleCount = 0;
+    function pathForSale(i) {
+      if (i === 2) {
+        const side = (phone2SaleCount++ % 2 === 0) ? 'left' : 'right';
+        return document.getElementById(`return-2-${side}`);
+      }
+      return document.getElementById(`return-${i}`);
+    }
+
+    // ── Money-trail effects: flight guide, comet tail, node credit, reinvestment surge ──
+    const fxLayer = document.getElementById('fx-layer');
+    const CHIP_DROP_MS = 600; // must match the chip-drop keyframe duration
+    const TAIL_SEGMENTS = [   // arc length trailing the orb, faintest and longest first
+      { len: 130, width: 7, opacity: 0.14 },
+      { len: 80, width: 5.5, opacity: 0.26 },
+      { len: 38, width: 4, opacity: 0.5 }
+    ];
+    const GUIDE_OPACITY = 0.5;
+    const GUIDE_FADE_IN_MS = 300;
+    const GUIDE_FADE_OUT_MS = 600;
+    const GUIDE_HOLD_MS = CHIP_DROP_MS + CONFIG.ORB_FLIGHT_MS;
+    const SURGE_MS = 900;
+    const SURGE_SEG = 90;
+    const SURGE_STAGGER_MS = 30;
+
+    function makeFxPath(d, width, opacity) {
+      const p = document.createElementNS(SVG_NS, 'path');
+      p.setAttribute('d', d);
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke', CONFIG.COLORS.orb);
+      p.setAttribute('stroke-width', width);
+      p.setAttribute('stroke-opacity', opacity);
+      p.setAttribute('stroke-linecap', 'round');
+      fxLayer.appendChild(p);
+      return p;
+    }
+
+    // Each tail segment is a single dash on a copy of the orb's own path. Setting
+    // dashoffset to (segment length - arc position) parks that dash so it ends exactly
+    // where the orb is, and the gap of a full path length keeps it to one visible dash.
+    function buildTail(pathD, totalLen) {
+      return TAIL_SEGMENTS.map(s => {
+        const el = makeFxPath(pathD, s.width, s.opacity);
+        el.setAttribute('stroke-dasharray', `${s.len} ${totalLen}`);
+        el.setAttribute('stroke-dashoffset', s.len);
+        return { el, len: s.len };
+      });
+    }
+
+    function drawTail(tail, pos) {
+      tail.forEach(seg => seg.el.setAttribute('stroke-dashoffset', seg.len - pos));
+    }
+
+    function removeTail(tail) { tail.forEach(seg => seg.el.remove()); }
+
+    // The route lights up dotted the moment a sale lands, so the eye knows where the
+    // money is about to travel before the orb gets there.
+    const activeGuides = [];
+
+    function lightGuide(path, t) {
+      const existing = activeGuides.find(g => g.path === path);
+      if (existing) {
+        existing.startT = t;
+        return;
+      }
+      path.setAttribute('stroke', CONFIG.COLORS.orb);
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-dasharray', '2 11');
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-opacity', '0');
+      activeGuides.push({ path, startT: t });
+    }
+
+    registerRenderer(function renderGuides(t) {
+      for (let k = activeGuides.length - 1; k >= 0; k--) {
+        const g = activeGuides[k];
+        const age = t - g.startT;
+        let o;
+        if (age < GUIDE_FADE_IN_MS) o = GUIDE_OPACITY * (age / GUIDE_FADE_IN_MS);
+        else if (age < GUIDE_HOLD_MS) o = GUIDE_OPACITY;
+        else o = GUIDE_OPACITY * (1 - (age - GUIDE_HOLD_MS) / GUIDE_FADE_OUT_MS);
+        if (o <= 0) {
+          g.path.setAttribute('stroke', 'none');
+          g.path.setAttribute('stroke-opacity', '0');
+          activeGuides.splice(k, 1);
+          continue;
+        }
+        g.path.setAttribute('stroke-opacity', o.toFixed(3));
+      }
+    });
+
+    // Reinvestment surge: a green wave runs down every wire the instant money lands, so the
+    // sale visibly turns back into traffic.
+    // Each landing gets its own set of waves, so two landings close together never truncate
+    // one another, and no surge elements exist at all between landings.
+    const activeSurges = [];
+    const SURGE_LIFE_MS = () => SURGE_MS + (wirePaths.length - 1) * SURGE_STAGGER_MS;
+
+    function fireSurge(t) {
+      const paths = wirePaths.flatMap((w, i) => {
+        if (!activePhoneIndices.has(i)) return [];
+        const len = w.path.getTotalLength();
+        const el = makeFxPath(w.path.getAttribute('d'), 3, 0);
+        el.setAttribute('stroke-dasharray', `${SURGE_SEG} ${len}`);
+        el.setAttribute('stroke-dashoffset', SURGE_SEG);
+        return [{ el, len, delay: i * SURGE_STAGGER_MS }];
+      });
+      activeSurges.push({ paths, startT: t });
+    }
+
+    registerRenderer(function renderSurge(t) {
+      for (let k = activeSurges.length - 1; k >= 0; k--) {
+        const surge = activeSurges[k];
+        const age = t - surge.startT;
+        if (age > SURGE_LIFE_MS()) {
+          surge.paths.forEach(s => s.el.remove());
+          activeSurges.splice(k, 1);
+          continue;
+        }
+        surge.paths.forEach(s => {
+          const a = age - s.delay;
+          if (a < 0 || a > SURGE_MS) {
+            s.el.setAttribute('stroke-opacity', '0');
+            return;
+          }
+          const p = a / SURGE_MS;
+          s.el.setAttribute('stroke-dashoffset', SURGE_SEG - p * (s.len + SURGE_SEG));
+          s.el.setAttribute('stroke-opacity', (0.75 * (1 - p * p)).toFixed(3));
+        });
+      }
+    });
+
+    // The arriving orb becomes a sale credit that floats into the counter as it ticks up.
+    function creditNodeCounter() {
+      const credit = document.createElement('div');
+      credit.className = 'node-credit';
+      credit.textContent = `+$${CONFIG.SALE_AMOUNT}`;
+      credit.addEventListener('animationend', () => credit.remove(), { once: true });
+      document.getElementById('ads-node').appendChild(credit);
+
+      const counter = document.getElementById('reinvested-counter');
+      counter.classList.remove('counter-pop');
+      void counter.offsetWidth; // restart the pop if two sales land close together
+      counter.classList.add('counter-pop');
+    }
+
+    const saleCallbacks = [];
+    function onSale(cb) { saleCallbacks.push(cb); }
+    const lastLocal = new Array(CONFIG.PHONE_COUNT).fill(0);
+    const REPORT_START_MS = 12500;
+    const REPORT_ANALYSIS_END_MS = 13700;
+    const FINDING_REVEAL_MS = 1100;
+    // The tab can load hidden (rAF frozen) so the first renderPhones call may land far into the
+    // loop with a stale lastLocal of 0 for every phone, which would read as a spurious crossing
+    // for any phone already past SALE_AT_MS. Seed lastLocal from the real localT on that first
+    // frame instead of assuming t=0, and skip crossing detection just for that seeding frame.
+    let phonesSeeded = false;
+
+    registerRenderer(function renderPhones(t) {
+      for (let i = 0; i < CONFIG.PHONE_COUNT; i++) {
+        const localT = phoneLocalTime(i, t);
+        const beat = beatFor(localT);
+        const refs = phones[i];
+        refs.el.dataset.beat = beat.name;
+
+        const startPressed = beat.name === 'landing' && localT >= 3250;
+        const quiz1Answered = beat.name === 'quiz1' && localT >= 6500;
+        const quiz2Answered = beat.name === 'quiz2' && localT >= 11000;
+        refs.primaryAction.classList.toggle('pressed', startPressed);
+        refs.quiz1Chip.classList.toggle('tapped', quiz1Answered);
+        refs.quiz2Chip.classList.toggle('tapped', quiz2Answered);
+        refs.quiz1Chip.classList.toggle('pressed', quiz1Answered && localT < 6680);
+        refs.quiz2Chip.classList.toggle('pressed', quiz2Answered && localT < 11180);
+        refs.quiz1Card.classList.toggle('answered', quiz1Answered);
+        refs.quiz2Card.classList.toggle('answered', quiz2Answered);
+
+        if (beat.name === 'report') {
+          const analyzing = localT < REPORT_ANALYSIS_END_MS;
+          const analysisProgress = Math.min(1, Math.max(0,
+            (localT - REPORT_START_MS) / (REPORT_ANALYSIS_END_MS - REPORT_START_MS)));
+          refs.reportCard.classList.toggle('is-analyzing', analyzing);
+          refs.analysisFill.style.width = (analysisProgress * 100) + '%';
+          refs.findingRows.forEach((row, k) => {
+            const revealAt = REPORT_ANALYSIS_END_MS + k * FINDING_REVEAL_MS;
+            row.classList.toggle('revealed', !analyzing && localT >= revealAt);
+          });
+        } else {
+          refs.reportCard.classList.add('is-analyzing');
+          refs.analysisFill.style.width = '0%';
+          refs.findingRows.forEach(row => row.classList.remove('revealed'));
+        }
+
+        const paymentPressed = beat.name === 'checkout' && localT >= 19700 && localT < 20000;
+        const paymentProcessing = beat.name === 'checkout' && localT >= 20000;
+        refs.payButton.classList.toggle('pressed', paymentPressed);
+        refs.payButton.classList.toggle('processing', paymentProcessing);
+        refs.payLabel.textContent = paymentProcessing ? 'Processing payment' : 'Unlock my report';
+
+        if (beat.name === 'reset') {
+          // Down-then-up curve (pure function of localT, no timers): fades to ~0.25 across
+          // the first leg, then back to 1.0 across the second, so the wrap into the next
+          // loop lands at opacity already ≈1.0 instead of snapping from a dim mid-fade value.
+          if (localT < 24200) {
+            const frac = (localT - 23000) / (24200 - 23000);
+            refs.el.style.setProperty('--content-opacity', String(1 - frac * 0.75));
+          } else {
+            const frac = (localT - 24200) / (25000 - 24200);
+            refs.el.style.setProperty('--content-opacity', String(0.25 + frac * 0.75));
+          }
+        } else {
+          refs.el.style.setProperty('--content-opacity', '1');
+        }
+
+        const crossed = phonesSeeded && activePhoneIndices.has(i) &&
+          lastLocal[i] < CONFIG.SALE_AT_MS && localT >= CONFIG.SALE_AT_MS;
+        if (crossed) saleCallbacks.forEach(cb => cb(i, t));
+        lastLocal[i] = localT;
+      }
+      phonesSeeded = true;
+    });
+
+    // ── Money loop: sale chip drops, morphs into a green orb, flies back into the node ──
+    const activeOrbs = [];
+
+    onSale((i, t) => {
+      const a = phoneAnchors[i];
+      // Resolved here rather than at handoff so the route can light up with the chip.
+      const path = pathForSale(i);
+      lightGuide(path, t);
+
+      const chip = document.createElement('div');
+      chip.className = 'sale-chip dropping';
+      chip.style.setProperty('--sx', a.x + 'px');
+      chip.style.setProperty('--sy', a.bottomY + 'px');
+      chip.style.setProperty('--chip-bg', CONFIG.COLORS.chip);
+      chip.style.setProperty('--orb-bg', CONFIG.COLORS.orb);
+      chip.innerHTML = `<span class="chip-label">+$${CONFIG.SALE_AMOUNT}</span>`;
+      document.getElementById('stage').appendChild(chip);
+
+      // Deliberate, documented exception to "no setTimeout": the chip-drop-to-orb
+      // handoff. clock.now() is read at the moment the handoff actually fires (whether or
+      // not the master clock is paused at that instant), so a pause during the drop
+      // can't cause the orb's subsequent flight-time math to jump.
+      setTimeout(() => {
+        chip.classList.remove('dropping');
+        chip.classList.add('to-orb');
+        const totalLen = path.getTotalLength();
+        const p0 = path.getPointAtLength(0);
+        chip.style.transform = `translate(${p0.x}px, ${p0.y}px)`;
+        activeOrbs.push({
+          el: chip,
+          path,
+          totalLen,
+          tail: buildTail(path.getAttribute('d'), totalLen),
+          startT: clock.now()
+        });
+      }, CHIP_DROP_MS);
+    });
+
+    registerRenderer(function renderOrbs(t) {
+      for (let k = activeOrbs.length - 1; k >= 0; k--) {
+        const orb = activeOrbs[k];
+        const progress = (t - orb.startT) / CONFIG.ORB_FLIGHT_MS;
+        if (progress >= 1) {
+          orb.el.remove();
+          removeTail(orb.tail);
+          activeOrbs.splice(k, 1);
+          setReinvested(reinvestedTotal + CONFIG.SALE_AMOUNT);
+          pulseAdsNode();
+          creditNodeCounter();
+          growPhoneWall();
+          fireSurge(t);
+          continue;
+        }
+        const clamped = Math.max(0, progress);
+        const eased = clamped < 0.5 ? 2 * clamped * clamped : 1 - Math.pow(-2 * clamped + 2, 2) / 2;
+        const pos = eased * orb.totalLen;
+        const pt = orb.path.getPointAtLength(pos);
+        orb.el.style.transform = `translate(${pt.x}px, ${pt.y}px)`;
+        drawTail(orb.tail, pos);
+      }
+    });
+  </script>
+</body>
+</html>
