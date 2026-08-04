@@ -2506,224 +2506,6 @@
     .problem-banner { padding: 12px; font-size: 14px; }
   }
 </style>
-<style>
-  /* Large-card layout mockup for slides 17 and 18. */
-  .large-card-demo {
-    width: 100%;
-    max-width: 1030px;
-    min-height: 390px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--al-900);
-  }
-  .large-card-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    width: 100%;
-  }
-  .large-card-row--single { gap: 8px; }
-  .large-card-row + .large-card-row { margin-top: 22px; }
-  .large-flow-card {
-    position: relative;
-    flex: 0 0 174px;
-    width: 174px;
-    height: 220px;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--al-100);
-    border-radius: 18px;
-    background: rgba(255,255,255,.96);
-    box-shadow: var(--shadow-card);
-    text-align: center;
-    overflow: hidden;
-  }
-  .large-flow-card__step {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    color: var(--al-400);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .08em;
-  }
-  .large-flow-card__icon {
-    width: 44px;
-    height: 44px;
-    margin-bottom: 12px;
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(16,104,68,.12);
-    border-radius: 12px;
-    background: var(--brand-50);
-    color: var(--brand-950);
-    font-size: 24px;
-  }
-  .large-flow-card strong {
-    color: var(--al-900);
-    font-size: 18px;
-    line-height: 1.1;
-  }
-  .large-flow-card small {
-    margin-top: 8px;
-    color: var(--al-500);
-    font-size: 12px;
-    line-height: 1.25;
-  }
-  .large-flow-card--video {
-    flex-basis: 174px;
-    width: 174px;
-    height: 220px;
-    padding: 12px 14px 14px;
-    justify-content: flex-end;
-  }
-  .large-flow-card__video {
-    position: absolute;
-    inset: 0 0 58px;
-    overflow: hidden;
-    background: var(--al-900);
-  }
-  .large-flow-card__video iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    pointer-events: none;
-      transform: scale(1.8);
-    transform-origin: center;
-  }
-  .large-flow-card--video strong { font-size: 16px; }
-  .large-flow-card--video .large-flow-card__step {
-    z-index: 2;
-    color: var(--white);
-    text-shadow: 0 1px 4px rgba(0,0,0,.4);
-  }
-  .large-flow-arrow {
-    flex: 0 0 16px;
-    color: var(--brand-950);
-    font-size: 22px;
-    font-weight: 600;
-    text-align: center;
-  }
-  .large-flow-turn {
-    height: 26px;
-    margin: 1px 0 -4px 522px;
-    color: var(--brand-950);
-    font-size: 25px;
-    line-height: 1;
-  }
-  .large-flow-return {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 6px 14px;
-    border: 1px solid rgba(16,104,68,.12);
-    border-radius: 999px;
-    background: var(--brand-50);
-    color: var(--brand-950);
-    font-size: 11px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  .large-card-demo--organic {
-    position: relative;
-    min-height: 285px;
-    padding-bottom: 40px;
-  }
-
-  .large-card-demo--paid {
-    position: relative;
-    width: 740px;
-    max-width: 740px;
-    min-height: 478px;
-    display: grid;
-    grid-template-columns: 240px 240px;
-    grid-template-rows: 220px 220px;
-    gap: 38px 260px;
-  }
-  .large-card-demo--paid .large-flow-card {
-    width: 240px;
-    height: 220px;
-    flex-basis: auto;
-    padding: 24px;
-    align-items: flex-start;
-    text-align: left;
-  }
-  .large-card-demo--paid .large-flow-card__icon { margin-bottom: 14px; }
-  .large-card-demo--paid .large-flow-card strong { font-size: 21px; }
-  .large-card-demo--paid .large-flow-card small { font-size: 12px; }
-  .large-card-demo--paid .large-flow-card--paid-video {
-    padding: 12px 18px 15px;
-    justify-content: flex-end;
-    align-items: flex-start;
-  }
-  .large-flow-card--paid-video .large-flow-card__video { inset: 0 0 66px; }
-  .large-flow-card--paid-video .large-flow-card__video iframe { transform: scale(1.55); }
-  .large-flow-card--paid-video .large-flow-card__step {
-    z-index: 2;
-    color: var(--white);
-    text-shadow: 0 1px 4px rgba(0,0,0,.4);
-  }
-  .large-flow-card--paid-video small { margin-top: 0; }
-  .large-paid-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 188px;
-    padding: 13px 15px;
-    border: 1px solid rgba(16,104,68,.12);
-    border-radius: 14px;
-    background: var(--brand-50);
-    color: var(--brand-950);
-    font-size: 14px;
-    font-weight: 750;
-    text-align: center;
-  }
-  .large-paid-arrow {
-    position: absolute;
-    color: var(--brand-950);
-    font-size: 31px;
-    line-height: 1;
-  }
-  .large-paid-arrow--top,
-  .large-paid-arrow--bottom {
-    width: 150px;
-    height: 3px;
-    border-radius: 999px;
-    background: var(--brand-950);
-    font-size: 0;
-  }
-  .large-paid-arrow--top::after,
-  .large-paid-arrow--bottom::after {
-    content: '';
-    position: absolute;
-    top: -6px;
-    right: -2px;
-    width: 0;
-    height: 0;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    border-left: 12px solid var(--brand-950);
-  }
-  .large-paid-arrow--top { top: 109px; left: 50%; transform: translateX(-50%); }
-  .large-paid-arrow--right { top: 50%; right: 108px; transform: translateY(-50%) rotate(90deg); }
-  .large-paid-arrow--bottom { bottom: 109px; left: 50%; transform: translateX(-50%) rotate(180deg); }
-  .large-paid-arrow--left { top: 50%; left: 108px; transform: translateY(-50%) rotate(-90deg); }
-  #organic-slide .sales-demo-layout,
-  #paid-slide .sales-demo-layout { transform: translateY(12px); gap: 10px; }
-  #organic-slide .sales-demo-caption,
-  #paid-slide .sales-demo-caption { margin-top: -2px; }
-</style>
 </head>
 <body>
 
@@ -3155,7 +2937,7 @@
           <div class="phase-num phase-num--brand">2</div>
 
           <div class="h-md" style="font-size: 20px;">Sell</div>
-          <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin: 2px 0 6px;">2 weeks</div>
+          <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin: 2px 0 6px;">Weeks 3 to 6</div>
           <p class="body" style="font-size: 15px; line-height: 22px;">Your Triager and Salesperson qualify buyers and point each one to the right offer.</p>
         </div>
         <div class="phase-col rv d5">
@@ -3618,15 +3400,15 @@
   <!-- Ad Reinvestment Loop Wall, repeated at two narrative beats -->
   <div class="slide slide--ad-loop" id="ad-loop-reinvestment-slide">
     <div class="ad-loop-demo">
-      <img class="ad-loop-demo__poster" src="ai-reinvestment-wall/poster.png" alt="" aria-hidden="true">
-      <iframe data-live-demo-src="ai-reinvestment-wall/embed/lattice-zoom.html" data-live-demo-kind="ai-reinvestment-wall" title="Lattice Direct starting at the AI Triager zoom-in"></iframe>
+      <img class="ad-loop-demo__poster" src="ad-loop-wall/poster.png" alt="" aria-hidden="true">
+      <iframe data-live-demo-src="ad-loop-wall/index.html" title="Ad reinvestment loop expanding from one AI assessment funnel to five" onload="if (this.hasAttribute('src')) this.classList.add('is-loaded')"></iframe>
     </div>
   </div>
 
   <div class="slide slide--ad-loop" id="ad-loop-sales-slide">
     <div class="ad-loop-demo">
-      <img class="ad-loop-demo__poster" src="ai-reinvestment-wall/poster.png" alt="" aria-hidden="true">
-      <iframe data-live-demo-src="ai-reinvestment-wall/embed/lattice-zoom.html" data-live-demo-kind="ai-reinvestment-wall" title="Lattice Direct starting at the AI Triager zoom-in"></iframe>
+      <img class="ad-loop-demo__poster" src="ad-loop-wall/poster.png" alt="" aria-hidden="true">
+      <iframe data-live-demo-src="ad-loop-wall/index.html" title="Ad reinvestment loop expanding from one AI assessment funnel to five" onload="if (this.hasAttribute('src')) this.classList.add('is-loaded')"></iframe>
     </div>
   </div>
 
@@ -4007,7 +3789,7 @@
           <div class="rv d2"><h2 class="h-lg">Your organic marketing works as one system.</h2></div>
         </div>
         <div class="rv d3 sales-demo-media">${salesDemoLive('organic-workflow', 'sales-demo-shell--wide sales-demo-shell--launch', 'Organic content workflow')}</div>
-        <p class="sales-demo-caption rv d4">The Brain creates the message, your Avatar delivers it, and Auto-DMs point interested people to the &lt;$20 assessment.</p>
+        <p class="sales-demo-caption rv d4">The Brain creates the message, your Avatar delivers it, and comments and DMs point interested people to the &lt;$20 assessment.</p>
       </div>`;
 
     paidSlide.querySelector('.content--wide').innerHTML = `
@@ -4027,99 +3809,6 @@
   }
 
   installSalesDemos();
-
-  function installLargeCardMockup() {
-    organicSlide.querySelector('.sales-demo-media').innerHTML = `
-      <div class="large-card-demo large-card-demo--organic" aria-label="Larger organic marketing workflow cards">
-        <div class="large-card-row large-card-row--single">
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">01</span>
-            <div class="large-flow-card__icon">✦</div>
-            <strong>AI Brain Manager</strong>
-            <small>Plans the content</small>
-          </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card large-flow-card--video">
-            <span class="large-flow-card__step">02</span>
-            <div class="large-flow-card__video">
-              <iframe
-                src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/393d729a00e6a20de5e23ae1665153da/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F393d729a00e6a20de5e23ae1665153da%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-                title="AI Avatar video inside a workflow card"
-                allow="autoplay; encrypted-media; picture-in-picture;"
-              ></iframe>
-            </div>
-            <strong>AI Avatar</strong>
-            <small>Records the ideas</small>
-          </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">03</span>
-            <div class="large-flow-card__icon">↑</div>
-            <strong>Publish</strong>
-            <small>Reaches new people</small>
-          </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">04</span>
-            <div class="large-flow-card__icon">··</div>
-            <strong>Auto-DMs</strong>
-            <small>Captures contact info</small>
-          </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">05</span>
-            <div class="large-flow-card__icon">✓</div>
-            <strong>&lt;$20 Assessment</strong>
-            <small>Qualifies intent</small>
-          </div>
-        </div>
-        <div class="large-flow-return">Buyer data improves the next cycle</div>
-      </div>`;
-
-    paidSlide.querySelector('.sales-demo-media').innerHTML = `
-      <div class="large-card-demo large-card-demo--paid" aria-label="Larger paid ads growth cycle cards">
-        <div class="large-flow-card large-flow-card--paid-video">
-          <span class="large-flow-card__step">01</span>
-          <div class="large-flow-card__video">
-            <iframe
-              src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cf012831e12dd92855000b85e12a60db/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcf012831e12dd92855000b85e12a60db%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-              title="Kodara paid ads launch video"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-              allowfullscreen="true"
-            ></iframe>
-          </div>
-          <small>Our team</small>
-          <strong>Launches Ads</strong>
-        </div>
-        <div class="large-flow-card">
-          <span class="large-flow-card__step">02</span>
-          <div class="large-flow-card__icon">◉</div>
-          <small>Qualified prospects</small>
-          <strong>AI Triager</strong>
-        </div>
-        <div class="large-flow-card">
-          <span class="large-flow-card__step">04</span>
-          <div class="large-flow-card__icon">↗</div>
-          <small>Sales revenue</small>
-          <strong>Funds Next Launch</strong>
-        </div>
-        <div class="large-flow-card">
-          <span class="large-flow-card__step">03</span>
-          <div class="large-flow-card__icon">✦</div>
-          <small>AI Brain Manager</small>
-          <strong>Learns What Converts</strong>
-        </div>
-        <div class="large-paid-center">↻ &nbsp; Self-funding growth cycle</div>
-        <div class="large-paid-arrow large-paid-arrow--top">→</div>
-        <div class="large-paid-arrow large-paid-arrow--right">→</div>
-        <div class="large-paid-arrow large-paid-arrow--bottom">→</div>
-        <div class="large-paid-arrow large-paid-arrow--left">→</div>
-      </div>`;
-
-    paidSlide.querySelector('.sales-demo-caption')?.remove();
-  }
-
-  installLargeCardMockup();
   deckElement.insertBefore(internalProofSlide, clientsLoveSlide);
   deckElement.insertBefore(programOverviewSlide, clientsLoveSlide);
   deckElement.insertBefore(phase1CoverSlide, lucasOnboardingSlide);
@@ -4242,17 +3931,6 @@
     const ro = new ResizeObserver(fitDemos);
     document.querySelectorAll('[data-demo-fit]').forEach(b => ro.observe(b));
   }
-
-  window.addEventListener('message', event => {
-    if (
-      event.data?.source !== 'ai-reinvestment-wall' ||
-      event.data?.type !== 'ready'
-    ) return;
-
-    document.querySelectorAll('iframe[data-live-demo-kind="ai-reinvestment-wall"]').forEach(frame => {
-      if (frame.contentWindow === event.source) frame.classList.add('is-loaded');
-    });
-  });
 
   function goTo(i) {
     if (i < 0 || i >= total) return;
@@ -4425,7 +4103,7 @@
     if (Math.abs(d) > 50) d > 0 ? goTo(current + 1) : goTo(current - 1);
   });
 
-  const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide') || 17);
+  const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide'));
   goTo(Number.isFinite(requestedSlide) && requestedSlide >= 1 ? Math.min(requestedSlide - 1, total - 1) : 0);
 </script>
 

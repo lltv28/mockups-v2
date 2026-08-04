@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI reinvestment wall</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+      body { background: #f1f4f2; color: #1a1a1a; font-family: "Instrument Sans", Arial, sans-serif; }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>window.process = { env: { NODE_ENV: 'production' } };</script>
+    <script src="lattice-zoom.js"></script>
+  </body>
+</html>
