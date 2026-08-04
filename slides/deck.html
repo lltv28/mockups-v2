@@ -2314,79 +2314,77 @@
     left: 0;
     width: 100%;
   }
-  .guarantee-grid {
+  .money-back-layout {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    grid-template-columns: minmax(0, 1fr) 74px minmax(0, 1fr);
+    gap: 18px;
     width: 100%;
-    max-width: 520px;
+    max-width: 1080px;
     margin: 0 auto;
-  }
-  .guarantee-grid__metric,
-  .guarantee-grid__detail {
-    border-radius: 18px;
-    text-align: center;
-  }
-  .guarantee-grid__metric {
-    min-height: 88px;
-    padding: 12px 16px;
-    background: var(--brand-50);
-    border: 1px solid var(--brand-100);
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
   }
-  .guarantee-grid__value {
-    font-family: var(--font-hero);
-    font-size: clamp(36px, 4vw, 44px);
-    font-weight: 600;
-    line-height: 0.95;
-    letter-spacing: -1.5px;
-    color: var(--brand-950);
-  }
-  .guarantee-grid__label {
-    margin-top: 8px;
-    color: var(--al-500);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-  }
-  .guarantee-grid__detail {
-    min-height: 98px;
-    padding: 14px 18px;
+  .money-back-card {
+    min-height: 300px;
+    padding: 42px 38px;
+    border: 1px solid var(--brand-300);
+    border-radius: 26px;
     background: var(--white);
-    border: 1px solid var(--al-50);
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
-  .guarantee-grid__check {
-    margin-bottom: 6px;
+  .money-back-card__title {
+    max-width: 430px;
     color: var(--brand-950);
+    font-family: var(--font-hero);
+    font-size: clamp(38px, 4vw, 52px);
+    font-weight: 600;
+    letter-spacing: -1.2px;
+    line-height: 1.02;
+  }
+  .money-back-card__copy {
+    max-width: 360px;
+    margin-top: 20px;
+    color: var(--al-600);
     font-size: 18px;
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.45;
   }
-  .guarantee-grid__title {
+  .money-back-or {
+    width: 64px;
+    height: 64px;
+    border: 1px solid var(--brand-200);
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-950);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+  .money-back-footer {
     color: var(--al-900);
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.25;
+    font-family: var(--font-hero);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+    text-align: center;
   }
-  .guarantee-grid__copy {
-    max-width: 340px;
-    margin-top: 5px;
-    color: var(--al-500);
-    font-size: 10.5px;
-    line-height: 1.35;
-  }
-  .guarantee-grid__terms {
+  #double-guarantee-slide > .money-back-disclaimer {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    left: 0;
     color: var(--al-400);
-    font-size: 8px;
+    font-size: 7px;
+    font-weight: 500;
     line-height: 1.4;
     text-align: center;
   }
@@ -2433,20 +2431,21 @@
     white-space: nowrap !important;
     text-wrap: nowrap !important;
   }
-  .problem-stat-grid {
+  .problem-speed-layout {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 42px;
     width: 100%;
-    max-width: 980px;
+    max-width: 1080px;
     margin: 0 auto;
+    align-items: stretch;
   }
-  .problem-stat {
-    min-height: 112px;
-    padding: 16px 12px;
-    border: 1px solid var(--al-50);
-    border-radius: 16px;
-    background: var(--white);
+  .problem-speed-stat {
+    min-height: 330px;
+    padding: 34px 30px;
+    border: 1px solid var(--brand-100);
+    border-radius: 24px;
+    background: var(--brand-50);
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
@@ -2454,20 +2453,50 @@
     justify-content: center;
     text-align: center;
   }
-  .problem-stat__value {
-    font-family: var(--font-hero);
+  .problem-speed-stat__value {
     color: var(--brand-950);
-    font-size: clamp(34px, 4vw, 44px);
+    font-family: var(--font-hero);
+    font-size: clamp(84px, 8vw, 118px);
     font-weight: 600;
-    line-height: 0.95;
-    letter-spacing: -1px;
+    letter-spacing: -4px;
+    line-height: 0.82;
   }
-  .problem-stat__copy {
-    margin-top: 12px;
-    color: var(--al-500);
-    font-size: 11px;
-    font-weight: 500;
+  .problem-speed-stat__label {
+    max-width: 330px;
+    margin-top: 24px;
+    color: var(--al-900);
+    font-size: 18px;
+    font-weight: 700;
     line-height: 1.4;
+  }
+  .problem-speed-stat__source {
+    margin-top: 18px;
+    color: var(--al-400);
+    font-size: 9px;
+    line-height: 1.35;
+  }
+  .problem-speed-stat__source a { color: inherit; }
+  .problem-speed-copy {
+    padding: 16px 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+  }
+  .problem-speed-copy__body {
+    margin-top: 20px;
+    color: var(--al-600);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  .problem-speed-copy__definition {
+    margin-top: 22px;
+    padding: 16px 18px;
+    border-left: 3px solid var(--brand-950);
+    background: var(--brand-50);
+    color: var(--al-600);
+    font-size: 15px;
+    line-height: 1.5;
   }
   .problem-banner {
     width: 100%;
@@ -2484,6 +2513,323 @@
   }
   #real-problem-slide > .content--wide { gap: 28px; }
   #real-problem-slide > .content--wide > .flex-col { gap: 14px; }
+
+  .reinvestment-compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .reinvestment-option {
+    min-height: 350px;
+    padding: 26px 28px;
+    border: 1px solid var(--al-100);
+    border-radius: 24px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .reinvestment-option--growth {
+    background: var(--brand-50);
+    border-color: var(--brand-200);
+  }
+  .reinvestment-option__eyebrow {
+    color: var(--brand-950);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .reinvestment-option__title {
+    margin-top: 8px;
+    color: var(--al-900);
+    font-family: var(--font-hero);
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 1.05;
+  }
+  .reinvestment-option__copy {
+    margin-top: 10px;
+    color: var(--al-600);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .reinvestment-settings {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .reinvestment-setting {
+    display: grid;
+    grid-template-columns: 126px minmax(0, 1fr) 48px;
+    gap: 12px;
+    align-items: center;
+  }
+  .reinvestment-setting__label {
+    color: var(--al-600);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .reinvestment-setting__value {
+    color: var(--brand-950);
+    font-size: 13px;
+    font-weight: 800;
+    text-align: right;
+  }
+  .reinvestment-track {
+    position: relative;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--al-100);
+  }
+  .reinvestment-track__fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand-950), var(--brand-600));
+  }
+  .reinvestment-track__fill::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -7px;
+    width: 15px;
+    height: 15px;
+    border: 3px solid var(--white);
+    border-radius: 999px;
+    background: var(--brand-950);
+    box-shadow: 0 2px 6px rgba(16,104,68,0.24);
+    transform: translateY(-50%);
+  }
+  .reinvestment-option__result {
+    margin-top: auto;
+    padding-top: 22px;
+    color: var(--al-900);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .reinvestment-option__example {
+    margin-top: 8px;
+    color: var(--al-500);
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .reinvestment-option__example--client {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .reinvestment-option__example--client img {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--white);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(30,41,59,0.12);
+    object-fit: cover;
+  }
+
+  .product-match-demo {
+    display: grid;
+    grid-template-columns: 300px 130px minmax(0, 1fr);
+    gap: 22px;
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    align-items: center;
+  }
+  .product-match-assessment {
+    min-height: 350px;
+    padding: 22px;
+    border: 1px solid var(--al-100);
+    border-radius: 22px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+    text-align: left;
+  }
+  .product-match-assessment__label,
+  .product-library__label {
+    color: var(--brand-950);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+  .product-match-scenes {
+    position: relative;
+    height: 260px;
+    margin-top: 18px;
+  }
+  .product-match-scene {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: productMatchScene 12s ease-in-out infinite both;
+  }
+  .product-match-scene--b { animation-delay: 4s; }
+  .product-match-scene--c { animation-delay: 8s; }
+  .product-match-scene__buyer {
+    color: var(--al-400);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .product-match-scene__need {
+    margin-top: 10px;
+    color: var(--al-900);
+    font-family: var(--font-hero);
+    font-size: 27px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    line-height: 1.08;
+  }
+  .product-match-scene__insight {
+    margin-top: 15px;
+    padding: 13px 14px;
+    border-radius: 12px;
+    background: var(--brand-50);
+    color: var(--al-600);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .product-match-scene__result {
+    margin-top: 18px;
+    color: var(--brand-950);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .product-match-brain {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    margin: 0 auto;
+    border: 1px solid var(--brand-200);
+    border-radius: 999px;
+    background: var(--brand-50);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-950);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    animation: productBrainPulse 4s ease-in-out infinite;
+  }
+  .product-match-brain::before,
+  .product-match-brain::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 26px;
+    height: 2px;
+    background: var(--brand-300);
+  }
+  .product-match-brain::before { right: calc(100% + 2px); }
+  .product-match-brain::after { left: calc(100% + 2px); }
+  .product-match-brain span {
+    margin-top: 4px;
+    color: var(--al-500);
+    font-size: 9px;
+    font-weight: 700;
+  }
+  .product-library {
+    min-height: 350px;
+    padding: 22px;
+    border: 1px solid var(--al-100);
+    border-radius: 22px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+    text-align: left;
+  }
+  .product-library-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .product-library-card {
+    position: relative;
+    min-height: 128px;
+    padding: 15px 13px;
+    border: 1px solid var(--al-100);
+    border-radius: 15px;
+    background: var(--n50);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 250ms ease, background 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+  }
+  .product-library-card--a,
+  .product-library-card--b,
+  .product-library-card--c {
+    animation: productCardMatch 12s ease-in-out infinite both;
+  }
+  .product-library-card--b { animation-delay: 4s; }
+  .product-library-card--c { animation-delay: 8s; }
+  .product-library-card__format {
+    color: var(--al-400);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .product-library-card__title {
+    margin-top: 7px;
+    color: var(--al-900);
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.25;
+  }
+  .product-library-card__price {
+    margin-top: auto;
+    color: var(--brand-950);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .product-library-card--a::after,
+  .product-library-card--b::after,
+  .product-library-card--c::after {
+    content: 'Best match';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 6px;
+    border-radius: 999px;
+    background: var(--brand-950);
+    color: var(--white);
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    text-transform: uppercase;
+    animation: productMatchBadge 12s ease-in-out infinite both;
+  }
+  .product-library-card--b::after { animation-delay: 4s; }
+  .product-library-card--c::after { animation-delay: 8s; }
+  @keyframes productMatchScene {
+    0%, 27% { opacity: 1; transform: translateY(0); }
+    31%, 100% { opacity: 0; transform: translateY(7px); }
+  }
+  @keyframes productCardMatch {
+    0%, 27% { border-color: var(--brand-950); background: var(--brand-50); box-shadow: 0 10px 26px rgba(16,104,68,0.14); transform: scale(1.035); }
+    31%, 100% { border-color: var(--al-100); background: var(--n50); box-shadow: none; transform: scale(1); }
+  }
+  @keyframes productMatchBadge {
+    0%, 27% { opacity: 1; }
+    31%, 100% { opacity: 0; }
+  }
+  @keyframes productBrainPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16,104,68,0); transform: scale(1); }
+    50% { box-shadow: 0 0 0 12px rgba(16,104,68,0.06); transform: scale(1.03); }
+  }
   #organic-slide .sales-demo-layout,
   #paid-slide .sales-demo-layout { transform: translateY(28px); }
   @media (max-width: 900px) {
@@ -2492,18 +2838,30 @@
     .sales-demo-role { padding-block: 7px; }
   }
   @media (max-width: 600px) {
-    .guarantee-grid { gap: 8px; }
-    .guarantee-grid__metric { min-height: 72px; padding: 10px 8px; }
-    .guarantee-grid__detail { min-height: 88px; padding: 12px 8px; }
-    .guarantee-grid__label { margin-top: 6px; font-size: 7px; }
-    .guarantee-grid__title { font-size: 10px; }
-    .guarantee-grid__copy { font-size: 8.5px; }
+    .money-back-layout { grid-template-columns: 1fr; gap: 10px; }
+    .money-back-card { min-height: 180px; padding: 22px 18px; }
+    .money-back-or { width: 44px; height: 44px; margin: 0 auto; }
+    .reinvestment-compare { grid-template-columns: 1fr; gap: 12px; }
+    .reinvestment-option { min-height: 260px; padding: 18px; }
+    .product-match-demo { grid-template-columns: 1fr; }
+    .product-match-brain { width: 72px; height: 72px; }
+    .product-match-brain::before,
+    .product-match-brain::after { display: none; }
+    .product-library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .triager-example-grid { grid-template-columns: 1fr; }
     .triager-example { grid-template-columns: 100px minmax(0, 1fr); min-height: 40px; }
-    .problem-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-    .problem-stat { min-height: 94px; padding: 12px 8px; }
-    .problem-stat__copy { margin-top: 8px; font-size: 9px; }
+    .problem-speed-layout { grid-template-columns: 1fr; gap: 12px; }
+    .problem-speed-stat { min-height: 210px; }
     .problem-banner { padding: 12px; font-size: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .product-match-scene,
+    .product-library-card,
+    .product-library-card::after,
+    .product-match-brain { animation: none !important; }
+    .product-match-scene--a { opacity: 1; }
+    .product-library-card--a { border-color: var(--brand-950); background: var(--brand-50); }
+    .product-library-card--a::after { opacity: 1; }
   }
 </style>
 <style>
@@ -2864,90 +3222,24 @@
 
   <!-- INTRO 1.1, The Real Problem -->
   <div class="slide" id="real-problem-slide" role="group" aria-roledescription="slide" aria-labelledby="real-problem-title">
-    <div class="content--wide text-center flex-col gap-14" style="justify-content: center;">
-      <div class="flex-col gap-8">
-        <div class="rv d1"><span class="label-tag">The real problem</span></div>
-        <div class="rv d2">
-          <h2 id="real-problem-title" class="h-hero" style="max-width: 940px; margin: 0 auto; font-size: clamp(28px, 3.3vw, 34px);">It can take up to 12 follow-ups to close a lead. Most sales teams stop after 2.</h2>
-        </div>
-        <div class="rv d3">
-          <p class="body-lg" style="max-width: 900px; margin: 0 auto; color: var(--al-500); font-size: 13px; line-height: 1.5;">8-figure businesses solve this with a large team of setters and closers working every lead relentlessly. Most businesses cannot afford that team, so leads just stop getting followed up on.</p>
-        </div>
-      </div>
-
-      <div class="problem-stat-grid rv d4" role="list" aria-label="Sales follow-up statistics">
-        <div class="problem-stat" role="listitem">
-          <div class="problem-stat__value">80%</div>
-          <div class="problem-stat__copy">of sales need 5+ follow-ups to close</div>
-        </div>
-        <div class="problem-stat" role="listitem">
-          <div class="problem-stat__value">44%</div>
-          <div class="problem-stat__copy">of reps give up after just one attempt</div>
-        </div>
-        <div class="problem-stat" role="listitem">
-          <div class="problem-stat__value">8</div>
-          <div class="problem-stat__copy">attempts on average to reach a prospect</div>
-        </div>
-        <div class="problem-stat" role="listitem">
-          <div class="problem-stat__value">$110K+</div>
-          <div class="problem-stat__copy">fully-loaded cost, per sales rep, per year</div>
-        </div>
-      </div>
-
-      <div class="problem-banner rv d5">This is why 80% of your leads go nowhere.</div>
-    </div>
-  </div>
-
-  <!-- INTRO 1.1, Meet The Version (never stops selling + offer ladder) -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="slide" id="sales-department-slide" role="group" aria-roledescription="slide" aria-labelledby="offer-ladder-title">
-    <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
-    <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
-
     <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
-      <div class="flex-col gap-16">
-        <div class="rv d1"><span class="label-tag">Your AI sales department</span></div>
-        <div class="rv d2"><h2 id="offer-ladder-title" class="h-hero" style="max-width: 860px; margin: 0 auto; text-wrap: balance;">Three roles work together so every lead is handled.</h2></div>
-      </div>
+      <div class="rv d1"><span class="label-tag">The real problem</span></div>
 
-      <div class="rv d3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 980px; margin: 0 auto; width: 100%; align-items: stretch;">
-        <div class="offer-ladder-card">
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">BRAIN + MANAGER</div>
-          <div>
-            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">Runs the system</div>
-            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px;">It holds your expertise, offers, pricing, objections and marketing data, then directs what each agent says and does.</div>
-          </div>
-          <div style="flex: 1;"></div>
-          <div style="border-top: 1px solid var(--al-50); padding-top: 12px; text-align: left;">
-            <div style="font-size: 12px; color: var(--brand-950); font-weight: 700;">Sets the rules for every agent</div>
-          </div>
+      <div class="problem-speed-layout">
+        <div class="problem-speed-stat rv d2">
+          <div class="problem-speed-stat__value">8×</div>
+          <div class="problem-speed-stat__label">higher conversion when leads are contacted within the first five minutes</div>
+          <div class="problem-speed-stat__source">Source: <a href="https://www.insidesales.com/response-time-matters/" target="_blank" rel="noopener">InsideSales Lead Response Study, 2021</a>, 55M+ sales activities</div>
         </div>
 
-        <div class="offer-ladder-card">
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">TRIAGER</div>
-          <div>
-            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">Qualifies buyers through a paid assessment</div>
-            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px;">It sells a personalized &lt;$20 assessment, finds the buyer's main need and identifies who is ready for your highest-level service.</div>
-          </div>
-          <div style="flex: 1;"></div>
-          <div style="border-top: 1px solid var(--al-50); padding-top: 12px; text-align: left;">
-            <div style="font-size: 12px; color: var(--brand-950); font-weight: 700;">Creates revenue before the sales call</div>
-          </div>
-        </div>
-
-        <div class="offer-ladder-card">
-          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--al-500);">SALESPERSON</div>
-          <div>
-            <div style="font-family: var(--font-hero); font-size: 22px; font-weight: 600; color: var(--al-900); letter-spacing: -0.3px;">Keeps interested buyers moving</div>
-            <div style="font-size: 13px; font-weight: 500; color: var(--al-600); margin-top: 4px;">Qualified buyers get the call. Everyone else gets a smaller offer that fits, including your AI Pocket Coach.</div>
-          </div>
-          <div style="flex: 1;"></div>
-          <div style="border-top: 1px solid var(--al-50); padding-top: 12px; text-align: left;">
-            <div style="font-size: 12px; color: var(--brand-950); font-weight: 700;">Every interested lead gets a next step</div>
-          </div>
+        <div class="problem-speed-copy rv d3">
+          <h2 id="real-problem-title" class="h-hero" style="font-size: clamp(38px, 4.2vw, 54px);">The first five minutes decide whether a lead gets worked or wasted.</h2>
+          <p class="problem-speed-copy__body">You already paid for the click. But if nobody responds while the buyer is interested, that ad spend disappears without a real sales conversation.</p>
+          <div class="problem-speed-copy__definition"><strong>Large companies hire teams of cold callers</strong> who spend all day calling, texting and emailing leads. Most businesses cannot afford that team.</div>
         </div>
       </div>
 
+      <div class="problem-banner rv d4">Your AI responds immediately, so every click you paid for gets worked.</div>
     </div>
   </div>
 
@@ -3209,7 +3501,7 @@
           </div>
           <div class="check-row">
             <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
-            <p><strong>AI Assessment + AI Pocket Coach</strong>: the two AI products we build for your tier ladder</p>
+            <p><strong>AI Assessment + Digital Product Library</strong>: the offers we build for every step of your tier ladder</p>
           </div>
           <div class="check-row">
             <div class="check-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
@@ -3252,34 +3544,7 @@
             <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/dda7d6b54baa18b5487b73233648182b/iframe?preload=true&amp;letterboxColor=transparent" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
           </div>
           <div class="h-md" style="font-size: 18px; margin-top: 12px;">Main offer → best-fit downsell</div>
-          <p class="body" style="font-size: 12px; margin-top: 6px; color: var(--al-600);">Qualified buyers book a call. Anyone who is not ready gets the AI Pocket Coach or another offer that fits.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- Phase 1, Mid-Ticket Demo (PLACEHOLDER, needs dashboard/metrics mockup) -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="slide" hidden>
-    <div class="bg-orb bg-orb--green" style="top: -100px; right: -80px;"></div>
-
-    <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
-      <div class="flex-col gap-10">
-        <div class="rv d1"><span class="label-tag">Phase 1 · AI Pocket Coach Demo</span></div>
-        <div class="rv d2"><h2 class="h-lg">Your AI Pocket Coach</h2></div>
-        <div class="rv d3"><p class="body" style="max-width: 700px; margin: 0 auto; color: var(--al-500); text-wrap: balance;">The $297+/month version unlocks the plan, 24/7 coaching that holds clients accountable over 30–60 days, with progress tracked in a live dashboard.</p></div>
-      </div>
-      <div class="rv d4" style="display: flex; justify-content: center; width: 100%;">
-        <div style="width: 100%; max-width: 720px; border-radius: 16px; overflow: hidden; border: 1px solid var(--al-200); box-shadow: var(--shadow-card);">
-          <div style="position: relative; padding-top: 56.25%;">
-            <iframe
-              src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/dda7d6b54baa18b5487b73233648182b/iframe?preload=true&poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fdda7d6b54baa18b5487b73233648182b%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
-              style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-              allowfullscreen="true"
-            ></iframe>
-          </div>
+          <p class="body" style="font-size: 12px; margin-top: 6px; color: var(--al-600);">Qualified buyers book a call. Anyone who is not ready gets the digital product that best matches what their assessment says they need.</p>
         </div>
       </div>
     </div>
@@ -3292,53 +3557,61 @@
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
-    <div class="content--wide text-center flex-col gap-28" style="justify-content: center;">
-      <div class="flex-col gap-12">
+    <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
+      <div class="flex-col gap-10">
         <div class="rv d1"><span class="label-tag">Phase 1 · Build</span></div>
         <div class="rv d2">
           <h2 class="h-hero" style="text-wrap: balance;">You choose how much revenue goes back into growth.</h2>
         </div>
       </div>
 
-      <!-- Horizontal 4-step timeline -->
-      <div class="rv d4" style="position: relative; max-width: 900px; margin: 52px auto 0; width: 100%;">
-        <div style="position: absolute; top: 24px; left: 12.5%; right: 12.5%; height: 2px; background: var(--al-100); z-index: 0;"></div>
-        <div style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
-          <!-- STEP 1 -->
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
-            <div style="width: 48px; height: 48px; border-radius: 999px; background: var(--n200); border: 1px solid var(--al-100); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: var(--brand-950);">$</div>
-            <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">Revenue</div>
-            <div style="font-size: 15px; font-weight: 700; color: var(--al-900);">Assessment sales</div>
-            <div class="strategy-slider"><span style="width: 78%;"></span></div>
-            <div style="font-size: 13px; color: var(--al-600); line-height: 1.4;">Reinvest more or retain more</div>
+      <div class="reinvestment-compare rv d3">
+        <section class="reinvestment-option" aria-label="Lifestyle business reinvestment example">
+          <div class="reinvestment-option__eyebrow">Option A · Freedom focused</div>
+          <div class="reinvestment-option__title">Keep more profit</div>
+          <div class="reinvestment-option__copy">Reinvest enough to keep the machine growing, then take more cash off the table for your life and family.</div>
+
+          <div class="reinvestment-settings">
+            <div class="reinvestment-setting">
+              <div class="reinvestment-setting__label">Assessment revenue</div>
+              <div class="reinvestment-track"><div class="reinvestment-track__fill" style="width: 40%;"></div></div>
+              <div class="reinvestment-setting__value">40%</div>
+            </div>
+            <div class="reinvestment-setting">
+              <div class="reinvestment-setting__label">Product revenue</div>
+              <div class="reinvestment-track"><div class="reinvestment-track__fill" style="width: 40%;"></div></div>
+              <div class="reinvestment-setting__value">40%</div>
+            </div>
           </div>
-          <!-- STEP 2 -->
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
-            <div style="width: 48px; height: 48px; border-radius: 999px; background: var(--n200); border: 1px solid var(--al-100); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: var(--brand-950);">↗</div>
-            <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">Growth</div>
-            <div style="font-size: 15px; font-weight: 700; color: var(--al-900);">Pocket Coach sales</div>
-            <div class="strategy-slider"><span style="width: 58%;"></span></div>
-            <div style="font-size: 13px; color: var(--al-600); line-height: 1.4;">Recurring revenue joins the loop</div>
+
+          <div class="reinvestment-option__result">More money and time stay with you.</div>
+          <div class="reinvestment-option__example reinvestment-option__example--client"><img src="clients/ray-grieves.jpg" alt="Ray Grieves"><span>Illustrative setup for Kodara client Ray Grieves</span></div>
+        </section>
+
+        <section class="reinvestment-option reinvestment-option--growth" aria-label="Industry leader reinvestment example">
+          <div class="reinvestment-option__eyebrow">Option B · Growth focused</div>
+          <div class="reinvestment-option__title">Reinvest everything</div>
+          <div class="reinvestment-option__copy">Put every dollar from assessments and digital products back into ads to reach more people and compound faster.</div>
+
+          <div class="reinvestment-settings">
+            <div class="reinvestment-setting">
+              <div class="reinvestment-setting__label">Assessment revenue</div>
+              <div class="reinvestment-track"><div class="reinvestment-track__fill" style="width: 100%;"></div></div>
+              <div class="reinvestment-setting__value">100%</div>
+            </div>
+            <div class="reinvestment-setting">
+              <div class="reinvestment-setting__label">Product revenue</div>
+              <div class="reinvestment-track"><div class="reinvestment-track__fill" style="width: 100%;"></div></div>
+              <div class="reinvestment-setting__value">100%</div>
+            </div>
           </div>
-          <!-- STEP 3 -->
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
-            <div style="width: 48px; height: 48px; border-radius: 999px; background: var(--n200); border: 1px solid var(--al-100); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: var(--brand-950);">✓</div>
-            <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">Control</div>
-            <div style="font-size: 15px; font-weight: 700; color: var(--al-900);">Cash retained</div>
-            <div class="strategy-slider"><span style="width: 42%;"></span></div>
-            <div style="font-size: 13px; color: var(--al-600); line-height: 1.4;">Your rules set the balance</div>
-          </div>
-          <!-- STEP 4 -->
-          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
-            <div style="width: 48px; height: 48px; border-radius: 999px; background: var(--brand-950); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: white;">↻</div>
-            <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">Reinvest</div>
-            <div style="font-size: 15px; font-weight: 700; color: var(--al-900);">Traffic funded</div>
-            <div class="strategy-slider"><span style="width: 84%;"></span></div>
-            <div style="font-size: 13px; color: var(--al-600); line-height: 1.4;">More qualified conversations</div>
-          </div>
-        </div>
+
+          <div class="reinvestment-option__result">Maximum visibility, leads and market share.</div>
+          <div class="reinvestment-option__example">Think: Tony Robbins, Grant Cardone and Alex Hormozi</div>
+        </section>
       </div>
-      <div class="rv d5" style="font-size: 12px; color: var(--al-500);">These are strategy controls, not fixed promises. Your rules change as the economics improve.</div>
+
+      <div class="rv d4" style="font-size: 11px; color: var(--al-500);">You can change these settings as your goals change.</div>
     </div>
   </div>
 
@@ -3365,7 +3638,7 @@
         </div>
         <div class="rv d3">
           <p class="body-lg" style="max-width: 540px;">
-             The Triager finds out what each buyer needs. The Salesperson pitches your main offer or a smaller one when they are not ready.
+             The Triager finds out what each buyer needs. The Salesperson pitches your main offer first, then matches everyone else to the right digital product.
           </p>
         </div>
       </div>
@@ -3438,6 +3711,84 @@
             <div class="triager-example__assessment">Legal risk and case-readiness assessment</div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2, Assessment-Matched Digital Product Library -->
+  <div class="slide" id="product-library-slide" role="group" aria-roledescription="slide" aria-labelledby="product-library-title">
+    <div class="bg-orb bg-orb--green" style="top: -130px; right: -90px;"></div>
+    <div class="bg-orb bg-orb--cyan" style="bottom: -140px; left: -80px;"></div>
+
+    <div class="content--wide text-center flex-col gap-18" style="justify-content: center;">
+      <div class="flex-col gap-8">
+        <div class="rv d1"><span class="label-tag">Phase 2 · Digital Product Library</span></div>
+        <div class="rv d2"><h2 id="product-library-title" class="h-lg" style="font-size: clamp(30px, 3.5vw, 42px);">Every buyer gets the product that matches what they need.</h2></div>
+        <div class="rv d3"><p class="body" style="max-width: 800px; margin: 0 auto; color: var(--al-500); font-size: 12px;">Your AI Brain builds the library, reads each assessment and selects the best next step automatically.</p></div>
+      </div>
+
+      <div class="product-match-demo rv d4" aria-label="Animated assessment-to-product matching demo">
+        <section class="product-match-assessment">
+          <div class="product-match-assessment__label">Assessment result</div>
+          <div class="product-match-scenes">
+            <div class="product-match-scene product-match-scene--a">
+              <div class="product-match-scene__buyer">Buyer 01</div>
+              <div class="product-match-scene__need">Leads are not getting followed up with.</div>
+              <div class="product-match-scene__insight">The buyer needs a simple system before they are ready for the main offer.</div>
+              <div class="product-match-scene__result">Matched to: Follow-Up System</div>
+            </div>
+            <div class="product-match-scene product-match-scene--b">
+              <div class="product-match-scene__buyer">Buyer 02</div>
+              <div class="product-match-scene__need">The team has no consistent sales script.</div>
+              <div class="product-match-scene__insight">The buyer needs a repeatable conversation framework before hiring more reps.</div>
+              <div class="product-match-scene__result">Matched to: Sales Script Builder</div>
+            </div>
+            <div class="product-match-scene product-match-scene--c">
+              <div class="product-match-scene__buyer">Buyer 03</div>
+              <div class="product-match-scene__need">More traffic will not fix an unclear offer.</div>
+              <div class="product-match-scene__insight">The buyer needs to sharpen the offer before spending more on acquisition.</div>
+              <div class="product-match-scene__result">Matched to: High-Ticket Offer Lab</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="product-match-brain" aria-hidden="true">AI Brain<span>analyzing</span></div>
+
+        <section class="product-library">
+          <div class="product-library__label">Ready-to-sell library</div>
+          <div class="product-library-grid">
+            <div class="product-library-card product-library-card--a">
+              <div class="product-library-card__format">Mini-course</div>
+              <div class="product-library-card__title">Follow-Up System</div>
+              <div class="product-library-card__price">$199</div>
+            </div>
+            <div class="product-library-card">
+              <div class="product-library-card__format">Guide</div>
+              <div class="product-library-card__title">Lead Conversion Playbook</div>
+              <div class="product-library-card__price">$99</div>
+            </div>
+            <div class="product-library-card product-library-card--b">
+              <div class="product-library-card__format">Toolkit</div>
+              <div class="product-library-card__title">Sales Script Builder</div>
+              <div class="product-library-card__price">$299</div>
+            </div>
+            <div class="product-library-card">
+              <div class="product-library-card__format">Video training</div>
+              <div class="product-library-card__title">Pipeline Audit Workshop</div>
+              <div class="product-library-card__price">$149</div>
+            </div>
+            <div class="product-library-card product-library-card--c">
+              <div class="product-library-card__format">Program</div>
+              <div class="product-library-card__title">High-Ticket Offer Lab</div>
+              <div class="product-library-card__price">$499</div>
+            </div>
+            <div class="product-library-card">
+              <div class="product-library-card__format">Templates</div>
+              <div class="product-library-card__title">Ad Angle Library</div>
+              <div class="product-library-card__price">$199</div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -3677,38 +4028,29 @@
   </div>
 
   <!-- ═══════════════════════════════════════ -->
-  <!-- S9, Fast Action Bonus · DFY Organic Until 1,000 Buyers — REMOVED per Kodara tweaks; restore by removing hidden -->
+  <!-- Money-back guarantee -->
   <!-- ═══════════════════════════════════════ -->
   <div class="slide" id="double-guarantee-slide" data-slide="8">
-    <div class="content--wide text-center flex-col gap-10" style="justify-content: center;">
-      <div class="rv d1"><span class="label-tag">The double guarantee</span></div>
-      <div class="rv d2">
-        <h2 class="h-hero" style="max-width: 900px; margin: 0 auto; font-size: clamp(28px, 3.4vw, 34px);"><span style="white-space: nowrap;">Reach 1,000 completed assessments,</span><br>or get every penny back.</h2>
+    <div class="content--wide text-center flex-col gap-32" style="justify-content: center;">
+      <div class="rv d1"><h2 class="h-hero" style="font-size: clamp(48px, 5.5vw, 68px);">Our Warranty</h2></div>
+
+      <div class="money-back-layout rv d2">
+        <section class="money-back-card">
+          <div class="money-back-card__title">It pays for itself</div>
+          <div class="money-back-card__copy">The system covers its own ad spend by month six.</div>
+        </section>
+
+        <div class="money-back-or">OR</div>
+
+        <section class="money-back-card">
+          <div class="money-back-card__title">You get refunded every penny back</div>
+          <div class="money-back-card__copy">No exceptions.</div>
+        </section>
       </div>
 
-      <div class="guarantee-grid">
-        <div class="guarantee-grid__metric rv d3">
-          <div class="guarantee-grid__value">1,000</div>
-          <div class="guarantee-grid__label">Completed AI assessments</div>
-        </div>
-        <div class="guarantee-grid__metric rv d3">
-          <div class="guarantee-grid__value">100%</div>
-          <div class="guarantee-grid__label">Every penny refunded</div>
-        </div>
-        <div class="guarantee-grid__detail rv d4">
-          <div class="guarantee-grid__check">✓</div>
-          <div class="guarantee-grid__title">1,000 completed assessments</div>
-          <div class="guarantee-grid__copy">We personally oversee and optimize your launch until you reach 1,000 completed assessments.</div>
-        </div>
-        <div class="guarantee-grid__detail rv d4">
-          <div class="guarantee-grid__check">✓</div>
-          <div class="guarantee-grid__title">Self-funding, or your money back</div>
-          <div class="guarantee-grid__copy">If it is not fully covering its own ad spend by then, we refund every penny.</div>
-        </div>
-      </div>
-
-      <div class="guarantee-grid__terms rv d5">Final terms depend on the program agreement.</div>
+      <div class="money-back-footer rv d3">There is no third option.</div>
     </div>
+    <div class="money-back-disclaimer">Full details are in our agreement.</div>
   </div>
 
   <!-- ═══════════════════════════════════════ -->
@@ -3926,22 +4268,8 @@
   }
 
   function installSalesDemos() {
-    const rolesSlide = document.querySelector('[aria-labelledby="offer-ladder-title"]');
     const approvedLogoSource = clientsLoveSlide.querySelector('.client-logo-strip__row')?.cloneNode(true);
     document.getElementById('opening-demo').innerHTML = salesDemoLive('self-funding-flywheel', 'sales-demo-shell--flywheel', 'Self-funding sales flywheel');
-    rolesSlide.querySelector('.content--wide').innerHTML = `
-      <div class="sales-demo-layout">
-        <div class="flex-col gap-10 text-center">
-          <div class="rv d1"><span class="label-tag">Your AI sales department</span></div>
-          <div class="rv d2"><h2 id="offer-ladder-title" class="h-lg" style="font-size: 48px;">Three roles work together so every lead is handled.</h2></div>
-        </div>
-        <div class="rv d3 sales-demo-media">${salesDemoLive('sales-department', 'sales-demo-shell--roles', 'AI sales department organization chart')}</div>
-        <div class="sales-demo-role-strip rv d4">
-          <div class="sales-demo-role"><strong>Brain + manager</strong><span>Holds your expertise and directs the other agents.</span></div>
-          <div class="sales-demo-role"><strong>Triager</strong><span>Sells the &lt;$20 assessment and identifies buyer intent.</span></div>
-          <div class="sales-demo-role"><strong>Salesperson</strong><span>Pitches the best next step for each interested buyer.</span></div>
-        </div>
-      </div>`;
 
     internalProofSlide.querySelector('.internal-proof-composition').innerHTML = `
       <div class="sales-demo-layout">
@@ -3989,16 +4317,6 @@
       approvedLogoSource.setAttribute('aria-hidden', 'true');
       clientsLoveSlide.appendChild(approvedLogoSource);
     }
-
-    reinvestmentSlide.querySelector('.content--wide').innerHTML = `
-      <div class="sales-demo-layout">
-        <div class="flex-col gap-10 text-center">
-          <div class="rv d1"><span class="label-tag">Phase 1 · Build</span></div>
-          <div class="rv d2"><h2 class="h-lg" style="font-size: 50px;">You choose how much revenue goes back into growth.</h2></div>
-        </div>
-        <div class="rv d3 sales-demo-media">${salesDemoLive('reinvestment-controls', 'sales-demo-shell--medium', 'Revenue reinvestment controls')}</div>
-        <p class="sales-demo-caption rv d4">Use the sliders to decide how much revenue from each offer goes back into paid traffic. Keep more profit now, or reinvest more to grow faster.</p>
-      </div>`;
 
     organicSlide.querySelector('.content--wide').innerHTML = `
       <div class="sales-demo-layout">
