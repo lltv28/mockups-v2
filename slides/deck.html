@@ -2433,20 +2433,18 @@
   }
   .problem-speed-layout {
     display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-columns: 230px 1px minmax(0, 1fr);
     gap: 42px;
     width: 100%;
     max-width: 1080px;
     margin: 0 auto;
-    align-items: stretch;
+    min-height: 250px;
+    padding: 34px 56px;
+    align-items: center;
+    border-radius: 28px;
+    background: var(--brand-50);
   }
   .problem-speed-stat {
-    min-height: 330px;
-    padding: 34px 30px;
-    border: 1px solid var(--brand-100);
-    border-radius: 24px;
-    background: var(--brand-50);
-    box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2456,62 +2454,52 @@
   .problem-speed-stat__value {
     color: var(--brand-950);
     font-family: var(--font-hero);
-    font-size: clamp(84px, 8vw, 118px);
+    font-size: clamp(78px, 7vw, 104px);
     font-weight: 600;
     letter-spacing: -4px;
     line-height: 0.82;
   }
   .problem-speed-stat__label {
-    max-width: 330px;
-    margin-top: 24px;
-    color: var(--al-900);
-    font-size: 18px;
+    max-width: 190px;
+    margin-top: 20px;
+    color: var(--al-600);
+    font-size: 16px;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.3;
   }
-  .problem-speed-stat__source {
-    margin-top: 18px;
-    color: var(--al-400);
-    font-size: 9px;
-    line-height: 1.35;
+  .problem-speed-divider {
+    width: 1px;
+    height: 130px;
+    background: var(--brand-200);
   }
-  .problem-speed-stat__source a { color: inherit; }
   .problem-speed-copy {
-    padding: 16px 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: left;
   }
-  .problem-speed-copy__body {
-    margin-top: 20px;
+  .problem-speed-support {
+    max-width: 1040px;
+    margin: 0 auto;
     color: var(--al-600);
     font-size: 17px;
-    line-height: 1.55;
-  }
-  .problem-speed-copy__definition {
-    margin-top: 22px;
-    padding: 16px 18px;
-    border-left: 3px solid var(--brand-950);
-    background: var(--brand-50);
-    color: var(--al-600);
-    font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.45;
+    text-align: center;
   }
   .problem-banner {
     width: 100%;
-    max-width: 980px;
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 14px 20px;
-    border-radius: 14px;
+    padding: 18px 24px;
+    border-radius: 18px;
     background: var(--brand-950);
     color: var(--white);
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 1.25;
     text-align: center;
   }
-  #real-problem-slide > .content--wide { gap: 28px; }
+  #real-problem-slide > .content--wide { gap: 30px; }
   #real-problem-slide > .content--wide > .flex-col { gap: 14px; }
 
   .reinvestment-compare {
@@ -2850,8 +2838,9 @@
     .product-library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .triager-example-grid { grid-template-columns: 1fr; }
     .triager-example { grid-template-columns: 100px minmax(0, 1fr); min-height: 40px; }
-    .problem-speed-layout { grid-template-columns: 1fr; gap: 12px; }
-    .problem-speed-stat { min-height: 210px; }
+    .problem-speed-layout { grid-template-columns: 1fr; gap: 18px; padding: 24px; }
+    .problem-speed-stat { min-height: auto; }
+    .problem-speed-divider { display: none; }
     .problem-banner { padding: 12px; font-size: 14px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -3081,6 +3070,212 @@
   #paid-slide .sales-demo-layout { transform: translateY(12px); gap: 10px; }
   #organic-slide .sales-demo-caption,
   #paid-slide .sales-demo-caption { margin-top: -2px; }
+
+  .simple-flow-demo {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .simple-flow-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr) 42px minmax(0, 1fr);
+    gap: 14px;
+    width: 100%;
+    align-items: stretch;
+  }
+  .simple-flow-card {
+    position: relative;
+    min-width: 0;
+    min-height: 320px;
+    padding: 30px 26px;
+    border: 1px solid var(--al-100);
+    border-radius: 24px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .simple-flow-step {
+    position: absolute;
+    top: 22px;
+    right: 24px;
+    color: var(--al-400);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .simple-flow-icon {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+    background: var(--brand-50);
+    color: var(--brand-950);
+    display: grid;
+    place-items: center;
+    font-size: 31px;
+    line-height: 1;
+  }
+  .simple-flow-card strong {
+    color: var(--al-900);
+    font-size: 24px;
+    line-height: 1.12;
+  }
+  .simple-flow-card > small {
+    max-width: 250px;
+    margin-top: 12px;
+    color: var(--al-500);
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .simple-flow-arrow {
+    color: var(--brand-950);
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+  .organic-social-preview,
+  .organic-dm-preview {
+    width: 100%;
+    max-width: 230px;
+    margin-bottom: 24px;
+    padding: 14px;
+    border: 1px solid var(--al-100);
+    border-radius: 16px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+    text-align: left;
+  }
+  .simple-flow-video {
+    position: relative;
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 24px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--al-900);
+    box-shadow: var(--shadow-card);
+  }
+  .simple-flow-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: none;
+    transform: scale(1.5);
+    transform-origin: center;
+  }
+  .simple-flow-video--paid {
+    max-width: 260px;
+    align-self: center;
+    margin-bottom: 22px;
+  }
+  .simple-flow-video--paid iframe { transform: scale(1.35); }
+  .organic-social-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .organic-social-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: var(--brand-50);
+    flex: 0 0 auto;
+  }
+  .organic-social-name {
+    color: var(--al-900);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .organic-social-count {
+    margin-top: 3px;
+    color: var(--al-400);
+    font-size: 10px;
+  }
+  .organic-social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    margin-top: 13px;
+  }
+  .organic-social-grid span {
+    height: 48px;
+    border-radius: 3px;
+    background: var(--n200);
+  }
+  .organic-social-grid span:nth-child(1),
+  .organic-social-grid span:nth-child(5) { background: var(--brand-100); }
+  .organic-dm-badge {
+    display: inline-flex;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--brand-50);
+    color: var(--al-900);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .organic-dm-message {
+    margin: 12px 0 4px 24px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: var(--brand-950);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .simple-paid-card {
+    min-height: 286px;
+    padding: 34px 32px;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .simple-paid-card .simple-flow-icon { margin-bottom: 28px; }
+  .simple-paid-card > small {
+    margin: 0 0 8px;
+    color: var(--al-500);
+    font-size: 17px;
+  }
+  .simple-paid-card strong {
+    font-size: 30px;
+    line-height: 1.08;
+  }
+  .simple-paid-cycle {
+    width: max-content;
+    margin: 34px auto 0;
+    padding: 13px 30px;
+    border-radius: 999px;
+    background: var(--brand-50);
+    color: var(--brand-950);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  #organic-slide .sales-demo-layout,
+  #paid-slide .sales-demo-layout {
+    gap: 22px;
+    transform: none;
+  }
+  #organic-slide .sales-demo-caption {
+    max-width: 1100px;
+    margin: 0 auto;
+    color: var(--al-500);
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  @media (max-width: 700px) {
+    .simple-flow-row { grid-template-columns: 1fr; }
+    .simple-flow-arrow { transform: rotate(90deg); }
+    .simple-flow-card { min-height: 240px; }
+  }
 </style>
 </head>
 <body>
@@ -3125,7 +3320,7 @@
     <div class="bg-orb bg-orb--green" style="top: -120px; right: -80px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -120px; left: -100px;"></div>
 
-    <div class="content--wide text-center flex-col gap-16" style="justify-content: center; transform: scale(0.88); transform-origin: center;">
+    <div class="content--wide text-center flex-col gap-16" style="justify-content: center; transform: scale(0.96); transform-origin: center;">
       <div class="flex-col gap-12">
         <div class="rv d1"><span class="label-tag">Why Clients Choose Kodara</span></div>
         <div class="rv d2"><h2 class="h-lg">Why our clients love the Kodara model.</h2></div>
@@ -3200,23 +3395,6 @@
           </div>
         </div>
 
-      <div class="rv d5 love-reasons">
-        <div class="love-reason">
-          <div class="love-reason__num">1</div>
-          <div class="love-reason__title">Fully done-for-you</div>
-          <div class="love-reason__body">Our white-glove team builds and launches everything for you in about six weeks.</div>
-        </div>
-        <div class="love-reason">
-          <div class="love-reason__num">2</div>
-          <div class="love-reason__title">Completely automated</div>
-          <div class="love-reason__body">It vets every lead for you, so only the qualified and motivated ones reach your calendar.</div>
-        </div>
-        <div class="love-reason">
-          <div class="love-reason__num">3</div>
-          <div class="love-reason__title">Your Own AI Whitelabel App</div>
-          <div class="love-reason__body">Offer an industry-first AI<br>your competitors do not offer<br>and create a category of your own.</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -3225,21 +3403,22 @@
     <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
       <div class="rv d1"><span class="label-tag">The real problem</span></div>
 
-      <div class="problem-speed-layout">
-        <div class="problem-speed-stat rv d2">
+      <div class="problem-speed-layout rv d2">
+        <div class="problem-speed-stat">
           <div class="problem-speed-stat__value">8×</div>
-          <div class="problem-speed-stat__label">higher conversion when leads are contacted within the first five minutes</div>
-          <div class="problem-speed-stat__source">Source: <a href="https://www.insidesales.com/response-time-matters/" target="_blank" rel="noopener">InsideSales Lead Response Study, 2021</a>, 55M+ sales activities</div>
+          <div class="problem-speed-stat__label">higher conversion<br>in 5 minutes</div>
         </div>
 
-        <div class="problem-speed-copy rv d3">
+        <div class="problem-speed-divider" aria-hidden="true"></div>
+
+        <div class="problem-speed-copy">
           <h2 id="real-problem-title" class="h-hero" style="font-size: clamp(38px, 4.2vw, 54px);">The first five minutes decide whether a lead gets worked or wasted.</h2>
-          <p class="problem-speed-copy__body">You already paid for the click. But if nobody responds while the buyer is interested, that ad spend disappears without a real sales conversation.</p>
-          <div class="problem-speed-copy__definition"><strong>Large companies hire teams of cold callers</strong> who spend all day calling, texting and emailing leads. Most businesses cannot afford that team.</div>
         </div>
       </div>
 
-      <div class="problem-banner rv d4">Your AI responds immediately, so every click you paid for gets worked.</div>
+      <p class="problem-speed-support rv d3">Only large companies can afford full-time cold-calling teams. Everyone else lets that paid click go unanswered.</p>
+
+      <div class="problem-banner rv d4">Your AI answers instantly, so every lead gets worked, not wasted.</div>
     </div>
   </div>
 
@@ -3325,23 +3504,6 @@
           </div>
         </div>
 
-      <div class="rv d5 love-reasons">
-        <div class="love-reason">
-          <div class="love-reason__num">1</div>
-          <div class="love-reason__title">AI Brain</div>
-          <div class="love-reason__body">Built from your courses, calls, pricing, objections, customer data and best thinking.</div>
-        </div>
-        <div class="love-reason">
-          <div class="love-reason__num">2</div>
-          <div class="love-reason__title">AI Avatar</div>
-          <div class="love-reason__body">Turns the Brain’s ideas into consistent video and written content in your voice.</div>
-        </div>
-        <div class="love-reason">
-          <div class="love-reason__num">3</div>
-          <div class="love-reason__title">Built for your business</div>
-          <div class="love-reason__body">The client examples above show how the same system adapts to different offers and audiences.</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -4325,17 +4487,15 @@
           <div class="rv d2"><h2 class="h-lg">Your organic marketing works as one system.</h2></div>
         </div>
         <div class="rv d3 sales-demo-media">${salesDemoLive('organic-workflow', 'sales-demo-shell--wide sales-demo-shell--launch', 'Organic content workflow')}</div>
-        <p class="sales-demo-caption rv d4">The Brain creates the message, your Avatar delivers it, and Auto-DMs point interested people to the &lt;$20 assessment.</p>
+        <p class="sales-demo-caption rv d4">The Brain creates the message, your Avatar publishes it, and comments turn into a booked assessment.</p>
       </div>`;
 
     paidSlide.querySelector('.content--wide').innerHTML = `
       <div class="sales-demo-layout">
         <div class="flex-col gap-10 text-center">
-          <div class="rv d1"><span class="label-tag">Phase 3 · Grow</span></div>
-          <div class="rv d2"><h2 class="h-lg">Paid ads learn from every assessment and sale.</h2></div>
+          <div class="rv d1"><span class="label-tag">DFY Paid Ads System</span></div>
         </div>
         <div class="rv d3 sales-demo-media">${salesDemoLive('paid-ads-loop', 'sales-demo-shell--wide sales-demo-shell--launch', 'Paid ads learning and reinvestment loop')}</div>
-        <p class="sales-demo-caption rv d4">Think of it as a smarter ad pixel. The Brain sees what converts, and revenue helps pay for the next campaign.</p>
       </div>`;
 
     triagerCloserSlide.dataset.demoPlacement = '06-triager-salesperson';
@@ -4348,93 +4508,70 @@
 
   function installLargeCardMockup() {
     organicSlide.querySelector('.sales-demo-media').innerHTML = `
-      <div class="large-card-demo large-card-demo--organic" aria-label="Larger organic marketing workflow cards">
-        <div class="large-card-row large-card-row--single">
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">01</span>
-            <div class="large-flow-card__icon">✦</div>
+      <div class="simple-flow-demo" aria-label="Three-step organic marketing workflow">
+        <div class="simple-flow-row">
+          <div class="simple-flow-card">
+            <div class="simple-flow-icon">✦</div>
             <strong>AI Brain Manager</strong>
             <small>Plans the content</small>
           </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card large-flow-card--video">
-            <span class="large-flow-card__step">02</span>
-            <div class="large-flow-card__video">
+          <div class="simple-flow-arrow" aria-hidden="true">→</div>
+          <div class="simple-flow-card">
+            <div class="simple-flow-video">
               <iframe
-                src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/393d729a00e6a20de5e23ae1665153da/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F393d729a00e6a20de5e23ae1665153da%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-                title="AI Avatar video inside a workflow card"
-                allow="autoplay; encrypted-media; picture-in-picture;"
+                src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/393d729a00e6a20de5e23ae1665153da/iframe?muted=true&amp;preload=auto&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F393d729a00e6a20de5e23ae1665153da%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D1200&amp;controls=false"
+                title="AI Avatar content demo"
+                loading="eager"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowfullscreen="true"
               ></iframe>
             </div>
             <strong>AI Avatar</strong>
-            <small>Records the ideas</small>
+            <small>Posts content in your voice</small>
           </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">03</span>
-            <div class="large-flow-card__icon">↑</div>
-            <strong>Publish</strong>
-            <small>Reaches new people</small>
-          </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">04</span>
-            <div class="large-flow-card__icon">··</div>
-            <strong>Auto-DMs</strong>
-            <small>Captures contact info</small>
-          </div>
-          <div class="large-flow-arrow">→</div>
-          <div class="large-flow-card">
-            <span class="large-flow-card__step">05</span>
-            <div class="large-flow-card__icon">✓</div>
-            <strong>&lt;$20 Assessment</strong>
-            <small>Qualifies intent</small>
+          <div class="simple-flow-arrow" aria-hidden="true">→</div>
+          <div class="simple-flow-card">
+            <div class="organic-dm-preview" aria-hidden="true">
+              <div class="organic-dm-badge">GUIDE</div>
+              <div class="organic-dm-message">Sent to your DMs<br>✓</div>
+            </div>
+            <strong>Auto-DM to assessment</strong>
+            <small>Books interested leads into the &lt;$20 assessment</small>
           </div>
         </div>
-        <div class="large-flow-return">Buyer data improves the next cycle</div>
       </div>`;
 
     paidSlide.querySelector('.sales-demo-media').innerHTML = `
-      <div class="large-card-demo large-card-demo--paid" aria-label="Larger paid ads growth cycle cards">
-        <div class="large-flow-card large-flow-card--paid-video">
-          <span class="large-flow-card__step">01</span>
-          <div class="large-flow-card__video">
-            <iframe
-              src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cf012831e12dd92855000b85e12a60db/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcf012831e12dd92855000b85e12a60db%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;controls=false"
-              title="Kodara paid ads launch video"
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-              allowfullscreen="true"
-            ></iframe>
+      <div class="simple-flow-demo" aria-label="Three-step paid ads growth cycle">
+        <div class="simple-flow-row">
+          <div class="simple-flow-card simple-paid-card">
+            <div class="simple-flow-video simple-flow-video--paid">
+              <iframe
+                src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cf012831e12dd92855000b85e12a60db/iframe?muted=true&amp;preload=auto&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcf012831e12dd92855000b85e12a60db%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D1200&amp;controls=false"
+                title="Paid ads launch demo"
+                loading="eager"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowfullscreen="true"
+              ></iframe>
+            </div>
+            <small>Our team</small>
+            <strong>Launches ads</strong>
           </div>
-          <small>Our team</small>
-          <strong>Launches Ads</strong>
+          <div class="simple-flow-arrow" aria-hidden="true">→</div>
+          <div class="simple-flow-card simple-paid-card">
+            <div class="simple-flow-icon">◎</div>
+            <small>Qualified prospects</small>
+            <strong>AI Triager</strong>
+          </div>
+          <div class="simple-flow-arrow" aria-hidden="true">→</div>
+          <div class="simple-flow-card simple-paid-card">
+            <div class="simple-flow-icon">↻</div>
+            <small>Sales revenue</small>
+            <strong>Funds next launch</strong>
+          </div>
         </div>
-        <div class="large-flow-card">
-          <span class="large-flow-card__step">02</span>
-          <div class="large-flow-card__icon">◉</div>
-          <small>Qualified prospects</small>
-          <strong>AI Triager</strong>
-        </div>
-        <div class="large-flow-card">
-          <span class="large-flow-card__step">04</span>
-          <div class="large-flow-card__icon">↗</div>
-          <small>Sales revenue</small>
-          <strong>Funds Next Launch</strong>
-        </div>
-        <div class="large-flow-card">
-          <span class="large-flow-card__step">03</span>
-          <div class="large-flow-card__icon">✦</div>
-          <small>AI Brain Manager</small>
-          <strong>Learns What Converts</strong>
-        </div>
-        <div class="large-paid-center">↻ &nbsp; Self-funding growth cycle</div>
-        <div class="large-paid-arrow large-paid-arrow--top">→</div>
-        <div class="large-paid-arrow large-paid-arrow--right">→</div>
-        <div class="large-paid-arrow large-paid-arrow--bottom">→</div>
-        <div class="large-paid-arrow large-paid-arrow--left">→</div>
+        <div class="simple-paid-cycle">↻ &nbsp; Self-funding growth cycle</div>
       </div>`;
-
-    paidSlide.querySelector('.sales-demo-caption')?.remove();
   }
 
   installLargeCardMockup();
