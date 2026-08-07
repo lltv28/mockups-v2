@@ -161,4 +161,3 @@ Browser verification must confirm:
 - The thumbnail shows completed chart lines rather than blank graphs.
 - No clipping, overlap, or horizontal overflow occurs at 1920x1080, 1280x720, 900x600, and 390x844.
 - The slide remains readable with reduced motion enabled.
-
