@@ -110,3 +110,7 @@ test('cash runway stacks without horizontal overflow on narrow screens', () => {
   assert.match(mobileWindow, /\.slide--cash-runway\s*\{[^}]*overflow-y:\s*auto/s);
   assert.match(deck, /\.slide--cash-runway \.cash-runway-chart\s*\{[^}]*width:\s*100%[^}]*height:\s*auto/s);
 });
+
+test('cash runway decorative orbs cannot expand the slide scroll width', () => {
+  assert.match(deck, /\.slide--cash-runway > \.bg-orb\s*\{[^}]*display:\s*none/s);
+});
