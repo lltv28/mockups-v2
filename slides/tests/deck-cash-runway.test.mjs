@@ -48,3 +48,31 @@ test('cash runway is accessible and self-contained', () => {
   assert.doesNotMatch(cashSlide, /<iframe\b/);
   assert.doesNotMatch(cashSlide, /(?:src|href)="https?:/);
 });
+
+test('cash runway uses scoped deck tokens and active-slide animation', () => {
+  assert.match(deck, /\.slide--cash-runway\s*\{[^}]*zoom:\s*1\.15/s);
+  assert.match(deck, /\.cash-runway-layout\s*\{/);
+  assert.match(deck, /\.cash-runway-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)\s+1px\s+minmax\(0, 1fr\)/s);
+  assert.match(deck, /\.cash-runway-path--self-funding\s*\{[^}]*stroke:\s*var\(--brand-950\)/s);
+  assert.match(deck, /\.cash-runway-fill--upside\s*\{[^}]*fill:\s*var\(--brand-100\)/s);
+  assert.match(deck, /\.slide--cash-runway\.active[^{]*\.cash-runway-path--loss/);
+  assert.match(deck, /@keyframes cash-runway-draw/);
+  assert.match(deck, /@keyframes cash-runway-draw-staircase/);
+  assert.match(deck, /@keyframes cash-runway-label-in/);
+});
+
+test('cash runway has static thumbnail and reduced-motion fallbacks', () => {
+  assert.match(deck, /\.thumb-clone \.cash-runway-path[^{]*\{[^}]*animation:\s*none\s*!important[^}]*stroke-dashoffset:\s*0\s*!important/s);
+  assert.match(deck, /\.thumb-clone \.cash-runway-closing-label[^{]*\{[^}]*opacity:\s*1\s*!important/s);
+  const reducedStart = deck.lastIndexOf('@media (prefers-reduced-motion: reduce)');
+  assert.ok(reducedStart >= 0);
+  const reducedWindow = deck.slice(reducedStart, reducedStart + 900);
+  assert.match(reducedWindow, /cash-runway-path/);
+  assert.match(reducedWindow, /cash-runway-closing-label/);
+});
+
+test('cash runway stacks without horizontal overflow on narrow screens', () => {
+  assert.match(deck, /@media \(max-width: 700px\)[\s\S]*?\.cash-runway-grid\s*\{[^}]*grid-template-columns:\s*1fr/s);
+  assert.match(deck, /@media \(max-width: 700px\)[\s\S]*?\.slide--cash-runway\s*\{[^}]*overflow-y:\s*auto/s);
+  assert.match(deck, /\.cash-runway-chart\s*\{[^}]*width:\s*100%[^}]*height:\s*auto/s);
+});
