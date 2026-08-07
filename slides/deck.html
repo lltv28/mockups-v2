@@ -3293,7 +3293,9 @@
     text-transform: uppercase;
   }
   .slide--cash-runway .cash-runway-grid {
-    width: 100%;
+    width: 115%;
+    max-width: 1242px;
+    margin-inline: -7.5%;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
     align-items: stretch;
@@ -3348,6 +3350,7 @@
   @media (max-width: 900px) {
     .slide--cash-runway { zoom: 1; }
     .slide--cash-runway .bg-orb { display: none; }
+    .slide--cash-runway .cash-runway-grid { width: calc(100% + 56px); max-width: calc(100% + 56px); margin-inline: -28px; }
   }
   @media (max-width: 700px) {
     .simple-flow-row { grid-template-columns: 1fr; }
@@ -3355,7 +3358,7 @@
     .simple-flow-card { min-height: 240px; }
     .slide--cash-runway { overflow-y: auto; align-items: flex-start; padding-top: 42px; padding-bottom: 72px; }
     .slide--cash-runway .cash-runway-layout { gap: 16px; }
-    .slide--cash-runway .cash-runway-grid { grid-template-columns: 1fr; gap: 14px; }
+    .slide--cash-runway .cash-runway-grid { width: 100%; max-width: 100%; margin-inline: 0; grid-template-columns: 1fr; gap: 14px; }
     .slide--cash-runway .cash-runway-divider { width: 100%; height: 1px; }
     .slide--cash-runway .cash-runway-header .h-lg { font-size: clamp(28px, 8vw, 38px); }
     .slide--cash-runway .cash-runway-context { max-width: 320px; line-height: 1.5; }

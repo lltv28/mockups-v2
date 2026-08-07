@@ -169,3 +169,26 @@ test('cash runway mobile SVG annotations remain legible and clear of sale marker
     assert.ok(clearanceFromMarker >= 10, `sale label clears its marker by only ${clearanceFromMarker.toFixed(1)}px`);
   }
 });
+
+test('cash runway chart panels enlarge where room permits and cap safely on tablets', () => {
+  const gridRule = cssRuleBody(deck, '.slide--cash-runway .cash-runway-grid');
+  assert.match(gridRule, /width:\s*115%/);
+  assert.match(gridRule, /max-width:\s*1242px/);
+  assert.match(gridRule, /margin-inline:\s*-7\.5%/);
+
+  const tabletStart = deck.lastIndexOf('@media (max-width: 900px)');
+  const tabletEnd = deck.indexOf('@media (max-width: 700px)', tabletStart);
+  const tabletCss = deck.slice(tabletStart, tabletEnd);
+  const tabletGridRule = cssRuleBody(tabletCss, '.slide--cash-runway .cash-runway-grid');
+  assert.match(tabletGridRule, /width:\s*calc\(100% \+ 56px\)/);
+  assert.match(tabletGridRule, /max-width:\s*calc\(100% \+ 56px\)/);
+  assert.match(tabletGridRule, /margin-inline:\s*-28px/);
+
+  const mobileStart = deck.lastIndexOf('@media (max-width: 700px)');
+  const mobileEnd = deck.indexOf('@media (min-width: 701px)', mobileStart);
+  const mobileCss = deck.slice(mobileStart, mobileEnd);
+  const mobileGridRule = cssRuleBody(mobileCss, '.slide--cash-runway .cash-runway-grid');
+  assert.match(mobileGridRule, /width:\s*100%/);
+  assert.match(mobileGridRule, /max-width:\s*100%/);
+  assert.match(mobileGridRule, /margin-inline:\s*0/);
+});
