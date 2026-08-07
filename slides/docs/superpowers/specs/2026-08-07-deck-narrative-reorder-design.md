@@ -24,7 +24,7 @@ The first six visible slides become:
 
 1. Opening — new self-funding headline
 2. Client wall — “Why our clients love the Kodara model.”
-3. Knowledge operating system — “Your knowledge becomes the operating system.”
+3. Existing AI build/knowledge slide (`#clients-love-slide`), with its current runtime-rendered content unchanged
 4. Self-funding flywheel — “Each sale helps pay for the next conversation.”
 5. Cash-runway comparison — “Stop betting your cash on the next big sale.”
 6. Program overview — “Build your AI, start selling, then grow.”
@@ -32,6 +32,8 @@ The first six visible slides become:
 Move the complete `#cash-runway-slide` block, including its comment marker and unchanged inline SVGs, directly after `#internal-proof-slide` and before `#program-overview-slide`. Preserve its chart geometry, sizing, animation, responsive behavior, copy, and accessibility structure.
 
 The deck changes from 25 to 24 visible slides. Update the static counter denominator from 25 to 24; runtime numbering, progress, thumbnails, and URL navigation continue to derive from visible DOM order.
+
+The current runtime contains `insertBefore(...)` calls that override source order. Remove the target-related calls that move the internal-proof, program-overview, clients-love, ad-loop-reinvestment, and ownership slides. Leave unrelated Build, Sell, and Grow reorders unchanged. Remove any constants that become unused. Navigation must initialize only after the approved early order and warranty-to-ownership adjacency are established.
 
 ## Warranty and ownership sequence
 
@@ -46,7 +48,7 @@ Preserve the ownership headline, remaining timeline milestones, supporting descr
 
 ## Testing and verification
 
-- Add or update a current-deck narrative regression test that checks the exact opener copy, absence of the speed-to-lead slide and its dedicated selectors, 24 visible slides, the approved first-six order, cash-runway placement after the internal-proof slide, warranty-to-ownership adjacency, and the two ownership copy replacements.
+- Add or update a current-deck narrative regression test that checks the exact opener copy, absence of the speed-to-lead slide and its dedicated selectors, 24 visible slides, the approved first-six order, absence of runtime moves that would override that order, cash-runway placement after the internal-proof slide, warranty-to-ownership adjacency, and the two ownership copy replacements.
 - Update the cash-runway test boundary and order assertions so the moved block is sliced through the program-overview marker instead of the deleted speed-to-lead marker.
 - Run the focused current-deck tests and the full slide suite. The documented pre-existing July archived-deck checksum mismatch may remain; do not modify archived decks or the checksum fixture.
 - Render and inspect the opener, the early sequence, the moved cash-runway slide, the warranty slide, and the ownership slide at desktop and mobile widths.
