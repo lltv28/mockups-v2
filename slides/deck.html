@@ -3273,7 +3273,7 @@
   }
 
   .slide--cash-runway { zoom: 1.15; }
-  .cash-runway-layout {
+  .slide--cash-runway .cash-runway-layout {
     width: 100%;
     max-width: 1080px;
     display: flex;
@@ -3281,9 +3281,9 @@
     align-items: center;
     gap: 12px;
   }
-  .cash-runway-header { display: flex; flex-direction: column; gap: 6px; }
-  .cash-runway-header .h-lg { font-size: clamp(30px, 3.2vw, 44px); }
-  .cash-runway-context {
+  .slide--cash-runway .cash-runway-header { display: flex; flex-direction: column; gap: 6px; }
+  .slide--cash-runway .cash-runway-header .h-lg { font-size: clamp(30px, 3.2vw, 44px); }
+  .slide--cash-runway .cash-runway-context {
     color: var(--al-400);
     font-family: var(--font);
     font-size: 10px;
@@ -3291,36 +3291,36 @@
     letter-spacing: .08em;
     text-transform: uppercase;
   }
-  .cash-runway-grid {
+  .slide--cash-runway .cash-runway-grid {
     width: 100%;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
     align-items: stretch;
     gap: 20px;
   }
-  .cash-runway-divider { width: 1px; background: var(--al-100); }
-  .cash-runway-panel { min-width: 0; border-radius: 16px; background: rgba(255,255,255,.7); }
-  .cash-runway-panel--self-funding { background: var(--brand-50); }
-  .cash-runway-chart { display: block; width: 100%; height: auto; overflow: visible; }
-  .cash-runway-chart text { font-family: var(--font); font-variation-settings: var(--fvs); }
-  .cash-runway-chart-title { fill: var(--al-900); font-size: 20px; font-weight: 700; }
-  .cash-runway-chart-subtitle { fill: var(--al-400); font-size: 11px; }
-  .cash-runway-axis { fill: none; stroke: var(--al-200); stroke-width: 1.5; }
-  .cash-runway-baseline { stroke: var(--al-100); stroke-dasharray: 5 7; }
-  .cash-runway-axis-label,
-  .cash-runway-baseline-label,
-  .cash-runway-sale-label { fill: var(--al-400); font-size: 9px; }
-  .cash-runway-fill--risk { fill: rgba(201, 90, 94, .14); }
-  .cash-runway-fill--upside { fill: var(--brand-100); }
-  .cash-runway-path { fill: none; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
-  .cash-runway-path--loss { stroke: #C95A5E; }
-  .cash-runway-path--gain { stroke: var(--brand-950); }
-  .cash-runway-path--self-funding { stroke: var(--brand-950); stroke-width: 7; stroke-linejoin: round; }
-  .cash-runway-closing-label { opacity: 1; font-size: 16px; font-weight: 700; }
-  .cash-runway-closing-label--negative { fill: #A7474B; }
-  .cash-runway-closing-label--positive { fill: var(--brand-950); }
-  .cash-runway-takeaway { color: var(--al-900); font-size: 18px; font-weight: 700; text-align: center; }
-  .cash-runway-accuracy { max-width: 820px; color: var(--al-300); font-size: 8px; line-height: 1.4; text-align: center; }
+  .slide--cash-runway .cash-runway-divider { width: 1px; background: var(--al-100); }
+  .slide--cash-runway .cash-runway-panel { min-width: 0; border-radius: 16px; background: rgba(255,255,255,.7); }
+  .slide--cash-runway .cash-runway-panel--self-funding { background: var(--brand-50); }
+  .slide--cash-runway .cash-runway-chart { display: block; width: 100%; height: auto; overflow: visible; }
+  .slide--cash-runway .cash-runway-chart text { font-family: var(--font); font-variation-settings: var(--fvs); }
+  .slide--cash-runway .cash-runway-chart-title { fill: var(--al-900); font-size: 20px; font-weight: 700; }
+  .slide--cash-runway .cash-runway-chart-subtitle { fill: var(--al-400); font-size: 11px; }
+  .slide--cash-runway .cash-runway-axis { fill: none; stroke: var(--al-200); stroke-width: 1.5; }
+  .slide--cash-runway .cash-runway-baseline { stroke: var(--al-100); stroke-dasharray: 5 7; }
+  .slide--cash-runway .cash-runway-axis-label,
+  .slide--cash-runway .cash-runway-baseline-label,
+  .slide--cash-runway .cash-runway-sale-label { fill: var(--al-400); font-size: 9px; }
+  .slide--cash-runway .cash-runway-fill--risk { fill: rgba(201, 90, 94, .14); }
+  .slide--cash-runway .cash-runway-fill--upside { fill: var(--brand-100); }
+  .slide--cash-runway .cash-runway-path { fill: none; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .slide--cash-runway .cash-runway-path--loss { stroke: #C95A5E; }
+  .slide--cash-runway .cash-runway-path--gain { stroke: var(--brand-950); }
+  .slide--cash-runway .cash-runway-path--self-funding { stroke: var(--brand-950); stroke-width: 7; stroke-linejoin: round; }
+  .slide--cash-runway .cash-runway-closing-label { opacity: 1; font-size: 16px; font-weight: 700; }
+  .slide--cash-runway .cash-runway-closing-label--negative { fill: #A7474B; }
+  .slide--cash-runway .cash-runway-closing-label--positive { fill: var(--brand-950); }
+  .slide--cash-runway .cash-runway-takeaway { color: var(--al-900); font-size: 18px; font-weight: 700; text-align: center; }
+  .slide--cash-runway .cash-runway-accuracy { max-width: 820px; color: var(--al-300); font-size: 8px; line-height: 1.4; text-align: center; }
 
   .slide--cash-runway.active .cash-runway-path--loss,
   .slide--cash-runway.active .cash-runway-path--gain {
@@ -3336,33 +3336,37 @@
   @keyframes cash-runway-draw-staircase { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
   @keyframes cash-runway-label-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-  .thumb-clone .cash-runway-path { animation: none !important; stroke-dashoffset: 0 !important; }
-  .thumb-clone .cash-runway-closing-label { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .thumb-clone .slide--cash-runway .cash-runway-path { animation: none !important; stroke-dashoffset: 0 !important; }
+  .thumb-clone .slide--cash-runway .cash-runway-closing-label { animation: none !important; opacity: 1 !important; transform: none !important; }
 
   @media (prefers-reduced-motion: reduce) {
-    .cash-runway-path { animation: none !important; stroke-dashoffset: 0 !important; }
-    .cash-runway-closing-label { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .slide--cash-runway .cash-runway-path { animation: none !important; stroke-dashoffset: 0 !important; }
+    .slide--cash-runway .cash-runway-closing-label { animation: none !important; opacity: 1 !important; transform: none !important; }
   }
 
+  @media (max-width: 900px) {
+    .slide--cash-runway { zoom: 1; }
+    .slide--cash-runway .bg-orb { display: none; }
+  }
   @media (max-width: 700px) {
     .simple-flow-row { grid-template-columns: 1fr; }
     .simple-flow-arrow { transform: rotate(90deg); }
     .simple-flow-card { min-height: 240px; }
     .slide--cash-runway { overflow-y: auto; align-items: flex-start; padding-top: 42px; padding-bottom: 72px; }
-    .cash-runway-layout { gap: 16px; }
-    .cash-runway-grid { grid-template-columns: 1fr; gap: 14px; }
-    .cash-runway-divider { width: 100%; height: 1px; }
-    .cash-runway-header .h-lg { font-size: clamp(28px, 8vw, 38px); }
-    .cash-runway-context { max-width: 320px; line-height: 1.5; }
-    .cash-runway-takeaway { font-size: 16px; }
-    .cash-runway-accuracy { font-size: 8px; }
+    .slide--cash-runway .cash-runway-layout { gap: 16px; }
+    .slide--cash-runway .cash-runway-grid { grid-template-columns: 1fr; gap: 14px; }
+    .slide--cash-runway .cash-runway-divider { width: 100%; height: 1px; }
+    .slide--cash-runway .cash-runway-header .h-lg { font-size: clamp(28px, 8vw, 38px); }
+    .slide--cash-runway .cash-runway-context { max-width: 320px; line-height: 1.5; }
+    .slide--cash-runway .cash-runway-takeaway { font-size: 16px; }
+    .slide--cash-runway .cash-runway-accuracy { font-size: 8px; }
   }
   @media (min-width: 701px) and (max-height: 700px) {
-    .cash-runway-layout { gap: 6px; }
-    .cash-runway-header { gap: 3px; }
-    .cash-runway-header .h-lg { font-size: 32px; }
-    .cash-runway-grid { max-width: 980px; }
-    .cash-runway-takeaway { font-size: 16px; }
+    .slide--cash-runway .cash-runway-layout { gap: 6px; }
+    .slide--cash-runway .cash-runway-header { gap: 3px; }
+    .slide--cash-runway .cash-runway-header .h-lg { font-size: 32px; }
+    .slide--cash-runway .cash-runway-grid { max-width: 980px; }
+    .slide--cash-runway .cash-runway-takeaway { font-size: 16px; }
   }
 </style>
 </head>

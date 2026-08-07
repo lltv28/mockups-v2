@@ -17,6 +17,25 @@ function visibleSlideIds() {
     .map((tag) => tag.match(/\sid="([^"]+)"/)?.[1] ?? null);
 }
 
+function cashRunwaySelectors() {
+  const cssStart = deck.indexOf('.slide--cash-runway { zoom: 1.15; }');
+  const cssEnd = deck.indexOf('</style>', cssStart);
+  const css = cssStart >= 0 && cssEnd > cssStart ? deck.slice(cssStart, cssEnd) : '';
+  const selectors = [];
+  let tokenStart = 0;
+
+  for (let index = 0; index < css.length; index += 1) {
+    if (css[index] === '{') {
+      selectors.push(...css.slice(tokenStart, index).split(',').map((selector) => selector.trim()));
+      tokenStart = index + 1;
+    } else if (css[index] === '}') {
+      tokenStart = index + 1;
+    }
+  }
+
+  return selectors.filter((selector) => selector.includes('.cash-runway'));
+}
+
 test('cash runway is the new visible slide 3', () => {
   const ids = visibleSlideIds();
   assert.equal(ids.length, 25);
@@ -51,28 +70,43 @@ test('cash runway is accessible and self-contained', () => {
 
 test('cash runway uses scoped deck tokens and active-slide animation', () => {
   assert.match(deck, /\.slide--cash-runway\s*\{[^}]*zoom:\s*1\.15/s);
-  assert.match(deck, /\.cash-runway-layout\s*\{/);
-  assert.match(deck, /\.cash-runway-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)\s+1px\s+minmax\(0, 1fr\)/s);
-  assert.match(deck, /\.cash-runway-path--self-funding\s*\{[^}]*stroke:\s*var\(--brand-950\)/s);
-  assert.match(deck, /\.cash-runway-fill--upside\s*\{[^}]*fill:\s*var\(--brand-100\)/s);
+  assert.match(deck, /\.slide--cash-runway \.cash-runway-layout\s*\{/);
+  assert.match(deck, /\.slide--cash-runway \.cash-runway-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)\s+1px\s+minmax\(0, 1fr\)/s);
+  assert.match(deck, /\.slide--cash-runway \.cash-runway-path--self-funding\s*\{[^}]*stroke:\s*var\(--brand-950\)/s);
+  assert.match(deck, /\.slide--cash-runway \.cash-runway-fill--upside\s*\{[^}]*fill:\s*var\(--brand-100\)/s);
   assert.match(deck, /\.slide--cash-runway\.active[^{]*\.cash-runway-path--loss/);
   assert.match(deck, /@keyframes cash-runway-draw/);
   assert.match(deck, /@keyframes cash-runway-draw-staircase/);
   assert.match(deck, /@keyframes cash-runway-label-in/);
 });
 
+test('cash runway component selectors are structurally scoped to the slide', () => {
+  const selectors = cashRunwaySelectors();
+  assert.ok(selectors.length > 0);
+  for (const selector of selectors) {
+    assert.match(selector, /^(?:\.thumb-clone )?\.slide--cash-runway(?:[\s.:]|$)/, `unscoped selector: ${selector}`);
+  }
+});
+
 test('cash runway has static thumbnail and reduced-motion fallbacks', () => {
-  assert.match(deck, /\.thumb-clone \.cash-runway-path[^{]*\{[^}]*animation:\s*none\s*!important[^}]*stroke-dashoffset:\s*0\s*!important/s);
-  assert.match(deck, /\.thumb-clone \.cash-runway-closing-label[^{]*\{[^}]*opacity:\s*1\s*!important/s);
+  assert.match(deck, /\.thumb-clone \.slide--cash-runway \.cash-runway-path[^{]*\{[^}]*animation:\s*none\s*!important[^}]*stroke-dashoffset:\s*0\s*!important/s);
+  assert.match(deck, /\.thumb-clone \.slide--cash-runway \.cash-runway-closing-label[^{]*\{[^}]*opacity:\s*1\s*!important/s);
   const reducedStart = deck.lastIndexOf('@media (prefers-reduced-motion: reduce)');
   assert.ok(reducedStart >= 0);
   const reducedWindow = deck.slice(reducedStart, reducedStart + 900);
-  assert.match(reducedWindow, /cash-runway-path/);
-  assert.match(reducedWindow, /cash-runway-closing-label/);
+  assert.match(reducedWindow, /\.slide--cash-runway \.cash-runway-path/);
+  assert.match(reducedWindow, /\.slide--cash-runway \.cash-runway-closing-label/);
 });
 
 test('cash runway stacks without horizontal overflow on narrow screens', () => {
-  assert.match(deck, /@media \(max-width: 700px\)[\s\S]*?\.cash-runway-grid\s*\{[^}]*grid-template-columns:\s*1fr/s);
-  assert.match(deck, /@media \(max-width: 700px\)[\s\S]*?\.slide--cash-runway\s*\{[^}]*overflow-y:\s*auto/s);
-  assert.match(deck, /\.cash-runway-chart\s*\{[^}]*width:\s*100%[^}]*height:\s*auto/s);
+  const tabletStart = deck.lastIndexOf('@media (max-width: 900px)');
+  const tabletWindow = deck.slice(tabletStart, tabletStart + 500);
+  assert.match(tabletWindow, /\.slide--cash-runway\s*\{[^}]*zoom:\s*1/s);
+  assert.match(tabletWindow, /\.slide--cash-runway \.bg-orb\s*\{[^}]*display:\s*none/s);
+
+  const mobileStart = deck.lastIndexOf('@media (max-width: 700px)');
+  const mobileWindow = deck.slice(mobileStart, mobileStart + 1200);
+  assert.match(mobileWindow, /\.slide--cash-runway \.cash-runway-grid\s*\{[^}]*grid-template-columns:\s*1fr/s);
+  assert.match(mobileWindow, /\.slide--cash-runway\s*\{[^}]*overflow-y:\s*auto/s);
+  assert.match(deck, /\.slide--cash-runway \.cash-runway-chart\s*\{[^}]*width:\s*100%[^}]*height:\s*auto/s);
 });
