@@ -36,6 +36,15 @@ function cashRunwaySelectors() {
   return selectors.filter((selector) => selector.includes('.cash-runway'));
 }
 
+function cssRuleBody(css, selector) {
+  const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return css.match(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`, 's'))?.[1] ?? '';
+}
+
+function cssPixelValue(ruleBody, property) {
+  return Number(ruleBody.match(new RegExp(`${property}:\\s*(-?[\\d.]+)px`))?.[1] ?? Number.NaN);
+}
+
 test('cash runway is the new visible slide 3', () => {
   const ids = visibleSlideIds();
   assert.equal(ids.length, 25);
@@ -113,4 +122,50 @@ test('cash runway stacks without horizontal overflow on narrow screens', () => {
 
 test('cash runway decorative orbs cannot expand the slide scroll width', () => {
   assert.match(deck, /\.slide--cash-runway > \.bg-orb\s*\{[^}]*display:\s*none/s);
+});
+
+test('cash runway mobile SVG annotations remain legible and clear of sale markers', () => {
+  const mobileStart = deck.lastIndexOf('@media (max-width: 700px)');
+  const mobileEnd = deck.indexOf('@media (min-width: 701px)', mobileStart);
+  const mobileCss = deck.slice(mobileStart, mobileEnd);
+  const mobileChartScale = 335 / 568;
+  const minimumEffectiveFontSize = 11;
+  const requiredSelectors = [
+    '.slide--cash-runway .cash-runway-chart-subtitle',
+    '.slide--cash-runway .cash-runway-axis-label',
+    '.slide--cash-runway .baseline-label-mobile',
+    '.slide--cash-runway .cash-runway-sale-label',
+    '.slide--cash-runway .cash-runway-closing-label',
+  ];
+
+  for (const selector of requiredSelectors) {
+    const fontSize = cssPixelValue(cssRuleBody(mobileCss, selector), 'font-size');
+    assert.ok(
+      fontSize * mobileChartScale >= minimumEffectiveFontSize,
+      `${selector} renders below ${minimumEffectiveFontSize}px at the 335px mobile chart width`,
+    );
+  }
+
+  assert.match(cssRuleBody(mobileCss, '.slide--cash-runway .baseline-label-desktop'), /display:\s*none/);
+  const mobileBaselineRule = cssRuleBody(mobileCss, '.slide--cash-runway .baseline-label-mobile');
+  assert.match(mobileBaselineRule, /display:\s*block/);
+  const baselineTranslate = mobileBaselineRule.match(/transform:\s*translate\((-?[\d.]+)px,\s*(-?[\d.]+)px\)/);
+  const baselineTranslateX = Number(baselineTranslate?.[1] ?? Number.NaN);
+  const baselineTranslateY = Number(baselineTranslate?.[2] ?? Number.NaN);
+  assert.ok(baselineTranslateX <= -12, 'mobile baseline label must clear the first staircase rise');
+  assert.ok(baselineTranslateY <= -8, 'mobile baseline label must clear the baseline path');
+
+  const subtitleRule = cssRuleBody(mobileCss, '.slide--cash-runway .cash-runway-chart-subtitle');
+  const subtitleTranslateX = Number(subtitleRule.match(/transform:\s*translate\(([\d.]+)px,/i)?.[1] ?? Number.NaN);
+  assert.ok(subtitleTranslateX * mobileChartScale >= 10, 'mobile subtitle must clear the CASH axis label');
+
+  const saleRule = cssRuleBody(mobileCss, '.slide--cash-runway .cash-runway-sale-label');
+  const saleTranslateY = Number(saleRule.match(/transform:\s*translateY\((-?[\d.]+)px\)/)?.[1] ?? Number.NaN);
+  const saleMarkers = [...cashSlide.matchAll(/<g data-sale-marker="[^"]+"><circle[^>]*cy="([\d.]+)"[^>]*>.*?<text class="cash-runway-sale-label"[^>]*y="([\d.]+)"/gs)];
+  assert.equal(saleMarkers.length, 8);
+
+  for (const [, markerY, labelY] of saleMarkers) {
+    const clearanceFromMarker = (Number(markerY) - Number(labelY) - saleTranslateY - 5) * mobileChartScale;
+    assert.ok(clearanceFromMarker >= 10, `sale label clears its marker by only ${clearanceFromMarker.toFixed(1)}px`);
+  }
 });
