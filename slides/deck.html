@@ -2431,74 +2431,6 @@
     white-space: nowrap !important;
     text-wrap: nowrap !important;
   }
-  .problem-speed-layout {
-    display: grid;
-    grid-template-columns: 230px 1px minmax(0, 1fr);
-    gap: 42px;
-    width: 100%;
-    max-width: 1080px;
-    margin: 0 auto;
-    min-height: 250px;
-    padding: 34px 56px;
-    align-items: center;
-    border-radius: 28px;
-    background: var(--brand-50);
-  }
-  .problem-speed-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  .problem-speed-stat__value {
-    color: var(--brand-950);
-    font-family: var(--font-hero);
-    font-size: clamp(78px, 7vw, 104px);
-    font-weight: 600;
-    letter-spacing: -4px;
-    line-height: 0.82;
-  }
-  .problem-speed-stat__label {
-    max-width: 190px;
-    margin-top: 20px;
-    color: var(--al-600);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-  .problem-speed-divider {
-    width: 1px;
-    height: 130px;
-    background: var(--brand-200);
-  }
-  .problem-speed-copy {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-  }
-  .problem-speed-support {
-    max-width: 1040px;
-    margin: 0 auto;
-    color: var(--al-600);
-    font-size: 17px;
-    line-height: 1.45;
-    text-align: center;
-  }
-  .problem-banner {
-    width: 100%;
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 18px 24px;
-    border-radius: 18px;
-    background: var(--brand-950);
-    color: var(--white);
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.25;
-    text-align: center;
-  }
   #real-problem-slide > .content--wide { gap: 30px; }
   #real-problem-slide > .content--wide > .flex-col { gap: 14px; }
 
@@ -2838,10 +2770,6 @@
     .product-library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .triager-example-grid { grid-template-columns: 1fr; }
     .triager-example { grid-template-columns: 100px minmax(0, 1fr); min-height: 40px; }
-    .problem-speed-layout { grid-template-columns: 1fr; gap: 18px; padding: 24px; }
-    .problem-speed-stat { min-height: auto; }
-    .problem-speed-divider { display: none; }
-    .problem-banner { padding: 12px; font-size: 14px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .product-match-scene,
@@ -3405,7 +3333,7 @@
       <div class="flex-col gap-16">
         <div class="rv d1"><span class="label-tag">Kodara</span></div>
         <div class="rv d2">
-          <h2 id="opening-title" class="h-hero" style="font-size: clamp(36px, 4vw, 52px);">We turn your expertise into an <span style="color: var(--brand-950);">AI sales department</span> that brings in its own leads.</h2>
+          <h2 id="opening-title" class="h-hero" style="font-size: clamp(36px, 4vw, 52px);">We turn your expertise into an <span style="color: var(--brand-950);">AI Sales department</span> that pays for its own leads</h2>
         </div>
         <div class="rv d3">
           <p class="body-lg">You no longer have to spend your own time or money on marketing.</p>
@@ -3500,84 +3428,6 @@
     </div>
   </div>
 
-  <!-- Cash Runway Comparison -->
-  <div class="slide slide--cash-runway" id="cash-runway-slide" role="group" aria-roledescription="slide" aria-labelledby="cash-runway-title">
-    <div class="bg-orb bg-orb--green" style="top: -160px; right: -120px;" aria-hidden="true"></div>
-    <div class="bg-orb bg-orb--neutral" style="bottom: -180px; left: -120px;" aria-hidden="true"></div>
-
-    <div class="cash-runway-layout">
-      <header class="cash-runway-header text-center">
-        <div class="rv d1"><span class="label-tag">The cash-flow problem</span></div>
-        <div class="rv d2"><h2 id="cash-runway-title" class="h-lg">Stop betting your cash on the next big sale.</h2></div>
-        <p class="cash-runway-context rv d3">24-week illustration · $30K start · $2K/week media · four $10K high-ticket sales</p>
-      </header>
-
-      <section class="cash-runway-grid rv d4" aria-label="Cash-balance comparison">
-        <div class="cash-runway-panel cash-runway-panel--traditional">
-          <svg class="cash-runway-chart" viewBox="0 0 568 420" role="img" xmlns="http://www.w3.org/2000/svg">
-            <title>Traditional marketing cash balance</title>
-            <desc>Traditional marketing spends cash every week and depends on four irregular high-ticket sales to restore the balance.</desc>
-            <text class="cash-runway-chart-title" x="28" y="25" font-size="20" font-weight="800" fill="#101827">Traditional marketing</text>
-            <text class="cash-runway-chart-subtitle" x="28" y="44" font-size="11" fill="#94A3B8">Spend. Wait. Hope.</text>
-            <path class="cash-runway-axis" d="M48 58 V344 H520" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
-            <text class="cash-runway-axis-label" x="40" y="65" text-anchor="end" font-size="9" fill="#C0C8D2">CASH</text>
-            <text class="cash-runway-axis-label" x="520" y="362" text-anchor="end" font-size="9" fill="#C0C8D2">24 WEEKS</text>
-            <line class="cash-runway-baseline" x1="48" y1="256" x2="520" y2="256" stroke="#DBE2E8" stroke-dasharray="5 7"/>
-            <text class="cash-runway-baseline-label baseline-label baseline-label-desktop" x="56" y="248" font-size="10" fill="#A8B1BD">$30K start</text>
-            <text class="cash-runway-baseline-label baseline-label baseline-label-mobile" x="56" y="232" display="none" font-size="16" fill="#87919C"><tspan x="56" y="232">$30K</tspan><tspan x="56" dy="16">start</tspan></text>
-            <path class="cash-runway-fill cash-runway-fill--risk" data-fill="capital-risk" d="M48.0,256.0 L48.0,256.0 L67.7,264.8 L87.3,273.6 L107.0,282.4 L126.7,247.2 L146.3,256.0 L166.0,264.8 L185.7,273.6 L205.3,282.4 L225.0,291.2 L244.7,300.0 L264.3,308.8 L284.0,273.6 L303.7,282.4 L323.3,291.2 L343.0,256.0 L362.7,264.8 L382.3,273.6 L402.0,282.4 L421.7,291.2 L441.3,300.0 L461.0,308.8 L480.7,317.6 L500.3,282.4 L520.0,291.2 L520.0,256.0 Z" fill="#FEE2E2" opacity=".46"/>
-            <path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:0" d="M48.0,256.0 L67.7,264.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:1" d="M67.7,264.8 L87.3,273.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:2" d="M87.3,273.6 L107.0,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:3" d="M107.0,282.4 L126.7,247.2" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:4" d="M126.7,247.2 L146.3,256.0" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:5" d="M146.3,256.0 L166.0,264.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:6" d="M166.0,264.8 L185.7,273.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:7" d="M185.7,273.6 L205.3,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:8" d="M205.3,282.4 L225.0,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:9" d="M225.0,291.2 L244.7,300.0" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:10" d="M244.7,300.0 L264.3,308.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:11" d="M264.3,308.8 L284.0,273.6" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:12" d="M284.0,273.6 L303.7,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:13" d="M303.7,282.4 L323.3,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:14" d="M323.3,291.2 L343.0,256.0" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:15" d="M343.0,256.0 L362.7,264.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:16" d="M362.7,264.8 L382.3,273.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:17" d="M382.3,273.6 L402.0,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:18" d="M402.0,282.4 L421.7,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:19" d="M421.7,291.2 L441.3,300.0" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:20" d="M441.3,300.0 L461.0,308.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:21" d="M461.0,308.8 L480.7,317.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:22" d="M480.7,317.6 L500.3,282.4" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:23" d="M500.3,282.4 L520.0,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><circle data-week="0" cx="48.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="1" cx="67.7" cy="264.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="2" cx="87.3" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="3" cx="107.0" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="4" cx="126.7" cy="247.2" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="5" cx="146.3" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="6" cx="166.0" cy="264.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="7" cx="185.7" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="8" cx="205.3" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="9" cx="225.0" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="10" cx="244.7" cy="300.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="11" cx="264.3" cy="308.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="12" cx="284.0" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="13" cx="303.7" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="14" cx="323.3" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="15" cx="343.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="16" cx="362.7" cy="264.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="17" cx="382.3" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="18" cx="402.0" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="19" cx="421.7" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="20" cx="441.3" cy="300.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="21" cx="461.0" cy="308.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="22" cx="480.7" cy="317.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="23" cx="500.3" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="24" cx="520.0" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><g data-sale-marker="4"><circle cx="126.7" cy="247.2" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="126.7" y="234.2" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="12"><circle cx="284.0" cy="273.6" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="284.0" y="260.6" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="15"><circle cx="343.0" cy="256.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="343.0" y="243.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="23"><circle cx="500.3" cy="282.4" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="500.3" y="269.4" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g>
-            <text class="cash-runway-closing-label cash-runway-closing-label--negative" x="284" y="392" text-anchor="middle" font-size="16" font-weight="800" fill="#C9343B">Volatile. Capital-dependent.</text>
-          </svg>
-        </div>
-        <div class="cash-runway-divider" aria-hidden="true"></div>
-        <div class="cash-runway-panel cash-runway-panel--self-funding">
-          <svg class="cash-runway-chart" viewBox="0 0 568 420" role="img" xmlns="http://www.w3.org/2000/svg">
-            <title>Self-funding AI sales cash balance</title>
-            <desc>Self-funding AI sales protects the starting baseline while four high-ticket sales raise the cash floor.</desc>
-            <text class="cash-runway-chart-title" x="28" y="25" font-size="20" font-weight="800" fill="#101827">Self-funding AI sales</text>
-            <text class="cash-runway-chart-subtitle" x="28" y="44" font-size="11" fill="#94A3B8">Recover. Qualify. Grow.</text>
-            <path class="cash-runway-axis" d="M48 58 V344 H520" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
-            <text class="cash-runway-axis-label" x="40" y="65" text-anchor="end" font-size="9" fill="#C0C8D2">CASH</text>
-            <text class="cash-runway-axis-label" x="520" y="362" text-anchor="end" font-size="9" fill="#C0C8D2">24 WEEKS</text>
-            <line class="cash-runway-baseline" x1="48" y1="256" x2="520" y2="256" stroke="#DBE2E8" stroke-dasharray="5 7"/>
-            <text class="cash-runway-baseline-label baseline-label baseline-label-desktop" x="56" y="248" font-size="10" fill="#A8B1BD">$30K baseline</text>
-            <text class="cash-runway-baseline-label baseline-label baseline-label-mobile" x="56" y="232" display="none" font-size="16" fill="#87919C"><tspan x="56" y="232">$30K</tspan><tspan x="56" dy="16">baseline</tspan></text>
-            <path class="cash-runway-fill cash-runway-fill--upside" data-fill="retained-upside" d="M48.0,256.0 H67.7 V256.0 H87.3 V256.0 H107.0 V256.0 H126.7 V212.0 H146.3 V212.0 H166.0 V212.0 H185.7 V212.0 H205.3 V212.0 H225.0 V212.0 H244.7 V212.0 H264.3 V212.0 H284.0 V168.0 H303.7 V168.0 H323.3 V168.0 H343.0 V124.0 H362.7 V124.0 H382.3 V124.0 H402.0 V124.0 H421.7 V124.0 H441.3 V124.0 H461.0 V124.0 H480.7 V124.0 H500.3 V80.0 H520.0 V80.0 V256.0 H48.0 Z" fill="#DCFCE7" opacity=".46"/>
-            <path data-path="staircase" class="cash-runway-path cash-runway-path--self-funding" pathLength="1" style="--segment:0" d="M48.0,256.0 H67.7 V256.0 H87.3 V256.0 H107.0 V256.0 H126.7 V212.0 H146.3 V212.0 H166.0 V212.0 H185.7 V212.0 H205.3 V212.0 H225.0 V212.0 H244.7 V212.0 H264.3 V212.0 H284.0 V168.0 H303.7 V168.0 H323.3 V168.0 H343.0 V124.0 H362.7 V124.0 H382.3 V124.0 H402.0 V124.0 H421.7 V124.0 H441.3 V124.0 H461.0 V124.0 H480.7 V124.0 H500.3 V80.0 H520.0 V80.0" fill="none" stroke="#20A865" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle data-week="0" cx="48.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="1" cx="67.7" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="2" cx="87.3" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="3" cx="107.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="4" cx="126.7" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="5" cx="146.3" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="6" cx="166.0" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="7" cx="185.7" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="8" cx="205.3" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="9" cx="225.0" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="10" cx="244.7" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="11" cx="264.3" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="12" cx="284.0" cy="168.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="13" cx="303.7" cy="168.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="14" cx="323.3" cy="168.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="15" cx="343.0" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="16" cx="362.7" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="17" cx="382.3" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="18" cx="402.0" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="19" cx="421.7" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="20" cx="441.3" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="21" cx="461.0" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="22" cx="480.7" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="23" cx="500.3" cy="80.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="24" cx="520.0" cy="80.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><g data-sale-marker="4"><circle cx="126.7" cy="212.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="126.7" y="199.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="12"><circle cx="284.0" cy="168.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="284.0" y="155.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="15"><circle cx="343.0" cy="124.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="343.0" y="111.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="23"><circle cx="500.3" cy="80.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="500.3" y="67.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g>
-            <text class="cash-runway-closing-label cash-runway-closing-label--positive" x="284" y="392" text-anchor="middle" font-size="16" font-weight="800" fill="#17824D">Stable baseline. Compounding upside.</text>
-          </svg>
-        </div>
-      </section>
-
-      <p class="cash-runway-takeaway rv d5">Protect the baseline. Let every high-ticket sale raise the floor.</p>
-      <p class="cash-runway-accuracy">Illustrative end-of-week cash balance. 1× ROAS refers to gross revenue divided by media spend; processing fees, fulfillment, refunds, taxes, and cash-collection timing are excluded.</p>
-    </div>
-  </div>
-
-  <!-- INTRO 1.1, The Real Problem -->
-  <div class="slide" id="real-problem-slide" role="group" aria-roledescription="slide" aria-labelledby="real-problem-title">
-    <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
-      <div class="rv d1"><span class="label-tag">The real problem</span></div>
-
-      <div class="problem-speed-layout rv d2">
-        <div class="problem-speed-stat">
-          <div class="problem-speed-stat__value">8×</div>
-          <div class="problem-speed-stat__label">higher conversion<br>in 5 minutes</div>
-        </div>
-
-        <div class="problem-speed-divider" aria-hidden="true"></div>
-
-        <div class="problem-speed-copy">
-          <h2 id="real-problem-title" class="h-hero" style="font-size: clamp(38px, 4.2vw, 54px);">The first five minutes decide whether a lead gets worked or wasted.</h2>
-        </div>
-      </div>
-
-      <p class="problem-speed-support rv d3">Only large companies can afford full-time cold-calling teams. Everyone else lets that paid click go unanswered.</p>
-
-      <div class="problem-banner rv d4">Your AI answers instantly, so every lead gets worked, not wasted.</div>
-    </div>
-  </div>
 
   <!-- ═══════════════════════════════════════ -->
   <!-- INTRO 1.2, Why Clients Love The Kodara Model (floating avatars) -->
@@ -3739,6 +3589,61 @@
       </div>
 
       <p class="internal-proof-support rv d5">Instead of paying for attention and hoping it converts later, the system creates revenue at the beginning of the journey.</p>
+    </div>
+  </div>
+
+  <!-- Cash Runway Comparison -->
+  <div class="slide slide--cash-runway" id="cash-runway-slide" role="group" aria-roledescription="slide" aria-labelledby="cash-runway-title">
+    <div class="bg-orb bg-orb--green" style="top: -160px; right: -120px;" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb--neutral" style="bottom: -180px; left: -120px;" aria-hidden="true"></div>
+
+    <div class="cash-runway-layout">
+      <header class="cash-runway-header text-center">
+        <div class="rv d1"><span class="label-tag">The cash-flow problem</span></div>
+        <div class="rv d2"><h2 id="cash-runway-title" class="h-lg">Stop betting your cash on the next big sale.</h2></div>
+        <p class="cash-runway-context rv d3">24-week illustration · $30K start · $2K/week media · four $10K high-ticket sales</p>
+      </header>
+
+      <section class="cash-runway-grid rv d4" aria-label="Cash-balance comparison">
+        <div class="cash-runway-panel cash-runway-panel--traditional">
+          <svg class="cash-runway-chart" viewBox="0 0 568 420" role="img" xmlns="http://www.w3.org/2000/svg">
+            <title>Traditional marketing cash balance</title>
+            <desc>Traditional marketing spends cash every week and depends on four irregular high-ticket sales to restore the balance.</desc>
+            <text class="cash-runway-chart-title" x="28" y="25" font-size="20" font-weight="800" fill="#101827">Traditional marketing</text>
+            <text class="cash-runway-chart-subtitle" x="28" y="44" font-size="11" fill="#94A3B8">Spend. Wait. Hope.</text>
+            <path class="cash-runway-axis" d="M48 58 V344 H520" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
+            <text class="cash-runway-axis-label" x="40" y="65" text-anchor="end" font-size="9" fill="#C0C8D2">CASH</text>
+            <text class="cash-runway-axis-label" x="520" y="362" text-anchor="end" font-size="9" fill="#C0C8D2">24 WEEKS</text>
+            <line class="cash-runway-baseline" x1="48" y1="256" x2="520" y2="256" stroke="#DBE2E8" stroke-dasharray="5 7"/>
+            <text class="cash-runway-baseline-label baseline-label baseline-label-desktop" x="56" y="248" font-size="10" fill="#A8B1BD">$30K start</text>
+            <text class="cash-runway-baseline-label baseline-label baseline-label-mobile" x="56" y="232" display="none" font-size="16" fill="#87919C"><tspan x="56" y="232">$30K</tspan><tspan x="56" dy="16">start</tspan></text>
+            <path class="cash-runway-fill cash-runway-fill--risk" data-fill="capital-risk" d="M48.0,256.0 L48.0,256.0 L67.7,264.8 L87.3,273.6 L107.0,282.4 L126.7,247.2 L146.3,256.0 L166.0,264.8 L185.7,273.6 L205.3,282.4 L225.0,291.2 L244.7,300.0 L264.3,308.8 L284.0,273.6 L303.7,282.4 L323.3,291.2 L343.0,256.0 L362.7,264.8 L382.3,273.6 L402.0,282.4 L421.7,291.2 L441.3,300.0 L461.0,308.8 L480.7,317.6 L500.3,282.4 L520.0,291.2 L520.0,256.0 Z" fill="#FEE2E2" opacity=".46"/>
+            <path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:0" d="M48.0,256.0 L67.7,264.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:1" d="M67.7,264.8 L87.3,273.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:2" d="M87.3,273.6 L107.0,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:3" d="M107.0,282.4 L126.7,247.2" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:4" d="M126.7,247.2 L146.3,256.0" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:5" d="M146.3,256.0 L166.0,264.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:6" d="M166.0,264.8 L185.7,273.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:7" d="M185.7,273.6 L205.3,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:8" d="M205.3,282.4 L225.0,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:9" d="M225.0,291.2 L244.7,300.0" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:10" d="M244.7,300.0 L264.3,308.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:11" d="M264.3,308.8 L284.0,273.6" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:12" d="M284.0,273.6 L303.7,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:13" d="M303.7,282.4 L323.3,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:14" d="M323.3,291.2 L343.0,256.0" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:15" d="M343.0,256.0 L362.7,264.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:16" d="M362.7,264.8 L382.3,273.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:17" d="M382.3,273.6 L402.0,282.4" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:18" d="M402.0,282.4 L421.7,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:19" d="M421.7,291.2 L441.3,300.0" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:20" d="M441.3,300.0 L461.0,308.8" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:21" d="M461.0,308.8 L480.7,317.6" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--gain" pathLength="1" style="--segment:22" d="M480.7,317.6 L500.3,282.4" fill="none" stroke="#20A865" stroke-width="6" stroke-linecap="round"/><path class="cash-runway-path cash-runway-path--loss" pathLength="1" style="--segment:23" d="M500.3,282.4 L520.0,291.2" fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round"/><circle data-week="0" cx="48.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="1" cx="67.7" cy="264.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="2" cx="87.3" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="3" cx="107.0" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="4" cx="126.7" cy="247.2" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="5" cx="146.3" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="6" cx="166.0" cy="264.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="7" cx="185.7" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="8" cx="205.3" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="9" cx="225.0" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="10" cx="244.7" cy="300.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="11" cx="264.3" cy="308.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="12" cx="284.0" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="13" cx="303.7" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="14" cx="323.3" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="15" cx="343.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="16" cx="362.7" cy="264.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="17" cx="382.3" cy="273.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="18" cx="402.0" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="19" cx="421.7" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="20" cx="441.3" cy="300.0" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="21" cx="461.0" cy="308.8" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="22" cx="480.7" cy="317.6" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><circle data-week="23" cx="500.3" cy="282.4" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="24" cx="520.0" cy="291.2" r="3.8" fill="#FBFCFA" stroke="#E5484D" stroke-width="1.5"/><g data-sale-marker="4"><circle cx="126.7" cy="247.2" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="126.7" y="234.2" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="12"><circle cx="284.0" cy="273.6" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="284.0" y="260.6" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="15"><circle cx="343.0" cy="256.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="343.0" y="243.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="23"><circle cx="500.3" cy="282.4" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="500.3" y="269.4" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g>
+            <text class="cash-runway-closing-label cash-runway-closing-label--negative" x="284" y="392" text-anchor="middle" font-size="16" font-weight="800" fill="#C9343B">Volatile. Capital-dependent.</text>
+          </svg>
+        </div>
+        <div class="cash-runway-divider" aria-hidden="true"></div>
+        <div class="cash-runway-panel cash-runway-panel--self-funding">
+          <svg class="cash-runway-chart" viewBox="0 0 568 420" role="img" xmlns="http://www.w3.org/2000/svg">
+            <title>Self-funding AI sales cash balance</title>
+            <desc>Self-funding AI sales protects the starting baseline while four high-ticket sales raise the cash floor.</desc>
+            <text class="cash-runway-chart-title" x="28" y="25" font-size="20" font-weight="800" fill="#101827">Self-funding AI sales</text>
+            <text class="cash-runway-chart-subtitle" x="28" y="44" font-size="11" fill="#94A3B8">Recover. Qualify. Grow.</text>
+            <path class="cash-runway-axis" d="M48 58 V344 H520" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
+            <text class="cash-runway-axis-label" x="40" y="65" text-anchor="end" font-size="9" fill="#C0C8D2">CASH</text>
+            <text class="cash-runway-axis-label" x="520" y="362" text-anchor="end" font-size="9" fill="#C0C8D2">24 WEEKS</text>
+            <line class="cash-runway-baseline" x1="48" y1="256" x2="520" y2="256" stroke="#DBE2E8" stroke-dasharray="5 7"/>
+            <text class="cash-runway-baseline-label baseline-label baseline-label-desktop" x="56" y="248" font-size="10" fill="#A8B1BD">$30K baseline</text>
+            <text class="cash-runway-baseline-label baseline-label baseline-label-mobile" x="56" y="232" display="none" font-size="16" fill="#87919C"><tspan x="56" y="232">$30K</tspan><tspan x="56" dy="16">baseline</tspan></text>
+            <path class="cash-runway-fill cash-runway-fill--upside" data-fill="retained-upside" d="M48.0,256.0 H67.7 V256.0 H87.3 V256.0 H107.0 V256.0 H126.7 V212.0 H146.3 V212.0 H166.0 V212.0 H185.7 V212.0 H205.3 V212.0 H225.0 V212.0 H244.7 V212.0 H264.3 V212.0 H284.0 V168.0 H303.7 V168.0 H323.3 V168.0 H343.0 V124.0 H362.7 V124.0 H382.3 V124.0 H402.0 V124.0 H421.7 V124.0 H441.3 V124.0 H461.0 V124.0 H480.7 V124.0 H500.3 V80.0 H520.0 V80.0 V256.0 H48.0 Z" fill="#DCFCE7" opacity=".46"/>
+            <path data-path="staircase" class="cash-runway-path cash-runway-path--self-funding" pathLength="1" style="--segment:0" d="M48.0,256.0 H67.7 V256.0 H87.3 V256.0 H107.0 V256.0 H126.7 V212.0 H146.3 V212.0 H166.0 V212.0 H185.7 V212.0 H205.3 V212.0 H225.0 V212.0 H244.7 V212.0 H264.3 V212.0 H284.0 V168.0 H303.7 V168.0 H323.3 V168.0 H343.0 V124.0 H362.7 V124.0 H382.3 V124.0 H402.0 V124.0 H421.7 V124.0 H441.3 V124.0 H461.0 V124.0 H480.7 V124.0 H500.3 V80.0 H520.0 V80.0" fill="none" stroke="#20A865" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle data-week="0" cx="48.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="1" cx="67.7" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="2" cx="87.3" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="3" cx="107.0" cy="256.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="4" cx="126.7" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="5" cx="146.3" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="6" cx="166.0" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="7" cx="185.7" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="8" cx="205.3" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="9" cx="225.0" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="10" cx="244.7" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="11" cx="264.3" cy="212.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="12" cx="284.0" cy="168.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="13" cx="303.7" cy="168.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="14" cx="323.3" cy="168.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="15" cx="343.0" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="16" cx="362.7" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="17" cx="382.3" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="18" cx="402.0" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="19" cx="421.7" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="20" cx="441.3" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="21" cx="461.0" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="22" cx="480.7" cy="124.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="23" cx="500.3" cy="80.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><circle data-week="24" cx="520.0" cy="80.0" r="3.8" fill="#FBFCFA" stroke="#20A865" stroke-width="1.5"/><g data-sale-marker="4"><circle cx="126.7" cy="212.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="126.7" y="199.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="12"><circle cx="284.0" cy="168.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="284.0" y="155.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="15"><circle cx="343.0" cy="124.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="343.0" y="111.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g><g data-sale-marker="23"><circle cx="500.3" cy="80.0" r="5" fill="#20A865" stroke="#FFFFFF" stroke-width="2"/><text class="cash-runway-sale-label" x="500.3" y="67.0" text-anchor="middle" font-size="9" fill="#87919C">sale</text></g>
+            <text class="cash-runway-closing-label cash-runway-closing-label--positive" x="284" y="392" text-anchor="middle" font-size="16" font-weight="800" fill="#17824D">Stable baseline. Compounding upside.</text>
+          </svg>
+        </div>
+      </section>
+
+      <p class="cash-runway-takeaway rv d5">Protect the baseline. Let every high-ticket sale raise the floor.</p>
+      <p class="cash-runway-accuracy">Illustrative end-of-week cash balance. 1× ROAS refers to gross revenue divided by media spend; processing fees, fulfillment, refunds, taxes, and cash-collection timing are excluded.</p>
     </div>
   </div>
 
@@ -4398,8 +4303,8 @@
               <div style="display: grid; grid-template-columns: 28px 1fr; gap: 14px; align-items: start;">
                 <div style="width: 12px; height: 12px; border-radius: 999px; background: var(--brand-950); box-shadow: 0 0 0 3px var(--white); margin-top: 4px;"></div>
                 <div>
-                  <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">During the program</div>
-                  <div style="font-size: 15px; font-weight: 700; color: var(--al-900); margin-top: 2px;">Weekly optimization</div>
+                  <div style="font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--brand-950);">Months 1-6</div>
+                  <div style="font-size: 15px; font-weight: 700; color: var(--al-900); margin-top: 2px;">We run the entire launch</div>
                   <div style="font-size: 12.5px; color: var(--al-600); line-height: 1.45; margin-top: 2px;">We review performance, refine the Brain and improve the marketing.</div>
                 </div>
               </div>
@@ -4556,13 +4461,12 @@
 <div class="progress" id="progress"></div>
 
 <!-- Counter -->
-<div class="counter" id="counter"><span class="cur">01</span> / 25</div>
+<div class="counter" id="counter"><span class="cur">01</span> / 24</div>
 
 <script>
   const deckElement = document.getElementById('deck');
   const clientsLoveSlide = document.getElementById('clients-love-slide');
   const internalProofSlide = document.getElementById('internal-proof-slide');
-  const programOverviewSlide = document.getElementById('program-overview-slide');
   const phase1CoverSlide = document.getElementById('phase-1-cover-slide');
   const lucasOnboardingSlide = document.getElementById('lucas-onboarding-slide');
   const reinvestmentSlide = document.getElementById('reinvestment-slide');
@@ -4572,10 +4476,7 @@
   const phase3CoverSlide = document.getElementById('phase-3-cover-slide');
   const organicSlide = document.getElementById('organic-slide');
   const paidSlide = document.getElementById('paid-slide');
-  const adLoopReinvestmentSlide = document.getElementById('ad-loop-reinvestment-slide');
   const adLoopSalesSlide = document.getElementById('ad-loop-sales-slide');
-  const ownershipSlide = document.getElementById('ownership-slide');
-  const offerRecapSlide = document.getElementById('offer-recap-slide');
 
   function salesDemoLive(route, className = 'sales-demo-shell--wide', label = '') {
     const requestedBase = new URL(window.location.href).searchParams.get('demoBase');
@@ -4732,16 +4633,11 @@
   }
 
   installLargeCardMockup();
-  deckElement.insertBefore(internalProofSlide, clientsLoveSlide);
-  deckElement.insertBefore(programOverviewSlide, clientsLoveSlide);
   deckElement.insertBefore(phase1CoverSlide, lucasOnboardingSlide);
-  deckElement.insertBefore(clientsLoveSlide, lucasOnboardingSlide.nextElementSibling);
   deckElement.insertBefore(reinvestmentSlide, triagerCloserSlide);
   deckElement.insertBefore(phase2CoverSlide, triagerCloserSlide);
   deckElement.insertBefore(triagerExamplesSlide, triagerCloserSlide);
   deckElement.insertBefore(phase3CoverSlide, organicSlide);
-  deckElement.insertBefore(ownershipSlide, offerRecapSlide);
-  deckElement.insertBefore(adLoopReinvestmentSlide, internalProofSlide.nextElementSibling);
   deckElement.insertBefore(adLoopSalesSlide, triagerCloserSlide);
 
   const slides = document.querySelectorAll('.slide:not([hidden])');

@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const deck = readFileSync(resolve(here, '..', 'deck.html'), 'utf8');
 const cashStart = deck.indexOf('<!-- Cash Runway Comparison -->');
-const cashEnd = deck.indexOf('<!-- INTRO 1.1, The Real Problem -->', cashStart);
+const cashEnd = deck.indexOf('<!-- S5, 2 Stages Overview -->', cashStart);
 const cashSlide = cashStart >= 0 && cashEnd > cashStart ? deck.slice(cashStart, cashEnd) : '';
 
 function visibleSlideIds() {
@@ -45,13 +45,20 @@ function cssPixelValue(ruleBody, property) {
   return Number(ruleBody.match(new RegExp(`${property}:\\s*(-?[\\d.]+)px`))?.[1] ?? Number.NaN);
 }
 
-test('cash runway is the new visible slide 3', () => {
+test('cash runway follows the self-funding flywheel as visible slide 5', () => {
   const ids = visibleSlideIds();
-  assert.equal(ids.length, 25);
-  assert.deepEqual(ids.slice(0, 4), [null, 'client-wall-slide', 'cash-runway-slide', 'real-problem-slide']);
-  assert.ok(cashStart > deck.indexOf('id="client-wall-slide"'));
-  assert.ok(cashEnd < deck.indexOf('id="real-problem-slide"') + 1);
-  assert.match(deck, /<div class="counter" id="counter"><span class="cur">01<\/span> \/ 25<\/div>/);
+  assert.equal(ids.length, 24);
+  assert.deepEqual(ids.slice(0, 6), [
+    null,
+    'client-wall-slide',
+    'clients-love-slide',
+    'internal-proof-slide',
+    'cash-runway-slide',
+    'program-overview-slide',
+  ]);
+  assert.ok(cashStart > deck.indexOf('id="internal-proof-slide"'));
+  assert.ok(cashEnd < deck.indexOf('id="program-overview-slide"'));
+  assert.match(deck, /<div class="counter" id="counter"><span class="cur">01<\/span> \/ 24<\/div>/);
 });
 
 test('cash runway preserves the approved assumptions and takeaway', () => {
