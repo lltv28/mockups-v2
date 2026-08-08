@@ -138,6 +138,37 @@ test('deck uses the approved 24-slide opening narrative', () => {
   );
 });
 
+test('program taxonomy is Build, Deploy, Launch everywhere', () => {
+  const overview = section('<!-- S5, 3 Phases Overview -->', '<!-- Phase 1, AI Build (Cover) -->');
+  const phase2 = section('<!-- Phase 2, Deploy (Cover) -->', '<!-- Phase 3, Launch (Cover) -->');
+  const phase3 = section('<!-- Phase 3, Launch (Cover) -->', '<!-- Offer Stack, Simple Phase Recap -->');
+  const recap = section('<!-- Offer Stack, Simple Phase Recap -->', '<!-- Money-back guarantee -->');
+
+  for (const block of [overview, recap]) {
+    const build = block.indexOf('>Build</div>');
+    const deploy = block.indexOf('>Deploy</div>');
+    const launch = block.indexOf('>Launch</div>');
+    assert.ok(build >= 0 && deploy > build && launch > deploy);
+  }
+
+  assert.match(overview, /Build, deploy, then launch\./);
+  assert.match(phase2, /<h2 class="h-lg">Deploy<\/h2>/);
+  assert.ok((deck.match(/Phase 2 · Deploy/g) ?? []).length >= 3);
+  assert.match(phase3, /<h2 class="h-lg">Launch<\/h2>/);
+  assert.ok((deck.match(/Phase 3 · Launch/g) ?? []).length >= 3);
+  assert.match(recap, /Build, deploy, then launch\./);
+
+  for (const obsolete of [
+    'Phase 2 · Sell',
+    '<!-- Phase 2, Sell (Cover) -->',
+    'Phase 3 · Grow',
+    '<!-- Phase 3, Grow (Cover) -->',
+    'Build, sell, then grow.',
+  ]) {
+    assert.doesNotMatch(deck, new RegExp(obsolete.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+});
+
 test('warranty flows directly into ownership with the approved launch language', () => {
   const ids = visibleSlideIds();
   const warrantyIndex = ids.indexOf('double-guarantee-slide');
