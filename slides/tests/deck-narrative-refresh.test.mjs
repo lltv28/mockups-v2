@@ -101,10 +101,18 @@ test('deck uses the approved 24-slide opening narrative', () => {
   assert.deepEqual(ids.slice(0, 6), [
     null,
     'client-wall-slide',
-    'clients-love-slide',
     'internal-proof-slide',
     'cash-runway-slide',
     'program-overview-slide',
+    'phase-1-cover-slide',
+  ]);
+
+  const phase1Start = ids.indexOf('phase-1-cover-slide');
+  assert.deepEqual(ids.slice(phase1Start, phase1Start + 4), [
+    'phase-1-cover-slide',
+    'lucas-onboarding-slide',
+    'clients-love-slide',
+    'triager-closer-slide',
   ]);
 
   assert.match(

@@ -45,16 +45,16 @@ function cssPixelValue(ruleBody, property) {
   return Number(ruleBody.match(new RegExp(`${property}:\\s*(-?[\\d.]+)px`))?.[1] ?? Number.NaN);
 }
 
-test('cash runway follows the self-funding flywheel as visible slide 5', () => {
+test('cash runway follows the self-funding flywheel as visible slide 4', () => {
   const ids = visibleSlideIds();
   assert.equal(ids.length, 24);
   assert.deepEqual(ids.slice(0, 6), [
     null,
     'client-wall-slide',
-    'clients-love-slide',
     'internal-proof-slide',
     'cash-runway-slide',
     'program-overview-slide',
+    'phase-1-cover-slide',
   ]);
   assert.ok(cashStart > deck.indexOf('id="internal-proof-slide"'));
   assert.ok(cashEnd < deck.indexOf('id="program-overview-slide"'));
