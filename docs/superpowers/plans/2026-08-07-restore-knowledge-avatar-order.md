@@ -23,7 +23,6 @@
 **Files:**
 - Modify: `slides/tests/deck-narrative-refresh.test.mjs`
 - Modify: `slides/tests/deck-cash-runway.test.mjs`
-- Modify: `slides/tests/pitch-deck-tweaks.test.mjs`
 
 **Interfaces:**
 - Consumes: slide IDs parsed from `slides/deck.html` by existing test helpers.
@@ -44,15 +43,16 @@ Update the opening-order expectations so the first six visible IDs are:
 ]
 ```
 
-Add an explicit Phase 1 assertion:
+Add an explicit Phase 1 assertion to the current-deck narrative test:
 
 ```js
-assertInOrder(deck, [
-  'id="phase-1-cover-slide"',
-  'id="lucas-onboarding-slide"',
-  'id="clients-love-slide"',
-  'id="triager-closer-slide"',
-], 'Phase 1 opening slides');
+const phase1Start = ids.indexOf('phase-1-cover-slide');
+assert.deepEqual(ids.slice(phase1Start, phase1Start + 4), [
+  'phase-1-cover-slide',
+  'lucas-onboarding-slide',
+  'clients-love-slide',
+  'triager-closer-slide',
+]);
 ```
 
 Rename the cash-runway order test to state that it is visible slide 4.
@@ -62,7 +62,7 @@ Rename the cash-runway order test to state that it is visible slide 4.
 Run:
 
 ```bash
-node --test slides/tests/deck-narrative-refresh.test.mjs slides/tests/deck-cash-runway.test.mjs slides/tests/pitch-deck-tweaks.test.mjs
+node --test slides/tests/deck-narrative-refresh.test.mjs slides/tests/deck-cash-runway.test.mjs
 ```
 
 Expected: FAIL because `clients-love-slide` still appears before `internal-proof-slide` and before the Phase 1 cover.
@@ -85,7 +85,7 @@ Move the complete `<div class="slide" id="clients-love-slide">…</div>` block f
 Run:
 
 ```bash
-node --test slides/tests/deck-narrative-refresh.test.mjs slides/tests/deck-cash-runway.test.mjs slides/tests/pitch-deck-tweaks.test.mjs
+node --test slides/tests/deck-narrative-refresh.test.mjs slides/tests/deck-cash-runway.test.mjs
 ```
 
 Expected: PASS.
@@ -107,6 +107,6 @@ Open `slides/deck.html` and confirm that Phase 1 presents as cover, Lucas Onboar
 - [ ] **Step 5: Commit**
 
 ```bash
-git add slides/deck.html slides/tests/deck-narrative-refresh.test.mjs slides/tests/deck-cash-runway.test.mjs slides/tests/pitch-deck-tweaks.test.mjs docs/superpowers/plans/2026-08-07-restore-knowledge-avatar-order.md
+git add slides/deck.html slides/tests/deck-narrative-refresh.test.mjs slides/tests/deck-cash-runway.test.mjs docs/superpowers/plans/2026-08-07-restore-knowledge-avatar-order.md
 git commit -m "fix: restore knowledge avatar phase order"
 ```
