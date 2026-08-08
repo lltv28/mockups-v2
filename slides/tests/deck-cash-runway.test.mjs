@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const deck = readFileSync(resolve(here, '..', 'deck.html'), 'utf8');
 const cashStart = deck.indexOf('<!-- Cash Runway Comparison -->');
-const cashEnd = deck.indexOf('<!-- S5, 2 Stages Overview -->', cashStart);
+const cashEnd = deck.indexOf('<!-- S5, 3 Phases Overview -->', cashStart);
 const cashSlide = cashStart >= 0 && cashEnd > cashStart ? deck.slice(cashStart, cashEnd) : '';
 
 function cashPanel(startMarker, endMarker) {
