@@ -64,3 +64,33 @@ test('warranty flows directly into ownership with the approved launch language',
   assert.doesNotMatch(ownership, /Weekly optimization/);
   assert.doesNotMatch(deck, /deckElement\.insertBefore\(ownershipSlide, offerRecapSlide\)/);
 });
+
+test('mobile opener keeps support copy clear of the scaled flywheel', () => {
+  const mobileCss = section('/* ── Mobile ── */', '/* Property Coach AI mockups');
+  const shellCss = section('.sales-demo-shell {', '.sales-demo-shell video,');
+  const flywheelIframeCss = section(
+    '#opening-demo .sales-demo-shell--flywheel iframe {',
+    '.sales-demo-shell--live iframe:not([src])',
+  );
+  const horizontalPadding = Number(mobileCss.match(/\.slide\s*\{[^}]*padding:\s*\d+px\s+(\d+)px/s)?.[1]);
+  const stackedGap = Number(mobileCss.match(/\.split-layout\s*\{[^}]*gap:\s*(\d+)px/s)?.[1]);
+  const [, aspectWidth, aspectHeight] = shellCss.match(/aspect-ratio:\s*(\d+)\s*\/\s*(\d+)/) ?? [];
+  const iframeScale = Number(flywheelIframeCss.match(/transform:\s*scale\(([\d.]+)\)/)?.[1]);
+  let cascadedDemoMarginTop = 0;
+  for (const rule of deck.matchAll(/#opening-demo\s*\{([^}]*)\}/g)) {
+    for (const declaration of rule[1].split(';')) {
+      const [property, value] = declaration.split(':').map((part) => part.trim());
+      if (property === 'margin') cascadedDemoMarginTop = Number.parseFloat(value);
+      if (property === 'margin-top') cascadedDemoMarginTop = Number.parseFloat(value);
+    }
+  }
+  const shellWidth = 390 - (2 * horizontalPadding);
+  const shellHeight = shellWidth * Number(aspectHeight) / Number(aspectWidth);
+  const transformedOverflowAbove = shellHeight * (iframeScale - 1) / 2;
+  const renderedSeparation = stackedGap + cascadedDemoMarginTop - transformedOverflowAbove;
+
+  assert.ok(
+    renderedSeparation >= 2,
+    `support/demo separation is ${renderedSeparation.toFixed(2)}px at 390px`,
+  );
+});
