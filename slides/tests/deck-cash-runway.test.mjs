@@ -169,6 +169,25 @@ test('cash runway stacks without horizontal overflow on narrow screens', () => {
   assert.match(deck, /\.slide--cash-runway \.cash-runway-chart\s*\{[^}]*width:\s*100%[^}]*height:\s*auto/s);
 });
 
+test('cash runway ledgers preserve aligned rows and mobile legibility', () => {
+  const baseLedgerRule = cssRuleBody(deck, '.slide--cash-runway .cash-runway-ledger');
+  assert.match(baseLedgerRule, /width:\s*calc\(100% - 40px\)/);
+  assert.match(baseLedgerRule, /font-size:\s*11px/);
+
+  const mobileStart = deck.lastIndexOf('@media (max-width: 700px)');
+  const mobileEnd = deck.indexOf('@media (min-width: 701px)', mobileStart);
+  const mobileCss = deck.slice(mobileStart, mobileEnd);
+  const mobileLedgerRule = cssRuleBody(mobileCss, '.slide--cash-runway .cash-runway-ledger');
+
+  assert.match(mobileLedgerRule, /width:\s*calc\(100% - 24px\)/);
+  assert.match(mobileLedgerRule, /margin:\s*0 12px 14px/);
+  assert.ok(cssPixelValue(mobileLedgerRule, 'font-size') >= 13);
+  assert.match(
+    mobileCss,
+    /\.slide--cash-runway \.cash-runway-ledger th,\s*\.slide--cash-runway \.cash-runway-ledger td\s*\{[^}]*padding:\s*7px 10px/s,
+  );
+});
+
 test('cash runway decorative orbs cannot expand the slide scroll width', () => {
   assert.match(deck, /\.slide--cash-runway > \.bg-orb\s*\{[^}]*display:\s*none/s);
 });
