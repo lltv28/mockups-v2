@@ -116,6 +116,24 @@ test('cash runway pairs each graph with an accessible one-week transaction ledge
   assert.match(selfFundingPanel, />\$0</);
 });
 
+test('cash runway weekly movement values use outcome colors without recoloring labels', () => {
+  const traditionalValueRule = cssRuleBody(
+    deck,
+    '.slide--cash-runway .cash-runway-ledger--traditional tfoot td',
+  );
+  const selfFundingValueRule = cssRuleBody(
+    deck,
+    '.slide--cash-runway .cash-runway-ledger--self-funding tfoot td',
+  );
+  const sharedFooterRule = deck.match(
+    /\.slide--cash-runway \.cash-runway-ledger tfoot th,\s*\.slide--cash-runway \.cash-runway-ledger tfoot td\s*\{([^}]*)\}/s,
+  )?.[1] ?? '';
+
+  assert.match(traditionalValueRule, /color:\s*#A7474B/);
+  assert.match(selfFundingValueRule, /color:\s*var\(--brand-950\)/);
+  assert.match(sharedFooterRule, /color:\s*var\(--al-900\)/);
+});
+
 test('cash runway is accessible and self-contained', () => {
   assert.match(cashSlide, /id="cash-runway-slide"[^>]*role="group"[^>]*aria-roledescription="slide"[^>]*aria-labelledby="cash-runway-title"/);
   assert.equal((cashSlide.match(/<svg\b/g) ?? []).length, 2);
