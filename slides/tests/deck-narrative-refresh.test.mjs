@@ -20,6 +20,81 @@ function section(startMarker, endMarker) {
   return start >= 0 && end > start ? deck.slice(start, end) : '';
 }
 
+function parsedCssRules(css, mediaQueries = []) {
+  const source = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  const rules = [];
+  let cursor = 0;
+
+  while (cursor < source.length) {
+    const open = source.indexOf('{', cursor);
+    if (open < 0) break;
+    const prelude = source.slice(cursor, open).trim();
+    let depth = 1;
+    let close = open + 1;
+    while (close < source.length && depth > 0) {
+      if (source[close] === '{') depth += 1;
+      if (source[close] === '}') depth -= 1;
+      close += 1;
+    }
+    const body = source.slice(open + 1, close - 1);
+
+    if (prelude.startsWith('@media')) {
+      rules.push(...parsedCssRules(body, [...mediaQueries, prelude]));
+    } else if (!prelude.startsWith('@')) {
+      rules.push({ selectors: prelude.split(',').map((selector) => selector.trim()), body, mediaQueries });
+    }
+    cursor = close;
+  }
+
+  return rules;
+}
+
+const css = section('<style>', '</style>');
+const cssRules = parsedCssRules(css);
+
+function cssAt(selector, width) {
+  const declarations = {};
+  for (const rule of cssRules) {
+    const applies = rule.mediaQueries.every((query) => {
+      const max = Number(query.match(/max-width:\s*(\d+)px/)?.[1] ?? Number.POSITIVE_INFINITY);
+      const min = Number(query.match(/min-width:\s*(\d+)px/)?.[1] ?? Number.NEGATIVE_INFINITY);
+      return width <= max && width >= min;
+    });
+    if (!applies || !rule.selectors.includes(selector)) continue;
+    for (const declaration of rule.body.split(';')) {
+      const colon = declaration.indexOf(':');
+      if (colon < 0) continue;
+      declarations[declaration.slice(0, colon).trim()] = declaration.slice(colon + 1).trim();
+    }
+  }
+  return declarations;
+}
+
+function horizontalPadding(declarations) {
+  const values = declarations.padding.split(/\s+/).map(Number.parseFloat);
+  return values.length === 1 ? values[0] : values[1];
+}
+
+function cssLength(value, width) {
+  const expression = value.trim();
+  const functional = expression.match(/^(clamp|min)\((.*)\)$/);
+  if (functional) {
+    const values = functional[2].split(',').map((part) => cssLength(part, width));
+    return functional[1] === 'clamp'
+      ? Math.max(values[0], Math.min(values[1], values[2]))
+      : Math.min(...values);
+  }
+  return [...expression.replace(/^calc\((.*)\)$/, '$1').matchAll(/([+-]?)\s*([\d.]+)(px|vw)/g)]
+    .reduce((total, [, sign, number, unit]) => (
+      total + (sign === '-' ? -1 : 1) * Number(number) * (unit === 'vw' ? width / 100 : 1)
+    ), 0);
+}
+
+function marginTop(declarations, width) {
+  if (declarations['margin-top']) return cssLength(declarations['margin-top'], width);
+  return cssLength(declarations.margin?.split(/\s+/)[0] ?? '0px', width);
+}
+
 test('deck uses the approved 24-slide opening narrative', () => {
   const ids = visibleSlideIds();
   assert.equal(ids.length, 24);
@@ -37,6 +112,7 @@ test('deck uses the approved 24-slide opening narrative', () => {
     /id="opening-title"[^>]*>We turn your expertise into an <span[^>]*>AI Sales department<\/span> that pays for its own leads<\/h2>/,
   );
   assert.doesNotMatch(deck, /id="real-problem-slide"/);
+  assert.doesNotMatch(deck, /#real-problem-slide/);
   assert.doesNotMatch(deck, /The first five minutes decide whether a lead gets worked or wasted\./);
   assert.doesNotMatch(deck, /\.problem-speed-|\.problem-banner/);
   for (const obsoleteMove of [
@@ -65,32 +141,29 @@ test('warranty flows directly into ownership with the approved launch language',
   assert.doesNotMatch(deck, /deckElement\.insertBefore\(ownershipSlide, offerRecapSlide\)/);
 });
 
-test('mobile opener keeps support copy clear of the scaled flywheel', () => {
-  const mobileCss = section('/* ── Mobile ── */', '/* Property Coach AI mockups');
-  const shellCss = section('.sales-demo-shell {', '.sales-demo-shell video,');
-  const flywheelIframeCss = section(
-    '#opening-demo .sales-demo-shell--flywheel iframe {',
-    '.sales-demo-shell--live iframe:not([src])',
-  );
-  const horizontalPadding = Number(mobileCss.match(/\.slide\s*\{[^}]*padding:\s*\d+px\s+(\d+)px/s)?.[1]);
-  const stackedGap = Number(mobileCss.match(/\.split-layout\s*\{[^}]*gap:\s*(\d+)px/s)?.[1]);
-  const [, aspectWidth, aspectHeight] = shellCss.match(/aspect-ratio:\s*(\d+)\s*\/\s*(\d+)/) ?? [];
-  const iframeScale = Number(flywheelIframeCss.match(/transform:\s*scale\(([\d.]+)\)/)?.[1]);
-  let cascadedDemoMarginTop = 0;
-  for (const rule of deck.matchAll(/#opening-demo\s*\{([^}]*)\}/g)) {
-    for (const declaration of rule[1].split(';')) {
-      const [property, value] = declaration.split(':').map((part) => part.trim());
-      if (property === 'margin') cascadedDemoMarginTop = Number.parseFloat(value);
-      if (property === 'margin-top') cascadedDemoMarginTop = Number.parseFloat(value);
-    }
-  }
-  const shellWidth = 390 - (2 * horizontalPadding);
-  const shellHeight = shellWidth * Number(aspectHeight) / Number(aspectWidth);
-  const transformedOverflowAbove = shellHeight * (iframeScale - 1) / 2;
-  const renderedSeparation = stackedGap + cascadedDemoMarginTop - transformedOverflowAbove;
+test('stacked opener keeps support copy clear of the scaled flywheel across breakpoints', () => {
+  for (const width of [390, 430, 600, 601, 768, 900]) {
+    const slide = cssAt('.slide', width);
+    const layout = cssAt('.split-layout', width);
+    const demo = cssAt('#opening-demo', width);
+    const shell = cssAt('.sales-demo-shell', width);
+    const iframe = cssAt('#opening-demo .sales-demo-shell--flywheel iframe', width);
+    const [aspectWidth, aspectHeight] = shell['aspect-ratio'].split('/').map(Number);
+    const iframeScale = Number(iframe.transform.match(/scale\(([\d.]+)\)/)?.[1]);
+    const shellWidth = Math.min(Number.parseFloat(demo['max-width']), width - (2 * horizontalPadding(slide)));
+    const shellHeight = shellWidth * aspectHeight / aspectWidth;
+    const transformedOverflowAbove = iframe['transform-origin'].includes('top')
+      ? 0
+      : shellHeight * (iframeScale - 1) / 2;
+    const renderedSeparation = cssLength(layout.gap, width) + marginTop(demo, width) - transformedOverflowAbove;
 
-  assert.ok(
-    renderedSeparation >= 2,
-    `support/demo separation is ${renderedSeparation.toFixed(2)}px at 390px`,
-  );
+    assert.equal(layout['grid-template-columns'], '1fr', `opener stacks at ${width}px`);
+    assert.ok(
+      renderedSeparation >= 2,
+      `support/demo separation is ${renderedSeparation.toFixed(2)}px at ${width}px`,
+    );
+  }
+
+  assert.notEqual(cssAt('.split-layout', 901)['grid-template-columns'], '1fr');
+  assert.equal(cssAt('#opening-demo .sales-demo-shell--flywheel iframe', 901)['transform-origin'], 'center');
 });
