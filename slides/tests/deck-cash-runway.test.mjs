@@ -188,6 +188,13 @@ test('cash runway ledgers preserve aligned rows and mobile legibility', () => {
   );
 });
 
+test('cash runway compact desktops reset deck zoom before content clips', () => {
+  const shortViewportStart = deck.lastIndexOf('@media (min-width: 701px) and (max-height: 760px)');
+  assert.ok(shortViewportStart >= 0);
+  const shortViewportCss = deck.slice(shortViewportStart, deck.indexOf('</style>', shortViewportStart));
+  assert.match(cssRuleBody(shortViewportCss, '.slide--cash-runway'), /zoom:\s*1/);
+});
+
 test('cash runway decorative orbs cannot expand the slide scroll width', () => {
   assert.match(deck, /\.slide--cash-runway > \.bg-orb\s*\{[^}]*display:\s*none/s);
 });
