@@ -4936,7 +4936,7 @@
     if (Math.abs(d) > 50) d > 0 ? goTo(current + 1) : goTo(current - 1);
   });
 
-  const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide') || 17);
+  const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide') || 1);
   goTo(Number.isFinite(requestedSlide) && requestedSlide >= 1 ? Math.min(requestedSlide - 1, total - 1) : 0);
 </script>
 

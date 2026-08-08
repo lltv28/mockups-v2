@@ -132,6 +132,10 @@ test('deck uses the approved 24-slide opening narrative', () => {
     assert.doesNotMatch(deck, new RegExp(obsoleteMove.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
   assert.match(deck, /<div class="counter" id="counter"><span class="cur">01<\/span> \/ 24<\/div>/);
+  assert.match(
+    deck,
+    /const requestedSlide = Number\(new URLSearchParams\(window\.location\.search\)\.get\('slide'\) \|\| 1\);/,
+  );
 });
 
 test('warranty flows directly into ownership with the approved launch language', () => {
