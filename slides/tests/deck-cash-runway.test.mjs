@@ -10,6 +10,21 @@ const cashStart = deck.indexOf('<!-- Cash Runway Comparison -->');
 const cashEnd = deck.indexOf('<!-- S5, 2 Stages Overview -->', cashStart);
 const cashSlide = cashStart >= 0 && cashEnd > cashStart ? deck.slice(cashStart, cashEnd) : '';
 
+function cashPanel(startMarker, endMarker) {
+  const start = cashSlide.indexOf(startMarker);
+  const end = cashSlide.indexOf(endMarker, start);
+  return start >= 0 && end > start ? cashSlide.slice(start, end) : '';
+}
+
+const traditionalPanel = cashPanel(
+  'cash-runway-panel cash-runway-panel--traditional',
+  '<div class="cash-runway-divider"',
+);
+const selfFundingPanel = cashPanel(
+  'cash-runway-panel cash-runway-panel--self-funding',
+  '</section>',
+);
+
 function visibleSlideIds() {
   return [...deck.matchAll(/<div class="slide[^"]*"[^>]*>/g)]
     .map((match) => match[0])
@@ -74,6 +89,33 @@ test('cash runway preserves the approved assumptions and takeaway', () => {
   assert.match(cashSlide, /processing fees, fulfillment, refunds, taxes, and cash-collection timing are excluded/);
 });
 
+test('cash runway pairs each graph with an accessible one-week transaction ledger', () => {
+  assert.equal((cashSlide.match(/<table class="cash-runway-ledger/g) ?? []).length, 2);
+  assert.equal((cashSlide.match(/<caption>One illustrative week<\/caption>/g) ?? []).length, 2);
+
+  for (const panel of [traditionalPanel, selfFundingPanel]) {
+    assert.match(panel, /<table class="cash-runway-ledger/);
+    assert.match(panel, /<tbody>/);
+    assert.match(panel, /<tfoot>/);
+    assert.equal((panel.match(/data-transaction="facebook-ads" data-amount="-500"/g) ?? []).length, 4);
+    assert.equal((panel.match(/>Facebook Ads</g) ?? []).length, 4);
+    assert.equal((panel.match(/>−\$500</g) ?? []).length, 4);
+    assert.match(panel, /<th scope="row"/);
+  }
+
+  assert.match(traditionalPanel, /data-transaction="front-end-sales" data-amount="0"/);
+  assert.match(traditionalPanel, />Front-end sales</);
+  assert.match(traditionalPanel, />—</);
+  assert.match(traditionalPanel, /data-total="weekly-cash-movement" data-amount="-2000"/);
+  assert.match(traditionalPanel, />Weekly cash movement</);
+  assert.match(traditionalPanel, />−\$2,000</);
+
+  assert.match(selfFundingPanel, /data-transaction="front-end-sales" data-amount="2000"/);
+  assert.match(selfFundingPanel, />\+\$2,000</);
+  assert.match(selfFundingPanel, /data-total="weekly-cash-movement" data-amount="0"/);
+  assert.match(selfFundingPanel, />\$0</);
+});
+
 test('cash runway is accessible and self-contained', () => {
   assert.match(cashSlide, /id="cash-runway-slide"[^>]*role="group"[^>]*aria-roledescription="slide"[^>]*aria-labelledby="cash-runway-title"/);
   assert.equal((cashSlide.match(/<svg\b/g) ?? []).length, 2);
@@ -125,6 +167,32 @@ test('cash runway stacks without horizontal overflow on narrow screens', () => {
   assert.match(mobileWindow, /\.slide--cash-runway \.cash-runway-grid\s*\{[^}]*grid-template-columns:\s*1fr/s);
   assert.match(mobileWindow, /\.slide--cash-runway\s*\{[^}]*overflow-y:\s*auto/s);
   assert.match(deck, /\.slide--cash-runway \.cash-runway-chart\s*\{[^}]*width:\s*100%[^}]*height:\s*auto/s);
+});
+
+test('cash runway ledgers preserve aligned rows and mobile legibility', () => {
+  const baseLedgerRule = cssRuleBody(deck, '.slide--cash-runway .cash-runway-ledger');
+  assert.match(baseLedgerRule, /width:\s*calc\(100% - 40px\)/);
+  assert.match(baseLedgerRule, /font-size:\s*11px/);
+
+  const mobileStart = deck.lastIndexOf('@media (max-width: 700px)');
+  const mobileEnd = deck.indexOf('@media (min-width: 701px)', mobileStart);
+  const mobileCss = deck.slice(mobileStart, mobileEnd);
+  const mobileLedgerRule = cssRuleBody(mobileCss, '.slide--cash-runway .cash-runway-ledger');
+
+  assert.match(mobileLedgerRule, /width:\s*calc\(100% - 24px\)/);
+  assert.match(mobileLedgerRule, /margin:\s*0 12px 14px/);
+  assert.ok(cssPixelValue(mobileLedgerRule, 'font-size') >= 13);
+  assert.match(
+    mobileCss,
+    /\.slide--cash-runway \.cash-runway-ledger th,\s*\.slide--cash-runway \.cash-runway-ledger td\s*\{[^}]*padding:\s*7px 10px/s,
+  );
+});
+
+test('cash runway compact desktops reset deck zoom before content clips', () => {
+  const shortViewportStart = deck.lastIndexOf('@media (min-width: 701px) and (max-height: 760px)');
+  assert.ok(shortViewportStart >= 0);
+  const shortViewportCss = deck.slice(shortViewportStart, deck.indexOf('</style>', shortViewportStart));
+  assert.match(cssRuleBody(shortViewportCss, '.slide--cash-runway'), /zoom:\s*1/);
 });
 
 test('cash runway decorative orbs cannot expand the slide scroll width', () => {
