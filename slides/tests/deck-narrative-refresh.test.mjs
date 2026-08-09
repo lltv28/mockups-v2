@@ -184,6 +184,13 @@ test('warranty flows directly into ownership with the approved launch language',
   assert.doesNotMatch(deck, /deckElement\.insertBefore\(ownershipSlide, offerRecapSlide\)/);
 });
 
+test('slide 14 keeps delayed product matches hidden until their animation starts', () => {
+  assert.match(deck, /animation: productMatchScene 12s ease-in-out infinite;/);
+  assert.match(deck, /animation: productCardMatch 12s ease-in-out infinite;/);
+  assert.match(deck, /animation: productMatchBadge 12s ease-in-out infinite;/);
+  assert.doesNotMatch(deck, /animation: product(?:MatchScene|CardMatch|MatchBadge) 12s ease-in-out infinite both;/);
+});
+
 test('stacked opener keeps support copy clear of the scaled flywheel across breakpoints', () => {
   for (const width of [390, 430, 600, 601, 768, 900]) {
     const slide = cssAt('.slide', width);
