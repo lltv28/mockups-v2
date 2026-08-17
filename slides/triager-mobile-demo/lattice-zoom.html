@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI reinvestment wall</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+      body { background: transparent; color: #1a1a1a; font-family: "Instrument Sans", Arial, sans-serif; }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>window.process = { env: { NODE_ENV: 'production' } }; window.__kodaraStoryProgress = 0;</script>
+    <script>
+      if (new URLSearchParams(location.search).has("capture")) {
+        let captureTime = 0;
+        let nextFrameId = 1;
+        const frameCallbacks = new Map();
+        const timeInput = document.createElement("input");
+
+        Object.defineProperty(Object.getPrototypeOf(window.performance), "now", {
+          configurable: true,
+          value: () => captureTime,
+        });
+        window.requestAnimationFrame = (callback) => {
+          const id = nextFrameId++;
+          frameCallbacks.set(id, callback);
+          return id;
+        };
+        window.cancelAnimationFrame = (id) => frameCallbacks.delete(id);
+        window.__captureStep = async (time) => {
+          captureTime = time;
+          const callbacks = Array.from(frameCallbacks.values());
+          frameCallbacks.clear();
+          callbacks.forEach((callback) => callback(time));
+          await new Promise((resolve) => setTimeout(resolve, 0));
+        };
+        timeInput.id = "capture-time";
+        timeInput.type = "number";
+        timeInput.value = "0";
+        timeInput.setAttribute("aria-label", "Capture time");
+        timeInput.style.cssText = "position:fixed;left:0;bottom:0;width:1px;height:1px;opacity:.001;z-index:99";
+        timeInput.addEventListener("input", () => window.__captureStep(Number(timeInput.value)));
+        document.body.append(timeInput);
+      }
+    </script>
+    <script>
+      let pendingCaptureTime = null;
+      let captureStepping = false;
+      let captureInitialized = false;
+
+      async function stepToLatestCaptureTime() {
+        if (captureStepping || typeof window.__captureStep !== "function") return;
+        captureStepping = true;
+        if (!captureInitialized) {
+          captureInitialized = true;
+          await window.__captureStep(0);
+        }
+        while (pendingCaptureTime !== null) {
+          const time = pendingCaptureTime;
+          pendingCaptureTime = null;
+          await window.__captureStep(time);
+        }
+        captureStepping = false;
+      }
+
+      window.addEventListener("message", (event) => {
+        const message = event.data;
+        if (!message || message.source !== "kodara-machine" || message.type !== "set-time") return;
+        window.__kodaraStoryProgress = Math.max(0, Math.min(1, Number(message.progress) || 0));
+        pendingCaptureTime = Math.max(0, Math.min(15000, Number(message.time) || 0));
+        stepToLatestCaptureTime();
+      });
+    </script>
+    <script src="lattice-zoom.js?surface=card-bg-v2"></script>
+  </body>
+</html>
