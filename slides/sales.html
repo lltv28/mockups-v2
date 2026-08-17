@@ -2805,6 +2805,34 @@
     cursor: default;
     opacity: 0.3;
   }
+  .triager-sales-video--mobile {
+    width: 56.25%;
+    aspect-ratio: 9 / 16;
+    background: transparent;
+  }
+  .triager-sales-video--mobile iframe {
+    left: 0;
+    width: 100%;
+  }
+  .product-library-priced .triager-example {
+    grid-template-columns: 126px minmax(0, 1fr) max-content;
+    gap: 12px;
+  }
+  .triager-example__price {
+    color: var(--brand-950);
+    font-size: 14px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+  @media (max-width: 900px) {
+    .product-library-priced .triager-example {
+      grid-template-columns: 90px minmax(0, 1fr) max-content;
+      gap: 10px;
+    }
+    .triager-example__price { font-size: 12px; }
+  }
   .phase3-engine-layout {
     width: min(100%, 1120px);
     margin: 0 auto;
@@ -3398,6 +3426,7 @@
     margin: 0 auto;
     border-color: var(--brand-600);
     background: var(--brand-50);
+    justify-content: center;
     text-align: center;
   }
   .engineer-flow-arrow {
@@ -3414,39 +3443,70 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
   }
-  .engineer-output-grid::before {
-    content: '';
-    position: absolute;
-    top: -14px;
-    left: 12.5%;
-    right: 12.5%;
-    border-top: 1px solid var(--brand-200);
-  }
   .engineer-output {
     min-height: 120px;
-    text-align: center;
-  }
-  .report-placeholder {
-    width: 100%;
-    max-width: 900px;
-    min-height: 300px;
-    margin: 0 auto;
-    padding: 42px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 14px;
-    border: 2px dashed var(--al-200);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.76);
     text-align: center;
   }
-  .lead-score-placeholder {
-    width: min(100%, 520px);
-    min-height: 0;
-    aspect-ratio: 1;
-    padding: 32px;
+  .engineer-output--avatar {
+    z-index: 2;
+  }
+  .engineer-output--avatar:focus-visible {
+    outline: 2px solid var(--brand-600);
+    outline-offset: 3px;
+  }
+  .engineer-avatar-popup {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% - 1px);
+    width: min(360px, 42vw);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--brand-200);
+    border-radius: 16px;
+    background: var(--al-900);
+    box-shadow: var(--shadow-modal);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 10px) scale(0.98);
+    transform-origin: 50% 100%;
+    transition: opacity 160ms ease-out, transform 160ms ease-out;
+  }
+  .engineer-avatar-popup iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .engineer-output--avatar:hover .engineer-avatar-popup,
+  .engineer-output--avatar:focus-within .engineer-avatar-popup {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0) scale(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .engineer-avatar-popup {
+      transition: none;
+      transform: translate(-50%, 0);
+    }
+  }
+  .deck-proof-screenshot {
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid var(--al-100);
+    border-radius: 18px;
+    background: var(--white);
+    box-shadow: var(--shadow-card);
+  }
+  .deck-proof-screenshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .lead-score-screenshot {
+    width: min(100%, 760px);
+  }
+  .performance-report-screenshot {
+    width: min(100%, 840px);
   }
   @media (max-width: 900px) {
     .deck-arrows {
@@ -3462,9 +3522,11 @@
     .department-branches {
       grid-template-columns: 1fr;
     }
-    .engineer-output-grid::before,
     .department-branches::before {
       display: none;
+    }
+    .engineer-avatar-popup {
+      width: min(420px, 82vw);
     }
     .replace-row > div:nth-child(2)::before { content: 'Monthly hire: '; }
     .replace-row > div:nth-child(4)::before { content: '2-year total: '; }
@@ -4077,7 +4139,7 @@
 
     <div class="content--wide text-center flex-col items-center justify-center gap-20">
       <div class="rv d1">
-        <h2 id="opening-title" class="h-hero"><span class="brand-text">9 in 10</span> leads go nowhere.</h2>
+        <h2 id="opening-title" class="h-hero"><span class="brand-text">9 out of 10</span> leads go nowhere.</h2>
       </div>
       <div class="rv d2">
         <p class="body-lg">We put the hottest leads on your calendar and give everyone else something smaller to buy.</p>
@@ -4390,10 +4452,19 @@
             <div class="upsell-step__title">AI Brain</div>
             <div class="upsell-step__body">Knows your audience, offers and expertise.</div>
           </div>
-          <div class="upsell-step engineer-output">
+          <div class="upsell-step engineer-output engineer-output--avatar" tabindex="0" aria-label="AI Avatar. Hover or focus to preview the AI Avatar video.">
             <div class="upsell-step__tag">Your voice</div>
             <div class="upsell-step__title">AI Avatar</div>
             <div class="upsell-step__body">Turns your knowledge into content in your voice.</div>
+            <div class="engineer-avatar-popup" role="region" aria-label="AI Avatar video preview">
+              <iframe
+                data-autoplay-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cd8203fbb01b4827b7216f6ccdaa0a68/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcd8203fbb01b4827b7216f6ccdaa0a68%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;startTime=9s"
+                data-reduced-motion-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/cd8203fbb01b4827b7216f6ccdaa0a68/iframe?muted=true&amp;controls=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fcd8203fbb01b4827b7216f6ccdaa0a68%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&amp;startTime=9s"
+                title="AI Avatar client content example"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                allowfullscreen="true"
+              ></iframe>
+            </div>
           </div>
           <div class="upsell-step engineer-output">
             <div class="upsell-step__tag">Qualification</div>
@@ -4414,35 +4485,67 @@
     <div class="bg-orb bg-orb--green" style="top: -130px; right: -90px;"></div>
     <div class="content--wide text-center flex-col items-center gap-20" style="justify-content: center;">
       <div class="rv d1"><h2 id="triage-demo-title" class="h-lg">The AI Triager Funnel.</h2></div>
-      <div class="report-placeholder lead-score-placeholder rv d2" role="group" aria-label="AI Triager demo placeholder">
-        <div class="label-tag">Demo placeholder</div>
-        <div class="h-md">AI Triager demo</div>
-        <p class="body" style="max-width: 420px;">Quiz to personalized plan to paid assessment.</p>
+      <div class="triager-sales-grid rv d2" role="group" aria-label="Sandra Triager video and vertical AI Triager demo">
+        <div class="brand-card" style="padding: 14px;">
+          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-bottom: 10px;">Sandra Triager demo</div>
+          <div style="position: relative; padding-top: 100%; overflow: hidden; border-radius: 12px;">
+            <iframe
+              data-autoplay-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/10a053df290fbc99ca3eb741fcfcb419/iframe?muted=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F10a053df290fbc99ca3eb741fcfcb419%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+              data-reduced-motion-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/10a053df290fbc99ca3eb741fcfcb419/iframe?muted=true&amp;controls=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2F10a053df290fbc99ca3eb741fcfcb419%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+              title="AI Triager assessment demo"
+              style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+              allowfullscreen="true"
+            ></iframe>
+          </div>
+          <div class="h-md" style="font-size: 18px; margin-top: 12px;">Quiz → personalized plan → &lt;$20 assessment</div>
+          <p class="body" style="font-size: 12px; margin-top: 6px; color: var(--al-600);">The assessment gives buyers immediate value and shows what they need, how urgent it is and whether they are ready to buy.</p>
+        </div>
+        <div class="brand-card" style="padding: 14px;">
+          <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--brand-950); margin-bottom: 10px;">AI Triager reinvestment loop</div>
+          <div class="triager-sales-video triager-sales-video--mobile">
+            <iframe
+              data-autoplay-src="triager-mobile-demo/lattice-zoom.html?surface=card-bg-v2"
+              data-reduced-motion-src="triager-mobile-demo/lattice-zoom.html?surface=card-bg-v2"
+              title="AI Triager assessment revenue returning to ad spend"
+            ></iframe>
+          </div>
+          <div class="h-md" style="font-size: 18px; margin-top: 12px;">Each assessment can help fund the next lead.</div>
+          <p class="body" style="font-size: 12px; margin-top: 6px; color: var(--al-600);">When a buyer pays for an assessment, that revenue can go back into ad spend and bring the next lead into the system.</p>
+        </div>
       </div>
-      <p class="body rv d3" style="max-width: 720px;">The assessment gives buyers immediate value and shows what buyers need, how urgent it is and whether they are ready to buy.</p>
     </div>
   </div>
 
   <div class="slide" id="product-library-slide" role="group" aria-roledescription="slide" aria-labelledby="product-library-title">
     <div class="bg-orb bg-orb--green" style="top: -130px; right: -90px;"></div>
     <div class="bg-orb bg-orb--cyan" style="bottom: -140px; left: -80px;"></div>
-    <div class="content--wide text-center flex-col gap-20" style="justify-content: center;">
+    <div class="content--wide text-center flex-col gap-18" style="justify-content: center;">
       <div class="flex-col gap-8">
         <div class="rv d1"><span class="label-tag">When they are not ready yet</span></div>
-        <div class="rv d2"><h2 id="product-library-title" class="h-lg" style="font-size: clamp(30px, 3.5vw, 42px);">Not ready for your highest-level service? The AI offers the next best fit.</h2></div>
-        <div class="rv d3"><p class="body" style="max-width: 800px; margin: 0 auto; color: var(--al-500); font-size: 12px;">Qualified buyers book a call. Everyone else gets matched to the digital product that best fits what their assessment says they need.</p></div>
+        <div class="rv d2"><h2 id="product-library-title" class="h-lg" style="font-size: clamp(26px, 3vw, 36px);">The digital product library adapts to almost any niche.</h2></div>
+        <div class="rv d3"><p class="body" style="max-width: 760px; margin: 0 auto; color: var(--al-500); font-size: 11px;">When buyers are not ready for your highest-level service, the AI can sell them something built around what they need next.</p></div>
       </div>
-      <section class="product-library rv d4" style="width: 100%; max-width: 900px; margin: 0 auto;" aria-label="Example digital product library">
-        <div class="product-library__label">Example digital product library</div>
-        <div class="product-library-grid">
-          <div class="product-library-card"><div class="product-library-card__format">Mini-course</div><div class="product-library-card__title">Follow-Up System</div><div class="product-library-card__price">$199</div></div>
-          <div class="product-library-card"><div class="product-library-card__format">Guide</div><div class="product-library-card__title">Lead Conversion Playbook</div><div class="product-library-card__price">$99</div></div>
-          <div class="product-library-card"><div class="product-library-card__format">Toolkit</div><div class="product-library-card__title">Sales Script Builder</div><div class="product-library-card__price">$299</div></div>
-          <div class="product-library-card"><div class="product-library-card__format">Video training</div><div class="product-library-card__title">Pipeline Audit Workshop</div><div class="product-library-card__price">$149</div></div>
-          <div class="product-library-card"><div class="product-library-card__format">Program</div><div class="product-library-card__title">High-Ticket Offer Lab</div><div class="product-library-card__price">$499</div></div>
-          <div class="product-library-card"><div class="product-library-card__format">Templates</div><div class="product-library-card__title">Ad Angle Library</div><div class="product-library-card__price">$199</div></div>
+      <div class="triager-example-grid product-library-priced rv d4" role="list" aria-label="Illustrative digital product examples and prices by industry">
+        <div class="triager-example-column">
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Peptide clinic</div><div class="triager-example__assessment">Peptide Optimization Starter Program</div><div class="triager-example__price">$199</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Real estate</div><div class="triager-example__assessment">First Investment Property Roadmap</div><div class="triager-example__price">$99</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Accountant</div><div class="triager-example__assessment">Small Business Tax Savings Toolkit</div><div class="triager-example__price">$149</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Medical clinic</div><div class="triager-example__assessment">Treatment Preparation Guide</div><div class="triager-example__price">$49</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Financial planner</div><div class="triager-example__assessment">Retirement Readiness Action Plan</div><div class="triager-example__price">$99</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Business coach</div><div class="triager-example__assessment">90-Day Growth Bottleneck Sprint</div><div class="triager-example__price">$499</div></div>
         </div>
-      </section>
+
+        <div class="triager-example-column">
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Mindset coach</div><div class="triager-example__assessment">Personal Performance Reset Course</div><div class="triager-example__price">$99</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Sales trainer</div><div class="triager-example__assessment">Sales Process Leak Fix Kit</div><div class="triager-example__price">$299</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Marketing agency</div><div class="triager-example__assessment">Lead Generation Playbook</div><div class="triager-example__price">$199</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Fitness coach</div><div class="triager-example__assessment">Training and Nutrition Plan</div><div class="triager-example__price">$149</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Home services</div><div class="triager-example__assessment">Project Planning and Budget Guide</div><div class="triager-example__price">$79</div></div>
+          <div class="triager-example" role="listitem"><div class="triager-example__niche">Attorney</div><div class="triager-example__assessment">Legal Risk Readiness Toolkit</div><div class="triager-example__price">$199</div></div>
+        </div>
+      </div>
+      <p class="body rv d5" style="margin: -8px auto 0; color: var(--al-400); font-size: 9px;">Illustrative products and example prices</p>
     </div>
   </div>
 <div class="slide" id="fund-cover-slide" role="group" aria-roledescription="slide" aria-labelledby="fund-cover-title">
@@ -4541,11 +4644,9 @@
     <div class="bg-orb bg-orb--green" style="bottom: -120px; left: -80px;"></div>
     <div class="content--wide text-center flex-col items-center gap-20" style="justify-content: center;">
       <div class="rv d1"><h2 id="lead-scoring-title" class="h-lg">The assessment shows you who is ready to buy.</h2></div>
-      <div class="report-placeholder lead-score-placeholder rv d2" role="group" aria-label="Lead qualification demo placeholder">
-        <div class="label-tag">Demo placeholder</div>
-        <div class="h-md">Lead qualification demo</div>
-        <p class="body" style="max-width: 400px;">Ready now: calendar. Not ready: next offer. No purchase: follow-up.</p>
-      </div>
+      <figure class="deck-proof-screenshot lead-score-screenshot rv d2">
+        <img src="lead-scoring-customer-journey.jpeg" alt="Customer journey dashboard showing a $17 assessment purchase, a six-day close, $8,800 in client revenue and a 96 out of 100 AI qualification score.">
+      </figure>
     </div>
   </div>
 <div class="slide" id="compound-cover-slide" role="group" aria-roledescription="slide" aria-labelledby="compound-cover-title">
@@ -4672,11 +4773,9 @@
         <div class="rv d2"><h2 id="performance-report-title" class="h-lg">See exactly what your AI Sales Department is doing.</h2></div>
         <div class="rv d3"><p class="body-lg">Track which leads buy, book and move into the next offer.</p></div>
       </div>
-      <div class="report-placeholder rv d4" role="group" aria-label="Sales Department performance demo placeholder">
-        <div class="label-tag">Demo placeholder</div>
-        <div class="h-md">Sales Department performance</div>
-        <p class="body" style="max-width: 680px;">Assessment buyers, qualified calls, downsell revenue and marketing costs in one view.</p>
-      </div>
+      <figure class="deck-proof-screenshot performance-report-screenshot rv d4">
+        <img src="performance-report-overview.jpeg" alt="Kodara overview dashboard showing $970,401 in revenue, 59.3 percent ad spend recovered, a 16.3 percent assessment ascension rate, conversion funnel results and recent lead activity.">
+      </figure>
     </div>
   </div>
 
@@ -4908,6 +5007,7 @@
   const nextSlide = document.getElementById('nextSlide');
   const total = slides.length;
   let current = 0;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   slides.forEach((slide, i) => {
     const thumb = document.createElement('div');
@@ -5005,6 +5105,15 @@
           video.play().catch(() => {});
         } else {
           video.pause();
+        }
+      });
+      candidate.querySelectorAll('iframe[data-autoplay-src]').forEach(frame => {
+        if (index === current) {
+          if (!frame.hasAttribute('src')) {
+            frame.setAttribute('src', prefersReducedMotion ? frame.dataset.reducedMotionSrc : frame.dataset.autoplaySrc);
+          }
+        } else {
+          frame.removeAttribute('src');
         }
       });
     });
