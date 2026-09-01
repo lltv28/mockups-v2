@@ -1139,6 +1139,30 @@
   .brain-context { min-height: 38px; }
   .brain-ready { color: var(--btn-primary); font-size: 12px; font-weight: 650; white-space: nowrap; }
 
+  #brain-slide .figma-brain-window {
+    position: relative;
+    width: min(1080px, 100%);
+    aspect-ratio: 1280 / 710;
+  }
+
+  #brain-slide .figma-brain-window img { object-position: center bottom; }
+
+  .brain-proof-video {
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    width: min(352px, 32.6%);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid rgba(26,26,26,.14);
+    border-radius: var(--control-radius);
+    background: var(--canvas);
+    box-shadow: 0 14px 36px rgba(16,68,45,.12), 0 2px 8px rgba(26,26,26,.06);
+    transform: translateX(50%);
+  }
+
+  .brain-proof-video iframe { width: 100%; height: 100%; display: block; border: 0; }
+
   @media (max-width: 1100px) {
     .content-wide { max-width: 100%; }
     .triager-shell { width: 100%; height: 700px; margin-left: 0; }
@@ -1164,6 +1188,7 @@
     .h-lg { font-size: 30px; }
     .triager-stage { padding: 18px 14px 22px; }
     .brain-context { align-items: flex-start; flex-direction: column; }
+    .brain-proof-video { width: 34%; }
   }
 
   /* Slide 3: product workflow with buyer-facing proof */
@@ -1439,6 +1464,14 @@
 
         <div class="figma-brain-window" aria-label="Your AI Brain onboarding screen">
           <img src="assets/figma-ai-brain-onboarding.png" alt="Kodara onboarding screen showing six business files and Drive folders flowing into a central AI Brain.">
+          <div class="brain-proof-video">
+            <iframe
+              data-video-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/dda7d6b54baa18b5487b73233648182b/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fdda7d6b54baa18b5487b73233648182b%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D12s%26height%3D600&amp;title=Dr.+Reyes+Health+AI+Program+Demo"
+              title="Dr. Reyes Health AI program demo"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </div>
     </section>
