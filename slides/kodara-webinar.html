@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kodara Webinar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --surface: #f8faf9;
+    --surface-strong: #eef5f1;
+    --ink: #202523;
+    --ink-soft: #5d6762;
+    --ink-faint: #89918d;
+    --line: rgba(32, 37, 35, 0.10);
+    --line-strong: rgba(32, 37, 35, 0.18);
+    --brand: #106844;
+    --brand-dark: #0a4c31;
+    --brand-soft: rgba(16, 104, 68, 0.08);
+    --brand-mid: rgba(16, 104, 68, 0.16);
+    --font: "Instrument Sans", Arial, sans-serif;
+    --font-display: "Instrument Serif", Georgia, serif;
+    --radius: 18px;
+    --shadow: 0 24px 70px rgba(16, 104, 68, 0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button { font: inherit; }
+
+  .app {
+    display: flex;
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .panel {
+    width: 220px;
+    min-width: 220px;
+    height: 100dvh;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+    transition: margin-left 220ms ease, opacity 180ms ease;
+  }
+
+  .panel.collapsed {
+    margin-left: -220px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .thumb {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 7px;
+    align-items: center;
+    padding: 6px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 150ms ease;
+  }
+
+  .thumb:hover, .thumb:focus-visible { background: var(--brand-soft); outline: none; }
+  .thumb.active { background: var(--brand-mid); }
+  .thumb-num { color: var(--ink-faint); font-size: 10px; font-weight: 700; text-align: center; }
+  .thumb.active .thumb-num { color: var(--brand-dark); }
+
+  .thumb-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--white);
+  }
+
+  .thumb.active .thumb-box { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+
+  .thumb-clone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1600px;
+    height: 900px;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(var(--thumb-scale, 0.1));
+  }
+
+  .thumb-clone > .slide {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    width: 1600px !important;
+    height: 900px !important;
+    padding: 72px 84px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .deck {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: clamp(54px, 6vw, 84px);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .slide::after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    width: 520px;
+    height: 520px;
+    right: -260px;
+    bottom: -260px;
+    border-radius: 50%;
+    background: var(--brand-soft);
+  }
+
+  .slide:nth-of-type(3n)::after { right: auto; left: -300px; bottom: auto; top: -300px; }
+  .slide:nth-of-type(4n)::after { width: 380px; height: 380px; right: 12%; bottom: -260px; }
+
+  .content { width: min(100%, 1320px); margin: 0 auto; }
+  .content-narrow { width: min(100%, 960px); margin: 0 auto; }
+  .center { text-align: center; }
+  .brand { color: var(--brand); }
+
+  .act-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    margin-bottom: 22px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand-dark);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  h1, h2 {
+    max-width: 1100px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
+  h1 { font-size: clamp(58px, 6.3vw, 92px); }
+  h2 { font-size: clamp(48px, 5.4vw, 78px); }
+  h3 { font-size: 22px; line-height: 1.15; }
+
+  .lede {
+    max-width: 760px;
+    margin-top: 24px;
+    color: var(--ink-soft);
+    font-size: clamp(18px, 1.8vw, 26px);
+    line-height: 1.45;
+  }
+
+  .center .lede { margin-right: auto; margin-left: auto; }
+
+  .small-print {
+    color: var(--ink-faint);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .draft-hold {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--brand);
+    background: var(--brand-soft);
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .draft-hold strong { color: var(--brand-dark); }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: clamp(38px, 6vw, 88px);
+    align-items: center;
+  }
+
+  .photo-frame {
+    position: relative;
+    min-height: 570px;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--surface-strong);
+    box-shadow: var(--shadow);
+  }
+
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-frame .photo-caption {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    left: 18px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.4;
+    backdrop-filter: blur(12px);
+  }
+
+  .agenda {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-top: 56px;
+  }
+
+  .agenda-list { display: grid; gap: 0; }
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .agenda-row:first-child { border-top: 1px solid var(--line); }
+  .agenda-row span { color: var(--brand); font-weight: 700; }
+  .agenda-row strong { font-size: 22px; font-weight: 600; }
+  .agenda-side {
+    padding: 34px;
+    border-radius: var(--radius);
+    background: var(--brand);
+    color: var(--white);
+  }
+
+  .agenda-side strong {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.05;
+  }
+
+  .agenda-side p { color: rgba(255, 255, 255, 0.78); font-size: 17px; line-height: 1.5; }
+
+  .definition-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 26px;
+    margin-top: 48px;
+  }
+
+  .definition-main, .definition-list {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+
+  .definition-main { padding: 48px; }
+  .definition-main strong {
+    display: block;
+    margin-bottom: 18px;
+    color: var(--brand);
+    font-family: var(--font-display);
+    font-size: 54px;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .definition-main p { color: var(--ink-soft); font-size: 21px; line-height: 1.45; }
+  .definition-list { display: grid; align-content: center; padding: 24px 34px; }
+  .definition-list div { padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 17px; line-height: 1.4; }
+  .definition-list div:last-child { border-bottom: 0; }
+
+  .search-board {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 44px;
+  }
+
+  .search-item {
+    min-height: 112px;
+    padding: 24px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .search-item:nth-child(2), .search-item:nth-child(3) { background: var(--brand-soft); }
+  .search-item strong { display: block; margin-bottom: 7px; color: var(--brand-dark); font-size: 17px; }
+  .search-item p { color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
+
+  .statement {
+    display: grid;
+    gap: 28px;
+    align-items: center;
+    min-height: 520px;
+  }
+
+  .statement h2 { max-width: 1200px; font-size: clamp(62px, 7.4vw, 108px); }
+  .statement-rule { width: min(220px, 30vw); height: 4px; border-radius: 999px; background: var(--brand); }
+
+  .bottleneck {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 54px;
+    align-items: center;
+  }
+
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 28px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .calendar span {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    background: var(--brand-mid);
+  }
+
+  .calendar span:nth-child(4n), .calendar span:nth-child(7n) { background: var(--line); }
+  .calendar-note { grid-column: 1 / -1; margin-top: 14px; color: var(--ink-soft); font-size: 14px; line-height: 1.4; }
+
+  .funnel-shell {
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+    margin-top: 44px;
+  }
+
+  .funnel {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+  }
+
+  .funnel-step {
+    display: grid;
+    place-items: center;
+    min-height: 70px;
+    border-radius: 12px;
+    background: var(--surface-strong);
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .funnel-step:nth-child(1) { width: 100%; }
+  .funnel-step:nth-child(2) { width: 78%; }
+  .funnel-step:nth-child(3) { width: 56%; }
+  .funnel-step:nth-child(4) { width: 34%; background: var(--brand); color: var(--white); }
+  .funnel-copy { display: grid; gap: 18px; }
+  .funnel-copy p { padding-left: 18px; border-left: 3px solid var(--brand); color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
+
+  .equation {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 18px;
+    align-items: stretch;
+    margin-top: 50px;
+  }
+
+  .equation-card {
+    display: grid;
+    place-items: center;
+    min-height: 230px;
+    padding: 30px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    text-align: center;
+  }
+
+  .equation-card strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 40px; font-weight: 400; line-height: 1.05; }
+  .equation-card p { margin-top: 12px; color: var(--ink-soft); font-size: 14px; line-height: 1.4; }
+  .equation-sign { display: grid; place-items: center; color: var(--brand); font-size: 36px; }
+
+  .alternatives {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    margin-top: 46px;
+  }
+
+  .alternative {
+    min-height: 170px;
+    padding: 30px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+
+  .alternative strong { display: block; margin-bottom: 12px; font-size: 21px; }
+  .alternative p { color: var(--ink-soft); font-size: 16px; line-height: 1.45; }
+
+  .profile {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.68fr) 1.32fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .profile img { width: 100%; max-height: 590px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
+  .profile-points { display: grid; gap: 16px; margin-top: 30px; }
+  .profile-point { padding: 18px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 17px; line-height: 1.45; }
+
+  .story-card {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 34px;
+    margin-top: 46px;
+    padding: 42px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .story-card strong { color: var(--brand); font-family: var(--font-display); font-size: 48px; font-weight: 400; line-height: 1; }
+  .story-card p { color: var(--ink-soft); font-size: 20px; line-height: 1.5; }
+
+  .process-line {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 54px;
+  }
+
+  .process-item {
+    position: relative;
+    min-height: 210px;
+    padding: 24px 18px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .process-item:nth-child(even) { margin-top: 34px; background: var(--brand-soft); }
+  .process-item strong { display: block; margin-bottom: 12px; color: var(--brand-dark); font-size: 18px; }
+  .process-item p { color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
+
+  .focus-layout {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .focus-panel {
+    padding: 38px;
+    border-radius: var(--radius);
+    background: var(--brand);
+    color: var(--white);
+  }
+
+  .focus-panel strong { display: block; margin-bottom: 18px; font-family: var(--font-display); font-size: 46px; font-weight: 400; line-height: 1.05; }
+  .focus-panel p { color: rgba(255, 255, 255, 0.78); font-size: 17px; line-height: 1.5; }
+  .focus-list { display: grid; gap: 0; }
+  .focus-list div { padding: 22px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 18px; line-height: 1.4; }
+  .focus-list div strong { display: block; margin-bottom: 5px; color: var(--ink); }
+
+  .source-flow {
+    display: grid;
+    grid-template-columns: 0.82fr 1.18fr;
+    gap: 36px;
+    margin-top: 46px;
+    align-items: stretch;
+  }
+
+  .sources { display: grid; gap: 12px; }
+  .source {
+    padding: 20px 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+
+  .source strong { display: block; margin-bottom: 5px; color: var(--brand-dark); }
+  .source span { color: var(--ink-soft); font-size: 14px; }
+  .source-output {
+    display: grid;
+    align-content: center;
+    padding: 42px;
+    border-radius: var(--radius);
+    background: var(--brand-soft);
+    border: 1px solid var(--brand-mid);
+  }
+
+  .source-output strong { color: var(--brand); font-family: var(--font-display); font-size: 50px; font-weight: 400; line-height: 1.05; }
+  .source-output p { margin-top: 16px; color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
+
+  .brain-map {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 0.8fr;
+    gap: 22px;
+    align-items: center;
+    margin-top: 48px;
+  }
+
+  .brain-side { display: grid; gap: 12px; }
+  .brain-node {
+    padding: 19px 22px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  .brain-core {
+    display: grid;
+    place-items: center;
+    min-height: 330px;
+    padding: 42px;
+    border-radius: var(--radius);
+    background: var(--brand);
+    color: var(--white);
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .brain-core strong { font-family: var(--font-display); font-size: 58px; font-weight: 400; line-height: 1; }
+  .brain-core span { margin-top: 12px; color: rgba(255, 255, 255, 0.74); font-size: 15px; line-height: 1.4; }
+
+  .build-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 18px;
+    margin-top: 46px;
+  }
+
+  .build-block {
+    min-height: 180px;
+    padding: 30px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .build-block:first-child { grid-row: 1 / 3; display: grid; align-content: end; min-height: 390px; background: var(--brand); color: var(--white); }
+  .build-block strong { display: block; margin-bottom: 10px; font-size: 24px; }
+  .build-block:first-child strong { font-family: var(--font-display); font-size: 54px; font-weight: 400; line-height: 1; }
+  .build-block p { color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
+  .build-block:first-child p { color: rgba(255, 255, 255, 0.76); }
+
+  .approval-loop {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 20px;
+    align-items: center;
+    margin-top: 58px;
+  }
+
+  .approval-card {
+    min-height: 210px;
+    padding: 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .approval-card strong { display: block; margin-bottom: 12px; color: var(--brand-dark); font-size: 22px; }
+  .approval-card p { color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
+  .approval-arrow { color: var(--brand); font-size: 30px; }
+
+  .channel-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 54px;
+    align-items: center;
+  }
+
+  .channel-stack { display: grid; gap: 14px; }
+  .channel-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    padding: 20px 24px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .channel-row strong { color: var(--brand-dark); }
+  .channel-row span { color: var(--ink-faint); font-size: 13px; }
+
+  .demo-sequence {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 46px;
+  }
+
+  .demo-card {
+    min-height: 180px;
+    padding: 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .demo-card:nth-child(2), .demo-card:nth-child(5) { background: var(--brand-soft); }
+  .demo-card strong { display: block; margin-bottom: 11px; color: var(--brand-dark); font-size: 20px; }
+  .demo-card p { color: var(--ink-soft); font-size: 14px; line-height: 1.45; }
+
+  .boundary-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 30px;
+    margin-top: 44px;
+  }
+
+  .boundary-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 30px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .boundary-main div { padding: 18px; border-radius: 12px; background: var(--white); color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
+  .boundary-callout { display: grid; align-content: center; padding: 36px; border-radius: var(--radius); background: var(--brand); color: var(--white); }
+  .boundary-callout > strong { font-family: var(--font-display); font-size: 42px; font-weight: 400; line-height: 1.05; }
+  .boundary-callout p { margin-top: 14px; color: rgba(255, 255, 255, 0.78); font-size: 15px; line-height: 1.45; }
+  .boundary-callout .draft-hold { border-color: rgba(255, 255, 255, 0.72); background: rgba(255, 255, 255, 0.10); color: rgba(255, 255, 255, 0.82); }
+  .boundary-callout .draft-hold strong { color: var(--white); font-family: var(--font); font-size: 13px; font-weight: 700; }
+
+  .system-path {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 56px;
+  }
+
+  .system-path div {
+    display: grid;
+    place-items: center;
+    min-height: 176px;
+    padding: 22px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .system-path div:nth-child(3) { background: var(--brand); color: var(--white); }
+
+  .elevator {
+    display: grid;
+    min-height: 570px;
+    align-content: center;
+    padding: 58px;
+    border-radius: var(--radius);
+    background: var(--brand);
+    color: var(--white);
+    box-shadow: var(--shadow);
+  }
+
+  .elevator h2 { color: var(--white); max-width: 1180px; }
+  .elevator p { max-width: 920px; margin-top: 28px; color: rgba(255, 255, 255, 0.78); font-size: 21px; line-height: 1.5; }
+
+  .fit-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 22px;
+    margin-top: 46px;
+  }
+
+  .fit-card {
+    padding: 36px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .fit-card:first-child { background: var(--brand-soft); border-color: var(--brand-mid); }
+  .fit-card h3 { margin-bottom: 20px; color: var(--brand-dark); }
+  .fit-card div { padding: 15px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 16px; line-height: 1.4; }
+  .fit-card div:last-child { border-bottom: 0; }
+
+  .deliverables {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 22px;
+    margin-top: 44px;
+  }
+
+  .delivery-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 28px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .delivery-main div { min-height: 124px; padding: 20px; border-radius: 12px; background: var(--white); }
+  .delivery-main strong { display: block; margin-bottom: 7px; color: var(--brand-dark); }
+  .delivery-main span { color: var(--ink-soft); font-size: 13px; line-height: 1.4; }
+  .delivery-side { display: grid; align-content: center; padding: 36px; border-radius: var(--radius); background: var(--brand); color: var(--white); }
+  .delivery-side strong { font-family: var(--font-display); font-size: 44px; font-weight: 400; line-height: 1; }
+  .delivery-side p { margin-top: 14px; color: rgba(255, 255, 255, 0.78); font-size: 15px; line-height: 1.45; }
+
+  .proof-layout {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    gap: 54px;
+    align-items: center;
+  }
+
+  .proof-image { padding: 16px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .proof-image img { display: block; width: 100%; max-height: 600px; object-fit: contain; border-radius: 12px; }
+  .proof-copy blockquote { margin-top: 28px; color: var(--ink-soft); font-family: var(--font-display); font-size: 32px; line-height: 1.22; }
+  .proof-copy .small-print { margin-top: 24px; }
+
+  .guarantee {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 46px;
+    align-items: center;
+  }
+
+  .guarantee-number {
+    display: grid;
+    place-items: center;
+    min-height: 470px;
+    border-radius: var(--radius);
+    background: var(--brand);
+    color: var(--white);
+    text-align: center;
+  }
+
+  .guarantee-number strong { display: block; font-family: var(--font-display); font-size: 132px; font-weight: 400; line-height: 0.8; }
+  .guarantee-number strong.hold-word { font-family: var(--font); font-size: 74px; font-weight: 700; letter-spacing: 0.04em; }
+  .guarantee-number span { margin-top: 18px; font-size: 18px; font-weight: 600; }
+  .guarantee-copy { display: grid; gap: 20px; }
+  .guarantee-copy h2 { font-size: clamp(48px, 5.2vw, 72px); }
+  .guarantee-copy p { color: var(--ink-soft); font-size: 18px; line-height: 1.5; }
+  .guarantee-note { padding: 18px 20px; border-left: 3px solid var(--brand); background: var(--brand-soft); color: var(--ink-soft); font-size: 14px; line-height: 1.45; }
+
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 46px;
+  }
+
+  .term {
+    min-height: 138px;
+    padding: 26px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .term strong { display: block; margin-bottom: 8px; color: var(--brand-dark); font-size: 18px; }
+  .term p { color: var(--ink-soft); font-size: 14px; line-height: 1.45; }
+
+  .objection {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 52px;
+    align-items: center;
+  }
+
+  .question-mark {
+    color: var(--brand);
+    font-family: var(--font-display);
+    font-size: 250px;
+    line-height: 0.75;
+    text-align: center;
+  }
+
+  .answer-list { display: grid; gap: 0; margin-top: 28px; }
+  .answer-list div { padding: 18px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 17px; line-height: 1.45; }
+  .answer-list strong { color: var(--ink); }
+
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 18px;
+    margin-top: 46px;
+  }
+
+  .compare-card {
+    min-height: 270px;
+    padding: 30px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .compare-card:last-child { background: var(--brand); color: var(--white); }
+  .compare-card strong { display: block; margin-bottom: 18px; font-size: 22px; }
+  .compare-card p { color: var(--ink-soft); font-size: 15px; line-height: 1.5; }
+  .compare-card:last-child p { color: rgba(255, 255, 255, 0.78); }
+
+  .qa-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 40px;
+    margin-top: 42px;
+  }
+
+  .qa-item { padding: 18px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 17px; line-height: 1.4; }
+  .qa-item strong { display: block; margin-bottom: 4px; color: var(--ink); }
+
+  .uncertainty {
+    display: grid;
+    min-height: 560px;
+    align-content: center;
+    padding: 60px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .uncertainty blockquote { max-width: 1100px; color: var(--ink); font-family: var(--font-display); font-size: clamp(46px, 5.2vw, 76px); line-height: 1.04; }
+  .uncertainty p { max-width: 780px; margin-top: 28px; color: var(--ink-soft); font-size: 18px; line-height: 1.5; }
+
+  .close {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .cta-line {
+    margin-top: 34px;
+    padding: 24px 28px;
+    border-left: 4px solid var(--brand);
+    background: var(--brand-soft);
+    color: var(--brand-dark);
+    font-size: 19px;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .close-side {
+    padding: 36px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .close-side strong { display: block; margin-bottom: 18px; color: var(--brand-dark); font-family: var(--font-display); font-size: 42px; font-weight: 400; line-height: 1.05; }
+  .close-side div { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
+  .close-side div:last-child { border-bottom: 0; }
+
+  .panel-toggle, .nav-button {
+    position: absolute;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink-soft);
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(32, 37, 35, 0.08);
+    transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+  }
+
+  .panel-toggle { top: 20px; left: 24px; }
+  .panel-toggle:hover, .nav-button:hover { background: var(--brand-soft); color: var(--brand-dark); }
+  .panel-toggle:active, .nav-button:active { transform: translateY(1px); }
+  .panel-toggle:focus-visible, .nav-button:focus-visible { outline: 3px solid var(--brand-mid); outline-offset: 2px; }
+  .grid-icon { display: grid; grid-template-columns: repeat(2, 5px); gap: 3px; }
+  .grid-icon i { width: 5px; height: 5px; border-radius: 1px; background: currentColor; }
+
+  .deck-arrows { position: absolute; right: 22px; bottom: 20px; z-index: 30; display: flex; gap: 8px; }
+  .deck-arrows .nav-button { position: static; }
+  .nav-button:disabled { opacity: 0.35; cursor: default; }
+
+  .progress {
+    position: fixed;
+    z-index: 400;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 4px;
+    background: var(--brand);
+    transition: width 220ms ease;
+  }
+
+  .counter {
+    position: fixed;
+    z-index: 350;
+    left: 240px;
+    bottom: 20px;
+    color: var(--ink-faint);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .counter .cur { color: var(--brand-dark); font-weight: 700; }
+
+  @media (max-width: 1100px) {
+    .slide { padding: 60px 38px 78px; }
+    .split, .bottleneck, .profile, .focus-layout, .channel-layout, .proof-layout, .guarantee, .objection, .close { gap: 30px; }
+    .process-line { gap: 7px; }
+    .process-item { padding: 18px 14px; }
+    .photo-frame { min-height: 480px; }
+  }
+
+  @media (max-width: 900px) {
+    .panel { display: none; }
+    .counter { left: 22px; }
+    .slide { align-items: flex-start; overflow-y: auto; padding: 68px 24px 92px; }
+    .split, .agenda, .definition-grid, .bottleneck, .funnel-shell, .profile, .story-card, .focus-layout, .source-flow, .channel-layout, .boundary-layout, .elevator, .fit-grid, .deliverables, .proof-layout, .guarantee, .objection, .close { grid-template-columns: 1fr; }
+    .photo-frame { min-height: 390px; }
+    .process-line, .system-path { grid-template-columns: 1fr 1fr; }
+    .process-item:nth-child(even) { margin-top: 0; }
+    .brain-map { grid-template-columns: 1fr; }
+    .brain-side { grid-template-columns: 1fr 1fr; }
+    .approval-loop { grid-template-columns: 1fr; }
+    .approval-arrow { transform: rotate(90deg); text-align: center; }
+    .comparison { grid-template-columns: 1fr; }
+    .question-mark { display: none; }
+    .guarantee-number { min-height: 300px; }
+  }
+
+  @media (max-width: 620px) {
+    h1 { font-size: 50px; }
+    h2 { font-size: 43px; }
+    .lede { font-size: 18px; }
+    .search-board, .alternatives, .demo-sequence, .boundary-main, .terms-grid, .qa-grid, .delivery-main, .brain-side, .process-line, .system-path { grid-template-columns: 1fr; }
+    .equation { grid-template-columns: 1fr; }
+    .equation-sign { transform: rotate(90deg); }
+    .build-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .build-block:first-child { grid-row: auto; min-height: 240px; }
+    .elevator, .uncertainty { padding: 34px; }
+    .statement h2 { font-size: 55px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel" id="panel" aria-label="Slides"></aside>
+  <main class="deck" id="deck">
+    <button class="panel-toggle" id="panelToggle" type="button" aria-label="Toggle slide panel" aria-controls="panel" aria-expanded="true">
+      <span class="grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    </button>
+
+    <section class="slide active" id="opening" data-act="1" data-title="Your expertise beyond the calendar" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
+      <div class="content split">
+        <div>
+          <div class="act-label">Why now</div>
+          <h1 id="opening-title">Beyond your <span class="brand">calendar.</span></h1>
+          <p class="lede">Your expertise should work beyond your calendar. Build a controlled AI version of your knowledge without adding more one-to-one appointments.</p>
+        </div>
+        <figure class="photo-frame">
+          <img src="lucas-photo.jpg" alt="Lucas Tyson, founder of Kodara">
+          <figcaption class="photo-caption">A practical webinar for health and wellness experts who want more reach without becoming the delivery bottleneck.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" id="agenda" data-act="1" data-title="What we will cover" role="group" aria-roledescription="slide" aria-labelledby="agenda-title">
+      <div class="content">
+        <h2 id="agenda-title">One question guides this entire session.</h2>
+        <div class="agenda">
+          <div class="agenda-list">
+            <div class="agenda-row"><span>1</span><strong>Why demand is moving online</strong></div>
+            <div class="agenda-row"><span>2</span><strong>Why the calendar limits growth</strong></div>
+            <div class="agenda-row"><span>3</span><strong>How controlled AI delivery works</strong></div>
+            <div class="agenda-row"><span>4</span><strong>What Kodara builds and supports</strong></div>
+            <div class="agenda-row"><span>5</span><strong>Whether your expertise is a fit</strong></div>
+          </div>
+          <aside class="agenda-side">
+            <strong>Can your knowledge help more people without requiring more hours from you?</strong>
+            <p>Every proof point, demonstration, and objection should make that question easier to answer.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="definition" data-act="1" data-title="What AI version means" role="group" aria-roledescription="slide" aria-labelledby="definition-title">
+      <div class="content">
+        <h2 id="definition-title">An AI version of your expertise is <span class="brand">not an autonomous clone.</span></h2>
+        <div class="definition-grid">
+          <div class="definition-main">
+            <strong>It is a controlled knowledge system.</strong>
+            <p>Your interviews, methods, documents, and approved materials become the source for a digital business you can review before launch.</p>
+          </div>
+          <div class="definition-list">
+            <div>Built from your real knowledge</div>
+            <div>Reviewed and corrected by you</div>
+            <div>Bounded by clear escalation rules</div>
+            <div>Connected to relevant digital programs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="online-demand" data-act="1" data-title="Demand is already online" role="group" aria-roledescription="slide" aria-labelledby="online-demand-title">
+      <div class="content">
+        <h2 id="online-demand-title">People already look online for help with complex health and wellness problems.</h2>
+        <p class="lede">They want credible guidance they can reach from a phone or computer, at the moment the problem matters.</p>
+        <div class="search-board">
+          <article class="search-item"><strong>They start with a question.</strong><p>Symptoms, goals, treatments, routines, tradeoffs, and possible next steps.</p></article>
+          <article class="search-item"><strong>They compare approaches.</strong><p>People learn before they are ready to choose an expert or program.</p></article>
+          <article class="search-item"><strong>They expect access.</strong><p>Digital access changes when and where education can happen.</p></article>
+          <article class="search-item"><strong>They still need trust.</strong><p>Convenience does not remove the need for boundaries, evidence, and responsible guidance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="category-shift" data-act="1" data-title="The behavioral shift" role="group" aria-roledescription="slide" aria-labelledby="category-shift-title">
+      <div class="content statement">
+        <div class="statement-rule" aria-hidden="true"></div>
+        <h2 id="category-shift-title">People do not organize the rest of their lives around a physical building.</h2>
+        <p class="lede">Health and wellness expertise still deserves care, context, and professional boundaries. Access can still improve.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="audience-online" data-act="1" data-title="The opportunity" role="group" aria-roledescription="slide" aria-labelledby="audience-online-title">
+      <div class="content statement">
+        <div class="act-label">The opportunity</div>
+        <h2 id="audience-online-title"><span class="brand">The audience is already online.</span><br>The expertise is still trapped inside appointments.</h2>
+        <p class="lede">The next question is not whether people need help. It is whether your delivery model can reach them responsibly.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="calendar-bottleneck" data-act="2" data-title="The calendar bottleneck" role="group" aria-roledescription="slide" aria-labelledby="calendar-bottleneck-title">
+      <div class="content bottleneck">
+        <div>
+          <div class="act-label">Why the old approach fails</div>
+          <h2 id="calendar-bottleneck-title"><span class="brand">The calendar is the bottleneck.</span></h2>
+          <p class="lede">If every client outcome and every dollar requires another hour from you, the business cannot grow independently of your time.</p>
+        </div>
+        <div class="calendar" aria-label="A full appointment calendar">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <p class="calendar-note">A full calendar can prove demand and still leave no room for more delivery.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="reverse-funnel" data-act="2" data-title="The reverse funnel" role="group" aria-roledescription="slide" aria-labelledby="reverse-funnel-title">
+      <div class="content">
+        <h2 id="reverse-funnel-title">The current model narrows a large need into <span class="brand">a very small calendar.</span></h2>
+        <div class="funnel-shell">
+          <div class="funnel" aria-label="Reverse funnel from online demand to appointments">
+            <div class="funnel-step">People looking for help</div>
+            <div class="funnel-step">People who discover you</div>
+            <div class="funnel-step">People who trust you</div>
+            <div class="funnel-step">People who can book</div>
+          </div>
+          <div class="funnel-copy">
+            <p>Today, only the people who can book, attend, and pay for personal time reach the bottom.</p>
+            <p>A virtual delivery system can create another responsible path without requiring a personal appointment every time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="more-leads" data-act="2" data-title="More leads can worsen the problem" role="group" aria-roledescription="slide" aria-labelledby="more-leads-title">
+      <div class="content">
+        <h2 id="more-leads-title">More leads do not fix a delivery bottleneck.</h2>
+        <div class="equation" aria-label="More demand added to the same calendar creates more pressure">
+          <div class="equation-card"><div><strong>More demand</strong><p>More people ask for help.</p></div></div>
+          <div class="equation-sign" aria-hidden="true">+</div>
+          <div class="equation-card"><div><strong>Same calendar</strong><p>Delivery capacity stays fixed.</p></div></div>
+          <div class="equation-sign" aria-hidden="true">=</div>
+          <div class="equation-card"><div><strong>More pressure</strong><p>The expert becomes an even larger bottleneck.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="false-alternatives" data-act="2" data-title="Why common options fall short" role="group" aria-roledescription="slide" aria-labelledby="false-alternatives-title">
+      <div class="content">
+        <h2 id="false-alternatives-title">These options can work. They just do not remove the bottleneck <span class="brand">by themselves.</span></h2>
+        <div class="alternatives">
+          <article class="alternative"><strong>More appointments</strong><p>Useful until the calendar fills again.</p></article>
+          <article class="alternative"><strong>A self-built course</strong><p>Can become another product you must create, market, deliver, and manage.</p></article>
+          <article class="alternative"><strong>More social content</strong><p>Can create attention while making you the full-time content engine.</p></article>
+          <article class="alternative"><strong>Another marketing agency</strong><p>Can create leads without changing how your expertise is delivered.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="presenter" data-act="2" data-title="Why Lucas built Kodara" role="group" aria-roledescription="slide" aria-labelledby="presenter-title">
+      <div class="content profile">
+        <img src="lucas-photo.jpg" alt="Lucas Tyson">
+        <div>
+          <h2 id="presenter-title">I learned how to find people who were already looking for a solution.</h2>
+          <div class="profile-points">
+            <div class="profile-point">My background is online marketing and lead generation across healthcare and other industries.</div>
+            <div class="profile-point">The harder problem was turning qualified demand into responsible, scalable delivery.</div>
+            <div class="profile-point">So I assembled AI engineers and operators with healthcare experience to build that missing layer.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="michelle-story" data-act="2" data-title="The personal reason" role="group" aria-roledescription="slide" aria-labelledby="michelle-story-title">
+      <div class="content">
+        <h2 id="michelle-story-title">The gap became personal when Michelle was searching for help.</h2>
+        <div class="story-card">
+          <strong>Access should not depend on one location and one available appointment.</strong>
+          <p>While Michelle dealt with Graves' disease and traveled to appointments, we saw how difficult it could be to find a clear path. Hearing about someone who found an independent wellness expert online made the access problem concrete. It did not prove that digital programs replace medical care. It showed that credible expertise can be easier to reach.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="mechanism-bridge" data-act="3" data-title="The mechanism" role="group" aria-roledescription="slide" aria-labelledby="mechanism-bridge-title">
+      <div class="content statement">
+        <div class="act-label">How the mechanism works</div>
+        <h2 id="mechanism-bridge-title"><span class="brand">You supply the expertise and approval.</span><br>Kodara builds the virtual business around it.</h2>
+        <p class="lede">The mechanism only works when the knowledge, controls, and client path are connected.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="six-part-process" data-act="3" data-title="The six-part process" role="group" aria-roledescription="slide" aria-labelledby="six-part-process-title">
+      <div class="content">
+        <h2 id="six-part-process-title">Six connected moves turn expertise into a virtual business.</h2>
+        <div class="process-line">
+          <article class="process-item"><strong>Select</strong><p>Choose a problem and audience the expert is qualified to help.</p></article>
+          <article class="process-item"><strong>Extract</strong><p>Capture interviews and relevant business materials.</p></article>
+          <article class="process-item"><strong>Organize</strong><p>Build the controlled knowledge system.</p></article>
+          <article class="process-item"><strong>Package</strong><p>Create the website, programs, and customer journey.</p></article>
+          <article class="process-item"><strong>Approve</strong><p>Test, correct, and set boundaries before launch.</p></article>
+          <article class="process-item"><strong>Launch</strong><p>Connect approved discovery channels and routing.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="select-problem" data-act="3" data-title="Select the problem" role="group" aria-roledescription="slide" aria-labelledby="select-problem-title">
+      <div class="content focus-layout">
+        <div>
+          <h2 id="select-problem-title">Start with one problem you are <span class="brand">qualified to help solve.</span></h2>
+          <p class="lede">A narrow, responsible promise makes the knowledge system easier to build, test, explain, and market.</p>
+        </div>
+        <aside class="focus-panel">
+          <strong>Clear problem. Clear audience. Clear boundary.</strong>
+          <p>The system should know who it is for, what outcome it supports, and when it must stop or escalate.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" id="extract-expertise" data-act="3" data-title="Extract the expertise" role="group" aria-roledescription="slide" aria-labelledby="extract-expertise-title">
+      <div class="content">
+        <h2 id="extract-expertise-title">Your existing work becomes the raw material.</h2>
+        <div class="source-flow">
+          <div class="sources">
+            <div class="source"><strong>Focused interviews</strong><span>Approximately one hour per week, subject to build needs.</span></div>
+            <div class="source"><strong>Documents and frameworks</strong><span>Methods, explanations, programs, and approved reference material.</span></div>
+            <div class="source"><strong>Existing media</strong><span>Training videos, lessons, examples, and stories.</span></div>
+            <div class="source"><strong>Business context</strong><span>Audience, offers, customer questions, and delivery boundaries.</span></div>
+          </div>
+          <aside class="source-output">
+            <strong>We capture how you think, not just what you have published.</strong>
+            <p>The expert reviews what becomes source material and controls what represents the business.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="knowledge-system" data-act="3" data-title="Build the knowledge system" role="group" aria-roledescription="slide" aria-labelledby="knowledge-system-title">
+      <div class="content">
+        <h2 id="knowledge-system-title">The AI Brain organizes your knowledge into <span class="brand">a system you can audit.</span></h2>
+        <div class="brain-map">
+          <div class="brain-side">
+            <div class="brain-node">Your interviews</div>
+            <div class="brain-node">Your approved materials</div>
+            <div class="brain-node">Your method and point of view</div>
+          </div>
+          <div class="brain-core"><strong>Your AI Brain</strong><span>Structured knowledge, approved sources, and clear boundaries.</span></div>
+          <div class="brain-side">
+            <div class="brain-node">Answers grounded in source material</div>
+            <div class="brain-node">Relevant program routing</div>
+            <div class="brain-node">Refusal and human escalation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="virtual-business" data-act="3" data-title="Build the virtual business" role="group" aria-roledescription="slide" aria-labelledby="virtual-business-title">
+      <div class="content">
+        <h2 id="virtual-business-title">The knowledge system needs a business around it.</h2>
+        <div class="build-grid">
+          <article class="build-block"><div><strong>A complete customer journey</strong><p>From the first question to the relevant program, with clear handoffs and approved delivery.</p></div></article>
+          <article class="build-block"><strong>Website and brand</strong><p>A clear place for the expert, programs, and boundaries to live.</p></article>
+          <article class="build-block"><strong>Digital programs</strong><p>Structured offers built around the selected problem and audience.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="test-and-approve" data-act="3" data-title="Test and approve" role="group" aria-roledescription="slide" aria-labelledby="test-and-approve-title">
+      <div class="content">
+        <h2 id="test-and-approve-title">Nothing should represent you until you have <span class="brand">tested and approved it.</span></h2>
+        <div class="approval-loop">
+          <article class="approval-card"><strong>Test</strong><p>Ask realistic questions and pressure-test edge cases.</p></article>
+          <div class="approval-arrow" aria-hidden="true">›</div>
+          <article class="approval-card"><strong>Correct</strong><p>Update the source, response, routing, or boundary.</p></article>
+          <div class="approval-arrow" aria-hidden="true">›</div>
+          <article class="approval-card"><strong>Approve</strong><p>Confirm what can go live and what must reach a human.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="launch-and-discover" data-act="3" data-title="Launch and discover clients" role="group" aria-roledescription="slide" aria-labelledby="launch-and-discover-title">
+      <div class="content channel-layout">
+        <div>
+          <h2 id="launch-and-discover-title">Discovery only works when the channels and handoffs are real.</h2>
+          <p class="lede">Show where prospective users come from, what the traffic costs, and how the system decides the next step.</p>
+        </div>
+        <div class="channel-stack">
+          <div class="channel-row"><strong>Approved traffic sources</strong><span>Named and documented</span></div>
+          <div class="channel-row"><strong>Relevant user intent</strong><span>Defined in practice</span></div>
+          <div class="channel-row"><strong>AI conversation</strong><span>Bounded by approved material</span></div>
+          <div class="channel-row"><strong>Program or human handoff</strong><span>Clear next step</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="live-demo" data-act="3" data-title="What the live demo should prove" role="group" aria-roledescription="slide" aria-labelledby="live-demo-title">
+      <div class="content">
+        <h2 id="live-demo-title">The live demonstration should show <span class="brand">capability and boundaries.</span></h2>
+        <div class="demo-sequence">
+          <article class="demo-card"><strong>Ask</strong><p>Start with a realistic question from a prospective user.</p></article>
+          <article class="demo-card"><strong>Clarify</strong><p>Show what information the system needs before answering.</p></article>
+          <article class="demo-card"><strong>Ground</strong><p>Show which approved source supports the response.</p></article>
+          <article class="demo-card"><strong>Route</strong><p>Show the relevant program or responsible next step.</p></article>
+          <article class="demo-card"><strong>Review</strong><p>Show how the expert corrects and approves the system.</p></article>
+          <article class="demo-card"><strong>Escalate</strong><p>Show what the AI refuses or routes to a human.</p></article>
+        </div>
+        <p class="draft-hold"><strong>Presentation hold:</strong> This is the presenter run sheet. A live product demonstration using one approved use case is still required outside the deck.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="safety-boundaries" data-act="3" data-title="Safety and control" role="group" aria-roledescription="slide" aria-labelledby="safety-boundaries-title">
+      <div class="content">
+        <h2 id="safety-boundaries-title">Approved source material does not guarantee every generated answer is accurate.</h2>
+        <div class="boundary-layout">
+          <div class="boundary-main">
+            <div>Define what the AI can use.</div>
+            <div>Define what requires a licensed professional.</div>
+            <div>Define what happens when the AI is uncertain.</div>
+            <div>Define how data is collected, stored, shared, and deleted.</div>
+          </div>
+          <aside class="boundary-callout">
+            <strong>Control is part of the product.</strong>
+            <p>Privacy, consent, licensing, health claims, human escalation, and product category must be resolved for each use case.</p>
+            <p class="draft-hold"><strong>Presentation hold:</strong> Replace this framework with the exact product configuration and counsel-approved disclosures before use.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="connected-system" data-act="3" data-title="The connected system" role="group" aria-roledescription="slide" aria-labelledby="connected-system-title">
+      <div class="content">
+        <h2 id="connected-system-title">The value comes from connecting the entire path.</h2>
+        <div class="system-path" aria-label="Approved knowledge connected to user delivery">
+          <div>Approved expert knowledge</div>
+          <div>Responsible conversation</div>
+          <div>Relevant recommendation</div>
+          <div>Digital program delivery</div>
+          <div>Review and improvement</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="elevator-pitch" data-act="4" data-title="What Kodara does" role="group" aria-roledescription="slide" aria-labelledby="elevator-pitch-title">
+      <div class="content elevator">
+        <div class="act-label">Why this implementation</div>
+        <h2 id="elevator-pitch-title">Kodara turns approved health and wellness expertise into an AI-powered virtual business.</h2>
+        <p>We interview the expert, build the knowledge system, create the programs and customer journey, and help launch the business while the expert contributes approximately one hour per week.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="who-fits" data-act="4" data-title="Who this is for" role="group" aria-roledescription="slide" aria-labelledby="who-fits-title">
+      <div class="content">
+        <h2 id="who-fits-title">This works best for experts who have <span class="brand">real knowledge and real boundaries.</span></h2>
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>Strong fit</h3>
+            <div>Meaningful expertise around a specific problem</div>
+            <div>Income, impact, or freedom constrained by personal delivery</div>
+            <div>Willingness to interview, review, correct, and approve</div>
+            <div>Commitment to professional and regulatory boundaries</div>
+          </article>
+          <article class="fit-card">
+            <h3>The expert still matters</h3>
+            <div>The system needs judgment.</div>
+            <div>The knowledge needs maintenance.</div>
+            <div>Unsafe or unsuitable questions need escalation.</div>
+            <div>Ongoing oversight is part of responsible use.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="who-does-not-fit" data-act="4" data-title="Who this is not for" role="group" aria-roledescription="slide" aria-labelledby="who-does-not-fit-title">
+      <div class="content">
+        <h2 id="who-does-not-fit-title">This is not passive income with the expert removed.</h2>
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>Not a fit</h3>
+            <div>No proven expertise to build from</div>
+            <div>No willingness to review or maintain the system</div>
+            <div>An unsafe, unsupported, or misleading proposed use</div>
+            <div>An expectation of guaranteed revenue or profit</div>
+          </article>
+          <article class="fit-card">
+            <h3>Important boundary</h3>
+            <div>Beta-user onboarding is not revenue.</div>
+            <div>A successful client story is not a typical result.</div>
+            <div>A digital program does not replace necessary medical care.</div>
+            <div>Qualification depends on the expert and the use case.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="what-we-build" data-act="4" data-title="What Kodara builds" role="group" aria-roledescription="slide" aria-labelledby="what-we-build-title">
+      <div class="content">
+        <h2 id="what-we-build-title">One implementation team connects the moving parts.</h2>
+        <div class="deliverables">
+          <div class="delivery-main">
+            <div><strong>Knowledge extraction</strong><span>Interviews and approved source organization.</span></div>
+            <div><strong>AI system</strong><span>Controlled responses, routing, and escalation design.</span></div>
+            <div><strong>Programs</strong><span>Digital offers around the selected problem.</span></div>
+            <div><strong>Website and brand</strong><span>A clear customer-facing home for the business.</span></div>
+            <div><strong>Approval workflow</strong><span>Testing, correction, review, and version control.</span></div>
+            <div><strong>Launch setup</strong><span>Defined discovery channels and customer handoffs.</span></div>
+          </div>
+          <aside class="delivery-side">
+            <strong>Done for you does not mean done without you.</strong>
+            <p>The expert supplies the knowledge, review, approval, and continuing boundaries.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="leanne-proof" data-act="4" data-title="Leanne's story" role="group" aria-roledescription="slide" aria-labelledby="leanne-proof-title">
+      <div class="content proof-layout">
+        <figure class="proof-image">
+          <img src="site-leanne.jpg" alt="Leanne Ellington's health and wellness business website">
+        </figure>
+        <div class="proof-copy">
+          <h2 id="leanne-proof-title">Leanne is the emotional proof anchor.</h2>
+          <blockquote>Use her approved words to show what changed in her delivery model and what that made possible.</blockquote>
+          <p class="draft-hold"><strong>Presentation hold:</strong> Do not state a workload, income, or automation result until approved language and records define the before and after.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="guarantee" data-act="4" data-title="The launch guarantee" role="group" aria-roledescription="slide" aria-labelledby="guarantee-title">
+      <div class="content guarantee">
+        <div class="guarantee-number"><div><strong class="hold-word">HOLD</strong><span>until written terms are complete</span></div></div>
+        <div class="guarantee-copy">
+          <h2 id="guarantee-title">Do not present the guarantee without its written terms.</h2>
+          <p>The VSL references a first AI version and the first 10 real beta users within 30 days on the launch timeline, or a full refund.</p>
+          <div class="guarantee-note">Before use, state eligibility, timeline start and pauses, AI and launch definitions, beta-user criteria, client duties, refund coverage, and refund process. It is not a revenue or paying-customer guarantee.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="decision-terms" data-act="4" data-title="What must be clear before deciding" role="group" aria-roledescription="slide" aria-labelledby="decision-terms-title">
+      <div class="content">
+        <h2 id="decision-terms-title">Commercial terms are not supplied yet.</h2>
+        <p class="draft-hold"><strong>Presentation hold:</strong> Do not present pricing or invite a decision until every material term below is stated on screen and aloud.</p>
+        <div class="terms-grid">
+          <article class="term"><strong>Total cost</strong><p>Setup price, payment schedule, recurring fees, usage charges, software, hosting, processing, and support.</p></article>
+          <article class="term"><strong>Traffic costs</strong><p>Required ad spend, acquisition channels, lead definition, and who owns each account.</p></article>
+          <article class="term"><strong>Ownership</strong><p>Website, customer list, programs, data, source materials, and AI configuration.</p></article>
+          <article class="term"><strong>After launch</strong><p>Maintenance, updates, support term, cancellation, refund process, and continuing obligations.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="accuracy-objection" data-act="5" data-title="Can AI represent me accurately" role="group" aria-roledescription="slide" aria-labelledby="accuracy-objection-title">
+      <div class="content objection">
+        <div class="question-mark" aria-hidden="true">?</div>
+        <div>
+          <div class="act-label">Why take the next step</div>
+          <h2 id="accuracy-objection-title">Can AI really represent me and my business?</h2>
+          <div class="answer-list">
+            <div><strong>It starts with focused interviews and approved material.</strong> The source should reflect how you actually think and work.</div>
+            <div><strong>You test and correct it before launch.</strong> Approval is a workflow, not a one-time assumption.</div>
+            <div><strong>It needs explicit boundaries.</strong> Uncertain, unsafe, or unsuitable questions should refuse or escalate.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="time-audience-objection" data-act="5" data-title="Do I need an audience or more time" role="group" aria-roledescription="slide" aria-labelledby="time-audience-objection-title">
+      <div class="content">
+        <h2 id="time-audience-objection-title">Do I need a large audience or a second full-time job?</h2>
+        <div class="fit-grid">
+          <article class="fit-card">
+            <h3>Audience</h3>
+            <div>A large social following is not presented as a requirement.</div>
+            <div>The actual acquisition channels and costs still need to be shown.</div>
+            <div>Customers should never be implied to arrive automatically.</div>
+          </article>
+          <article class="fit-card">
+            <h3>Time</h3>
+            <div>The stated build input is approximately one hour per week.</div>
+            <div>Review, launch, updates, and ongoing oversight still require expert time.</div>
+            <div>The full workload should be defined before signing.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="difference-objection" data-act="5" data-title="How Kodara differs" role="group" aria-roledescription="slide" aria-labelledby="difference-objection-title">
+      <div class="content">
+        <h2 id="difference-objection-title">How is this different from a course or a marketing agency?</h2>
+        <div class="comparison">
+          <article class="compare-card"><strong>Course</strong><p>Packages knowledge, but the expert may still need to build, market, explain, and support it.</p></article>
+          <article class="compare-card"><strong>Agency</strong><p>Can create demand, but may not change how the expertise is delivered after a lead arrives.</p></article>
+          <article class="compare-card"><strong>Kodara model</strong><p>Connects approved knowledge, an interactive AI, digital programs, a customer journey, and launch setup in one implementation.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="common-questions" data-act="5" data-title="Common questions" role="group" aria-roledescription="slide" aria-labelledby="common-questions-title">
+      <div class="content">
+        <h2 id="common-questions-title">Common questions</h2>
+        <p class="lede">These are prepared questions we hear often. The answers should use the exact product, contract, and compliance details for the current offer.</p>
+        <div class="qa-grid">
+          <div class="qa-item"><strong>How do the first 10 beta users work?</strong>Define user, onboarding, qualification, timing, and whether the user pays.</div>
+          <div class="qa-item"><strong>What will this cost in total?</strong>State every setup, recurring, usage, software, traffic, and processing cost.</div>
+          <div class="qa-item"><strong>Who owns the business assets?</strong>State ownership of the site, list, programs, data, materials, and AI configuration.</div>
+          <div class="qa-item"><strong>How is data protected?</strong>Explain vendors, retention, access, deletion, consent, and breach process.</div>
+          <div class="qa-item"><strong>What if the AI is wrong?</strong>Show refusal, escalation, review, and correction.</div>
+          <div class="qa-item"><strong>Can I expect the same results?</strong>No individual client result is a guarantee or assumed typical result.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="normalize-uncertainty" data-act="5" data-title="Reasonable questions are welcome" role="group" aria-roledescription="slide" aria-labelledby="normalize-uncertainty-title">
+      <div class="content uncertainty">
+        <blockquote id="normalize-uncertainty-title">You should have questions.</blockquote>
+        <p>This is your expertise, your reputation, and potentially your clients' health information. The next step is meant to determine whether this can be built responsibly for your specific business.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="fit-assessment" data-act="5" data-title="Complete the fit assessment" role="group" aria-roledescription="slide" aria-labelledby="fit-assessment-title">
+      <div class="content close">
+        <div>
+          <h2 id="fit-assessment-title">Find out whether your expertise is a fit.</h2>
+          <p class="lede">The intended assessment determines whether the problem, knowledge, use case, and required boundaries fit the done-for-you process.</p>
+          <div class="cta-line">Intended response: Complete the fit assessment</div>
+          <p class="small-print" style="margin-top:16px">Not every applicant qualifies. The assessment is not medical, legal, or financial advice.</p>
+        </div>
+        <aside class="close-side">
+          <strong>Finish the production flow.</strong>
+          <div>Add the actual assessment URL.</div>
+          <div>State what information is collected and how it is used.</div>
+          <div>State who reviews fit and guarantee eligibility.</div>
+          <div>Show the actual post-assessment booking path.</div>
+        </aside>
+      </div>
+    </section>
+
+    <nav class="deck-arrows" aria-label="Slide navigation">
+      <button class="nav-button" id="previousSlide" type="button" aria-label="Previous slide">‹</button>
+      <button class="nav-button" id="nextSlide" type="button" aria-label="Next slide">›</button>
+    </nav>
+  </main>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"><span class="cur">01</span> / 36</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide:not([hidden])')];
+  const panel = document.getElementById('panel');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const panelToggle = document.getElementById('panelToggle');
+  const previousSlide = document.getElementById('previousSlide');
+  const nextSlide = document.getElementById('nextSlide');
+  let current = 0;
+
+  slides.forEach((slide, index) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb' + (index === 0 ? ' active' : '');
+    thumb.dataset.thumb = String(index);
+    thumb.tabIndex = 0;
+    thumb.setAttribute('role', 'button');
+    thumb.setAttribute('aria-label', 'Go to slide ' + (index + 1) + ': ' + slide.dataset.title);
+
+    const number = document.createElement('span');
+    number.className = 'thumb-num';
+    number.textContent = String(index + 1).padStart(2, '0');
+
+    const box = document.createElement('div');
+    box.className = 'thumb-box';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'thumb-clone';
+    wrapper.setAttribute('aria-hidden', 'true');
+
+    const clone = slide.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+    wrapper.appendChild(clone);
+    box.appendChild(wrapper);
+    thumb.append(number, box);
+    panel.appendChild(thumb);
+  });
+
+  const thumbs = [...document.querySelectorAll('.thumb')];
+
+  function updateThumbScale() {
+    const box = document.querySelector('.thumb-box');
+    if (!box) return;
+    const scale = box.clientWidth / 1600;
+    document.querySelectorAll('.thumb-clone').forEach(clone => clone.style.setProperty('--thumb-scale', scale));
+  }
+
+  function syncUrl() {
+    if (window.location.protocol === 'file:') return;
+    const url = new URL(window.location.href);
+    url.searchParams.set('slide', String(current + 1));
+    history.replaceState(null, '', url);
+  }
+
+  function goTo(index) {
+    if (index < 0 || index >= slides.length) return;
+    slides[current].classList.remove('active');
+    slides[current].setAttribute('aria-hidden', 'true');
+    thumbs[current].classList.remove('active');
+    current = index;
+    syncUrl();
+
+    const slide = slides[current];
+    slide.classList.add('active');
+    slide.setAttribute('aria-hidden', 'false');
+    thumbs[current].classList.add('active');
+    thumbs[current].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+    counter.innerHTML = '<span class="cur">' + String(current + 1).padStart(2, '0') + '</span> / ' + String(slides.length).padStart(2, '0');
+    previousSlide.disabled = current === 0;
+    nextSlide.disabled = current === slides.length - 1;
+  }
+
+  thumbs.forEach(thumb => {
+    const activate = () => goTo(Number(thumb.dataset.thumb));
+    thumb.addEventListener('click', activate);
+    thumb.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate();
+      }
+    });
+  });
+
+  function setPanelCollapsed(collapsed) {
+    panel.classList.toggle('collapsed', collapsed);
+    panel.inert = collapsed;
+    panel.setAttribute('aria-hidden', String(collapsed));
+    panelToggle.setAttribute('aria-expanded', String(!collapsed));
+  }
+
+  panelToggle.addEventListener('click', () => setPanelCollapsed(!panel.classList.contains('collapsed')));
+  previousSlide.addEventListener('click', () => goTo(current - 1));
+  nextSlide.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', event => {
+    if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(document.activeElement?.tagName)) return;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') {
+      event.preventDefault();
+      goTo(current + 1);
+    }
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      goTo(current - 1);
+    }
+    if (event.key === 'Home') {
+      event.preventDefault();
+      goTo(0);
+    }
+    if (event.key === 'End') {
+      event.preventDefault();
+      goTo(slides.length - 1);
+    }
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', event => {
+    touchStartX = event.touches[0].clientX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', event => {
+    const delta = touchStartX - event.changedTouches[0].clientX;
+    if (Math.abs(delta) > 50) goTo(current + (delta > 0 ? 1 : -1));
+  }, { passive: true });
+
+  window.addEventListener('resize', updateThumbScale);
+  updateThumbScale();
+
+  const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide') || 1);
+  goTo(Number.isFinite(requestedSlide) ? Math.min(Math.max(requestedSlide - 1, 0), slides.length - 1) : 0);
+</script>
+</body>
+</html>
