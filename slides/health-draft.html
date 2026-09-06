@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kodara Health | Your AI Version of You</title>
+<style>
+
+@font-face {
+  font-family: 'Instrument Sans Local';
+  src: url('health/assets/InstrumentSans.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+  :root {
+    --white: #ffffff;
+    --canvas: #f6f6f7;
+    --ink: #1a1a1a;
+    --border: #e5e5e8;
+    --card-border: #d5d7db;
+    --al-25: rgba(26,26,26,0.04);
+    --al-50: rgba(26,26,26,0.06);
+    --al-100: rgba(26,26,26,0.09);
+    --al-200: rgba(26,26,26,0.20);
+    --al-300: rgba(26,26,26,0.28);
+    --al-400: rgba(26,26,26,0.36);
+    --al-500: rgba(26,26,26,0.48);
+    --al-600: rgba(26,26,26,0.60);
+    --al-900: rgba(26,26,26,0.80);
+    --brand-50: rgba(46,125,82,0.06);
+    --brand-100: rgba(46,125,82,0.08);
+    --brand-200: rgba(46,125,82,0.12);
+    --brand-300: rgba(46,125,82,0.18);
+    --brand-600: rgba(46,125,82,0.55);
+    --brand-950: rgba(46,125,82,0.92);
+    --btn-primary: #2e7d52;
+    --btn-primary-hover: #256b45;
+    --gradient-cta: linear-gradient(to bottom, #087a50, #075e3f);
+    --n50: #fafafa;
+    --n200: #e5e5e8;
+    --font: 'Instrument Sans Local', sans-serif;
+    --font-hero: 'Instrument Sans Local', sans-serif;
+    --shadow-card: 0 8px 16px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-avatar: 0 13px 5px rgba(12,48,70,0.02), 0 7px 4px rgba(12,48,70,0.07), 0 3px 3px rgba(12,48,70,0.12), 0 1px 2px rgba(12,48,70,0.14);
+    --control-radius: 12px;
+  }
+/* Same tokens, controls, and card treatment as the original health demos. */
+:root { --green: var(--btn-primary); --ink: #1a1a1a; --muted: var(--al-600); --pale: var(--brand-50); --line: var(--border); }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--canvas); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+button, a { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--brand-950); outline-offset: 3px; }
+em { font-style: normal; color: var(--brand-950); }
+[hidden] { display: none !important; }
+.viewport { position: fixed; inset: 0; display: grid; place-items: center; overflow: hidden; }
+.deck { width: 1600px; height: 900px; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(var(--scale,1)); transform-origin: center; }
+.slide { position: absolute; inset: 0; padding: 36px 48px 80px; background: var(--white); overflow: hidden; }
+.slide-heading { margin-bottom: 22px; }
+.slide-heading h1, .slide-heading h2 { color: var(--ink); font-size: 36px; font-weight: 650; letter-spacing: -1px; line-height: 1.15; margin: 10px 0 0; }
+.eyebrow { color: var(--brand-950); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; margin: 0; }
+.subtitle { color: var(--muted); font-size: 17px; line-height: 1.5; margin: 10px 0 0; }
+.footer { position: absolute; left: 32px; right: 32px; bottom: 22px; display: flex; align-items: center; color: var(--al-400); font-size: 12px; pointer-events: none; }
+.footer strong { font-weight: 600; letter-spacing: .5px; }
+.footer>span { margin-left: auto; margin-right: 24px; color: var(--al-600); }
+.nav { display: flex; gap: 8px; pointer-events: auto; }
+.nav button, .menu-toggle { width: 36px; height: 36px; background: rgba(255,255,255,.78); color: var(--al-600); border: 1px solid var(--al-100); border-radius: 8px; box-shadow: var(--shadow-card); font-size: 24px; line-height: 1; }
+.nav button:disabled { opacity: .28; cursor: default; }
+.nav button:hover:not(:disabled), .menu-toggle:hover { color: var(--brand-950); background: var(--brand-50); border-color: var(--brand-200); }
+.menu-toggle { position: absolute; right: 32px; top: 24px; z-index: 3; font-size: 20px; }
+.slide-menu { position: absolute; right: 32px; top: 72px; z-index: 8; width: 330px; padding: 12px; background: var(--n50); border: 1px solid var(--border); border-radius: var(--control-radius); box-shadow: var(--shadow-card); }
+.slide-menu button { display: block; padding: 13px 12px; width: 100%; text-align: left; border: 0; border-radius: 8px; background: none; color: var(--al-600); font-size: 16px; }
+.slide-menu button[aria-current=true] { background: var(--brand-50); color: var(--brand-950); font-weight: 600; }
+.progress { position: absolute; left: 0; bottom: 0; height: 2px; background: var(--brand-600); transition: width 180ms; }
+.demo-wrap { min-width: 0; background: var(--white); border: 1px solid var(--al-100); border-radius: var(--control-radius); overflow: hidden; box-shadow: var(--shadow-card); }
+.demo-top { height: 36px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 18px; color: var(--al-600); border-bottom: 1px solid var(--border); font-size: 14px; }
+.demo-top>span { display: flex; gap: 8px; align-items: center; }
+.demo-top i, .status-label i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--btn-primary); }
+.expand { background: none; border: 0; color: var(--btn-primary); font-size: 14px; font-weight: 600; padding: 8px 0 8px 12px; white-space: nowrap; }
+.demo-viewport { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--canvas); }
+.demo-viewport iframe { position: absolute; left: 0; top: 0; width: 1600px; height: 900px; border: 0; transform-origin: top left; }
+.audit-layout { display: grid; grid-template-columns: 320px minmax(0,1fr); gap: 24px; align-items: stretch; margin-top: 28px; }
+.audit-proof { display: flex; flex-direction: column; justify-content: center; gap: 38px; padding: 28px; border: 1px solid var(--border); border-radius: var(--control-radius); background: var(--canvas); }
+.audit-proof strong { display: block; color: var(--btn-primary); font-size: 39px; letter-spacing: -1px; font-weight: 650; }
+.audit-proof span { display: block; color: var(--al-500); font-size: 14px; margin-top: 5px; }
+.audit-proof p { color: var(--al-600); font-size: 16px; line-height: 1.5; margin: 0; }
+.benefits { display: flex; gap: 12px; margin: 0 0 18px; }
+.benefits span { padding: 9px 16px; border: 1px solid var(--brand-200); border-radius: var(--control-radius); background: var(--brand-50); color: var(--btn-primary); font-size: 14px; font-weight: 600; }
+.center-demo { width: 1010px; margin: 0 auto; }
+.launch-layout { display: grid; grid-template-columns: 370px minmax(0,1fr); align-items: stretch; gap: 24px; }
+.channels { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 22px; background: var(--canvas); border: 1px solid var(--border); border-radius: var(--control-radius); }
+.channels>span { background: white; border: 1px solid var(--card-border); border-radius: var(--control-radius); padding: 14px; width: 100%; text-align: center; font-size: 16px; font-weight: 600; }
+.channel-line { width: 1px; height: 28px; background: var(--brand-300); }
+.channels strong { color: var(--btn-primary); letter-spacing: 1px; font-size: 15px; }
+.channels>p:last-child { color: var(--al-500); margin: 0; font-size: 12px; }
+.overview-shell, .guarantee-shell, .always-shell, .closing-shell { display: grid; grid-template-columns: 1.1fr 1fr; width: min(1420px,100%); min-height: 646px; margin: 34px auto 0; border: 1px solid var(--al-100); border-radius: var(--control-radius); overflow: hidden; background: var(--white); box-shadow: var(--shadow-card); }
+.hero-copy, .guarantee-main, .uptime-card, .closing-copy { padding: 48px 54px; }
+.status-label { display: flex; align-items: center; gap: 9px; color: var(--btn-primary); font-size: 12px; font-weight: 600; }
+.hero-copy h2 { font-size: 39px; letter-spacing: -1px; line-height: 1.22; font-weight: 600; margin: 30px 0 18px; }
+.hero-copy>p, .closing-copy>p { font-size: 18px; line-height: 1.5; color: var(--al-600); max-width: 530px; }
+.promise { padding: 21px 24px; border: 1px solid var(--brand-200); border-radius: var(--control-radius); background: var(--brand-50); margin-top: 28px; }
+.promise span { display: block; color: var(--btn-primary); font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+.promise strong { font-size: 21px; line-height: 1.4; font-weight: 600; letter-spacing: -.3px; }
+.proof-pair { display: flex; gap: 40px; margin-top: 32px; }
+.proof-pair strong { display: block; color: var(--btn-primary); font-size: 31px; letter-spacing: -.6px; }
+.proof-pair span { display: block; color: var(--al-500); font-size: 12px; margin-top: 5px; }
+.phase-plan { padding: 48px; border-left: 1px solid var(--border); background: var(--canvas); }
+.phase-plan article { display: flex; gap: 22px; padding: 27px 0; border-bottom: 1px solid var(--border); }
+.phase-plan article:last-child { border-bottom: 0; }
+.phase-plan article>b { display: grid; place-items: center; flex-shrink: 0; width: 38px; height: 38px; color: var(--btn-primary); background: white; border: 1px solid var(--brand-200); border-radius: 9px; font-size: 14px; }
+.phase-plan article span, .guarantee-steps article span { color: var(--al-500); font-size: 12px; }
+.phase-plan h3 { margin: 5px 0 10px; font-size: 23px; font-weight: 600; }
+.phase-plan article p { color: var(--al-600); font-size: 16px; line-height: 1.5; margin: 0; }
+.guarantee-shell, .always-shell, .closing-shell { margin-top: 42px; min-height: 662px; }
+.guarantee-main { display: flex; flex-direction: column; justify-content: center; }
+.guarantee-metrics { display: flex; align-items: center; gap: 45px; margin: 48px 0 32px; }
+.guarantee-metrics strong { display: block; color: var(--btn-primary); font-size: 88px; line-height: 1; letter-spacing: -3px; font-weight: 600; }
+.guarantee-metrics div>span { display: block; color: var(--al-500); margin-top: 10px; font-size: 18px; }
+.metric-divider { height: 95px; width: 1px; background: var(--border); }
+.guarantee-main h3 { font-size: 36px; font-weight: 600; letter-spacing: -.7px; margin: 0 0 20px; }
+.guarantee-main>p { color: var(--al-600); font-size: 19px; margin: 0; }
+.guarantee-main>small { color: var(--al-500); font-size: 12px; margin-top: 38px; }
+.guarantee-steps { background: var(--brand-50); padding: 50px 46px; border-left: 1px solid var(--brand-200); }
+.guarantee-steps article { display: flex; gap: 18px; margin-top: 37px; }
+.guarantee-steps article i, .closing-summary i { display: grid; place-items: center; width: 27px; height: 27px; flex-shrink: 0; border-radius: 50%; background: var(--btn-primary); color: white; font-style: normal; font-size: 13px; }
+.guarantee-steps h3 { font-size: 23px; font-weight: 600; margin: 7px 0 9px; }
+.guarantee-steps article p { margin: 0; color: var(--al-600); font-size: 16px; line-height: 1.5; }
+.uptime-card { display: flex; flex-direction: column; justify-content: center; }
+.uptime-card>strong { font-size: 104px; color: var(--btn-primary); letter-spacing: -4px; line-height: 1; margin: 43px 0 35px; font-weight: 600; }
+.uptime-card h3 { font-size: 27px; font-weight: 600; line-height: 1.4; margin: 0; }
+.uptime-card>p { color: var(--al-500); font-size: 18px; line-height: 1.5; margin: 28px 0 0; }
+.life-moments { display: flex; flex-direction: column; justify-content: center; gap: 16px; background: var(--canvas); padding: 42px; border-left: 1px solid var(--border); }
+.life-moments article { background: white; border: 1px solid var(--card-border); border-radius: var(--control-radius); padding: 25px 28px; }
+.life-moments article>span { font-size: 11px; color: var(--btn-primary); font-weight: 600; }
+.life-moments h3 { font-size: 24px; margin: 10px 0; font-weight: 600; }
+.life-moments p { font-size: 15px; color: var(--al-600); margin: 0; }
+.cost-layout, .investment-layout { display: grid; grid-template-columns: 1.08fr .92fr; width: min(1420px,100%); margin: 34px auto 0; min-height: 644px; border: 1px solid var(--al-100); border-radius: var(--control-radius); box-shadow: var(--shadow-card); overflow: hidden; }
+.deliverables { padding: 32px 50px; }
+.deliverables article { display: flex; gap: 20px; padding: 26px 0; border-bottom: 1px solid var(--border); }
+.deliverables article>span { color: var(--al-400); font-size: 12px; padding-top: 5px; }
+.deliverables h3 { font-size: 23px; font-weight: 600; margin: 0 0 10px; }
+.deliverables p { font-size: 17px; color: var(--al-600); line-height: 1.5; margin: 0; }
+.workload { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding-top: 27px; color: var(--al-500); font-size: 14px; }
+.workload strong { font-size: 29px; color: var(--btn-primary); white-space: nowrap; font-weight: 650; }
+.cost-card { padding: 58px 50px; background: var(--brand-50); border-left: 1px solid var(--brand-200); }
+.cost-card>strong { display: block; font-size: 62px; font-weight: 600; line-height: 1; letter-spacing: -2.4px; margin: 38px 0 15px; }
+.cost-card strong small { font-size: 26px; letter-spacing: -.6px; }
+.cost-card>p:not(.eyebrow) { color: var(--al-600); font-size: 18px; line-height: 1.5; }
+.cost-card hr { border: 0; border-top: 1px solid var(--brand-300); margin: 40px 0; }
+.cost-card>b { font-size: 32px; font-weight: 600; }
+.cost-card .cost-note { font-size: 16px !important; }
+.investment-layout { min-height: 662px; margin-top: 42px; }
+.investment-layout>div { padding: 62px 48px; }
+.price-options { display: flex; align-items: center; gap: 28px; }
+.price-options>div { flex: 1; }
+.price-options p { color: var(--al-500); font-size: 12px; letter-spacing: 1px; margin: 0 0 17px; }
+.price-options strong { display: block; font-size: 56px; font-weight: 650; line-height: 1; letter-spacing: -1.8px; color: var(--btn-primary); }
+.price-options span { display: block; font-size: 16px; color: var(--al-600); margin-top: 10px; }
+.price-options .or { font-size: 14px; color: var(--al-400); }
+.comparison-note { margin-top: 38px; color: var(--al-600); font-size: 16px; line-height: 1.6; }
+.built-note { border-top: 1px solid var(--border); margin-top: 43px; padding-top: 32px; display: grid; gap: 15px; }
+.built-note b { font-size: 25px; font-weight: 600; letter-spacing: -.4px; }
+.built-note span { font-size: 17px; line-height: 1.5; color: var(--al-600); }
+.investment-guarantee { padding: 62px 48px; background: var(--brand-50); border-left: 1px solid var(--brand-200); }
+.investment-guarantee h3 { font-size: 29px; font-weight: 600; line-height: 1.5; margin: 36px 0 24px; letter-spacing: -.5px; }
+.investment-guarantee>p:last-child { color: var(--al-500); font-size: 14px; }
+@media(min-width:701px) {
+  .investment-layout>div, .investment-guarantee { display: flex; flex-direction: column; justify-content: center; }
+}
+.closing-copy h3 { font-size: 42px; line-height: 1.25; letter-spacing: -.9px; margin: 38px 0 25px; font-weight: 600; }
+.closing-summary { background: var(--canvas); padding: 58px 50px; border-left: 1px solid var(--border); }
+.closing-summary>div { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid var(--border); padding: 30px 0; font-size: 24px; font-weight: 600; }
+.closing-summary>p:not(.eyebrow) { margin-top: 36px; color: var(--al-600); font-size: 22px; line-height: 1.5; }
+.closing-summary small { color: var(--al-500); font-size: 13px; }
+dialog { border: 1px solid var(--border); padding: 0; background: var(--canvas); width: min(96vw,1680px); max-width: 96vw; border-radius: var(--control-radius); overflow: hidden; }
+dialog::backdrop { background: rgba(26,26,26,.8); }
+.dialog-bar { height: 48px; display: flex; justify-content: space-between; align-items: center; padding: 0 18px; color: var(--ink); font-size: 15px; background: white; }
+.dialog-bar button { border: 1px solid var(--al-100); border-radius: 8px; background: white; color: var(--al-600); padding: 7px 12px; }
+dialog .demo-viewport { width: min(100%,calc((94vh - 48px)*16/9)); aspect-ratio: 16/9; margin: auto; }
+@media(max-width:700px) {
+  .viewport { display: block; }
+  .deck { left: 0; top: 0; width: 100%; height: 100dvh; transform: none; }
+  .slide { padding: 70px 20px 105px; overflow-y: auto; overflow-x: hidden; }
+  .slide-heading h1, .slide-heading h2 { font-size: 28px; letter-spacing: -.7px; }
+  .eyebrow { font-size: 10px; }
+  .subtitle { font-size: 15px; }
+  .footer { left: 20px; right: 20px; bottom: 16px; padding: 10px 0; background: white; font-size: 10px; }
+  .footer>span { margin-right: 14px; }
+  .menu-toggle { top: 20px; right: 20px; }
+  .slide-menu { top: 64px; right: 20px; width: calc(100% - 40px); max-height: 65vh; overflow-y: auto; }
+  .audit-layout, .launch-layout { display: flex; flex-direction: column; gap: 16px; margin-top: 22px; }
+  .audit-proof { flex-direction: row; justify-content: flex-start; gap: 24px; padding: 20px; }
+  .audit-proof strong { font-size: 28px; }
+  .audit-proof span { font-size: 12px; }
+  .audit-proof p { display: none; }
+  .demo-wrap, .center-demo { width: 100%; }
+  .demo-top { padding: 0 10px; font-size: 10px; height: 40px; gap: 5px; }
+  .demo-top i { display: none; }
+  .expand { font-size: 10px; white-space: nowrap; }
+  .benefits { flex-wrap: wrap; gap: 8px; }
+  .benefits span { font-size: 12px; padding: 8px 10px; }
+  .channels { flex-direction: row; gap: 8px; padding: 13px; flex-wrap: wrap; }
+  .channels .eyebrow { width: 100%; }
+  .channels>span { font-size: 13px; width: auto; flex: 1; padding: 10px 8px; }
+  .channels .channel-line, .channels>strong, .channels>p:last-child { display: none; }
+  .overview-shell, .guarantee-shell, .always-shell, .closing-shell, .cost-layout, .investment-layout { display: block; min-height: 0; margin-top: 24px; }
+  .hero-copy, .guarantee-main, .uptime-card, .closing-copy, .phase-plan, .guarantee-steps, .life-moments, .closing-summary, .deliverables, .cost-card, .investment-layout>div, .investment-guarantee { padding: 25px 22px; }
+  .phase-plan, .guarantee-steps, .life-moments, .closing-summary, .cost-card, .investment-guarantee { border-left: 0; border-top: 1px solid var(--border); }
+  .hero-copy h2 { font-size: 28px; }
+  .hero-copy>p, .closing-copy>p { font-size: 16px; }
+  .promise { padding: 17px; }
+  .promise strong { font-size: 17px; }
+  .proof-pair { gap: 20px; }
+  .proof-pair strong { font-size: 25px; }
+  .proof-pair span { font-size: 11px; line-height: 1.5; }
+  .phase-plan article { gap: 16px; padding: 22px 0; }
+  .phase-plan h3, .guarantee-steps h3 { font-size: 21px; }
+  .phase-plan article p, .guarantee-steps article p { font-size: 14px; }
+  .guarantee-metrics { gap: 30px; margin: 35px 0; }
+  .guarantee-metrics strong { font-size: 65px; }
+  .guarantee-metrics div>span { font-size: 15px; }
+  .guarantee-main h3 { font-size: 27px; }
+  .guarantee-main>p { font-size: 16px; line-height: 1.5; }
+  .uptime-card>strong { font-size: 78px; margin: 32px 0; }
+  .uptime-card h3 { font-size: 21px; }
+  .uptime-card>p { font-size: 16px; }
+  .life-moments article { padding: 22px; }
+  .life-moments h3 { font-size: 21px; }
+  .life-moments p { font-size: 14px; line-height: 1.5; }
+  .deliverables article { gap: 12px; padding: 22px 0; }
+  .deliverables h3 { font-size: 20px; }
+  .deliverables p { font-size: 15px; }
+  .workload { font-size: 12px; gap: 10px; }
+  .workload strong { font-size: 20px; }
+  .cost-card>strong { font-size: 46px; }
+  .cost-card strong small { font-size: 20px; }
+  .cost-card>b { font-size: 27px; }
+  .cost-card>p:not(.eyebrow) { font-size: 16px; }
+  .price-options { gap: 12px; }
+  .price-options strong { font-size: 33px; letter-spacing: -1.5px; }
+  .price-options p { font-size: 10px; }
+  .price-options span { font-size: 13px; }
+  .price-options .or { font-size: 12px; }
+  .comparison-note { font-size: 14px; margin-top: 26px; }
+  .built-note { margin-top: 25px; padding-top: 25px; }
+  .built-note b { font-size: 20px; }
+  .built-note span { font-size: 15px; }
+  .investment-guarantee h3 { font-size: 24px; margin-top: 25px; }
+  .closing-copy h3 { font-size: 30px; margin-top: 30px; }
+  .closing-summary>div { font-size: 20px; padding: 22px 0; }
+  .closing-summary>p:not(.eyebrow) { font-size: 19px; }
+  .dialog-bar { font-size: 12px; }
+}
+@media(prefers-reduced-motion:reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+
+</style>
+</head>
+<body>
+<div class="viewport"><main class="deck" aria-label="Kodara Health presentation">
+<section class="slide intro" id="intro" aria-labelledby="intro-title" data-title="Your AI version of you" hidden><header class="slide-heading"><p class="eyebrow">KODARA HEALTH</p><h1 id="intro-title">Your AI version of <em>you.</em></h1><p class="subtitle">Three phases. 30 days to your first 10 beta users.</p></header>
+<div class="overview-shell"><div class="hero-copy"><span class="status-label"><i></i>Built around your expertise</span><h2>Your expertise. Your voice.<br>A business that works<br><em>beyond your hours.</em></h2><p>Your knowledge becomes an AI Brain, with marketing and sales built around it.</p><div class="promise"><span>Launch guarantee</span><strong>10 beta users in 30 days.<br>Or your money back.</strong></div><div class="proof-pair"><div><strong>350+</strong><span>health &amp; wellness experts</span></div><div><strong>100,000+</strong><span>leads analyzed</span></div></div></div><div class="phase-plan"><p class="eyebrow">YOUR FIRST 30 DAYS</p><article><b>01</b><div><span>Days 1–7</span><h3>Build</h3><p>Find your winning angle.<br>Build your AI Brain.</p></div></article><article><b>02</b><div><span>Days 8–28</span><h3>Launch</h3><p>Find the lead. Make the sale.<br>Deliver the program.</p></div></article><article><b>03</b><div><span>Ongoing</span><h3>Compound</h3><p>Learn from every buyer.<br>Keep growing your asset.</p></div></article></div></div></section>
+<section class="slide " id="angle" aria-labelledby="angle-title" data-title="Find your winning angle" hidden><header class="slide-heading"><p class="eyebrow">PHASE 1 · BUILD · DAYS 1–7</p><h2 id="angle-title">Your expertise isn’t the problem. <em>Your angle is.</em></h2></header><div class="audit-layout"><div class="audit-proof"><div><strong>350+</strong><span>experts matched</span></div><div><strong>100,000+</strong><span>leads analyzed</span></div><p>Find the buyer problem<br>your expertise can solve.</p></div><div class="demo-wrap"><div class="demo-top"><span><i></i>Winning Angle Audit</span><button class="expand" type="button">Expand demo ↗</button></div><div class="demo-viewport"><iframe data-src="health/demos.html?slide=1&amp;embed=1" title="Winning Angle Audit" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div></div></section>
+<section class="slide " id="brain" aria-labelledby="brain-title" data-title="Your AI Brain, built" hidden><header class="slide-heading"><p class="eyebrow">PHASE 1 · BUILD · DAYS 1–7</p><h2 id="brain-title">Your AI Brain, <em>built.</em></h2><p class=subtitle>Trained on your videos, SOPs, and a 1:1 interview. Your brain, in AI form.</p></header><div class="benefits"><span>Live in 7 days</span><span>$500–$2,000 program</span><span>You approve before launch</span></div><div class="center-demo"><div class="demo-wrap"><div class="demo-top"><span><i></i>Your AI Brain + Dr. Reyes program demo</span><button class="expand" type="button">Expand demo ↗</button></div><div class="demo-viewport"><iframe data-src="health/demos.html?slide=2&amp;embed=1" title="Your AI Brain + Dr. Reyes program demo" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div></div></section>
+<section class="slide " id="launch" aria-labelledby="launch-title" data-title="Finds, sells, delivers" hidden><header class="slide-heading"><p class="eyebrow">PHASE 2 · LAUNCH · DAYS 8–28</p><h2 id="launch-title">Finds the lead. Makes the sale. <em>Delivers the program.</em></h2><p class=subtitle>No calls scheduled. No chasing.</p></header><div class="launch-layout"><div class="channels"><p class="eyebrow">CHANNELS</p><span>Facebook</span><span>Instagram</span><span>Google</span><div class="channel-line"></div><strong>KODARA</strong><p>Your AI version of you</p></div><div class="demo-wrap"><div class="demo-top"><span><i></i>AI sales & delivery + Sandra AI</span><button class="expand" type="button">Expand demo ↗</button></div><div class="demo-viewport"><iframe data-src="health/demos.html?slide=3&amp;embed=1" title="AI sales & delivery + Sandra AI" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div></div></section>
+<section class="slide guarantee" id="guarantee" aria-labelledby="guarantee-title" data-title="10 beta users. Guaranteed." hidden><header class="slide-heading"><p class="eyebrow">LAUNCH GUARANTEE</p><h2 id="guarantee-title">Your first 10 beta users. <em>Guaranteed.</em></h2></header><div class="guarantee-shell"><div class="guarantee-main"><span class="status-label"><i></i>Your first milestone</span><div class="guarantee-metrics"><div><strong>10</strong><span>beta users</span></div><span class="metric-divider"></span><div><strong>30</strong><span>days</span></div></div><h3>Or a <em>full refund.</em></h3><p>By day 8, guesswork is already gone.</p><small>Full details are in our agreement.</small></div><div class="guarantee-steps"><p class="eyebrow">A CLEAR PATH TO LAUNCH</p><article><i>✓</i><div><span>Days 1–7</span><h3>Your AI Brain, built</h3><p>Your expertise, trained and ready for your approval.</p></div></article><article><i>✓</i><div><span>From day 8</span><h3>Your system goes to work</h3><p>Lead generation, sales, and program delivery.</p></div></article><article><i>✓</i><div><span>Within 30 days</span><h3>Your first 10 beta users</h3><p>Or you get a full refund.</p></div></article></div></div></section>
+<section class="slide " id="compound" aria-labelledby="compound-title" data-title="You own an asset now" hidden><header class="slide-heading"><p class="eyebrow">PHASE 3 · COMPOUND · ONGOING</p><h2 id="compound-title">You own an <em>asset now.</em></h2><p class=subtitle>A system that learns from every buyer and keeps working for you.</p></header><div class="benefits"><span>Dedicated AI Engineer</span><span>Income planned, not hoped for</span><span>Sells 24/7</span></div><div class="center-demo"><div class="demo-wrap"><div class="demo-top"><span><i></i>Buyer insights, new programs & reinvestment</span><button class="expand" type="button">Expand demo ↗</button></div><div class="demo-viewport"><iframe data-src="health/demos.html?slide=4&amp;embed=1" title="Buyer insights, new programs & reinvestment" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div></div></section>
+<section class="slide always" id="always" aria-labelledby="always-title" data-title="Always on, 24/7" hidden><header class="slide-heading"><p class="eyebrow">ALWAYS ON</p><h2 id="always-title">Your AI keeps working. <em>Even when you’re away.</em></h2></header><div class="always-shell"><div class="uptime-card"><span class="status-label"><i></i>Always on</span><strong>24/7</strong><h3>Your AI Brain keeps growing.<br>Your marketing keeps selling.</h3><p>It doesn’t take a day off.<br>It doesn’t get tired.</p></div><div class="life-moments"><article><span>01</span><h3>While you sleep.</h3><p>Your AI keeps working beyond your hours.</p></article><article><span>02</span><h3>While you’re with family.</h3><p>Your expertise stays available to your buyers.</p></article><article><span>03</span><h3>While you’re on vacation.</h3><p>Your system keeps marketing and selling.</p></article></div></div></section>
+<section class="slide " id="included" aria-labelledby="included-title" data-title="Everything built for you" hidden><header class="slide-heading"><p class="eyebrow">YOUR COMPLETE SYSTEM</p><h2 id="included-title">Everything <em>built for you.</em></h2><p class=subtitle>Your knowledge, marketing, and sales system. One connected operation.</p></header><div class="cost-layout"><div class="deliverables"><article><span>01</span><div><h3>DFY AI Brain</h3><p>Your CRM, documents, training videos, and interviews become one working knowledge base.</p></div></article><article><span>02</span><div><h3>DFY AI Marketing</h3><p>Niche positioning, lead generation, and buyer messaging built around proven offer patterns.</p></div></article><article><span>03</span><div><h3>DFY AI Sales Team</h3><p>The AI qualifies leads, sells the right program, and opens customer access.</p></div></article><div class="workload"><span>Work required on your end</span><strong>1 hour/week</strong></div></div><aside class="cost-card"><p class="eyebrow">COST COMPARISON</p><strong>$8,000<small>/month</small></strong><p>To run this online properly</p><hr><b>$96,000/year</b><p class="cost-note">Agencies, freelancers, and tools.<br>Before you’ve seen a single new beta user.</p></aside></div></section>
+<section class="slide " id="investment" aria-labelledby="investment-title" data-title="Your Kodara investment" hidden><header class="slide-heading"><p class="eyebrow">YOUR KODARA INVESTMENT</p><h2 id="investment-title">Built for you. <em>Priced to make sense.</em></h2></header><div class="investment-layout"><div><div class="price-options"><div><p>ANNUAL</p><strong>$8,000</strong><span>per year</span></div><span class="or">or</span><div><p>LIFETIME</p><strong>$15,000</strong><span>lifetime license</span></div></div><p class="comparison-note">The annual plan is less than 10% of the $96,000 yearly operating-cost comparison.</p><div class="built-note"><b>Your AI Brain, built in 7 days.</b><span>AI Brain, Marketing, and Sales included in both options.</span></div></div><aside class="investment-guarantee"><p class="eyebrow">LAUNCH GUARANTEE</p><h3>Launched in less than 30 days.<br>Your first 10 beta users.<br><em>Or a full refund.</em></h3><p>Full details are in our agreement.</p></aside></div></section>
+<section class="slide closing" id="next" aria-labelledby="next-title" data-title="Book onboarding with Lucas" hidden><header class="slide-heading"><p class="eyebrow">NEXT STEP</p><h2 id="next-title">Book your onboarding call with <em>Lucas.</em></h2></header><div class="closing-shell"><div class="closing-copy"><span class="status-label"><i></i>Ready to get started</span><h3>Your expertise.<br>Your AI Brain.<br><em>Your next chapter.</em></h3><p>The 30-day guarantee clock starts<br>the moment you book.</p><div class="promise"><span>Launch guarantee</span><strong>10 beta users · 30 days · full refund.</strong></div></div><aside class="closing-summary"><p class="eyebrow">EVERYTHING BUILT FOR YOU</p><div><i>✓</i><span>AI Brain</span></div><div><i>✓</i><span>AI Marketing</span></div><div><i>✓</i><span>AI Sales Team</span></div><p>Put your expertise to work<br>beyond your hours.</p><small>Full details are in our agreement.</small></aside></div></section>
+<button class="menu-toggle" aria-label="Choose slide" aria-expanded="false" aria-controls="slide-menu">☷</button>
+<nav class="slide-menu" id="slide-menu" aria-label="Choose a slide" hidden></nav>
+<footer class="footer"><strong>KODARA HEALTH</strong><span id="count" aria-live="polite"></span><nav class="nav" aria-label="Slide navigation"><button id="prev" aria-label="Previous slide">‹</button><button id="next-button" aria-label="Next slide">›</button></nav></footer>
+<div class="progress" aria-hidden="true"></div>
+</main></div>
+<dialog id="demo-dialog" aria-label="Expanded demo"><div class="dialog-bar"><strong id="demo-name"></strong><button id="close-demo" type="button">Close ✕</button></div></dialog>
+<script>
+const deck = document.querySelector('.deck');
+const slides = [...document.querySelectorAll('.slide')];
+const menu = document.querySelector('.slide-menu');
+const toggle = document.querySelector('.menu-toggle');
+const dialog = document.querySelector('dialog');
+let current = 0, demoHome = null, expanded = null;
+// ponytail: scale the existing demo canvas; keep its original interface and video sources.
+const observer = new ResizeObserver(entries => entries.forEach(({target}) => {
+  const frame = target.querySelector('iframe');
+  if (frame) frame.style.transform = `scale(${target.clientWidth / 1600})`;
+}));
+document.querySelectorAll('.demo-viewport').forEach(el => observer.observe(el));
+function fitDeck(){ deck.style.setProperty('--scale', Math.min(innerWidth/1600, innerHeight/900)); }
+addEventListener('resize', fitDeck); fitDeck();
+function closeDemo(){
+  if (expanded) { demoHome.append(expanded); expanded = null; demoHome = null; }
+  if (dialog.open) dialog.close();
+}
+dialog.addEventListener('close', closeDemo);
+document.querySelector('#close-demo').addEventListener('click', closeDemo);
+document.querySelectorAll('.expand').forEach(button => button.addEventListener('click', () => {
+  demoHome = button.closest('.demo-wrap'); expanded = demoHome.querySelector('.demo-viewport');
+  document.querySelector('#demo-name').textContent = expanded.querySelector('iframe').title;
+  dialog.append(expanded); dialog.showModal();
+}));
+function showSlide(index){
+  closeDemo();
+  current = Math.max(0, Math.min(slides.length-1, Number.isFinite(index) ? Math.trunc(index) : 0));
+  slides.forEach((slide,i) => {
+    slide.hidden = i !== current; if (i === current) slide.scrollTop = 0;
+    slide.querySelectorAll('iframe[data-src]').forEach(frame => {
+      if (i === current && !frame.hasAttribute('src')) frame.src = frame.dataset.src;
+      else if (i !== current) frame.removeAttribute('src');
+    });
+  });
+  [...menu.children].forEach((b,i) => b.setAttribute('aria-current', String(i === current)));
+  document.querySelector('#prev').disabled = current === 0;
+  document.querySelector('#next-button').disabled = current === slides.length-1;
+  document.querySelector('#count').textContent = `${String(current+1).padStart(2,'0')} / ${slides.length}`;
+  document.querySelector('.progress').style.width = `${(current+1)/slides.length*100}%`;
+  menu.hidden = true; toggle.setAttribute('aria-expanded','false');
+  if (location.protocol !== 'file:') { const url = new URL(location.href); url.searchParams.set('slide', current+1); history.replaceState(null,'',url); }
+}
+slides.forEach((slide,i) => {const button=document.createElement('button');button.textContent=`${String(i+1).padStart(2,'0')}  ${slide.dataset.title}`;button.addEventListener('click',()=>{showSlide(i);toggle.focus();});menu.append(button);});
+toggle.addEventListener('click',()=>{menu.hidden=!menu.hidden;toggle.setAttribute('aria-expanded',String(!menu.hidden));});
+document.querySelector('#prev').addEventListener('click',()=>showSlide(current-1));
+document.querySelector('#next-button').addEventListener('click',()=>showSlide(current+1));
+function handleKey(event){
+  if (event.key==='Escape'){if(dialog.open)closeDemo();else{menu.hidden=true;toggle.setAttribute('aria-expanded','false');}return;}
+  if(dialog.open || /^(INPUT|TEXTAREA|SELECT)$/.test(event.target?.tagName))return;
+  if(['ArrowRight','PageDown','ArrowLeft','PageUp','Home','End'].includes(event.key)){
+    event.preventDefault?.();
+    showSlide(event.key==='Home'?0:event.key==='End'?slides.length-1:current+(['ArrowRight','PageDown'].includes(event.key)?1:-1));
+  }
+}
+document.addEventListener('keydown',handleKey);
+addEventListener('message',event=>{if(event.origin===location.origin && event.source===(expanded ?? slides[current]).querySelector('iframe')?.contentWindow && event.data?.type==='health-deck-key')handleKey(event.data);});
+showSlide(Number(new URLSearchParams(location.search).get('slide') || 1)-1);
+</script>
+</body></html>
