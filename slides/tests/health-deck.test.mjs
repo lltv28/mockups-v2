@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { Script } from 'node:vm';
 
 const root = new URL('../health/', import.meta.url);
-const deck = readFileSync(new URL('index.html', root), 'utf8');
+const deck = readFileSync(new URL('../health-draft.html', root), 'utf8');
 const demos = readFileSync(new URL('demos.html', root), 'utf8');
 
 test('presentation IDs are unique and every labelled control resolves', () => {
@@ -21,7 +21,7 @@ test('presentation IDs are unique and every labelled control resolves', () => {
 });
 
 test('all four existing demo routes, both videos, and local assets remain available', () => {
-  const routes = [...deck.matchAll(/data-src="demos.html\?slide=(\d)&amp;embed=1"/g)].map(m => Number(m[1]));
+  const routes = [...deck.matchAll(/data-src="health\/demos.html\?slide=(\d)&amp;embed=1"/g)].map(m => Number(m[1]));
   assert.deepEqual(routes, [1, 2, 3, 4]);
   for (const id of ['dda7d6b54baa18b5487b73233648182b', 'efec3e7459738b6bdddbbb49f3f9b0b8']) {
     assert.ok(demos.includes(id), `missing existing video ${id}`);
