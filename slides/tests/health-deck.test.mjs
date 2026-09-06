@@ -26,6 +26,9 @@ test('all four existing demo routes, both videos, and local assets remain availa
   for (const id of ['dda7d6b54baa18b5487b73233648182b', 'efec3e7459738b6bdddbbb49f3f9b0b8']) {
     assert.ok(demos.includes(id), `missing existing video ${id}`);
   }
+  const sandraFrame = demos.match(/<iframe\s+data-video-src="([^"]*efec3e7459738b6bdddbbb49f3f9b0b8[^"]*)"[^>]*>/)[0];
+  assert.match(sandraFrame, /controls=true/, 'Sandra needs visible playback and fullscreen controls');
+  assert.match(sandraFrame, /allowfullscreen/, 'Sandra player must be allowed to enter fullscreen');
   for (const [, asset] of demos.matchAll(/(?:src="|url\(')(assets\/[^"')]+)/g)) {
     assert.ok(existsSync(fileURLToPath(new URL(asset, root))), `missing asset ${asset}`);
   }
