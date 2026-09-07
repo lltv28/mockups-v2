@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { Script } from 'node:vm';
 
 const root = new URL('../health/', import.meta.url);
-const deck = readFileSync(new URL('../health-draft.html', root), 'utf8');
+const deck = readFileSync(new URL('../health.html', root), 'utf8');
 const demos = readFileSync(new URL('demos.html', root), 'utf8');
 
 test('presentation IDs are unique and every labelled control resolves', () => {
