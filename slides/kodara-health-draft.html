@@ -255,7 +255,7 @@ dialog .demo-viewport { width: min(100%,calc((94vh - 48px)*16/9)); aspect-ratio:
 @media(prefers-reduced-motion:reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 
 </style>
-<link rel="stylesheet" href="kodara-health-draft/marketing.css">
+<link rel="stylesheet" href="kodara-health-draft/marketing.css?v=scan-ltr">
 </head>
 <body>
 <div class="viewport"><main class="deck" aria-label="Kodara Health presentation">
@@ -360,5 +360,5 @@ document.addEventListener('keydown',handleKey);
 addEventListener('message',event=>{if(event.origin===location.origin && event.source===(expanded ?? slides[current]).querySelector('iframe')?.contentWindow && event.data?.type==='health-deck-key')handleKey(event.data);});
 showSlide(Number(new URLSearchParams(location.search).get('slide') || 1)-1);
 </script>
-<script src="kodara-health-draft/marketing.js"></script>
+<script src="kodara-health-draft/marketing.js?v=scan-ltr"></script>
 </body></html>

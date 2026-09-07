@@ -37,7 +37,6 @@
     const [kind, title, excerpt, topic, format] = data;
     const card = document.createElement('article');
     card.className = `research-record format-${format}`;
-    card.dataset.topic = topic;
     const heading = text('div', '', 'record-heading');
     heading.append(text('span', kind), text('span', 'Indexed', 'record-state'));
     card.append(heading);
@@ -89,7 +88,7 @@
   function step() {
     if (phase === 0) {
       current = records[nextRecord++ % records.length];
-      library.querySelectorAll('.new-record, .scanning').forEach(card => card.classList.remove('new-record', 'scanning'));
+      library.querySelectorAll('.new-record').forEach(card => card.classList.remove('new-record'));
       const batch = document.createDocumentFragment();
       for (let i = 0; i < 20; i++) {
         const outgoing = library.lastElementChild;
@@ -108,7 +107,6 @@
       library.querySelectorAll('.new-record .record-state').forEach(state => { state.textContent = 'Tagged'; });
       status.textContent = `Topic identified: ${current[3].toLowerCase()}`;
     } else if (phase === 2) {
-      [...library.children].forEach(card => card.classList.toggle('scanning', card.dataset.topic === current[3]));
       library.firstElementChild.querySelector('.record-state').textContent = 'Connected';
       finding.textContent = `${current[3]} linked to a matching program.`;
       status.textContent = 'Connecting related buyer language';
