@@ -1094,6 +1094,20 @@
   .proof-client p { max-width: 430px; margin-top: 18px; color: var(--ink-soft); font-size: 20px; line-height: 1.45; }
   .proof-disclosure { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 17px; line-height: 1.45; }
 
+  .provider-demand {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(620px, 1.2fr);
+    gap: 76px;
+    align-items: center;
+  }
+
+  .provider-demand h2 { max-width: 760px; font-size: 76px; }
+  .provider-demand .lede { max-width: 680px; }
+  .provider-demand-boundary { max-width: 630px; margin-top: 30px; color: var(--ink-faint); font-size: 17px; line-height: 1.45; }
+  .provider-demand-source { margin: 0; }
+  .provider-demand-source img { width: 100%; max-height: 790px; display: block; object-fit: contain; border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .provider-demand-source figcaption { margin-top: 14px; color: var(--ink-faint); font-size: 15px; line-height: 1.4; }
+
   .guarantee {
     display: grid;
     grid-template-columns: 0.85fr 1.15fr;
@@ -1448,6 +1462,20 @@
           </article>
         </div>
         <p class="proof-disclosure">These are individual client experiences. Results vary, and no specific outcome is guaranteed.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="independent-provider-demand" data-act="1" data-title="Why independent providers are in demand" role="group" aria-roledescription="slide" aria-labelledby="independent-provider-demand-title">
+      <div class="content provider-demand">
+        <div>
+          <h2 id="independent-provider-demand-title">This is one reason independent providers are <span class="brand">in demand.</span></h2>
+          <p class="lede">When confidence in the system falls, people can become more open to credible alternatives.</p>
+          <p class="provider-demand-boundary">Gallup measures public views of U.S. healthcare quality. It does not measure demand for independent providers directly.</p>
+        </div>
+        <figure class="provider-demand-source">
+          <img src="health/assets/gallup-healthcare-quality-24-year-low.png" alt="Gallup article titled View of U.S. Healthcare Quality Declines to 24-Year Low">
+          <figcaption>Source: Gallup screenshot supplied for this presentation.</figcaption>
+        </figure>
       </div>
     </section>
 

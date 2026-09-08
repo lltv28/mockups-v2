@@ -12,9 +12,9 @@ const visibleText = html
 
 const slides = html.match(/<section class="slide(?: |")/g) || [];
 
-assert.equal(slides.length, 51, 'webinar should contain the complete 51-slide story');
-assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 51);
-assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 51);
+assert.equal(slides.length, 52, 'webinar should contain the complete 52-slide story');
+assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 52);
+assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 52);
 
 for (const requiredCopy of [
   'Health and wellness interest is already moving online.',
@@ -48,6 +48,9 @@ for (const requiredCopy of [
   'Neuroscience educator',
   'Her virtual business reduced dependence on one-to-one delivery and created time for a passion project.',
   'These are individual client experiences. Results vary, and no specific outcome is guaranteed.',
+  'This is one reason independent providers are in demand.',
+  'When confidence in the system falls, people can become more open to credible alternatives.',
+  'Gallup measures public views of U.S. healthcare quality. It does not measure demand for independent providers directly.',
   'First, decide whether this is even a direction you want to go.',
   'Then you can decide whether you want Kodara to build it for you.',
   'How To Build The “AI Version Of You” That Can Sell Itself To Clients & Patients Online',
@@ -102,7 +105,8 @@ for (const [earlier, later] of [
   ['id="presenter"', 'id="michelle-story"'],
   ['id="michelle-story"', 'id="online-premise"'],
   ['id="online-premise"', 'id="leanne-proof"'],
-  ['id="leanne-proof"', 'id="online-reality"'],
+  ['id="leanne-proof"', 'id="independent-provider-demand"'],
+  ['id="independent-provider-demand"', 'id="online-reality"'],
   ['id="online-reality"', 'id="two-problems"'],
   ['id="two-problems"', 'id="positioning-shift"'],
   ['id="positioning-shift"', 'id="search-first"'],
@@ -129,6 +133,7 @@ assert.ok((html.match(/health\/assets\/kodara-wordmark\.svg/g) || []).length >= 
 assert.ok(html.includes('health/assets/dr-mike-poster.jpg'));
 assert.ok(html.includes('health/assets/martyn-buffler.jpg'));
 assert.ok(html.includes('health/assets/leanne.jpg'));
+assert.ok(html.includes('health/assets/gallup-healthcare-quality-24-year-low.png'));
 assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
 assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>https:\/\/kodarahealth\.com\/webinar\/<\/a>/);
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
