@@ -128,7 +128,7 @@ assert.ok(html.includes('health/assets/martyn-buffler.jpg'));
 assert.ok(html.includes('health/assets/leanne.jpg'));
 assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
-assert.equal((html.match(/class="proof-client"/g) || []).length, 3, 'opening proof should show three clients');
+assert.equal((html.match(/class="proof-client(?:\s[^"]*)?"/g) || []).length, 3, 'opening proof should show three clients');
 assert.equal((html.match(/id="leanne-proof"/g) || []).length, 1, 'client proof should appear only once');
 assert.ok(html.includes("clone.querySelectorAll('[data-thumbnail-poster]')"));
 assert.ok(html.includes('media.replaceWith(poster)'));

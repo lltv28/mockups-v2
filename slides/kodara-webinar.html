@@ -741,9 +741,6 @@
   }
 
   .profile img { width: 100%; max-height: 590px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
-  .profile-points { display: grid; gap: 16px; margin-top: 30px; }
-  .profile-point { padding: 18px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 17px; line-height: 1.45; }
-
   .credential-profile h2 { max-width: 980px; font-size: 72px; }
   .credential-proof {
     display: grid;
@@ -1089,8 +1086,8 @@
   .proof-client:last-child { padding-right: 0; }
   .proof-client + .proof-client { border-left: 1px solid var(--line); }
   .proof-client img { width: 170px; height: 170px; display: block; object-fit: cover; object-position: center 20%; border: 1px solid var(--line-strong); border-radius: 50%; box-shadow: var(--shadow); }
-  .proof-client:nth-child(2) img { object-position: center 16%; }
-  .proof-client:nth-child(3) img { object-position: center; }
+  .proof-client--martyn img { object-position: center 16%; }
+  .proof-client--leanne img { object-position: center; }
   .proof-client strong, .proof-client span { display: block; }
   .proof-client strong { margin-top: 24px; font-family: var(--font-display); font-size: 31px; font-weight: 650; line-height: 1.08; letter-spacing: -.025em; }
   .proof-client span { min-height: 56px; margin-top: 8px; color: var(--brand-dark); font-size: 18px; font-weight: 650; line-height: 1.35; }
@@ -1238,7 +1235,7 @@
   .agenda-side p, .definition-list div, .search-item strong { font-size: 22px; }
   .search-item p, .calendar-note, .equation-card p, .source span, .channel-row span, .delivery-main span, .guarantee-note { font-size: 19px; }
   .alternative strong, .approval-card strong, .demo-card strong, .term strong, .compare-card strong { font-size: 25px; }
-  .alternative p, .profile-point, .focus-panel p, .focus-list div, .source-output p, .brain-node, .brain-core span, .build-block p, .approval-card p, .demo-card p, .boundary-main div, .boundary-callout p, .fit-card div, .delivery-side p, .term p, .answer-list div, .compare-card p, .qa-item, .uncertainty p { font-size: 21px; }
+  .alternative p, .focus-panel p, .focus-list div, .source-output p, .brain-node, .brain-core span, .build-block p, .approval-card p, .demo-card p, .boundary-main div, .boundary-callout p, .fit-card div, .delivery-side p, .term p, .answer-list div, .compare-card p, .qa-item, .uncertainty p { font-size: 21px; }
   .funnel-copy p, .guarantee-copy p { font-size: 23px; }
 
   .panel-toggle, .nav-button {
@@ -1425,13 +1422,13 @@
             <span>Power-Up Sports Psychology</span>
             <p>Dr. Mike AI launched its first product and moved into testing.</p>
           </article>
-          <article class="proof-client">
+          <article class="proof-client proof-client--martyn">
             <img src="health/assets/martyn-buffler.jpg" alt="Martyn Buffler">
             <strong>Martyn Buffler</strong>
             <span>CEO, The Cancer Battle Plan</span>
             <p>Five years of ideas and a book became a launched first prototype.</p>
           </article>
-          <article class="proof-client">
+          <article class="proof-client proof-client--leanne">
             <img src="health/assets/leanne.jpg" alt="Leanne Ellington">
             <strong>Leanne Ellington</strong>
             <span>Neuroscience educator</span>
