@@ -67,7 +67,7 @@
     width: 260px;
     height: 100dvh;
     overflow-y: auto;
-    padding: 16px;
+    padding: 80px 16px 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -1070,12 +1070,8 @@
   .cta-line { font-size: 25px; }
 
   .panel-toggle, .nav-button {
-    position: absolute;
-    z-index: 20;
     display: grid;
     place-items: center;
-    width: 54px;
-    height: 54px;
     border: 1px solid var(--line);
     border-radius: 12px;
     background: rgba(253, 253, 253, 0.94);
@@ -1085,12 +1081,35 @@
     transition: background 150ms ease, color 150ms ease, transform 150ms ease;
   }
 
-  .panel-toggle { top: 30px; left: 36px; }
+  .panel-toggle {
+    position: fixed;
+    z-index: 600;
+    width: 48px;
+    height: 48px;
+    top: 16px;
+    left: 16px;
+  }
+  .nav-button { position: absolute; z-index: 20; width: 54px; height: 54px; }
   .panel-toggle:hover, .nav-button:hover { background: var(--brand-soft); color: var(--brand-dark); }
   .panel-toggle:active, .nav-button:active { transform: translateY(1px); }
   .panel-toggle:focus-visible, .nav-button:focus-visible { outline: 3px solid var(--brand-mid); outline-offset: 2px; }
   .grid-icon { display: grid; grid-template-columns: repeat(2, 7px); gap: 4px; }
   .grid-icon i { width: 7px; height: 7px; border-radius: 2px; background: currentColor; }
+  .panel-toggle[aria-expanded="true"] .grid-icon { position: relative; display: block; width: 18px; height: 18px; }
+  .panel-toggle[aria-expanded="true"] .grid-icon i { display: none; }
+  .panel-toggle[aria-expanded="true"] .grid-icon::before,
+  .panel-toggle[aria-expanded="true"] .grid-icon::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 1px;
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+  }
+  .panel-toggle[aria-expanded="true"] .grid-icon::before { transform: rotate(45deg); }
+  .panel-toggle[aria-expanded="true"] .grid-icon::after { transform: rotate(-45deg); }
 
   .deck-arrows { position: absolute; right: 36px; bottom: 30px; z-index: 30; display: flex; gap: 12px; }
   .deck-arrows .nav-button { position: static; }
@@ -1131,11 +1150,10 @@
 <body>
 <div class="app">
   <aside class="panel collapsed" id="panel" aria-label="Slides" aria-hidden="true" inert></aside>
+  <button class="panel-toggle" id="panelToggle" type="button" aria-label="Open slide panel" aria-controls="panel" aria-expanded="false">
+    <span class="grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  </button>
   <main class="deck" id="deck">
-    <button class="panel-toggle" id="panelToggle" type="button" aria-label="Toggle slide panel" aria-controls="panel" aria-expanded="false">
-      <span class="grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-    </button>
-
     <section class="slide active" id="webinar-title" data-act="1" data-title="How to build the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="webinar-title-heading">
       <div class="content title-slide">
         <div class="act-label">A Kodara webinar for health and wellness experts</div>
@@ -1867,7 +1885,10 @@
   }
 
   thumbs.forEach(thumb => {
-    const activate = () => goTo(Number(thumb.dataset.thumb));
+    const activate = () => {
+      goTo(Number(thumb.dataset.thumb));
+      setPanelCollapsed(true);
+    };
     thumb.addEventListener('click', activate);
     thumb.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -1882,6 +1903,9 @@
     panel.inert = collapsed;
     panel.setAttribute('aria-hidden', String(collapsed));
     panelToggle.setAttribute('aria-expanded', String(!collapsed));
+    panelToggle.setAttribute('aria-label', collapsed ? 'Open slide panel' : 'Close slide panel');
+    if (collapsed) panelToggle.focus();
+    else thumbs[current].focus();
   }
 
   panelToggle.addEventListener('click', () => setPanelCollapsed(!panel.classList.contains('collapsed')));
@@ -1889,6 +1913,11 @@
   nextSlide.addEventListener('click', () => goTo(current + 1));
 
   document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !panel.classList.contains('collapsed')) {
+      event.preventDefault();
+      setPanelCollapsed(true);
+      return;
+    }
     if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(document.activeElement?.tagName)) return;
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') {
       event.preventDefault();

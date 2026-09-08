@@ -72,10 +72,19 @@ assert.ok(html.includes('site-leanne.jpg'));
 assert.ok(html.includes('id="previousSlide"'));
 assert.ok(html.includes('id="nextSlide"'));
 assert.ok(html.includes('aria-controls="panel"'));
+assert.ok(html.includes('aria-label="Open slide panel"'));
 assert.ok(html.includes('class="panel collapsed"'));
 assert.ok(html.includes('aria-hidden="true" inert'));
 assert.ok(html.includes('aria-expanded="false"'));
 assert.ok(html.includes('panel.inert = collapsed'));
+assert.ok(
+  html.indexOf('id="panelToggle"') < html.indexOf('<main class="deck"'),
+  'the slide panel control should stay outside the scaled deck',
+);
+assert.match(html, /\.panel-toggle\s*\{[^}]*position:\s*fixed;[^}]*z-index:\s*600;[^}]*width:\s*48px;[^}]*height:\s*48px;/s);
+assert.ok(html.includes("panelToggle.setAttribute('aria-label', collapsed ? 'Open slide panel' : 'Close slide panel')"));
+assert.ok(html.includes('thumbs[current].focus()'));
+assert.ok(html.includes("if (event.key === 'Escape' && !panel.classList.contains('collapsed'))"));
 assert.ok(html.includes('function goTo(index)'));
 assert.ok(html.includes("event.key === 'Home'"));
 assert.ok(html.includes("event.key === 'End'"));
