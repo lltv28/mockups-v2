@@ -101,6 +101,24 @@ assert.ok(html.includes('--deck-width: 1920px'));
 assert.ok(html.includes('--deck-height: 1080px'));
 assert.ok(html.includes('transform: translate(-50%, -50%) scale(var(--deck-scale))'));
 assert.ok(html.includes('function updateDeckScale()'));
+assert.ok(html.includes('--panel-space: 0px'), 'collapsed selector should reserve no viewport width');
+assert.ok(
+  html.includes('left: calc(50% + var(--panel-space) / 2)'),
+  'the slide should center within the space beside the selector',
+);
+assert.ok(html.includes('const availableWidth = window.innerWidth - panelWidth'));
+assert.ok(html.includes("style.setProperty('--panel-space', panelWidth + 'px')"));
+
+const thumbnailActivation = html.match(/const activate = \(\) => \{([\s\S]*?)\n\s*\};/);
+assert.ok(thumbnailActivation, 'thumbnail activation should exist');
+assert.ok(
+  !thumbnailActivation[1].includes('setPanelCollapsed(true)'),
+  'selecting a slide should keep the selector open',
+);
+
+const panelState = html.match(/function setPanelCollapsed\(collapsed\) \{([\s\S]*?)\n\s*\}/);
+assert.ok(panelState, 'panel state handler should exist');
+assert.ok(panelState[1].includes('updateDeckScale()'), 'panel changes should immediately resize the stage');
 
 assert.doesNotMatch(html, /\[INSERT|PLACEHOLDER|TODO/i);
 assert.doesNotMatch(html, /[—–]/);

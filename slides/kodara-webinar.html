@@ -34,6 +34,7 @@
     --deck-width: 1920px;
     --deck-height: 1080px;
     --deck-scale: 1;
+    --panel-space: 0px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -139,7 +140,7 @@
   .deck {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: calc(50% + var(--panel-space) / 2);
     flex: none;
     width: var(--deck-width);
     height: var(--deck-height);
@@ -148,6 +149,7 @@
     transform: translate(-50%, -50%) scale(var(--deck-scale));
     transform-origin: center;
     box-shadow: 0 20px 60px rgba(26, 26, 26, 0.08);
+    transition: left 220ms ease, transform 220ms ease;
   }
 
   .slide {
@@ -1834,7 +1836,10 @@
   }
 
   function updateDeckScale() {
-    const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    const panelWidth = panel.classList.contains('collapsed') ? 0 : panel.offsetWidth;
+    const availableWidth = window.innerWidth - panelWidth;
+    const scale = Math.min(availableWidth / 1920, window.innerHeight / 1080);
+    document.documentElement.style.setProperty('--panel-space', panelWidth + 'px');
     document.documentElement.style.setProperty('--deck-scale', String(scale));
     updateThumbScale();
   }
@@ -1893,7 +1898,6 @@
   thumbs.forEach(thumb => {
     const activate = () => {
       goTo(Number(thumb.dataset.thumb));
-      setPanelCollapsed(true);
     };
     thumb.addEventListener('click', activate);
     thumb.addEventListener('keydown', event => {
@@ -1910,6 +1914,7 @@
     panel.setAttribute('aria-hidden', String(collapsed));
     panelToggle.setAttribute('aria-expanded', String(!collapsed));
     panelToggle.setAttribute('aria-label', collapsed ? 'Open slide panel' : 'Close slide panel');
+    updateDeckScale();
     if (collapsed) panelToggle.focus();
     else thumbs[current].focus();
   }
