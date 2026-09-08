@@ -744,6 +744,18 @@
   .profile-points { display: grid; gap: 16px; margin-top: 30px; }
   .profile-point { padding: 18px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 17px; line-height: 1.45; }
 
+  .credential-profile h2 { max-width: 980px; font-size: 72px; }
+  .credential-proof {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 34px;
+    margin-top: 44px;
+  }
+
+  .credential-stat { padding-top: 24px; border-top: 2px solid var(--brand); }
+  .credential-stat strong { display: block; color: var(--brand-dark); font-family: var(--font-display); font-size: 70px; font-weight: 650; line-height: 1; letter-spacing: -.04em; }
+  .credential-stat span { display: block; max-width: 390px; margin-top: 13px; color: var(--ink-soft); font-size: 20px; line-height: 1.42; }
+
   .story-card {
     display: grid;
     grid-template-columns: 0.7fr 1.3fr;
@@ -760,6 +772,22 @@
   .story-card > :first-child { background: var(--brand-soft); }
   .story-card strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 38px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
   .story-card p { color: var(--ink-soft); font-size: 20px; line-height: 1.5; }
+
+  .personal-slide { display: grid; align-content: center; min-height: 700px; }
+  .personal-slide h2 { max-width: 1450px; font-size: 118px; }
+
+  .origin-story {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(440px, .9fr);
+    gap: 76px;
+    align-items: center;
+  }
+
+  .origin-story h2 { max-width: 1030px; font-size: 76px; }
+  .origin-conclusion { padding: 54px; border-radius: var(--radius); background: var(--brand-dark); color: var(--white); }
+  .origin-conclusion strong, .origin-conclusion span { display: block; font-family: var(--font-display); font-size: 48px; font-weight: 650; line-height: 1.05; letter-spacing: -.035em; }
+  .origin-conclusion span { margin-top: 14px; color: rgba(255, 255, 255, .68); }
+  .origin-conclusion p { margin-top: 34px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .2); color: rgba(255, 255, 255, .78); font-size: 21px; line-height: 1.48; }
 
   .macro-process {
     display: grid;
@@ -1054,35 +1082,20 @@
   .delivery-side strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 38px; font-weight: 650; line-height: 1; letter-spacing: -.03em; }
   .delivery-side p { margin-top: 14px; color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
 
-  .client-story {
-    display: grid;
-    grid-template-columns: minmax(360px, 0.74fr) minmax(0, 1.26fr);
-    gap: 64px;
-    align-items: center;
-  }
-
-  .client-video {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    max-height: 720px;
-    overflow: hidden;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
-    background: var(--ink);
-    box-shadow: var(--shadow);
-  }
-
-  .client-video video, .client-video .thumbnail-media-poster { width: 100%; height: 100%; display: block; border: 0; object-fit: cover; }
-  .client-story-copy h2 { max-width: 940px; font-size: 66px; }
-  .client-quote { max-width: 900px; margin-top: 30px; color: var(--ink-soft); font-family: var(--font-display); font-size: 31px; font-weight: 600; line-height: 1.24; letter-spacing: -.02em; }
-  .client-change { margin-top: 28px; padding: 22px 24px; border-left: 3px solid var(--brand); background: var(--brand-soft); color: var(--ink-soft); font-size: 20px; line-height: 1.45; }
-  .client-change strong { display: block; margin-bottom: 7px; color: var(--brand-dark); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; }
-  .client-person { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
-  .client-person img { width: 58px; height: 58px; object-fit: cover; border-radius: 50%; }
-  .client-person strong, .client-person span { display: block; }
-  .client-person strong { font-size: 18px; }
-  .client-person span { margin-top: 3px; color: var(--ink-soft); font-size: 15px; }
-  .client-disclosure { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
+  .client-proof h2 { max-width: 1420px; font-size: 68px; }
+  .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 42px; }
+  .proof-client { min-width: 0; padding: 0 38px; }
+  .proof-client:first-child { padding-left: 0; }
+  .proof-client:last-child { padding-right: 0; }
+  .proof-client + .proof-client { border-left: 1px solid var(--line); }
+  .proof-client img { width: 170px; height: 170px; display: block; object-fit: cover; object-position: center 20%; border: 1px solid var(--line-strong); border-radius: 50%; box-shadow: var(--shadow); }
+  .proof-client:nth-child(2) img { object-position: center 16%; }
+  .proof-client:nth-child(3) img { object-position: center; }
+  .proof-client strong, .proof-client span { display: block; }
+  .proof-client strong { margin-top: 24px; font-family: var(--font-display); font-size: 31px; font-weight: 650; line-height: 1.08; letter-spacing: -.025em; }
+  .proof-client span { min-height: 56px; margin-top: 8px; color: var(--brand-dark); font-size: 18px; font-weight: 650; line-height: 1.35; }
+  .proof-client p { max-width: 430px; margin-top: 18px; color: var(--ink-soft); font-size: 20px; line-height: 1.45; }
+  .proof-disclosure { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 17px; line-height: 1.45; }
 
   .guarantee {
     display: grid;
@@ -1300,53 +1313,140 @@
       </div>
     </section>
 
-    <section class="slide" id="opening" data-act="1" data-title="You have probably heard this before" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
-      <div class="content split">
-        <div>
-          <div class="act-label">For health and wellness experts</div>
-          <h1 id="opening-title">You have probably <span class="brand">heard this before.</span></h1>
-          <p class="lede">Take what you know and put it online.</p>
-        </div>
-        <figure class="photo-frame">
-          <img src="lucas-photo.jpg" alt="Lucas Tyson, founder of Kodara">
-          <figcaption class="photo-caption">Build a course. Start a group. Sell high-ticket coaching.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="slide" id="online-models" data-act="1" data-title="The familiar online models" role="group" aria-roledescription="slide" aria-labelledby="online-models-title">
+    <section class="slide" id="search-signals" data-act="1" data-title="Health and wellness interest is moving online" role="group" aria-roledescription="slide" aria-labelledby="search-signals-title">
       <div class="content">
-        <h2 id="online-models-title">Most advice sends you toward one of four models.</h2>
-        <div class="alternatives">
-          <article class="alternative"><strong>Online course</strong><p>Record what you know once, then sell access to the lessons.</p></article>
-          <article class="alternative"><strong>High-ticket coaching</strong><p>Charge more for direct access to you.</p></article>
-          <article class="alternative"><strong>Group program</strong><p>Serve more people during one live session.</p></article>
-          <article class="alternative"><strong>Content-led business</strong><p>Build an audience first, then sell programs to that audience.</p></article>
+        <h2 id="search-signals-title">Health and wellness interest is already <span class="brand">moving online.</span></h2>
+        <p class="lede">Your audience is already online. People are looking for answers, explanations, and next steps from their phones and computers.</p>
+        <div class="demand-teaching">
+          <figure class="demand-chart">
+            <svg viewBox="0 0 840 360" role="img" aria-label="Illustrative indexed search-interest examples from 2016 through 2026">
+              <line class="grid-line" x1="60" y1="305" x2="720" y2="305"></line>
+              <line class="grid-line" x1="60" y1="230" x2="720" y2="230"></line>
+              <line class="grid-line" x1="60" y1="155" x2="720" y2="155"></line>
+              <line class="grid-line" x1="60" y1="80" x2="720" y2="80"></line>
+              <polyline class="trend trend-anxiety" points="60,305.2 126,302.8 192,299.0 258,294.1 324,287.9 390,279.2 456,268.1 522,253.2 588,237.1 654,219.8 720,201.2"></polyline>
+              <polyline class="trend trend-hormonal" points="60,305.2 126,302.3 192,296.6 258,288.4 324,278.0 390,264.4 456,248.3 522,228.5 588,202.5 654,174.0 720,141.8"></polyline>
+              <polyline class="trend trend-glp" points="60,305.2 126,304.0 192,300.8 258,294.1 324,283.0 390,264.4 456,233.4 522,191.3 588,146.8 654,117.0 720,82.4"></polyline>
+              <text class="axis-label" x="60" y="342">2016</text>
+              <text class="axis-label" x="370" y="342">2021</text>
+              <text class="axis-label" x="690" y="342">2026</text>
+              <text class="series-label" x="738" y="205">Anxiety</text>
+              <text class="series-label" x="738" y="145">Hormonal health</text>
+              <text class="series-label" x="738" y="86">GLP-1s</text>
+            </svg>
+            <div class="demand-legend" aria-hidden="true"><span><i></i>Anxiety</span><span><i></i>Hormonal health</span><span><i></i>GLP-1s</span></div>
+            <figcaption class="demand-note"><strong>Illustrative estimates for teaching only.</strong> Indexed to 2016 = 100. This shows the shape of the analysis, not measured market demand.</figcaption>
+          </figure>
+          <div class="search-signal-stack">
+            <article><span>What they want</span><strong>The outcome</strong><p>What they want to change or understand.</p></article>
+            <article><span>How they explain it</span><strong>The cause</strong><p>What they think is creating the problem.</p></article>
+            <article><span>What they want next</span><strong>The readiness</strong><p>Whether they want information, an approach, or help.</p></article>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="online-premise" data-act="1" data-title="The idea behind the advice is right" role="group" aria-roledescription="slide" aria-labelledby="online-premise-title">
-      <div class="content statement">
-        <div class="statement-rule" aria-hidden="true"></div>
-        <h2 id="online-premise-title">That advice starts with a <span class="brand">real opportunity.</span></h2>
-        <p class="lede">Your audience is already online. Your expertise should not stop working when your calendar fills.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="online-reality" data-act="1" data-title="What usually happens next" role="group" aria-roledescription="slide" aria-labelledby="online-reality-title">
+    <section class="slide" id="opening" data-act="1" data-title="The vehicle decides whether this works" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
       <div class="content">
-        <h2 id="online-reality-title">But if one of those models had given you the business you wanted, you probably would not be here.</h2>
+        <h2 id="opening-title">You have probably heard this before: <span class="brand">take what you know and put it online.</span></h2>
         <div class="story-card">
           <div>
-            <strong>Maybe you already tried it.</strong>
-            <p>You built the course, launched the coaching offer, or started posting content. But it never became the online business you were promised.</p>
+            <strong>Online course. Group program. High-ticket coaching.</strong>
+            <p>But most people on this webinar have not seen massive success with those models.</p>
           </div>
           <div>
-            <strong>Or you saw what it would take.</strong>
-            <p>First you need the offer. Then the content, funnel, sales, technology, support, and delivery. You did not escape your first business. You added a second one.</p>
+            <strong>Or you saw how much work it would take.</strong>
+            <p>The offer, content, funnel, sales, technology, support, and delivery become an entire second business.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="slide" id="online-models" data-act="1" data-title="What we will cover" role="group" aria-roledescription="slide" aria-labelledby="online-models-title">
+      <div class="content">
+        <h2 id="online-models-title">Here is what we are going to figure out together.</h2>
+        <div class="agenda">
+          <div class="agenda-list">
+            <div class="agenda-row"><span>01</span><strong>Is taking your expertise online the right direction for you?</strong></div>
+            <div class="agenda-row"><span>02</span><strong>How do you find an angle people are already searching for?</strong></div>
+            <div class="agenda-row"><span>03</span><strong>How can that angle become an AI product without creating an entire second business?</strong></div>
+          </div>
+          <aside class="agenda-side">
+            <strong>At the end</strong>
+            <p>And at the end, I’ll show you how Kodara can build and launch the entire system for you.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="presenter" data-act="1" data-title="Why you should listen to Lucas" role="group" aria-roledescription="slide" aria-labelledby="presenter-title">
+      <div class="content profile credential-profile">
+        <img src="health/assets/lucas-tyson-speaking.jpg" alt="Lucas Tyson speaking at an event">
+        <div>
+          <div class="act-label">Why you should listen to me</div>
+          <h2 id="presenter-title">My name is Lucas Tyson. I’m the founder and CEO of Kodara.</h2>
+          <div class="credential-proof">
+            <div class="credential-stat"><strong>$50M+</strong><span>Online marketing agency built by age 25.</span></div>
+            <div class="credential-stat"><strong>100,000+</strong><span>Leads and appointments generated, including for health and wellness businesses.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="michelle-story" data-act="1" data-title="Why this became personal" role="group" aria-roledescription="slide" aria-labelledby="michelle-story-title">
+      <div class="content personal-slide">
+        <div class="act-label">Why this became personal</div>
+        <h2 id="michelle-story-title">Michelle was diagnosed with <span class="brand">Graves Disease.</span></h2>
+      </div>
+    </section>
+
+    <section class="slide" id="online-premise" data-act="1" data-title="Why Lucas built Kodara" role="group" aria-roledescription="slide" aria-labelledby="online-premise-title">
+      <div class="content origin-story">
+        <div>
+          <div class="act-label">Why I built Kodara</div>
+          <h2 id="online-premise-title">Then I saw what happened when the right expertise became easier to reach.</h2>
+          <p class="lede">Someone found a wellness expert online and completed the entire program from home.</p>
+        </div>
+        <aside class="origin-conclusion">
+          <strong>The expertise already existed.</strong>
+          <span>The delivery model had to change.</span>
+          <p>So I focused the business on health and wellness and built the team behind Kodara.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" id="leanne-proof" data-act="1" data-title="What Kodara clients have built" role="group" aria-roledescription="slide" aria-labelledby="client-proof-title">
+      <div class="content client-proof">
+        <h2 id="client-proof-title">We have already helped experts turn what they know into something people can use online.</h2>
+        <div class="proof-grid">
+          <article class="proof-client">
+            <img src="health/assets/dr-mike-poster.jpg" alt="Dr. Mike">
+            <strong>Dr. Mike</strong>
+            <span>Power-Up Sports Psychology</span>
+            <p>Dr. Mike AI launched its first product and moved into testing.</p>
+          </article>
+          <article class="proof-client">
+            <img src="health/assets/martyn-buffler.jpg" alt="Martyn Buffler">
+            <strong>Martyn Buffler</strong>
+            <span>CEO, The Cancer Battle Plan</span>
+            <p>Five years of ideas and a book became a launched first prototype.</p>
+          </article>
+          <article class="proof-client">
+            <img src="health/assets/leanne.jpg" alt="Leanne Ellington">
+            <strong>Leanne Ellington</strong>
+            <span>Neuroscience educator</span>
+            <p>Her virtual business reduced dependence on one-to-one delivery and created time for a passion project.</p>
+          </article>
+        </div>
+        <p class="proof-disclosure">These are individual client experiences. Results vary, and no specific outcome is guaranteed.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="online-reality" data-act="1" data-title="Decide whether this direction fits" role="group" aria-roledescription="slide" aria-labelledby="online-reality-title">
+      <div class="content statement">
+        <div class="statement-rule" aria-hidden="true"></div>
+        <h2 id="online-reality-title">First, decide whether this is even a direction <span class="brand">you want to go.</span></h2>
+        <p class="lede">Your expertise should not stop working when your calendar fills. Then you can decide whether you want Kodara to build it for you.</p>
       </div>
     </section>
 
@@ -1421,38 +1521,6 @@
           <article><span>03</span><strong>Solve</strong><p>“What can I do?”</p></article>
           <article><span>04</span><strong>Compare</strong><p>“Which approach fits me?”</p></article>
           <article><span>05</span><strong>Choose</strong><p>“Who can help?”</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="search-signals" data-act="2" data-title="Map the demand before choosing the angle" role="group" aria-roledescription="slide" aria-labelledby="search-signals-title">
-      <div class="content">
-        <h2 id="search-signals-title">Before you pick an angle, map where people are already looking for help.</h2>
-        <div class="demand-teaching">
-          <figure class="demand-chart">
-            <svg viewBox="0 0 840 360" role="img" aria-label="Illustrative indexed search-interest examples from 2016 through 2026">
-              <line class="grid-line" x1="60" y1="305" x2="720" y2="305"></line>
-              <line class="grid-line" x1="60" y1="230" x2="720" y2="230"></line>
-              <line class="grid-line" x1="60" y1="155" x2="720" y2="155"></line>
-              <line class="grid-line" x1="60" y1="80" x2="720" y2="80"></line>
-              <polyline class="trend trend-anxiety" points="60,305.2 126,302.8 192,299.0 258,294.1 324,287.9 390,279.2 456,268.1 522,253.2 588,237.1 654,219.8 720,201.2"></polyline>
-              <polyline class="trend trend-hormonal" points="60,305.2 126,302.3 192,296.6 258,288.4 324,278.0 390,264.4 456,248.3 522,228.5 588,202.5 654,174.0 720,141.8"></polyline>
-              <polyline class="trend trend-glp" points="60,305.2 126,304.0 192,300.8 258,294.1 324,283.0 390,264.4 456,233.4 522,191.3 588,146.8 654,117.0 720,82.4"></polyline>
-              <text class="axis-label" x="60" y="342">2016</text>
-              <text class="axis-label" x="370" y="342">2021</text>
-              <text class="axis-label" x="690" y="342">2026</text>
-              <text class="series-label" x="738" y="205">Anxiety</text>
-              <text class="series-label" x="738" y="145">Hormonal health</text>
-              <text class="series-label" x="738" y="86">GLP-1s</text>
-            </svg>
-            <div class="demand-legend" aria-hidden="true"><span><i></i>Anxiety</span><span><i></i>Hormonal health</span><span><i></i>GLP-1s</span></div>
-            <figcaption class="demand-note"><strong>Illustrative estimates for teaching only.</strong> Indexed to 2016 = 100. This shows the shape of the analysis, not measured market demand.</figcaption>
-          </figure>
-          <div class="search-signal-stack">
-            <article><span>Signal 1</span><strong>The outcome</strong><p>What they want to change or understand.</p></article>
-            <article><span>Signal 2</span><strong>The explanation</strong><p>What they think is causing the problem.</p></article>
-            <article><span>Signal 3</span><strong>The readiness</strong><p>Whether they want information, an approach, or help.</p></article>
-          </div>
         </div>
       </div>
     </section>
@@ -1639,30 +1707,6 @@
           <article class="alternative"><strong>A course you build yourself</strong><p>Now you have another offer to create, market, deliver, and manage.</p></article>
           <article class="alternative"><strong>More social content</strong><p>More attention helps. But now you have a full-time content job too.</p></article>
           <article class="alternative"><strong>Another marketing agency</strong><p>More leads do not fix what happens after a lead arrives.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="presenter" data-act="2" data-title="Why Lucas built Kodara" role="group" aria-roledescription="slide" aria-labelledby="presenter-title">
-      <div class="content profile">
-        <img src="health/assets/lucas-tyson-speaking.jpg" alt="Lucas Tyson speaking at an event">
-        <div>
-          <h2 id="presenter-title">I already knew how to find people who wanted help. The hard part came next.</h2>
-          <div class="profile-points">
-            <div class="profile-point">I built my career finding customers online for healthcare companies and other businesses.</div>
-            <div class="profile-point">Then a qualified person raised their hand, and the expert still had to handle everything that followed.</div>
-            <div class="profile-point">So I brought together AI engineers, operators, and people with healthcare experience to build the delivery layer.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="michelle-story" data-act="2" data-title="The personal reason" role="group" aria-roledescription="slide" aria-labelledby="michelle-story-title">
-      <div class="content">
-        <h2 id="michelle-story-title">Then this became personal.</h2>
-        <div class="story-card">
-          <strong>When Michelle needed help, access became personal.</strong>
-          <p>Michelle was dealing with Graves' disease. She traveled to appointments and still could not find a clear path. Then we heard about someone who found an independent wellness expert online and completed a virtual program from home. That does not mean virtual programs replace medical care. It showed us that credible expertise could be easier to reach.</p>
         </div>
       </div>
     </section>
@@ -1891,28 +1935,6 @@
             <strong>Done for you still requires you.</strong>
             <p>You supply the expertise, the review, the approval, and the continuing boundaries.</p>
           </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="leanne-proof" data-act="4" data-title="Sandra Parker's client-acquisition story" role="group" aria-roledescription="slide" aria-labelledby="sandra-proof-title">
-      <div class="content client-story">
-        <div class="client-video">
-          <video controls playsinline preload="metadata" poster="health/assets/sandra-video-poster.jpg" data-thumbnail-poster="health/assets/sandra-video-poster.jpg" aria-label="Sandra Parker describes how her business became more consistent">
-            <source src="health/assets/sandra-client-story.mp4" type="video/mp4">
-            <track kind="captions" src="health/assets/sandra-client-story.en.vtt" srclang="en" label="English" default>
-          </video>
-        </div>
-        <div class="client-story-copy">
-          <div class="act-label">Client-acquisition story</div>
-          <h2 id="sandra-proof-title">Sandra's story shows why client acquisition is still part of the build.</h2>
-          <blockquote class="client-quote">“My business feels better now because it feels consistent, and I’m able to enjoy it more.”</blockquote>
-          <div class="client-change"><strong>What changed</strong>She says working with Lucas changed how she viewed the business, and a regular number of people enrolling each week felt better.</div>
-          <div class="client-person">
-            <img src="health/assets/sandra-parker.jpg" alt="Sandra Parker">
-            <div><strong>Sandra Parker</strong><span>Sobriety coach, Just The Tonic</span></div>
-          </div>
-          <p class="client-disclosure">This describes Sandra's individual experience working with Lucas. It is not proof of a Kodara AI build or a typical result. No outcome is guaranteed.</p>
         </div>
       </div>
     </section>
