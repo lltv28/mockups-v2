@@ -88,6 +88,12 @@ assert.ok(html.includes("if (event.key === 'Escape' && !panel.classList.contains
 assert.ok(html.includes('function goTo(index)'));
 assert.ok(html.includes("event.key === 'Home'"));
 assert.ok(html.includes("event.key === 'End'"));
+assert.ok(html.includes("event.key.toLowerCase() === 'p'"), 'P should open presenter view');
+assert.ok(html.includes("new BroadcastChannel('kodara-webinar')"));
+assert.ok(html.includes("window.open(presenterUrl, 'kodara-webinar-presenter'"));
+assert.ok(html.includes('presenterWindow && !presenterWindow.closed'), 'P should refocus an existing presenter window');
+assert.ok(html.includes("message.type === 'go-to'"));
+assert.ok(html.includes("document.documentElement.classList.add('preview-mode')"));
 assert.ok(!html.includes('id="progress"'), 'audience view should not show a progress bar');
 assert.ok(!html.includes('id="counter"'), 'audience view should not show a slide counter');
 assert.ok(html.includes('@media (prefers-reduced-motion: reduce)'));

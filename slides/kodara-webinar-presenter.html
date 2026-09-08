@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kodara Webinar Presenter View</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --surface: #111615;
+    --surface-raised: #1a201e;
+    --surface-soft: #242b28;
+    --line: #39413e;
+    --text: #f4f7f5;
+    --text-soft: #aab4af;
+    --brand: #8fbf9d;
+    --brand-dark: #183c2c;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    min-width: 720px;
+    min-height: 100dvh;
+    overflow: hidden;
+    background: var(--surface);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  button, textarea { font: inherit; }
+
+  .presenter {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    min-height: 74px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line);
+    background: #151b19;
+  }
+
+  .identity { display: flex; align-items: baseline; gap: 14px; min-width: 0; }
+  .identity h1 { margin: 0; font-size: 20px; letter-spacing: -0.02em; }
+  .status { overflow: hidden; color: var(--text-soft); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+  .session { display: flex; align-items: center; gap: 28px; }
+  .session-block { display: grid; gap: 3px; text-align: right; }
+  .session-block span { color: var(--text-soft); font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+  .session-block strong { font-size: 19px; font-variant-numeric: tabular-nums; }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(340px, 0.75fr);
+    gap: 20px;
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .preview-card, .notes-card {
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface-raised);
+  }
+
+  .current-card { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  .side { display: grid; grid-template-rows: auto minmax(240px, 1fr); gap: 20px; min-height: 0; }
+  .next-card { display: grid; grid-template-rows: auto auto auto; }
+  .notes-card { display: grid; grid-template-rows: auto minmax(0, 1fr); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 46px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card-header h2 { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+  .card-header span { color: var(--text-soft); font-size: 12px; }
+
+  .preview-shell {
+    position: relative;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #e9ecea;
+  }
+
+  .preview-shell iframe { width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .current-card .preview-shell { height: 100%; aspect-ratio: auto; }
+  .preview-empty { display: grid; place-items: center; width: 100%; height: 100%; color: #59635e; font-size: 14px; }
+  [hidden] { display: none !important; }
+
+  .slide-title {
+    min-height: 50px;
+    margin: 0;
+    padding: 14px 16px;
+    border-top: 1px solid var(--line);
+    color: var(--text-soft);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .notes-card textarea {
+    width: 100%;
+    min-height: 0;
+    resize: none;
+    border: 0;
+    outline: 0;
+    padding: 18px;
+    background: transparent;
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .notes-card textarea::placeholder { color: #79837e; }
+  .notes-card textarea:focus { box-shadow: inset 0 0 0 2px var(--brand); }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 78px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--line);
+    background: #151b19;
+  }
+
+  .privacy-note { max-width: 620px; margin: 0; color: var(--text-soft); font-size: 12px; line-height: 1.45; }
+  .buttons { display: flex; gap: 10px; }
+  .control-button {
+    min-width: 118px;
+    min-height: 46px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-soft);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .control-button.primary { border-color: var(--brand); background: var(--brand); color: var(--brand-dark); font-weight: 750; }
+  .control-button:hover:not(:disabled) { filter: brightness(1.08); }
+  .control-button:active:not(:disabled) { transform: translateY(1px); }
+  .control-button:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+  .control-button:disabled { cursor: default; opacity: 0.38; }
+
+  @media (max-width: 980px) {
+    body { min-width: 640px; overflow: auto; }
+    .presenter { height: auto; min-height: 100dvh; }
+    .workspace { grid-template-columns: 1fr; overflow: visible; }
+    .side { grid-template-columns: minmax(280px, 0.7fr) 1fr; grid-template-rows: minmax(280px, 1fr); }
+    .controls { align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="presenter">
+  <header class="topbar">
+    <div class="identity">
+      <h1>Presenter View</h1>
+      <span class="status" id="status" aria-live="polite">Waiting for the audience deck</span>
+    </div>
+    <div class="session">
+      <div class="session-block">
+        <span>Position</span>
+        <strong id="position">-</strong>
+      </div>
+      <div class="session-block">
+        <span>Elapsed</span>
+        <strong id="elapsed">00:00</strong>
+      </div>
+    </div>
+  </header>
+
+  <section class="workspace" aria-label="Presenter workspace">
+    <article class="preview-card current-card">
+      <div class="card-header">
+        <h2>Current slide</h2>
+        <span id="currentNumber">Waiting</span>
+      </div>
+      <div class="preview-shell">
+        <iframe id="currentFrame" title="Current audience slide" tabindex="-1" hidden></iframe>
+        <div class="preview-empty" id="currentEmpty">Waiting for the audience deck</div>
+      </div>
+      <p class="slide-title" id="currentTitle">Open this window by pressing P in the audience deck.</p>
+    </article>
+
+    <div class="side">
+      <article class="preview-card next-card">
+        <div class="card-header">
+          <h2>Next slide</h2>
+          <span id="nextNumber">-</span>
+        </div>
+        <div class="preview-shell">
+          <iframe id="nextFrame" title="Next audience slide" tabindex="-1" hidden></iframe>
+          <div class="preview-empty" id="nextEmpty">Waiting for the audience deck</div>
+        </div>
+        <p class="slide-title" id="nextTitle">-</p>
+      </article>
+
+      <article class="notes-card">
+        <div class="card-header">
+          <h2>Private notes</h2>
+          <span>Saved on this browser</span>
+        </div>
+        <textarea id="notes" aria-label="Private notes for current slide" placeholder="Add talking points, timing cues, or producer instructions..." disabled></textarea>
+      </article>
+    </div>
+  </section>
+
+  <footer class="controls">
+    <p class="privacy-note">Keep this window off the shared display. Share only the audience deck window or tab.</p>
+    <div class="buttons">
+      <button class="control-button" id="previousSlide" type="button" disabled>Previous</button>
+      <button class="control-button primary" id="nextSlide" type="button" disabled>Next</button>
+    </div>
+  </footer>
+</main>
+
+<script>
+  const channel = 'BroadcastChannel' in window ? new BroadcastChannel('kodara-webinar') : null;
+  let stateRequestTimer = null;
+  const status = document.getElementById('status');
+  const position = document.getElementById('position');
+  const elapsed = document.getElementById('elapsed');
+  const currentNumber = document.getElementById('currentNumber');
+  const currentFrame = document.getElementById('currentFrame');
+  const currentEmpty = document.getElementById('currentEmpty');
+  const currentTitle = document.getElementById('currentTitle');
+  const nextNumber = document.getElementById('nextNumber');
+  const nextFrame = document.getElementById('nextFrame');
+  const nextEmpty = document.getElementById('nextEmpty');
+  const nextTitle = document.getElementById('nextTitle');
+  const notes = document.getElementById('notes');
+  const previousSlide = document.getElementById('previousSlide');
+  const nextSlide = document.getElementById('nextSlide');
+  const startedAt = Date.now();
+
+  let slides = [];
+  let current = 0;
+  let deckUrl = '';
+
+  function notesKey(slideId) {
+    return 'kodara-webinar:notes:' + slideId;
+  }
+
+  function previewUrl(index) {
+    const url = new URL(deckUrl);
+    url.searchParams.set('slide', String(index + 1));
+    url.searchParams.set('preview', '1');
+    return url.toString();
+  }
+
+  function renderPreview(frame, empty, index, emptyText) {
+    const slide = slides[index];
+    frame.hidden = !slide;
+    empty.hidden = Boolean(slide);
+    empty.textContent = emptyText;
+    if (slide) frame.src = previewUrl(index);
+    else frame.removeAttribute('src');
+  }
+
+  function render() {
+    const currentSlide = slides[current];
+    const upcomingSlide = slides[current + 1];
+    const connected = Boolean(currentSlide && deckUrl);
+
+    status.textContent = connected ? 'Connected to audience deck' : 'Waiting for the audience deck';
+    position.textContent = connected ? String(current + 1) + ' / ' + String(slides.length) : '-';
+    currentNumber.textContent = connected ? 'Slide ' + String(current + 1) : 'Waiting';
+    currentTitle.textContent = currentSlide?.title || 'Open this window by pressing P in the audience deck.';
+    nextNumber.textContent = upcomingSlide ? 'Slide ' + String(current + 2) : 'End';
+    nextTitle.textContent = upcomingSlide?.title || (connected ? 'End of deck' : '-');
+
+    renderPreview(currentFrame, currentEmpty, connected ? current : -1, 'Waiting for the audience deck');
+    renderPreview(nextFrame, nextEmpty, upcomingSlide ? current + 1 : -1, connected ? 'End of deck' : 'Waiting for the audience deck');
+
+    notes.disabled = !connected;
+    notes.value = currentSlide ? localStorage.getItem(notesKey(currentSlide.id)) || '' : '';
+    previousSlide.disabled = !connected || current === 0;
+    nextSlide.disabled = !connected || current === slides.length - 1;
+  }
+
+  function requestSlide(index) {
+    if (!channel || index < 0 || index >= slides.length) return;
+    channel.postMessage({ type: 'go-to', index });
+  }
+
+  notes.addEventListener('input', () => {
+    const currentSlide = slides[current];
+    if (!currentSlide) return;
+    localStorage.setItem(notesKey(currentSlide.id), notes.value);
+  });
+
+  previousSlide.addEventListener('click', () => requestSlide(current - 1));
+  nextSlide.addEventListener('click', () => requestSlide(current + 1));
+
+  document.addEventListener('keydown', event => {
+    if (event.target === notes) return;
+    if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+      event.preventDefault();
+      requestSlide(current + 1);
+    }
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+      event.preventDefault();
+      requestSlide(current - 1);
+    }
+  });
+
+  channel?.addEventListener('message', event => {
+    const message = event.data;
+    if (!message || message.type !== 'state' || !Array.isArray(message.slides)) return;
+    if (stateRequestTimer) {
+      clearInterval(stateRequestTimer);
+      stateRequestTimer = null;
+    }
+    slides = message.slides;
+    current = Math.min(Math.max(message.current, 0), slides.length - 1);
+    deckUrl = message.deckUrl;
+    render();
+  });
+
+  function updateElapsed() {
+    const totalSeconds = Math.floor((Date.now() - startedAt) / 1000);
+    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+    const seconds = String(totalSeconds % 60).padStart(2, '0');
+    elapsed.textContent = minutes + ':' + seconds;
+  }
+
+  setInterval(updateElapsed, 1000);
+  updateElapsed();
+  render();
+
+  function requestState() {
+    channel?.postMessage({ type: 'request-state' });
+  }
+
+  if (channel) {
+    stateRequestTimer = setInterval(requestState, 1000);
+    requestState();
+  } else {
+    status.textContent = 'Presenter sync is unavailable in this browser';
+  }
+
+  window.addEventListener('pagehide', () => {
+    if (stateRequestTimer) clearInterval(stateRequestTimer);
+    channel?.close();
+  });
+</script>
+</body>
+</html>

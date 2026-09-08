@@ -1114,6 +1114,7 @@
   .deck-arrows { position: absolute; right: 36px; bottom: 30px; z-index: 30; display: flex; gap: 12px; }
   .deck-arrows .nav-button { position: static; }
   .nav-button:disabled { opacity: 0.35; cursor: default; }
+  .preview-mode .panel-toggle, .preview-mode .deck-arrows { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1781,12 +1782,20 @@
 </div>
 
 <script>
+  const queryParams = new URLSearchParams(window.location.search);
+  const previewMode = queryParams.get('preview') === '1';
+  if (previewMode) document.documentElement.classList.add('preview-mode');
+
   const slides = [...document.querySelectorAll('.slide:not([hidden])')];
   const panel = document.getElementById('panel');
   const panelToggle = document.getElementById('panelToggle');
   const previousSlide = document.getElementById('previousSlide');
   const nextSlide = document.getElementById('nextSlide');
+  const presenterChannel = !previewMode && 'BroadcastChannel' in window
+    ? new BroadcastChannel('kodara-webinar')
+    : null;
   let current = 0;
+  let presenterWindow = null;
 
   slides.forEach((slide, index) => {
     const thumb = document.createElement('div');
@@ -1837,6 +1846,31 @@
     history.replaceState(null, '', url);
   }
 
+  function presenterState() {
+    return {
+      type: 'state',
+      current,
+      deckUrl: window.location.href,
+      slides: slides.map(slide => ({ id: slide.id, title: slide.dataset.title })),
+    };
+  }
+
+  function broadcastPresenterState() {
+    presenterChannel?.postMessage(presenterState());
+  }
+
+  function openPresenterView() {
+    if (presenterWindow && !presenterWindow.closed) {
+      presenterWindow.focus();
+      broadcastPresenterState();
+      return;
+    }
+
+    const presenterUrl = new URL('kodara-webinar-presenter.html', window.location.href);
+    presenterWindow = window.open(presenterUrl, 'kodara-webinar-presenter', 'popup,width=1440,height=900');
+    presenterWindow?.focus();
+  }
+
   function goTo(index) {
     if (index < 0 || index >= slides.length) return;
     slides[current].classList.remove('active');
@@ -1853,6 +1887,7 @@
 
     previousSlide.disabled = current === 0;
     nextSlide.disabled = current === slides.length - 1;
+    broadcastPresenterState();
   }
 
   thumbs.forEach(thumb => {
@@ -1883,10 +1918,22 @@
   previousSlide.addEventListener('click', () => goTo(current - 1));
   nextSlide.addEventListener('click', () => goTo(current + 1));
 
+  presenterChannel?.addEventListener('message', event => {
+    const message = event.data;
+    if (!message || typeof message !== 'object') return;
+    if (message.type === 'request-state') broadcastPresenterState();
+    if (message.type === 'go-to' && Number.isInteger(message.index)) goTo(message.index);
+  });
+
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !panel.classList.contains('collapsed')) {
       event.preventDefault();
       setPanelCollapsed(true);
+      return;
+    }
+    if (!previewMode && event.key.toLowerCase() === 'p' && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      event.preventDefault();
+      openPresenterView();
       return;
     }
     if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(document.activeElement?.tagName)) return;
@@ -1921,7 +1968,7 @@
   window.addEventListener('resize', updateDeckScale);
   updateDeckScale();
 
-  const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide') || 1);
+  const requestedSlide = Number(queryParams.get('slide') || 1);
   goTo(Number.isFinite(requestedSlide) ? Math.min(Math.max(requestedSlide - 1, 0), slides.length - 1) : 0);
 </script>
 </body>
