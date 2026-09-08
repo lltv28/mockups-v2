@@ -12,9 +12,9 @@ const visibleText = html
 
 const slides = html.match(/<section class="slide(?: |")/g) || [];
 
-assert.equal(slides.length, 50, 'webinar should contain the complete 50-slide story');
-assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 50);
-assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 50);
+assert.equal(slides.length, 51, 'webinar should contain the complete 51-slide story');
+assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 51);
+assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 51);
 
 for (const requiredCopy of [
   'Health and wellness interest is already moving online.',
@@ -87,6 +87,8 @@ for (const requiredCopy of [
   'You should see every cost and ownership term before you decide.',
   'These are the questions that matter before you apply.',
   'See If You Qualify',
+  'Ready to see if Kodara can build this for you?',
+  'https://kodarahealth.com/webinar/',
   'not a revenue or paying-customer guarantee',
 ]) {
   assert.ok(visibleText.includes(requiredCopy), `missing required webinar copy: ${requiredCopy}`);
@@ -117,6 +119,7 @@ for (const [earlier, later] of [
   ['id="angle-controls-build"', 'id="implementation-bridge"'],
   ['id="implementation-bridge"', 'id="calendar-bottleneck"'],
   ['id="definition"', 'id="mechanism-bridge"'],
+  ['id="fit-assessment"', 'id="webinar-cta"'],
 ]) {
   assert.ok(html.indexOf(earlier) < html.indexOf(later), `${earlier} should appear before ${later}`);
 }
@@ -127,6 +130,7 @@ assert.ok(html.includes('health/assets/dr-mike-poster.jpg'));
 assert.ok(html.includes('health/assets/martyn-buffler.jpg'));
 assert.ok(html.includes('health/assets/leanne.jpg'));
 assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
+assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>https:\/\/kodarahealth\.com\/webinar\/<\/a>/);
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
 assert.equal((html.match(/class="proof-client(?:\s[^"]*)?"/g) || []).length, 3, 'opening proof should show three clients');
 assert.equal((html.match(/id="leanne-proof"/g) || []).length, 1, 'client proof should appear only once');

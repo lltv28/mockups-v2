@@ -1217,6 +1217,18 @@
   .qualification-url { color: rgba(255, 255, 255, 0.7); font-size: 18px; }
   .qualification-disclosure { margin-top: 20px; color: rgba(255, 255, 255, 0.58); font-size: 15px; line-height: 1.45; }
 
+  .final-cta {
+    display: grid;
+    min-height: 760px;
+    place-content: center;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .final-cta .brand-wordmark { width: 230px; margin-bottom: 64px; filter: brightness(0) invert(1); }
+  .final-cta h2 { max-width: 1250px; color: var(--white); font-size: 88px; }
+  .final-cta-url { margin-top: 52px; color: var(--white); font-family: var(--font-display); font-size: 42px; font-weight: 650; letter-spacing: -.02em; text-underline-offset: 10px; }
+
   .qualification-list {
     padding: 38px;
     border-radius: var(--radius);
@@ -2046,6 +2058,14 @@
           <div>The knowledge and materials you can build from.</div>
           <div>A first version that can be tested and approved.</div>
         </aside>
+      </div>
+    </section>
+
+    <section class="slide close-slide" id="webinar-cta" data-act="5" data-title="Book your session" role="group" aria-roledescription="slide" aria-labelledby="webinar-cta-title">
+      <div class="content final-cta">
+        <img class="brand-wordmark" src="health/assets/kodara-wordmark.svg" alt="Kodara">
+        <h2 id="webinar-cta-title">Ready to see if Kodara can build this for you?</h2>
+        <a class="final-cta-url" href="https://kodarahealth.com/webinar/" target="_blank" rel="noopener">https://kodarahealth.com/webinar/</a>
       </div>
     </section>
 
