@@ -31,6 +31,9 @@
     --font-display: "Instrument Sans Local", Arial, sans-serif;
     --radius: 12px;
     --shadow: 0 8px 16px rgba(20, 69, 46, 0.04), 0 2px 4px rgba(26, 26, 26, 0.05);
+    --deck-width: 1920px;
+    --deck-height: 1080px;
+    --deck-scale: 1;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,30 +51,36 @@
   button { font: inherit; }
 
   .app {
-    display: flex;
+    position: relative;
+    display: grid;
+    place-items: center;
     width: 100vw;
     height: 100dvh;
     overflow: hidden;
   }
 
   .panel {
-    width: 220px;
-    min-width: 220px;
+    position: fixed;
+    z-index: 500;
+    top: 0;
+    left: 0;
+    width: 260px;
     height: 100dvh;
     overflow-y: auto;
-    padding: 12px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     background: #fbfcfb;
     border-right: 1px solid var(--line);
+    box-shadow: 16px 0 40px rgba(26, 26, 26, 0.08);
     scrollbar-width: thin;
     scrollbar-color: var(--line-strong) transparent;
-    transition: margin-left 220ms ease, opacity 180ms ease;
+    transition: transform 220ms ease, opacity 180ms ease;
   }
 
   .panel.collapsed {
-    margin-left: -220px;
+    transform: translateX(-100%);
     opacity: 0;
     pointer-events: none;
   }
@@ -108,8 +117,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 1600px;
-    height: 900px;
+    width: 1920px;
+    height: 1080px;
     overflow: hidden;
     pointer-events: none;
     transform: translate(-50%, -50%) scale(var(--thumb-scale, 0.1));
@@ -119,21 +128,26 @@
     position: absolute !important;
     inset: 0 !important;
     display: flex !important;
-    width: 1600px !important;
-    height: 900px !important;
-    padding: 72px 84px !important;
+    width: 1920px !important;
+    height: 1080px !important;
+    padding: 96px 120px !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
   }
 
   .deck {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-    height: 100dvh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    flex: none;
+    width: var(--deck-width);
+    height: var(--deck-height);
     overflow: hidden;
     background: var(--white);
+    transform: translate(-50%, -50%) scale(var(--deck-scale));
+    transform-origin: center;
+    box-shadow: 0 20px 60px rgba(26, 26, 26, 0.08);
   }
 
   .slide {
@@ -144,7 +158,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: clamp(48px, 5vw, 72px);
+    padding: 96px 120px;
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
@@ -160,8 +174,8 @@
 
   .slide::after { content: none; }
 
-  .content { width: min(100%, 1400px); margin: 0 auto; }
-  .content-narrow { width: min(100%, 960px); margin: 0 auto; }
+  .content { width: min(100%, 1680px); margin: 0 auto; }
+  .content-narrow { width: min(100%, 1200px); margin: 0 auto; }
   .center { text-align: center; }
   .brand { color: var(--brand); }
 
@@ -189,15 +203,15 @@
     text-wrap: balance;
   }
 
-  h1 { font-size: clamp(56px, 5.7vw, 82px); }
-  h2 { font-size: clamp(44px, 4.7vw, 68px); }
-  h3 { font-size: 22px; line-height: 1.15; }
+  h1 { font-size: 108px; }
+  h2 { font-size: 82px; }
+  h3 { font-size: 30px; line-height: 1.15; }
 
   .lede {
-    max-width: 760px;
-    margin-top: 24px;
+    max-width: 1020px;
+    margin-top: 30px;
     color: var(--ink-soft);
-    font-size: clamp(18px, 1.8vw, 26px);
+    font-size: 30px;
     line-height: 1.45;
   }
 
@@ -205,7 +219,7 @@
 
   .small-print {
     color: var(--ink-faint);
-    font-size: 12px;
+    font-size: 17px;
     line-height: 1.5;
   }
 
@@ -215,7 +229,7 @@
     border-left: 3px solid var(--brand);
     background: var(--brand-soft);
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: 18px;
     line-height: 1.45;
   }
 
@@ -224,7 +238,7 @@
   .split {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-    gap: clamp(38px, 6vw, 88px);
+    gap: 110px;
     align-items: center;
   }
 
@@ -343,16 +357,138 @@
     display: grid;
     gap: 28px;
     align-items: center;
-    min-height: 570px;
-    padding: clamp(44px, 5vw, 70px);
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: var(--shadow);
+    min-height: 720px;
   }
 
-  .statement h2 { max-width: 1200px; font-size: clamp(58px, 6.6vw, 94px); }
-  .statement-rule { width: min(180px, 30vw); height: 3px; background: var(--brand); }
+  .statement h2 { max-width: 1500px; font-size: 108px; }
+  .statement-rule { width: 180px; height: 3px; background: var(--brand); }
+
+  .title-slide {
+    display: grid;
+    align-content: center;
+    min-height: 760px;
+  }
+
+  .title-slide h1 { max-width: 1580px; font-size: 104px; }
+  .title-slide .lede { max-width: 980px; }
+
+  .two-problem-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 70px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .two-problem-layout article { min-height: 300px; padding: 46px 56px 46px 0; }
+  .two-problem-layout article + article { padding-right: 0; padding-left: 56px; border-left: 1px solid var(--line); }
+  .two-problem-layout span { color: var(--brand); font-size: 20px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .two-problem-layout strong { display: block; max-width: 600px; margin-top: 18px; font-size: 42px; line-height: 1.08; letter-spacing: -.03em; }
+  .two-problem-layout p { max-width: 620px; margin-top: 20px; color: var(--ink-soft); font-size: 23px; line-height: 1.48; }
+
+  .question-shift {
+    display: grid;
+    grid-template-columns: .82fr 1.18fr;
+    gap: 68px;
+    align-items: end;
+    margin-top: 74px;
+  }
+
+  .question-shift article { padding-top: 34px; border-top: 2px solid var(--line-strong); }
+  .question-shift article:last-child { border-color: var(--brand); }
+  .question-shift span { color: var(--ink-faint); font-size: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .question-shift strong { display: block; margin-top: 18px; color: var(--ink); font-size: 40px; line-height: 1.12; letter-spacing: -.03em; }
+  .question-shift article:last-child strong { color: var(--brand-dark); font-size: 52px; }
+  .question-shift p { margin-top: 18px; color: var(--ink-soft); font-size: 22px; line-height: 1.48; }
+
+  .topic-search {
+    display: grid;
+    grid-template-columns: .76fr 1.24fr;
+    gap: 64px;
+    align-items: stretch;
+    margin-top: 64px;
+  }
+
+  .topic-search article { padding: 42px 0; border-top: 2px solid var(--line-strong); border-bottom: 1px solid var(--line); }
+  .topic-search article:last-child { padding-left: 48px; border-top-color: var(--brand); background: linear-gradient(90deg, var(--brand-soft), transparent 72%); }
+  .topic-search span { color: var(--ink-faint); font-size: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .topic-search strong { display: block; margin-top: 22px; font-size: 42px; line-height: 1.1; letter-spacing: -.03em; }
+  .topic-search p { max-width: 640px; margin-top: 18px; color: var(--ink-soft); font-size: 22px; line-height: 1.48; }
+
+  .intent-path, .research-path, .downstream-path {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px;
+    margin-top: 78px;
+  }
+
+  .intent-path::before, .research-path::before, .downstream-path::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 8%;
+    left: 8%;
+    height: 2px;
+    background: var(--line-strong);
+  }
+
+  .intent-path article, .research-path article, .downstream-path article { position: relative; padding-top: 52px; }
+  .intent-path article::before, .research-path article::before, .downstream-path article::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 8px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    border: 4px solid var(--white);
+    border-radius: 50%;
+    background: var(--line-strong);
+    box-shadow: 0 0 0 1px var(--line-strong);
+  }
+
+  .intent-path article:last-child::before, .research-path article:last-child::before, .downstream-path article:first-child::before { background: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+  .intent-path span, .research-path span, .downstream-path span { color: var(--brand-dark); font-size: 18px; font-weight: 700; }
+  .intent-path strong, .research-path strong, .downstream-path strong { display: block; margin-top: 10px; font-size: 25px; line-height: 1.18; }
+  .intent-path p, .research-path p, .downstream-path p { margin-top: 12px; color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
+
+  .signal-list {
+    display: grid;
+    margin-top: 58px;
+    border-top: 1px solid var(--line);
+  }
+
+  .signal-list article { display: grid; grid-template-columns: 80px 360px 1fr; gap: 34px; align-items: baseline; padding: 30px 0; border-bottom: 1px solid var(--line); }
+  .signal-list span { color: var(--brand); font-size: 20px; font-weight: 700; }
+  .signal-list strong { font-size: 30px; }
+  .signal-list p { color: var(--ink-soft); font-size: 21px; line-height: 1.45; }
+
+  .angle-tests {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 58px;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+
+  .angle-tests article { min-height: 210px; padding: 34px 42px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .angle-tests strong { display: block; color: var(--brand-dark); font-size: 30px; }
+  .angle-tests p { max-width: 610px; margin-top: 12px; color: var(--ink-soft); font-size: 21px; line-height: 1.45; }
+
+  .positioning-formula {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 28px;
+    align-items: center;
+    margin-top: 72px;
+  }
+
+  .positioning-part { min-height: 230px; padding: 36px; border-top: 2px solid var(--brand); background: var(--brand-soft); }
+  .positioning-part span { color: var(--brand-dark); font-size: 18px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .positioning-part strong { display: block; margin-top: 18px; font-size: 34px; line-height: 1.15; letter-spacing: -.025em; }
+  .positioning-plus { color: var(--brand); font-size: 42px; }
+  .positioning-output { margin-top: 40px; padding-left: 24px; border-left: 3px solid var(--brand); color: var(--ink-soft); font-size: 24px; line-height: 1.48; }
 
   .bottleneck {
     display: grid;
@@ -720,44 +856,16 @@
   .boundary-callout .draft-hold { border-color: var(--brand); background: var(--white); color: var(--ink-soft); }
   .boundary-callout .draft-hold strong { color: var(--brand-dark); font-family: var(--font); font-size: 13px; font-weight: 700; }
 
-  .system-path {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    margin-top: 56px;
-  }
-
-  .system-path div {
-    display: grid;
-    place-items: center;
-    min-height: 176px;
-    padding: 22px;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background: var(--surface);
-    color: var(--ink-soft);
-    font-weight: 600;
-    text-align: center;
-    line-height: 1.35;
-  }
-
-  .system-path div:nth-child(3) { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-dark); }
-
   .elevator {
     display: grid;
-    min-height: 570px;
+    min-height: 720px;
     align-content: center;
-    padding: 58px;
-    border-radius: var(--radius);
-    border: 1px solid var(--brand-mid);
-    background: linear-gradient(135deg, var(--white), var(--brand-soft));
     color: var(--ink);
-    box-shadow: var(--shadow);
   }
 
   .elevator h2 { color: var(--ink); max-width: 1180px; }
   .elevator h2 span { color: var(--brand-dark); }
-  .elevator p { max-width: 920px; margin-top: 28px; color: var(--ink-soft); font-size: 21px; line-height: 1.5; }
+  .elevator p { max-width: 1080px; margin-top: 32px; color: var(--ink-soft); font-size: 28px; line-height: 1.5; }
 
   .fit-grid {
     display: grid;
@@ -836,7 +944,7 @@
   .guarantee-number strong.hold-word { font-family: var(--font); font-size: 74px; font-weight: 700; letter-spacing: 0.04em; }
   .guarantee-number span { margin-top: 18px; font-size: 18px; font-weight: 600; }
   .guarantee-copy { display: grid; gap: 20px; }
-  .guarantee-copy h2 { font-size: clamp(48px, 5.2vw, 72px); }
+  .guarantee-copy h2 { font-size: 68px; }
   .guarantee-copy p { color: var(--ink-soft); font-size: 18px; line-height: 1.5; }
   .guarantee-note { padding: 18px 20px; border-left: 3px solid var(--brand); background: var(--brand-soft); color: var(--ink-soft); font-size: 14px; line-height: 1.45; }
 
@@ -918,7 +1026,7 @@
     border: 1px solid var(--line);
   }
 
-  .uncertainty blockquote { max-width: 1100px; color: var(--ink); font-family: var(--font-display); font-size: clamp(46px, 5.2vw, 76px); font-weight: 650; line-height: 1.04; letter-spacing: -.04em; }
+  .uncertainty blockquote { max-width: 1100px; color: var(--ink); font-family: var(--font-display); font-size: 76px; font-weight: 650; line-height: 1.04; letter-spacing: -.04em; }
   .uncertainty p { max-width: 780px; margin-top: 28px; color: var(--ink-soft); font-size: 18px; line-height: 1.5; }
 
   .close {
@@ -950,15 +1058,26 @@
   .close-side div { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
   .close-side div:last-child { border-bottom: 0; }
 
+  /* Type sizes are authored for the 1920 by 1080 stage, then scale as one unit. */
+  .act-label { min-height: 28px; margin-bottom: 24px; padding-left: 14px; font-size: 17px; }
+  .photo-frame .photo-caption { font-size: 20px; }
+  .agenda-row strong { font-size: 28px; }
+  .agenda-side p, .definition-list div, .search-item strong { font-size: 22px; }
+  .search-item p, .calendar-note, .equation-card p, .process-item p, .source span, .channel-row span, .delivery-main span, .guarantee-note { font-size: 19px; }
+  .alternative strong, .process-item strong, .approval-card strong, .demo-card strong, .term strong, .compare-card strong { font-size: 25px; }
+  .alternative p, .profile-point, .focus-panel p, .focus-list div, .source-output p, .brain-node, .brain-core span, .build-block p, .approval-card p, .demo-card p, .boundary-main div, .boundary-callout p, .fit-card div, .delivery-side p, .term p, .answer-list div, .compare-card p, .qa-item, .uncertainty p, .close-side div { font-size: 21px; }
+  .funnel-copy p, .guarantee-copy p { font-size: 23px; }
+  .cta-line { font-size: 25px; }
+
   .panel-toggle, .nav-button {
     position: absolute;
     z-index: 20;
     display: grid;
     place-items: center;
-    width: 36px;
-    height: 36px;
+    width: 54px;
+    height: 54px;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 12px;
     background: rgba(253, 253, 253, 0.94);
     color: var(--ink-soft);
     cursor: pointer;
@@ -966,96 +1085,39 @@
     transition: background 150ms ease, color 150ms ease, transform 150ms ease;
   }
 
-  .panel-toggle { top: 20px; left: 24px; }
+  .panel-toggle { top: 30px; left: 36px; }
   .panel-toggle:hover, .nav-button:hover { background: var(--brand-soft); color: var(--brand-dark); }
   .panel-toggle:active, .nav-button:active { transform: translateY(1px); }
   .panel-toggle:focus-visible, .nav-button:focus-visible { outline: 3px solid var(--brand-mid); outline-offset: 2px; }
-  .grid-icon { display: grid; grid-template-columns: repeat(2, 5px); gap: 3px; }
-  .grid-icon i { width: 5px; height: 5px; border-radius: 1px; background: currentColor; }
+  .grid-icon { display: grid; grid-template-columns: repeat(2, 7px); gap: 4px; }
+  .grid-icon i { width: 7px; height: 7px; border-radius: 2px; background: currentColor; }
 
-  .deck-arrows { position: absolute; right: 22px; bottom: 20px; z-index: 30; display: flex; gap: 8px; }
+  .deck-arrows { position: absolute; right: 36px; bottom: 30px; z-index: 30; display: flex; gap: 12px; }
   .deck-arrows .nav-button { position: static; }
   .nav-button:disabled { opacity: 0.35; cursor: default; }
 
   .progress {
-    position: fixed;
+    position: absolute;
     z-index: 400;
     left: 0;
     bottom: 0;
     width: 0;
-    height: 2px;
+    height: 3px;
     background: var(--brand);
     transition: width 220ms ease;
   }
 
   .counter {
-    position: fixed;
+    position: absolute;
     z-index: 350;
-    left: 240px;
-    bottom: 20px;
+    left: 120px;
+    bottom: 36px;
     color: var(--ink-faint);
-    font-size: 12px;
+    font-size: 18px;
     font-variant-numeric: tabular-nums;
   }
 
   .counter .cur { color: var(--brand-dark); font-weight: 700; }
-
-  @media (max-height: 780px) and (min-width: 901px) {
-    .slide { align-items: flex-start; overflow-y: auto; padding: 44px 64px 64px; }
-    h1 { font-size: clamp(52px, 5vw, 66px); }
-    h2 { font-size: clamp(40px, 4.2vw, 56px); }
-    .lede { margin-top: 18px; font-size: clamp(17px, 1.55vw, 22px); }
-    .photo-frame { min-height: 520px; }
-    .alternatives, .definition-grid, .search-board, .funnel-shell, .equation, .story-card, .process-line, .source-flow, .brain-map, .build-grid, .approval-loop, .demo-sequence, .boundary-layout, .system-path, .fit-grid, .deliverables, .terms-grid, .comparison, .qa-grid { margin-top: 30px; }
-    .statement, .elevator, .uncertainty { min-height: calc(100dvh - 108px); }
-    .product-demo-frame { height: 470px; margin-top: 24px; }
-    .process-item { min-height: 160px; }
-    .alternative { min-height: 145px; padding: 24px; }
-    .fit-card { padding: 28px; }
-    .fit-card div { padding-block: 12px; }
-  }
-
-  @media (max-width: 1100px) {
-    .slide { padding: 60px 38px 78px; }
-    .split, .bottleneck, .profile, .focus-layout, .channel-layout, .proof-layout, .guarantee, .objection, .close { gap: 30px; }
-    .process-line { gap: 7px; }
-    .process-item { padding: 18px 14px; }
-    .photo-frame { min-height: 480px; }
-  }
-
-  @media (max-width: 900px) {
-    .panel { display: none; }
-    .counter { left: 22px; }
-    .slide { align-items: flex-start; overflow-y: auto; padding: 68px 24px 92px; }
-    .split, .agenda, .definition-grid, .bottleneck, .funnel-shell, .profile, .story-card, .focus-layout, .source-flow, .channel-layout, .boundary-layout, .elevator, .fit-grid, .deliverables, .proof-layout, .guarantee, .objection, .close { grid-template-columns: 1fr; }
-    .photo-frame { min-height: 390px; }
-    .process-line, .system-path { grid-template-columns: 1fr 1fr; }
-    .process-item:nth-child(even) { margin-top: 0; }
-    .brain-map { grid-template-columns: 1fr; }
-    .brain-side { grid-template-columns: 1fr 1fr; }
-    .product-demo-frame { height: auto; min-height: 520px; }
-    .approval-loop { grid-template-columns: 1fr; }
-    .approval-arrow { transform: rotate(90deg); text-align: center; }
-    .comparison { grid-template-columns: 1fr; }
-    .question-mark { display: none; }
-    .guarantee-number { min-height: 300px; }
-  }
-
-  @media (max-width: 620px) {
-    h1 { font-size: 50px; }
-    h2 { font-size: 43px; }
-    .lede { font-size: 18px; }
-    .search-board, .alternatives, .demo-sequence, .boundary-main, .terms-grid, .qa-grid, .delivery-main, .brain-side, .process-line, .system-path { grid-template-columns: 1fr; }
-    .equation { grid-template-columns: 1fr; }
-    .equation-sign { transform: rotate(90deg); }
-    .build-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-    .build-block:first-child { grid-row: auto; min-height: 240px; }
-    .elevator, .uncertainty { padding: 34px; }
-    .statement h2 { font-size: 55px; }
-    .product-demo-frame { min-height: 420px; }
-    .product-demo-header { padding-inline: 14px; }
-    .product-demo-identity span, .product-demo-state { display: none; }
-  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1074,7 +1136,15 @@
       <span class="grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     </button>
 
-    <section class="slide active" id="opening" data-act="1" data-title="You have probably heard this before" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
+    <section class="slide active" id="webinar-title" data-act="1" data-title="How to build the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="webinar-title-heading">
+      <div class="content title-slide">
+        <div class="act-label">A Kodara webinar for health and wellness experts</div>
+        <h1 id="webinar-title-heading">How To Build The <span class="brand">“AI Version Of You”</span> That Can Sell Itself To Clients &amp; Patients Online</h1>
+        <p class="lede">Built around your knowledge, your approval, and a controlled path from question to program.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="opening" data-act="1" data-title="You have probably heard this before" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
       <div class="content split">
         <div>
           <div class="act-label">For health and wellness experts</div>
@@ -1124,28 +1194,149 @@
       </div>
     </section>
 
-    <section class="slide" id="webinar-title" data-act="1" data-title="How to build the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="webinar-title-heading">
-      <div class="content elevator">
-        <h2 id="webinar-title-heading">How To Build The <span>“AI Version Of You”</span> That Can Sell Itself To Clients &amp; Patients Online</h2>
-        <p>Built around your knowledge, your approval, and a controlled path from question to program.</p>
+    <section class="slide" id="two-problems" data-act="2" data-title="Two different problems" role="group" aria-roledescription="slide" aria-labelledby="two-problems-title">
+      <div class="content">
+        <h2 id="two-problems-title">There are two different problems hiding inside that goal.</h2>
+        <div class="two-problem-layout">
+          <article>
+            <span>Problem one</span>
+            <strong>What should you sell?</strong>
+            <p>You need a clear problem and a credible promise that gives the right person a reason to care now.</p>
+          </article>
+          <article>
+            <span>Problem two</span>
+            <strong>How do you deliver it without building another job?</strong>
+            <p>You need a way to turn your knowledge into a business that does not require you at every step.</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="slide" id="definition" data-act="1" data-title="What AI version means" role="group" aria-roledescription="slide" aria-labelledby="definition-title">
+    <section class="slide" id="positioning-shift" data-act="2" data-title="Start with the right question" role="group" aria-roledescription="slide" aria-labelledby="positioning-shift-title">
       <div class="content">
-        <h2 id="definition-title">Here is what we mean by <span class="brand">an AI version of you.</span></h2>
-        <div class="definition-grid">
-          <div class="definition-main">
-            <strong>It is not a clone. It is a controlled knowledge system.</strong>
-            <p>We take your interviews, methods, documents, and approved materials, then use them as the source for a digital business you review before launch.</p>
-          </div>
-          <div class="definition-list">
-            <div>It starts with your real knowledge</div>
-            <div>You review and correct what it says</div>
-            <div>Clear rules tell it when to stop</div>
-            <div>Relevant users can reach the right program</div>
-          </div>
+        <h2 id="positioning-shift-title">Most experts start with the wrong question.</h2>
+        <div class="question-shift">
+          <article>
+            <span>The usual question</span>
+            <strong>What can I teach?</strong>
+            <p>That usually creates a broad list of everything you know.</p>
+          </article>
+          <article>
+            <span>The better question</span>
+            <strong>What problem are people already trying to solve?</strong>
+            <p>That gives your expertise a clear place to meet existing demand.</p>
+          </article>
         </div>
+      </div>
+    </section>
+
+    <section class="slide" id="search-first" data-act="2" data-title="The AI starts before the AI" role="group" aria-roledescription="slide" aria-labelledby="search-first-title">
+      <div class="content statement">
+        <div class="statement-rule" aria-hidden="true"></div>
+        <h2 id="search-first-title">The best AI version of you does not start with AI.</h2>
+        <p class="lede">It starts with a specific problem people are already trying to solve.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="topic-vs-search" data-act="2" data-title="A topic is not a search" role="group" aria-roledescription="slide" aria-labelledby="topic-vs-search-title">
+      <div class="content">
+        <h2 id="topic-vs-search-title">A topic tells us what you know. A search tells us what they want.</h2>
+        <div class="topic-search">
+          <article>
+            <span>A topic</span>
+            <strong>Hormone health</strong>
+            <p>Useful expertise, but too broad to tell us what someone needs today.</p>
+          </article>
+          <article>
+            <span>A search</span>
+            <strong>“Why am I still exhausted after changing my diet?”</strong>
+            <p>Now we can see the problem, the language, and the next question that person is likely to ask.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="intent-ladder" data-act="2" data-title="Different searches reveal different intent" role="group" aria-roledescription="slide" aria-labelledby="intent-ladder-title">
+      <div class="content">
+        <h2 id="intent-ladder-title">People can search the same topic with completely different intent.</h2>
+        <div class="intent-path" aria-label="Search intent from early research to choosing a provider">
+          <article><span>01</span><strong>Understand</strong><p>“What is happening?”</p></article>
+          <article><span>02</span><strong>Identify</strong><p>“Is this my problem?”</p></article>
+          <article><span>03</span><strong>Solve</strong><p>“What can I do?”</p></article>
+          <article><span>04</span><strong>Compare</strong><p>“Which approach fits me?”</p></article>
+          <article><span>05</span><strong>Choose</strong><p>“Who can help?”</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="search-signals" data-act="2" data-title="Three signals inside a search" role="group" aria-roledescription="slide" aria-labelledby="search-signals-title">
+      <div class="content">
+        <h2 id="search-signals-title">The words they use tell us three things.</h2>
+        <div class="signal-list">
+          <article><span>01</span><strong>The outcome</strong><p>What they want to change, reach, avoid, or understand.</p></article>
+          <article><span>02</span><strong>The explanation</strong><p>How they currently describe the cause of the problem.</p></article>
+          <article><span>03</span><strong>The readiness</strong><p>Whether they are learning, comparing approaches, or looking for help.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="angle-fit" data-act="2" data-title="The four tests for an angle" role="group" aria-roledescription="slide" aria-labelledby="angle-fit-title">
+      <div class="content">
+        <h2 id="angle-fit-title">A strong angle has to pass four tests.</h2>
+        <div class="angle-tests">
+          <article><strong>Demand</strong><p>Do real searches show that people are trying to solve this problem?</p></article>
+          <article><strong>Authority</strong><p>Do you have the experience and approved knowledge to help responsibly?</p></article>
+          <article><strong>Clarity</strong><p>Can the right person recognize the problem and understand the next step?</p></article>
+          <article><strong>Deliverability</strong><p>Can the problem be supported safely without requiring your live time at every step?</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="research-process" data-act="2" data-title="How raw search data becomes an angle" role="group" aria-roledescription="slide" aria-labelledby="research-process-title">
+      <div class="content">
+        <h2 id="research-process-title">Here is how raw search data becomes one angle.</h2>
+        <div class="research-path" aria-label="Five steps from search data to a positioning angle">
+          <article><span>01</span><strong>Collect</strong><p>Start with the real phrases people use.</p></article>
+          <article><span>02</span><strong>Group</strong><p>Find repeated problems and language.</p></article>
+          <article><span>03</span><strong>Separate</strong><p>Distinguish learning from buying intent.</p></article>
+          <article><span>04</span><strong>Match</strong><p>Compare demand with your expertise and boundaries.</p></article>
+          <article><span>05</span><strong>Choose</strong><p>Commit to one angle for the first build.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="positioning-output" data-act="2" data-title="The positioning sentence" role="group" aria-roledescription="slide" aria-labelledby="positioning-output-title">
+      <div class="content">
+        <h2 id="positioning-output-title">The research should end in one sentence.</h2>
+        <div class="positioning-formula" aria-label="A positioning formula">
+          <div class="positioning-part"><span>Who</span><strong>A specific person</strong></div>
+          <div class="positioning-plus" aria-hidden="true">+</div>
+          <div class="positioning-part"><span>Problem</span><strong>A specific problem</strong></div>
+          <div class="positioning-plus" aria-hidden="true">+</div>
+          <div class="positioning-part"><span>Path</span><strong>An approved mechanism</strong></div>
+        </div>
+        <p class="positioning-output">We help a specific person solve a specific problem through an approved mechanism.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="angle-controls-build" data-act="2" data-title="The angle controls the build" role="group" aria-roledescription="slide" aria-labelledby="angle-controls-build-title">
+      <div class="content">
+        <h2 id="angle-controls-build-title">Once the angle is clear, every downstream decision gets easier.</h2>
+        <div class="downstream-path" aria-label="The positioning angle informs the complete business build">
+          <article><span>01</span><strong>Knowledge</strong><p>What expertise to extract.</p></article>
+          <article><span>02</span><strong>AI</strong><p>Which questions it should answer.</p></article>
+          <article><span>03</span><strong>Program</strong><p>What next step to build.</p></article>
+          <article><span>04</span><strong>Website</strong><p>What message to lead with.</p></article>
+          <article><span>05</span><strong>Discovery</strong><p>Where the right people can find it.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="implementation-bridge" data-act="2" data-title="The angle is only the first problem" role="group" aria-roledescription="slide" aria-labelledby="implementation-bridge-title">
+      <div class="content statement">
+        <div class="statement-rule" aria-hidden="true"></div>
+        <h2 id="implementation-bridge-title">But the right angle can still create the wrong business.</h2>
+        <p class="lede">If every answer, sale, and client result still depends on your time, you have built another job.</p>
       </div>
     </section>
 
@@ -1229,6 +1420,24 @@
         <div class="story-card">
           <strong>When Michelle needed help, access became personal.</strong>
           <p>Michelle was dealing with Graves' disease, traveling to appointments, and still struggling to find a clear path. Then we heard about someone who found an independent wellness expert online and completed a virtual program from home. That did not prove virtual programs replace medical care. It proved credible expertise could be easier to reach.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="definition" data-act="3" data-title="What AI version means" role="group" aria-roledescription="slide" aria-labelledby="definition-title">
+      <div class="content">
+        <h2 id="definition-title">Here is what we mean by <span class="brand">an AI version of you.</span></h2>
+        <div class="definition-grid">
+          <div class="definition-main">
+            <strong>It is not a clone. It is a controlled knowledge system.</strong>
+            <p>We take your interviews, methods, documents, and approved materials, then use them as the source for a digital business you review before launch.</p>
+          </div>
+          <div class="definition-list">
+            <div>It starts with your real knowledge</div>
+            <div>You review and correct what it says</div>
+            <div>Clear rules tell it when to stop</div>
+            <div>Relevant users can reach the right program</div>
+          </div>
         </div>
       </div>
     </section>
@@ -1370,19 +1579,6 @@
             <p>Privacy, consent, licensing, health claims, human escalation, and product category have to be resolved for each use case.</p>
             <p class="draft-hold"><strong>Before this slide goes live:</strong> Replace these questions with the exact product configuration and counsel-approved disclosures.</p>
           </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="connected-system" data-act="3" data-title="The connected system" role="group" aria-roledescription="slide" aria-labelledby="connected-system-title">
-      <div class="content">
-        <h2 id="connected-system-title">This only works when every part is connected.</h2>
-        <div class="system-path" aria-label="Approved knowledge connected to user delivery">
-          <div>Your approved expertise</div>
-          <div>A conversation grounded in it</div>
-          <div>The right next step</div>
-          <div>Your digital program</div>
-          <div>Your review improves the system</div>
         </div>
       </div>
     </section>
@@ -1586,11 +1782,10 @@
       <button class="nav-button" id="previousSlide" type="button" aria-label="Previous slide">‹</button>
       <button class="nav-button" id="nextSlide" type="button" aria-label="Next slide">›</button>
     </nav>
+    <div class="progress" id="progress"></div>
+    <div class="counter" id="counter"><span class="cur">01</span> / 46</div>
   </main>
 </div>
-
-<div class="progress" id="progress"></div>
-<div class="counter" id="counter"><span class="cur">01</span> / 36</div>
 
 <script>
   const slides = [...document.querySelectorAll('.slide:not([hidden])')];
@@ -1634,8 +1829,14 @@
   function updateThumbScale() {
     const box = document.querySelector('.thumb-box');
     if (!box) return;
-    const scale = box.clientWidth / 1600;
+    const scale = box.clientWidth / 1920;
     document.querySelectorAll('.thumb-clone').forEach(clone => clone.style.setProperty('--thumb-scale', scale));
+  }
+
+  function updateDeckScale() {
+    const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.documentElement.style.setProperty('--deck-scale', String(scale));
+    updateThumbScale();
   }
 
   function syncUrl() {
@@ -1717,8 +1918,8 @@
     if (Math.abs(delta) > 50) goTo(current + (delta > 0 ? 1 : -1));
   }, { passive: true });
 
-  window.addEventListener('resize', updateThumbScale);
-  updateThumbScale();
+  window.addEventListener('resize', updateDeckScale);
+  updateDeckScale();
 
   const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide') || 1);
   goTo(Number.isFinite(requestedSlide) ? Math.min(Math.max(requestedSlide - 1, 0), slides.length - 1) : 0);
