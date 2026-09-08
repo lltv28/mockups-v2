@@ -4,27 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kodara Webinar</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
+  @font-face {
+    font-family: "Instrument Sans Local";
+    src: url("health/assets/InstrumentSans.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+  }
+
   :root {
-    --white: #ffffff;
-    --surface: #f8faf9;
-    --surface-strong: #eef5f1;
-    --ink: #202523;
-    --ink-soft: #5d6762;
-    --ink-faint: #89918d;
-    --line: rgba(32, 37, 35, 0.10);
-    --line-strong: rgba(32, 37, 35, 0.18);
-    --brand: #106844;
-    --brand-dark: #0a4c31;
-    --brand-soft: rgba(16, 104, 68, 0.08);
-    --brand-mid: rgba(16, 104, 68, 0.16);
-    --font: "Instrument Sans", Arial, sans-serif;
-    --font-display: "Instrument Serif", Georgia, serif;
-    --radius: 18px;
-    --shadow: 0 24px 70px rgba(16, 104, 68, 0.10);
+    --white: #fdfdfd;
+    --canvas: #f6f6f7;
+    --surface: #f6f7f6;
+    --surface-strong: #edf2ef;
+    --ink: #1a1a1a;
+    --ink-soft: #5f625f;
+    --ink-faint: #6f736f;
+    --line: #e5e5e8;
+    --line-strong: #d5d7db;
+    --brand: #2e7d52;
+    --brand-dark: #256b45;
+    --brand-soft: rgba(46, 125, 82, 0.07);
+    --brand-mid: rgba(46, 125, 82, 0.16);
+    --font: "Instrument Sans Local", Arial, sans-serif;
+    --font-display: "Instrument Sans Local", Arial, sans-serif;
+    --radius: 12px;
+    --shadow: 0 8px 16px rgba(20, 69, 46, 0.04), 0 2px 4px rgba(26, 26, 26, 0.05);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,7 +39,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: var(--white);
+    background: var(--canvas);
     color: var(--ink);
     font-family: var(--font);
     -webkit-font-smoothing: antialiased;
@@ -57,7 +63,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background: var(--surface);
+    background: #fbfcfb;
     border-right: 1px solid var(--line);
     scrollbar-width: thin;
     scrollbar-color: var(--line-strong) transparent;
@@ -93,7 +99,7 @@
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: var(--white);
+    background: var(--canvas);
   }
 
   .thumb.active .thumb-box { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
@@ -138,12 +144,12 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: clamp(54px, 6vw, 84px);
+    padding: clamp(48px, 5vw, 72px);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px);
-    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+    transform: translateY(8px);
+    transition: opacity 180ms ease-out, transform 180ms ease-out, visibility 180ms;
   }
 
   .slide.active {
@@ -152,22 +158,9 @@
     transform: none;
   }
 
-  .slide::after {
-    content: "";
-    position: absolute;
-    z-index: -2;
-    width: 520px;
-    height: 520px;
-    right: -260px;
-    bottom: -260px;
-    border-radius: 50%;
-    background: var(--brand-soft);
-  }
+  .slide::after { content: none; }
 
-  .slide:nth-of-type(3n)::after { right: auto; left: -300px; bottom: auto; top: -300px; }
-  .slide:nth-of-type(4n)::after { width: 380px; height: 380px; right: 12%; bottom: -260px; }
-
-  .content { width: min(100%, 1320px); margin: 0 auto; }
+  .content { width: min(100%, 1400px); margin: 0 auto; }
   .content-narrow { width: min(100%, 960px); margin: 0 auto; }
   .center { text-align: center; }
   .brand { color: var(--brand); }
@@ -175,15 +168,14 @@
   .act-label {
     display: inline-flex;
     align-items: center;
-    min-height: 28px;
-    margin-bottom: 22px;
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: var(--brand-soft);
+    min-height: 20px;
+    margin-bottom: 18px;
+    padding-left: 10px;
+    border-left: 2px solid var(--brand);
     color: var(--brand-dark);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.09em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
@@ -191,13 +183,14 @@
     max-width: 1100px;
     color: var(--ink);
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.035em;
-    line-height: 0.98;
+    font-weight: 650;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+    text-wrap: balance;
   }
 
-  h1 { font-size: clamp(58px, 6.3vw, 92px); }
-  h2 { font-size: clamp(48px, 5.4vw, 78px); }
+  h1 { font-size: clamp(56px, 5.7vw, 82px); }
+  h2 { font-size: clamp(44px, 4.7vw, 68px); }
   h3 { font-size: 22px; line-height: 1.15; }
 
   .lede {
@@ -237,26 +230,25 @@
 
   .photo-frame {
     position: relative;
-    min-height: 570px;
+    min-height: 560px;
     overflow: hidden;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     border-radius: var(--radius);
-    background: var(--surface-strong);
+    border: 1px solid var(--line-strong);
+    background: var(--white);
     box-shadow: var(--shadow);
   }
 
-  .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-frame img { width: 100%; height: 100%; min-height: 0; object-fit: cover; object-position: center 18%; display: block; }
   .photo-frame .photo-caption {
-    position: absolute;
-    right: 18px;
-    bottom: 18px;
-    left: 18px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.92);
+    position: static;
+    padding: 14px 16px 15px;
+    border-top: 1px solid var(--line);
+    background: var(--white);
     color: var(--ink-soft);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.4;
-    backdrop-filter: blur(12px);
   }
 
   .agenda {
@@ -291,7 +283,8 @@
     margin-bottom: 14px;
     font-family: var(--font-display);
     font-size: 38px;
-    font-weight: 400;
+    font-weight: 650;
+    letter-spacing: -.03em;
     line-height: 1.05;
   }
 
@@ -316,9 +309,10 @@
     margin-bottom: 18px;
     color: var(--brand);
     font-family: var(--font-display);
-    font-size: 54px;
-    font-weight: 400;
+    font-size: 46px;
+    font-weight: 650;
     line-height: 1;
+    letter-spacing: -.04em;
   }
 
   .definition-main p { color: var(--ink-soft); font-size: 21px; line-height: 1.45; }
@@ -349,11 +343,16 @@
     display: grid;
     gap: 28px;
     align-items: center;
-    min-height: 520px;
+    min-height: 570px;
+    padding: clamp(44px, 5vw, 70px);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: var(--shadow);
   }
 
-  .statement h2 { max-width: 1200px; font-size: clamp(62px, 7.4vw, 108px); }
-  .statement-rule { width: min(220px, 30vw); height: 4px; border-radius: 999px; background: var(--brand); }
+  .statement h2 { max-width: 1200px; font-size: clamp(58px, 6.6vw, 94px); }
+  .statement-rule { width: min(180px, 30vw); height: 3px; background: var(--brand); }
 
   .bottleneck {
     display: grid;
@@ -431,7 +430,7 @@
     text-align: center;
   }
 
-  .equation-card strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 40px; font-weight: 400; line-height: 1.05; }
+  .equation-card strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 34px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
   .equation-card p { margin-top: 12px; color: var(--ink-soft); font-size: 14px; line-height: 1.4; }
   .equation-sign { display: grid; place-items: center; color: var(--brand); font-size: 36px; }
 
@@ -450,6 +449,7 @@
     background: var(--white);
   }
 
+  .alternative:nth-child(2), .alternative:nth-child(3) { background: var(--brand-soft); }
   .alternative strong { display: block; margin-bottom: 12px; font-size: 21px; }
   .alternative p { color: var(--ink-soft); font-size: 16px; line-height: 1.45; }
 
@@ -469,32 +469,34 @@
     grid-template-columns: 0.7fr 1.3fr;
     gap: 34px;
     margin-top: 46px;
-    padding: 42px;
+    padding: 0;
+    overflow: hidden;
     border-radius: var(--radius);
     background: var(--surface);
     border: 1px solid var(--line);
   }
 
-  .story-card strong { color: var(--brand); font-family: var(--font-display); font-size: 48px; font-weight: 400; line-height: 1; }
+  .story-card > * { padding: 42px; }
+  .story-card > :first-child { background: var(--brand-soft); }
+  .story-card strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 38px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
   .story-card p { color: var(--ink-soft); font-size: 20px; line-height: 1.5; }
 
   .process-line {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 10px;
+    gap: 18px;
     margin-top: 54px;
   }
 
   .process-item {
     position: relative;
-    min-height: 210px;
-    padding: 24px 18px;
-    border-radius: var(--radius);
-    background: var(--surface);
-    border: 1px solid var(--line);
+    min-height: 190px;
+    padding: 22px 4px 0;
+    border-top: 2px solid var(--line-strong);
   }
 
-  .process-item:nth-child(even) { margin-top: 34px; background: var(--brand-soft); }
+  .process-item:nth-child(even) { margin-top: 34px; }
+  .process-item:nth-child(1), .process-item:nth-child(6) { border-color: var(--brand); }
   .process-item strong { display: block; margin-bottom: 12px; color: var(--brand-dark); font-size: 18px; }
   .process-item p { color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
 
@@ -508,12 +510,13 @@
   .focus-panel {
     padding: 38px;
     border-radius: var(--radius);
-    background: var(--brand);
-    color: var(--white);
+    border: 1px solid var(--brand-mid);
+    background: var(--brand-soft);
+    color: var(--ink);
   }
 
-  .focus-panel strong { display: block; margin-bottom: 18px; font-family: var(--font-display); font-size: 46px; font-weight: 400; line-height: 1.05; }
-  .focus-panel p { color: rgba(255, 255, 255, 0.78); font-size: 17px; line-height: 1.5; }
+  .focus-panel strong { display: block; margin-bottom: 18px; font-family: var(--font-display); font-size: 38px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
+  .focus-panel p { color: var(--ink-soft); font-size: 17px; line-height: 1.5; }
   .focus-list { display: grid; gap: 0; }
   .focus-list div { padding: 22px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 18px; line-height: 1.4; }
   .focus-list div strong { display: block; margin-bottom: 5px; color: var(--ink); }
@@ -545,7 +548,7 @@
     border: 1px solid var(--brand-mid);
   }
 
-  .source-output strong { color: var(--brand); font-family: var(--font-display); font-size: 50px; font-weight: 400; line-height: 1.05; }
+  .source-output strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 42px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
   .source-output p { margin-top: 16px; color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
 
   .brain-map {
@@ -572,14 +575,44 @@
     min-height: 330px;
     padding: 42px;
     border-radius: var(--radius);
-    background: var(--brand);
-    color: var(--white);
+    border: 1px solid var(--brand);
+    background: var(--brand-soft);
+    color: var(--ink);
     text-align: center;
     box-shadow: var(--shadow);
   }
 
-  .brain-core strong { font-family: var(--font-display); font-size: 58px; font-weight: 400; line-height: 1; }
-  .brain-core span { margin-top: 12px; color: rgba(255, 255, 255, 0.74); font-size: 15px; line-height: 1.4; }
+  .brain-core strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 48px; font-weight: 650; line-height: 1; letter-spacing: -.04em; }
+  .brain-core span { margin-top: 12px; color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
+
+  .product-demo-frame {
+    height: 540px;
+    margin-top: 34px;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 62px minmax(0, 1fr);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: var(--shadow);
+  }
+
+  .product-demo-header {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .product-demo-identity { min-width: 0; display: flex; align-items: center; gap: 10px; }
+  .product-demo-identity img { width: 30px; height: 30px; flex: 0 0 30px; object-fit: contain; }
+  .product-demo-identity strong { color: var(--ink); font-size: 16px; font-weight: 650; white-space: nowrap; }
+  .product-demo-identity span { padding-left: 10px; overflow: hidden; border-left: 1px solid var(--line); color: var(--ink-soft); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+  .product-demo-state { color: var(--brand-dark); font-size: 13px; font-weight: 650; white-space: nowrap; }
+  .product-demo-body { min-height: 0; display: grid; place-items: center; overflow: hidden; background: var(--canvas); }
+  .product-demo-body img { width: 100%; height: 100%; display: block; object-fit: contain; mix-blend-mode: multiply; }
 
   .build-grid {
     display: grid;
@@ -597,11 +630,11 @@
     background: var(--surface);
   }
 
-  .build-block:first-child { grid-row: 1 / 3; display: grid; align-content: end; min-height: 390px; background: var(--brand); color: var(--white); }
+  .build-block:first-child { grid-row: 1 / 3; display: grid; align-content: end; min-height: 390px; border-color: var(--brand); background: var(--brand-soft); color: var(--ink); }
   .build-block strong { display: block; margin-bottom: 10px; font-size: 24px; }
-  .build-block:first-child strong { font-family: var(--font-display); font-size: 54px; font-weight: 400; line-height: 1; }
+  .build-block:first-child strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 46px; font-weight: 650; line-height: 1; letter-spacing: -.04em; }
   .build-block p { color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
-  .build-block:first-child p { color: rgba(255, 255, 255, 0.76); }
+  .build-block:first-child p { color: var(--ink-soft); }
 
   .approval-loop {
     display: grid;
@@ -681,11 +714,11 @@
   }
 
   .boundary-main div { padding: 18px; border-radius: 12px; background: var(--white); color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
-  .boundary-callout { display: grid; align-content: center; padding: 36px; border-radius: var(--radius); background: var(--brand); color: var(--white); }
-  .boundary-callout > strong { font-family: var(--font-display); font-size: 42px; font-weight: 400; line-height: 1.05; }
-  .boundary-callout p { margin-top: 14px; color: rgba(255, 255, 255, 0.78); font-size: 15px; line-height: 1.45; }
-  .boundary-callout .draft-hold { border-color: rgba(255, 255, 255, 0.72); background: rgba(255, 255, 255, 0.10); color: rgba(255, 255, 255, 0.82); }
-  .boundary-callout .draft-hold strong { color: var(--white); font-family: var(--font); font-size: 13px; font-weight: 700; }
+  .boundary-callout { display: grid; align-content: center; padding: 36px; border: 1px solid var(--brand-mid); border-radius: var(--radius); background: var(--brand-soft); color: var(--ink); }
+  .boundary-callout > strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 36px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
+  .boundary-callout p { margin-top: 14px; color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
+  .boundary-callout .draft-hold { border-color: var(--brand); background: var(--white); color: var(--ink-soft); }
+  .boundary-callout .draft-hold strong { color: var(--brand-dark); font-family: var(--font); font-size: 13px; font-weight: 700; }
 
   .system-path {
     display: grid;
@@ -708,7 +741,7 @@
     line-height: 1.35;
   }
 
-  .system-path div:nth-child(3) { background: var(--brand); color: var(--white); }
+  .system-path div:nth-child(3) { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-dark); }
 
   .elevator {
     display: grid;
@@ -716,13 +749,15 @@
     align-content: center;
     padding: 58px;
     border-radius: var(--radius);
-    background: var(--brand);
-    color: var(--white);
+    border: 1px solid var(--brand-mid);
+    background: linear-gradient(135deg, var(--white), var(--brand-soft));
+    color: var(--ink);
     box-shadow: var(--shadow);
   }
 
-  .elevator h2 { color: var(--white); max-width: 1180px; }
-  .elevator p { max-width: 920px; margin-top: 28px; color: rgba(255, 255, 255, 0.78); font-size: 21px; line-height: 1.5; }
+  .elevator h2 { color: var(--ink); max-width: 1180px; }
+  .elevator h2 span { color: var(--brand-dark); }
+  .elevator p { max-width: 920px; margin-top: 28px; color: var(--ink-soft); font-size: 21px; line-height: 1.5; }
 
   .fit-grid {
     display: grid;
@@ -763,9 +798,9 @@
   .delivery-main div { min-height: 124px; padding: 20px; border-radius: 12px; background: var(--white); }
   .delivery-main strong { display: block; margin-bottom: 7px; color: var(--brand-dark); }
   .delivery-main span { color: var(--ink-soft); font-size: 13px; line-height: 1.4; }
-  .delivery-side { display: grid; align-content: center; padding: 36px; border-radius: var(--radius); background: var(--brand); color: var(--white); }
-  .delivery-side strong { font-family: var(--font-display); font-size: 44px; font-weight: 400; line-height: 1; }
-  .delivery-side p { margin-top: 14px; color: rgba(255, 255, 255, 0.78); font-size: 15px; line-height: 1.45; }
+  .delivery-side { display: grid; align-content: center; padding: 36px; border: 1px solid var(--brand-mid); border-radius: var(--radius); background: var(--brand-soft); color: var(--ink); }
+  .delivery-side strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 38px; font-weight: 650; line-height: 1; letter-spacing: -.03em; }
+  .delivery-side p { margin-top: 14px; color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
 
   .proof-layout {
     display: grid;
@@ -776,7 +811,7 @@
 
   .proof-image { padding: 16px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
   .proof-image img { display: block; width: 100%; max-height: 600px; object-fit: contain; border-radius: 12px; }
-  .proof-copy blockquote { margin-top: 28px; color: var(--ink-soft); font-family: var(--font-display); font-size: 32px; line-height: 1.22; }
+  .proof-copy blockquote { margin-top: 28px; color: var(--ink-soft); font-family: var(--font-display); font-size: 30px; font-weight: 600; line-height: 1.22; letter-spacing: -.02em; }
   .proof-copy .small-print { margin-top: 24px; }
 
   .guarantee {
@@ -791,12 +826,13 @@
     place-items: center;
     min-height: 470px;
     border-radius: var(--radius);
-    background: var(--brand);
-    color: var(--white);
+    border: 1px solid var(--brand);
+    background: var(--brand-soft);
+    color: var(--brand-dark);
     text-align: center;
   }
 
-  .guarantee-number strong { display: block; font-family: var(--font-display); font-size: 132px; font-weight: 400; line-height: 0.8; }
+  .guarantee-number strong { display: block; font-family: var(--font-display); font-size: 132px; font-weight: 650; line-height: 0.8; }
   .guarantee-number strong.hold-word { font-family: var(--font); font-size: 74px; font-weight: 700; letter-spacing: 0.04em; }
   .guarantee-number span { margin-top: 18px; font-size: 18px; font-weight: 600; }
   .guarantee-copy { display: grid; gap: 20px; }
@@ -856,10 +892,11 @@
     border: 1px solid var(--line);
   }
 
-  .compare-card:last-child { background: var(--brand); color: var(--white); }
+  .compare-card:last-child { border-color: var(--brand); background: var(--brand-soft); color: var(--ink); }
   .compare-card strong { display: block; margin-bottom: 18px; font-size: 22px; }
   .compare-card p { color: var(--ink-soft); font-size: 15px; line-height: 1.5; }
-  .compare-card:last-child p { color: rgba(255, 255, 255, 0.78); }
+  .compare-card:last-child strong { color: var(--brand-dark); }
+  .compare-card:last-child p { color: var(--ink-soft); }
 
   .qa-grid {
     display: grid;
@@ -881,7 +918,7 @@
     border: 1px solid var(--line);
   }
 
-  .uncertainty blockquote { max-width: 1100px; color: var(--ink); font-family: var(--font-display); font-size: clamp(46px, 5.2vw, 76px); line-height: 1.04; }
+  .uncertainty blockquote { max-width: 1100px; color: var(--ink); font-family: var(--font-display); font-size: clamp(46px, 5.2vw, 76px); font-weight: 650; line-height: 1.04; letter-spacing: -.04em; }
   .uncertainty p { max-width: 780px; margin-top: 28px; color: var(--ink-soft); font-size: 18px; line-height: 1.5; }
 
   .close {
@@ -909,7 +946,7 @@
     border: 1px solid var(--line);
   }
 
-  .close-side strong { display: block; margin-bottom: 18px; color: var(--brand-dark); font-family: var(--font-display); font-size: 42px; font-weight: 400; line-height: 1.05; }
+  .close-side strong { display: block; margin-bottom: 18px; color: var(--brand-dark); font-family: var(--font-display); font-size: 36px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
   .close-side div { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
   .close-side div:last-child { border-bottom: 0; }
 
@@ -918,14 +955,14 @@
     z-index: 20;
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border: 1px solid var(--line);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.92);
+    border-radius: 8px;
+    background: rgba(253, 253, 253, 0.94);
     color: var(--ink-soft);
     cursor: pointer;
-    box-shadow: 0 8px 30px rgba(32, 37, 35, 0.08);
+    box-shadow: var(--shadow);
     transition: background 150ms ease, color 150ms ease, transform 150ms ease;
   }
 
@@ -946,7 +983,7 @@
     left: 0;
     bottom: 0;
     width: 0;
-    height: 4px;
+    height: 2px;
     background: var(--brand);
     transition: width 220ms ease;
   }
@@ -962,6 +999,21 @@
   }
 
   .counter .cur { color: var(--brand-dark); font-weight: 700; }
+
+  @media (max-height: 780px) and (min-width: 901px) {
+    .slide { align-items: flex-start; overflow-y: auto; padding: 44px 64px 64px; }
+    h1 { font-size: clamp(52px, 5vw, 66px); }
+    h2 { font-size: clamp(40px, 4.2vw, 56px); }
+    .lede { margin-top: 18px; font-size: clamp(17px, 1.55vw, 22px); }
+    .photo-frame { min-height: 520px; }
+    .alternatives, .definition-grid, .search-board, .funnel-shell, .equation, .story-card, .process-line, .source-flow, .brain-map, .build-grid, .approval-loop, .demo-sequence, .boundary-layout, .system-path, .fit-grid, .deliverables, .terms-grid, .comparison, .qa-grid { margin-top: 30px; }
+    .statement, .elevator, .uncertainty { min-height: calc(100dvh - 108px); }
+    .product-demo-frame { height: 470px; margin-top: 24px; }
+    .process-item { min-height: 160px; }
+    .alternative { min-height: 145px; padding: 24px; }
+    .fit-card { padding: 28px; }
+    .fit-card div { padding-block: 12px; }
+  }
 
   @media (max-width: 1100px) {
     .slide { padding: 60px 38px 78px; }
@@ -981,6 +1033,7 @@
     .process-item:nth-child(even) { margin-top: 0; }
     .brain-map { grid-template-columns: 1fr; }
     .brain-side { grid-template-columns: 1fr 1fr; }
+    .product-demo-frame { height: auto; min-height: 520px; }
     .approval-loop { grid-template-columns: 1fr; }
     .approval-arrow { transform: rotate(90deg); text-align: center; }
     .comparison { grid-template-columns: 1fr; }
@@ -999,6 +1052,9 @@
     .build-block:first-child { grid-row: auto; min-height: 240px; }
     .elevator, .uncertainty { padding: 34px; }
     .statement h2 { font-size: 55px; }
+    .product-demo-frame { min-height: 420px; }
+    .product-demo-header { padding-inline: 14px; }
+    .product-demo-identity span, .product-demo-state { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1012,122 +1068,117 @@
 </head>
 <body>
 <div class="app">
-  <aside class="panel" id="panel" aria-label="Slides"></aside>
+  <aside class="panel collapsed" id="panel" aria-label="Slides" aria-hidden="true" inert></aside>
   <main class="deck" id="deck">
-    <button class="panel-toggle" id="panelToggle" type="button" aria-label="Toggle slide panel" aria-controls="panel" aria-expanded="true">
+    <button class="panel-toggle" id="panelToggle" type="button" aria-label="Toggle slide panel" aria-controls="panel" aria-expanded="false">
       <span class="grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     </button>
 
-    <section class="slide active" id="opening" data-act="1" data-title="Your expertise beyond the calendar" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
+    <section class="slide active" id="opening" data-act="1" data-title="You have probably heard this before" role="group" aria-roledescription="slide" aria-labelledby="opening-title">
       <div class="content split">
         <div>
-          <div class="act-label">Why now</div>
-          <h1 id="opening-title">Beyond your <span class="brand">calendar.</span></h1>
-          <p class="lede">Your expertise should work beyond your calendar. Build a controlled AI version of your knowledge without adding more one-to-one appointments.</p>
+          <div class="act-label">For health and wellness experts</div>
+          <h1 id="opening-title">You have probably <span class="brand">heard this before.</span></h1>
+          <p class="lede">Take what you know and put it online.</p>
         </div>
         <figure class="photo-frame">
           <img src="lucas-photo.jpg" alt="Lucas Tyson, founder of Kodara">
-          <figcaption class="photo-caption">A practical webinar for health and wellness experts who want more reach without becoming the delivery bottleneck.</figcaption>
+          <figcaption class="photo-caption">Build a course. Start a group program. Sell high-ticket coaching.</figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="slide" id="agenda" data-act="1" data-title="What we will cover" role="group" aria-roledescription="slide" aria-labelledby="agenda-title">
+    <section class="slide" id="online-models" data-act="1" data-title="The familiar online models" role="group" aria-roledescription="slide" aria-labelledby="online-models-title">
       <div class="content">
-        <h2 id="agenda-title">One question guides this entire session.</h2>
-        <div class="agenda">
-          <div class="agenda-list">
-            <div class="agenda-row"><span>1</span><strong>Why demand is moving online</strong></div>
-            <div class="agenda-row"><span>2</span><strong>Why the calendar limits growth</strong></div>
-            <div class="agenda-row"><span>3</span><strong>How controlled AI delivery works</strong></div>
-            <div class="agenda-row"><span>4</span><strong>What Kodara builds and supports</strong></div>
-            <div class="agenda-row"><span>5</span><strong>Whether your expertise is a fit</strong></div>
-          </div>
-          <aside class="agenda-side">
-            <strong>Can your knowledge help more people without requiring more hours from you?</strong>
-            <p>Every proof point, demonstration, and objection should make that question easier to answer.</p>
-          </aside>
+        <h2 id="online-models-title">Most advice points you toward one of four models.</h2>
+        <div class="alternatives">
+          <article class="alternative"><strong>Online course</strong><p>Package what you know into recorded lessons.</p></article>
+          <article class="alternative"><strong>High-ticket coaching</strong><p>Sell direct access to your expertise at a higher price.</p></article>
+          <article class="alternative"><strong>Group program</strong><p>Teach more people during the same live session.</p></article>
+          <article class="alternative"><strong>Content-led business</strong><p>Build an audience, then sell programs to that audience.</p></article>
         </div>
+      </div>
+    </section>
+
+    <section class="slide" id="online-premise" data-act="1" data-title="The idea behind the advice is right" role="group" aria-roledescription="slide" aria-labelledby="online-premise-title">
+      <div class="content statement">
+        <div class="statement-rule" aria-hidden="true"></div>
+        <h2 id="online-premise-title">The idea behind that advice is <span class="brand">right.</span></h2>
+        <p class="lede">The audience is already online. Your expertise should work beyond your calendar.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="online-reality" data-act="1" data-title="What usually happens next" role="group" aria-roledescription="slide" aria-labelledby="online-reality-title">
+      <div class="content">
+        <h2 id="online-reality-title">But if these models had already created the success and freedom you wanted, you probably would not be here.</h2>
+        <div class="story-card">
+          <div>
+            <strong>Maybe you tried it.</strong>
+            <p>You built the course, launched the coaching offer, or started posting content. But it never became the massive online business you were promised.</p>
+          </div>
+          <div>
+            <strong>Or you saw the workload.</strong>
+            <p>The offer, content, funnel, sales, technology, support, and delivery. Basically, an entirely new business. Now two businesses depend on you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="webinar-title" data-act="1" data-title="How to build the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="webinar-title-heading">
+      <div class="content elevator">
+        <h2 id="webinar-title-heading">How To Build The <span>“AI Version Of You”</span> That Can Sell Itself To Clients &amp; Patients Online</h2>
+        <p>Built around your knowledge, your approval, and a controlled path from question to program.</p>
       </div>
     </section>
 
     <section class="slide" id="definition" data-act="1" data-title="What AI version means" role="group" aria-roledescription="slide" aria-labelledby="definition-title">
       <div class="content">
-        <h2 id="definition-title">An AI version of your expertise is <span class="brand">not an autonomous clone.</span></h2>
+        <h2 id="definition-title">Here is what we mean by <span class="brand">an AI version of you.</span></h2>
         <div class="definition-grid">
           <div class="definition-main">
-            <strong>It is a controlled knowledge system.</strong>
-            <p>Your interviews, methods, documents, and approved materials become the source for a digital business you can review before launch.</p>
+            <strong>It is not a clone. It is a controlled knowledge system.</strong>
+            <p>We take your interviews, methods, documents, and approved materials, then use them as the source for a digital business you review before launch.</p>
           </div>
           <div class="definition-list">
-            <div>Built from your real knowledge</div>
-            <div>Reviewed and corrected by you</div>
-            <div>Bounded by clear escalation rules</div>
-            <div>Connected to relevant digital programs</div>
+            <div>It starts with your real knowledge</div>
+            <div>You review and correct what it says</div>
+            <div>Clear rules tell it when to stop</div>
+            <div>Relevant users can reach the right program</div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="slide" id="online-demand" data-act="1" data-title="Demand is already online" role="group" aria-roledescription="slide" aria-labelledby="online-demand-title">
-      <div class="content">
-        <h2 id="online-demand-title">People already look online for help with complex health and wellness problems.</h2>
-        <p class="lede">They want credible guidance they can reach from a phone or computer, at the moment the problem matters.</p>
-        <div class="search-board">
-          <article class="search-item"><strong>They start with a question.</strong><p>Symptoms, goals, treatments, routines, tradeoffs, and possible next steps.</p></article>
-          <article class="search-item"><strong>They compare approaches.</strong><p>People learn before they are ready to choose an expert or program.</p></article>
-          <article class="search-item"><strong>They expect access.</strong><p>Digital access changes when and where education can happen.</p></article>
-          <article class="search-item"><strong>They still need trust.</strong><p>Convenience does not remove the need for boundaries, evidence, and responsible guidance.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="category-shift" data-act="1" data-title="The behavioral shift" role="group" aria-roledescription="slide" aria-labelledby="category-shift-title">
-      <div class="content statement">
-        <div class="statement-rule" aria-hidden="true"></div>
-        <h2 id="category-shift-title">People do not organize the rest of their lives around a physical building.</h2>
-        <p class="lede">Health and wellness expertise still deserves care, context, and professional boundaries. Access can still improve.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="audience-online" data-act="1" data-title="The opportunity" role="group" aria-roledescription="slide" aria-labelledby="audience-online-title">
-      <div class="content statement">
-        <div class="act-label">The opportunity</div>
-        <h2 id="audience-online-title"><span class="brand">The audience is already online.</span><br>The expertise is still trapped inside appointments.</h2>
-        <p class="lede">The next question is not whether people need help. It is whether your delivery model can reach them responsibly.</p>
       </div>
     </section>
 
     <section class="slide" id="calendar-bottleneck" data-act="2" data-title="The calendar bottleneck" role="group" aria-roledescription="slide" aria-labelledby="calendar-bottleneck-title">
       <div class="content bottleneck">
         <div>
-          <div class="act-label">Why the old approach fails</div>
+          <div class="act-label">The real bottleneck</div>
           <h2 id="calendar-bottleneck-title"><span class="brand">The calendar is the bottleneck.</span></h2>
-          <p class="lede">If every client outcome and every dollar requires another hour from you, the business cannot grow independently of your time.</p>
+          <p class="lede">If every client result and every dollar needs another hour from you, growth eventually means working more.</p>
         </div>
         <div class="calendar" aria-label="A full appointment calendar">
           <span></span><span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span><span></span>
-          <p class="calendar-note">A full calendar can prove demand and still leave no room for more delivery.</p>
+          <p class="calendar-note">A full calendar proves demand. It also caps how much you can personally deliver.</p>
         </div>
       </div>
     </section>
 
     <section class="slide" id="reverse-funnel" data-act="2" data-title="The reverse funnel" role="group" aria-roledescription="slide" aria-labelledby="reverse-funnel-title">
       <div class="content">
-        <h2 id="reverse-funnel-title">The current model narrows a large need into <span class="brand">a very small calendar.</span></h2>
+        <h2 id="reverse-funnel-title">Here is what your current funnel does to the market.</h2>
         <div class="funnel-shell">
           <div class="funnel" aria-label="Reverse funnel from online demand to appointments">
-            <div class="funnel-step">People looking for help</div>
-            <div class="funnel-step">People who discover you</div>
-            <div class="funnel-step">People who trust you</div>
-            <div class="funnel-step">People who can book</div>
+            <div class="funnel-step">People searching for help</div>
+            <div class="funnel-step">People who find you</div>
+            <div class="funnel-step">People ready to trust you</div>
+            <div class="funnel-step">People who can get on your calendar</div>
           </div>
           <div class="funnel-copy">
-            <p>Today, only the people who can book, attend, and pay for personal time reach the bottom.</p>
-            <p>A virtual delivery system can create another responsible path without requiring a personal appointment every time.</p>
+            <p>At the top, there may be a lot of demand. But every requirement narrows that demand until only the people who can book, attend, and pay for your time reach you.</p>
+            <p>Virtual delivery creates another responsible path without taking another hour from your calendar every time.</p>
           </div>
         </div>
       </div>
@@ -1135,25 +1186,25 @@
 
     <section class="slide" id="more-leads" data-act="2" data-title="More leads can worsen the problem" role="group" aria-roledescription="slide" aria-labelledby="more-leads-title">
       <div class="content">
-        <h2 id="more-leads-title">More leads do not fix a delivery bottleneck.</h2>
+        <h2 id="more-leads-title">More leads can make this problem worse.</h2>
         <div class="equation" aria-label="More demand added to the same calendar creates more pressure">
-          <div class="equation-card"><div><strong>More demand</strong><p>More people ask for help.</p></div></div>
+          <div class="equation-card"><div><strong>More people</strong><p>More people raise their hand and ask for help.</p></div></div>
           <div class="equation-sign" aria-hidden="true">+</div>
-          <div class="equation-card"><div><strong>Same calendar</strong><p>Delivery capacity stays fixed.</p></div></div>
+          <div class="equation-card"><div><strong>Same hours</strong><p>You still have the same calendar and the same delivery capacity.</p></div></div>
           <div class="equation-sign" aria-hidden="true">=</div>
-          <div class="equation-card"><div><strong>More pressure</strong><p>The expert becomes an even larger bottleneck.</p></div></div>
+          <div class="equation-card"><div><strong>More pressure</strong><p>More demand lands on the same person: you.</p></div></div>
         </div>
       </div>
     </section>
 
     <section class="slide" id="false-alternatives" data-act="2" data-title="Why common options fall short" role="group" aria-roledescription="slide" aria-labelledby="false-alternatives-title">
       <div class="content">
-        <h2 id="false-alternatives-title">These options can work. They just do not remove the bottleneck <span class="brand">by themselves.</span></h2>
+        <h2 id="false-alternatives-title">These options can work. But none of them removes you as the bottleneck <span class="brand">by itself.</span></h2>
         <div class="alternatives">
-          <article class="alternative"><strong>More appointments</strong><p>Useful until the calendar fills again.</p></article>
-          <article class="alternative"><strong>A self-built course</strong><p>Can become another product you must create, market, deliver, and manage.</p></article>
-          <article class="alternative"><strong>More social content</strong><p>Can create attention while making you the full-time content engine.</p></article>
-          <article class="alternative"><strong>Another marketing agency</strong><p>Can create leads without changing how your expertise is delivered.</p></article>
+          <article class="alternative"><strong>More appointments</strong><p>You grow until the calendar fills again.</p></article>
+          <article class="alternative"><strong>A course you build yourself</strong><p>Now you own another thing to create, market, deliver, and manage.</p></article>
+          <article class="alternative"><strong>More social content</strong><p>You may get attention, but now you are also the full-time content engine.</p></article>
+          <article class="alternative"><strong>Another marketing agency</strong><p>You may get more leads without changing what happens after a lead arrives.</p></article>
         </div>
       </div>
     </section>
@@ -1162,11 +1213,11 @@
       <div class="content profile">
         <img src="lucas-photo.jpg" alt="Lucas Tyson">
         <div>
-          <h2 id="presenter-title">I learned how to find people who were already looking for a solution.</h2>
+          <h2 id="presenter-title">I knew how to find people looking for help. That was not the hard part.</h2>
           <div class="profile-points">
-            <div class="profile-point">My background is online marketing and lead generation across healthcare and other industries.</div>
-            <div class="profile-point">The harder problem was turning qualified demand into responsible, scalable delivery.</div>
-            <div class="profile-point">So I assembled AI engineers and operators with healthcare experience to build that missing layer.</div>
+            <div class="profile-point">I built my career around online marketing and lead generation across healthcare and other industries.</div>
+            <div class="profile-point">The hard part was what happened after a qualified person raised their hand.</div>
+            <div class="profile-point">So I brought together AI engineers and operators with healthcare experience to build the delivery layer.</div>
           </div>
         </div>
       </div>
@@ -1174,32 +1225,32 @@
 
     <section class="slide" id="michelle-story" data-act="2" data-title="The personal reason" role="group" aria-roledescription="slide" aria-labelledby="michelle-story-title">
       <div class="content">
-        <h2 id="michelle-story-title">The gap became personal when Michelle was searching for help.</h2>
+        <h2 id="michelle-story-title">Then this stopped feeling like a marketing problem.</h2>
         <div class="story-card">
-          <strong>Access should not depend on one location and one available appointment.</strong>
-          <p>While Michelle dealt with Graves' disease and traveled to appointments, we saw how difficult it could be to find a clear path. Hearing about someone who found an independent wellness expert online made the access problem concrete. It did not prove that digital programs replace medical care. It showed that credible expertise can be easier to reach.</p>
+          <strong>When Michelle needed help, access became personal.</strong>
+          <p>Michelle was dealing with Graves' disease, traveling to appointments, and still struggling to find a clear path. Then we heard about someone who found an independent wellness expert online and completed a virtual program from home. That did not prove virtual programs replace medical care. It proved credible expertise could be easier to reach.</p>
         </div>
       </div>
     </section>
 
     <section class="slide" id="mechanism-bridge" data-act="3" data-title="The mechanism" role="group" aria-roledescription="slide" aria-labelledby="mechanism-bridge-title">
       <div class="content statement">
-        <div class="act-label">How the mechanism works</div>
+        <div class="act-label">Now the mechanism</div>
         <h2 id="mechanism-bridge-title"><span class="brand">You supply the expertise and approval.</span><br>Kodara builds the virtual business around it.</h2>
-        <p class="lede">The mechanism only works when the knowledge, controls, and client path are connected.</p>
+        <p class="lede">We connect the knowledge, the boundaries, the programs, and the client path. If one piece is missing, it is not the same business.</p>
       </div>
     </section>
 
     <section class="slide" id="six-part-process" data-act="3" data-title="The six-part process" role="group" aria-roledescription="slide" aria-labelledby="six-part-process-title">
       <div class="content">
-        <h2 id="six-part-process-title">Six connected moves turn expertise into a virtual business.</h2>
+        <h2 id="six-part-process-title">Here is how we turn what you know into a virtual business.</h2>
         <div class="process-line">
-          <article class="process-item"><strong>Select</strong><p>Choose a problem and audience the expert is qualified to help.</p></article>
-          <article class="process-item"><strong>Extract</strong><p>Capture interviews and relevant business materials.</p></article>
-          <article class="process-item"><strong>Organize</strong><p>Build the controlled knowledge system.</p></article>
-          <article class="process-item"><strong>Package</strong><p>Create the website, programs, and customer journey.</p></article>
-          <article class="process-item"><strong>Approve</strong><p>Test, correct, and set boundaries before launch.</p></article>
-          <article class="process-item"><strong>Launch</strong><p>Connect approved discovery channels and routing.</p></article>
+          <article class="process-item"><strong>Select</strong><p>Choose one problem and one audience you are qualified to help.</p></article>
+          <article class="process-item"><strong>Extract</strong><p>Pull your knowledge from interviews and existing business materials.</p></article>
+          <article class="process-item"><strong>Build</strong><p>Turn that knowledge into a controlled AI Brain.</p></article>
+          <article class="process-item"><strong>Package</strong><p>Build the website, programs, and customer journey around it.</p></article>
+          <article class="process-item"><strong>Approve</strong><p>Test it, correct it, and set the boundaries before launch.</p></article>
+          <article class="process-item"><strong>Launch</strong><p>Connect approved discovery channels and the right next step.</p></article>
         </div>
       </div>
     </section>
@@ -1207,29 +1258,29 @@
     <section class="slide" id="select-problem" data-act="3" data-title="Select the problem" role="group" aria-roledescription="slide" aria-labelledby="select-problem-title">
       <div class="content focus-layout">
         <div>
-          <h2 id="select-problem-title">Start with one problem you are <span class="brand">qualified to help solve.</span></h2>
-          <p class="lede">A narrow, responsible promise makes the knowledge system easier to build, test, explain, and market.</p>
+          <h2 id="select-problem-title">We start with one problem you are <span class="brand">qualified to help solve.</span></h2>
+          <p class="lede">Because the clearer the problem is, the easier the system is to build, test, explain, and market responsibly.</p>
         </div>
         <aside class="focus-panel">
-          <strong>Clear problem. Clear audience. Clear boundary.</strong>
-          <p>The system should know who it is for, what outcome it supports, and when it must stop or escalate.</p>
+          <strong>One problem. One audience. One responsible promise.</strong>
+          <p>The system needs to know who it helps, what it can help with, and exactly when it must stop or bring in a human.</p>
         </aside>
       </div>
     </section>
 
     <section class="slide" id="extract-expertise" data-act="3" data-title="Extract the expertise" role="group" aria-roledescription="slide" aria-labelledby="extract-expertise-title">
       <div class="content">
-        <h2 id="extract-expertise-title">Your existing work becomes the raw material.</h2>
+        <h2 id="extract-expertise-title">Then we pull your expertise out of your head and into the system.</h2>
         <div class="source-flow">
           <div class="sources">
-            <div class="source"><strong>Focused interviews</strong><span>Approximately one hour per week, subject to build needs.</span></div>
-            <div class="source"><strong>Documents and frameworks</strong><span>Methods, explanations, programs, and approved reference material.</span></div>
-            <div class="source"><strong>Existing media</strong><span>Training videos, lessons, examples, and stories.</span></div>
-            <div class="source"><strong>Business context</strong><span>Audience, offers, customer questions, and delivery boundaries.</span></div>
+            <div class="source"><strong>Focused interviews</strong><span>Approximately one hour per week, depending on what the build requires.</span></div>
+            <div class="source"><strong>Your documents and frameworks</strong><span>Your methods, explanations, programs, and approved reference material.</span></div>
+            <div class="source"><strong>Your existing media</strong><span>Your training videos, lessons, examples, and stories.</span></div>
+            <div class="source"><strong>Your business context</strong><span>Your audience, offers, customer questions, and delivery boundaries.</span></div>
           </div>
           <aside class="source-output">
-            <strong>We capture how you think, not just what you have published.</strong>
-            <p>The expert reviews what becomes source material and controls what represents the business.</p>
+            <strong>We need how you think, not just what you have posted.</strong>
+            <p>You decide what becomes source material, and you control what represents your business.</p>
           </aside>
         </div>
       </div>
@@ -1237,18 +1288,14 @@
 
     <section class="slide" id="knowledge-system" data-act="3" data-title="Build the knowledge system" role="group" aria-roledescription="slide" aria-labelledby="knowledge-system-title">
       <div class="content">
-        <h2 id="knowledge-system-title">The AI Brain organizes your knowledge into <span class="brand">a system you can audit.</span></h2>
-        <div class="brain-map">
-          <div class="brain-side">
-            <div class="brain-node">Your interviews</div>
-            <div class="brain-node">Your approved materials</div>
-            <div class="brain-node">Your method and point of view</div>
-          </div>
-          <div class="brain-core"><strong>Your AI Brain</strong><span>Structured knowledge, approved sources, and clear boundaries.</span></div>
-          <div class="brain-side">
-            <div class="brain-node">Answers grounded in source material</div>
-            <div class="brain-node">Relevant program routing</div>
-            <div class="brain-node">Refusal and human escalation</div>
+        <h2 id="knowledge-system-title">Now your knowledge becomes <span class="brand">a system you can test.</span></h2>
+        <div class="product-demo-frame" aria-label="Kodara AI Brain onboarding screen">
+          <header class="product-demo-header">
+            <div class="product-demo-identity"><img src="health/assets/spinewell.svg" alt=""><strong>SpineWell Chiropractic</strong><span>AI Brain onboarding</span></div>
+            <span class="product-demo-state">Sources connected</span>
+          </header>
+          <div class="product-demo-body">
+            <img src="health/assets/figma-ai-brain-onboarding.png" alt="Six business files and Drive folders flowing into a central AI Brain.">
           </div>
         </div>
       </div>
@@ -1256,24 +1303,24 @@
 
     <section class="slide" id="virtual-business" data-act="3" data-title="Build the virtual business" role="group" aria-roledescription="slide" aria-labelledby="virtual-business-title">
       <div class="content">
-        <h2 id="virtual-business-title">The knowledge system needs a business around it.</h2>
+        <h2 id="virtual-business-title">Then we build a business around the knowledge.</h2>
         <div class="build-grid">
-          <article class="build-block"><div><strong>A complete customer journey</strong><p>From the first question to the relevant program, with clear handoffs and approved delivery.</p></div></article>
-          <article class="build-block"><strong>Website and brand</strong><p>A clear place for the expert, programs, and boundaries to live.</p></article>
-          <article class="build-block"><strong>Digital programs</strong><p>Structured offers built around the selected problem and audience.</p></article>
+          <article class="build-block"><div><strong>One connected customer journey</strong><p>From the first question to the right program or human handoff, using the delivery you approved.</p></div></article>
+          <article class="build-block"><strong>Your website and brand</strong><p>A clear home for your expertise, your programs, and your boundaries.</p></article>
+          <article class="build-block"><strong>Your digital programs</strong><p>Structured offers built around the problem and audience we selected.</p></article>
         </div>
       </div>
     </section>
 
     <section class="slide" id="test-and-approve" data-act="3" data-title="Test and approve" role="group" aria-roledescription="slide" aria-labelledby="test-and-approve-title">
       <div class="content">
-        <h2 id="test-and-approve-title">Nothing should represent you until you have <span class="brand">tested and approved it.</span></h2>
+        <h2 id="test-and-approve-title">Before the AI represents you, <span class="brand">you test it.</span></h2>
         <div class="approval-loop">
-          <article class="approval-card"><strong>Test</strong><p>Ask realistic questions and pressure-test edge cases.</p></article>
+          <article class="approval-card"><strong>Test</strong><p>Ask the questions a real customer would ask, including the difficult ones.</p></article>
           <div class="approval-arrow" aria-hidden="true">›</div>
-          <article class="approval-card"><strong>Correct</strong><p>Update the source, response, routing, or boundary.</p></article>
+          <article class="approval-card"><strong>Correct</strong><p>Fix the source, the answer, the next step, or the boundary.</p></article>
           <div class="approval-arrow" aria-hidden="true">›</div>
-          <article class="approval-card"><strong>Approve</strong><p>Confirm what can go live and what must reach a human.</p></article>
+          <article class="approval-card"><strong>Approve</strong><p>You decide what can go live and what must always reach a human.</p></article>
         </div>
       </div>
     </section>
@@ -1281,47 +1328,47 @@
     <section class="slide" id="launch-and-discover" data-act="3" data-title="Launch and discover clients" role="group" aria-roledescription="slide" aria-labelledby="launch-and-discover-title">
       <div class="content channel-layout">
         <div>
-          <h2 id="launch-and-discover-title">Discovery only works when the channels and handoffs are real.</h2>
-          <p class="lede">Show where prospective users come from, what the traffic costs, and how the system decides the next step.</p>
+          <h2 id="launch-and-discover-title">Then we connect the business to real discovery channels.</h2>
+          <p class="lede">That means showing where users come from, what the traffic costs, and exactly how the system chooses the next step.</p>
         </div>
         <div class="channel-stack">
-          <div class="channel-row"><strong>Approved traffic sources</strong><span>Named and documented</span></div>
-          <div class="channel-row"><strong>Relevant user intent</strong><span>Defined in practice</span></div>
-          <div class="channel-row"><strong>AI conversation</strong><span>Bounded by approved material</span></div>
-          <div class="channel-row"><strong>Program or human handoff</strong><span>Clear next step</span></div>
+          <div class="channel-row"><strong>Traffic source</strong><span>Named and documented</span></div>
+          <div class="channel-row"><strong>User intent</strong><span>Defined, not guessed</span></div>
+          <div class="channel-row"><strong>AI conversation</strong><span>Grounded in approved material</span></div>
+          <div class="channel-row"><strong>Next step</strong><span>The right program or the right human</span></div>
         </div>
       </div>
     </section>
 
     <section class="slide" id="live-demo" data-act="3" data-title="What the live demo should prove" role="group" aria-roledescription="slide" aria-labelledby="live-demo-title">
       <div class="content">
-        <h2 id="live-demo-title">The live demonstration should show <span class="brand">capability and boundaries.</span></h2>
+        <h2 id="live-demo-title">The live demo needs to show <span class="brand">the whole chain.</span></h2>
         <div class="demo-sequence">
-          <article class="demo-card"><strong>Ask</strong><p>Start with a realistic question from a prospective user.</p></article>
-          <article class="demo-card"><strong>Clarify</strong><p>Show what information the system needs before answering.</p></article>
-          <article class="demo-card"><strong>Ground</strong><p>Show which approved source supports the response.</p></article>
-          <article class="demo-card"><strong>Route</strong><p>Show the relevant program or responsible next step.</p></article>
-          <article class="demo-card"><strong>Review</strong><p>Show how the expert corrects and approves the system.</p></article>
-          <article class="demo-card"><strong>Escalate</strong><p>Show what the AI refuses or routes to a human.</p></article>
+          <article class="demo-card"><strong>Ask</strong><p>Start with a question a real prospective user would ask.</p></article>
+          <article class="demo-card"><strong>Clarify</strong><p>Show what the system needs to know before it can answer.</p></article>
+          <article class="demo-card"><strong>Answer</strong><p>Show the approved source behind the response.</p></article>
+          <article class="demo-card"><strong>Route</strong><p>Show the right program or the responsible next step.</p></article>
+          <article class="demo-card"><strong>Review</strong><p>Show how you correct and approve what the system does.</p></article>
+          <article class="demo-card"><strong>Escalate</strong><p>Show exactly what the AI refuses or sends to a human.</p></article>
         </div>
-        <p class="draft-hold"><strong>Presentation hold:</strong> This is the presenter run sheet. A live product demonstration using one approved use case is still required outside the deck.</p>
+        <p class="draft-hold"><strong>Before this slide goes live:</strong> Run one approved use case in the live product. This slide is only the presenter checklist.</p>
       </div>
     </section>
 
     <section class="slide" id="safety-boundaries" data-act="3" data-title="Safety and control" role="group" aria-roledescription="slide" aria-labelledby="safety-boundaries-title">
       <div class="content">
-        <h2 id="safety-boundaries-title">Approved source material does not guarantee every generated answer is accurate.</h2>
+        <h2 id="safety-boundaries-title">Your source material can be approved and the AI can still get an answer wrong.</h2>
         <div class="boundary-layout">
           <div class="boundary-main">
-            <div>Define what the AI can use.</div>
-            <div>Define what requires a licensed professional.</div>
-            <div>Define what happens when the AI is uncertain.</div>
-            <div>Define how data is collected, stored, shared, and deleted.</div>
+            <div>What information can the AI use?</div>
+            <div>When must a licensed professional take over?</div>
+            <div>What happens when the AI is uncertain?</div>
+            <div>How is data collected, stored, shared, and deleted?</div>
           </div>
           <aside class="boundary-callout">
-            <strong>Control is part of the product.</strong>
-            <p>Privacy, consent, licensing, health claims, human escalation, and product category must be resolved for each use case.</p>
-            <p class="draft-hold"><strong>Presentation hold:</strong> Replace this framework with the exact product configuration and counsel-approved disclosures before use.</p>
+            <strong>The boundaries are part of the product.</strong>
+            <p>Privacy, consent, licensing, health claims, human escalation, and product category have to be resolved for each use case.</p>
+            <p class="draft-hold"><strong>Before this slide goes live:</strong> Replace these questions with the exact product configuration and counsel-approved disclosures.</p>
           </aside>
         </div>
       </div>
@@ -1329,42 +1376,42 @@
 
     <section class="slide" id="connected-system" data-act="3" data-title="The connected system" role="group" aria-roledescription="slide" aria-labelledby="connected-system-title">
       <div class="content">
-        <h2 id="connected-system-title">The value comes from connecting the entire path.</h2>
+        <h2 id="connected-system-title">This only works when every part is connected.</h2>
         <div class="system-path" aria-label="Approved knowledge connected to user delivery">
-          <div>Approved expert knowledge</div>
-          <div>Responsible conversation</div>
-          <div>Relevant recommendation</div>
-          <div>Digital program delivery</div>
-          <div>Review and improvement</div>
+          <div>Your approved expertise</div>
+          <div>A conversation grounded in it</div>
+          <div>The right next step</div>
+          <div>Your digital program</div>
+          <div>Your review improves the system</div>
         </div>
       </div>
     </section>
 
     <section class="slide" id="elevator-pitch" data-act="4" data-title="What Kodara does" role="group" aria-roledescription="slide" aria-labelledby="elevator-pitch-title">
       <div class="content elevator">
-        <div class="act-label">Why this implementation</div>
-        <h2 id="elevator-pitch-title">Kodara turns approved health and wellness expertise into an AI-powered virtual business.</h2>
-        <p>We interview the expert, build the knowledge system, create the programs and customer journey, and help launch the business while the expert contributes approximately one hour per week.</p>
+        <div class="act-label">Why Kodara</div>
+        <h2 id="elevator-pitch-title">Kodara builds the virtual business around your approved expertise.</h2>
+        <p>We interview you, build the knowledge system, create the programs and customer journey, and help launch the business while you contribute approximately one hour per week.</p>
       </div>
     </section>
 
     <section class="slide" id="who-fits" data-act="4" data-title="Who this is for" role="group" aria-roledescription="slide" aria-labelledby="who-fits-title">
       <div class="content">
-        <h2 id="who-fits-title">This works best for experts who have <span class="brand">real knowledge and real boundaries.</span></h2>
+        <h2 id="who-fits-title">This is built for an expert who already knows how to solve a real problem.</h2>
         <div class="fit-grid">
           <article class="fit-card">
-            <h3>Strong fit</h3>
-            <div>Meaningful expertise around a specific problem</div>
-            <div>Income, impact, or freedom constrained by personal delivery</div>
-            <div>Willingness to interview, review, correct, and approve</div>
-            <div>Commitment to professional and regulatory boundaries</div>
+            <h3>You may be a strong fit if</h3>
+            <div>You have meaningful expertise around one specific problem.</div>
+            <div>Your income, impact, or freedom is constrained by personal delivery.</div>
+            <div>You are willing to interview, review, correct, and approve.</div>
+            <div>You take professional and regulatory boundaries seriously.</div>
           </article>
           <article class="fit-card">
-            <h3>The expert still matters</h3>
-            <div>The system needs judgment.</div>
-            <div>The knowledge needs maintenance.</div>
-            <div>Unsafe or unsuitable questions need escalation.</div>
-            <div>Ongoing oversight is part of responsible use.</div>
+            <h3>You are still in control</h3>
+            <div>The system still needs your judgment.</div>
+            <div>The knowledge still needs your updates.</div>
+            <div>Unsafe or unsuitable questions still need escalation.</div>
+            <div>Ongoing oversight is part of using it responsibly.</div>
           </article>
         </div>
       </div>
@@ -1372,21 +1419,21 @@
 
     <section class="slide" id="who-does-not-fit" data-act="4" data-title="Who this is not for" role="group" aria-roledescription="slide" aria-labelledby="who-does-not-fit-title">
       <div class="content">
-        <h2 id="who-does-not-fit-title">This is not passive income with the expert removed.</h2>
+        <h2 id="who-does-not-fit-title">This is not passive income with you removed from the business.</h2>
         <div class="fit-grid">
           <article class="fit-card">
-            <h3>Not a fit</h3>
-            <div>No proven expertise to build from</div>
-            <div>No willingness to review or maintain the system</div>
-            <div>An unsafe, unsupported, or misleading proposed use</div>
-            <div>An expectation of guaranteed revenue or profit</div>
+            <h3>This is not a fit if</h3>
+            <div>There is no proven expertise to build from.</div>
+            <div>You are not willing to review or maintain the system.</div>
+            <div>The proposed use is unsafe, unsupported, or misleading.</div>
+            <div>You expect guaranteed revenue or profit.</div>
           </article>
           <article class="fit-card">
-            <h3>Important boundary</h3>
-            <div>Beta-user onboarding is not revenue.</div>
-            <div>A successful client story is not a typical result.</div>
-            <div>A digital program does not replace necessary medical care.</div>
-            <div>Qualification depends on the expert and the use case.</div>
+            <h3>And keep this clear</h3>
+            <div>Onboarding beta users is not the same as generating revenue.</div>
+            <div>One successful client story is not automatically a typical result.</div>
+            <div>A digital program does not replace medical care when medical care is needed.</div>
+            <div>Qualification depends on you and the use case.</div>
           </article>
         </div>
       </div>
@@ -1394,19 +1441,19 @@
 
     <section class="slide" id="what-we-build" data-act="4" data-title="What Kodara builds" role="group" aria-roledescription="slide" aria-labelledby="what-we-build-title">
       <div class="content">
-        <h2 id="what-we-build-title">One implementation team connects the moving parts.</h2>
+        <h2 id="what-we-build-title">You bring the expertise. One team connects the rest.</h2>
         <div class="deliverables">
           <div class="delivery-main">
-            <div><strong>Knowledge extraction</strong><span>Interviews and approved source organization.</span></div>
-            <div><strong>AI system</strong><span>Controlled responses, routing, and escalation design.</span></div>
-            <div><strong>Programs</strong><span>Digital offers around the selected problem.</span></div>
-            <div><strong>Website and brand</strong><span>A clear customer-facing home for the business.</span></div>
-            <div><strong>Approval workflow</strong><span>Testing, correction, review, and version control.</span></div>
-            <div><strong>Launch setup</strong><span>Defined discovery channels and customer handoffs.</span></div>
+            <div><strong>We extract your knowledge</strong><span>Focused interviews and organized, approved source material.</span></div>
+            <div><strong>We build the AI system</strong><span>Controlled answers, routing, and escalation design.</span></div>
+            <div><strong>We build the programs</strong><span>Digital offers around the problem you solve.</span></div>
+            <div><strong>We build the website and brand</strong><span>A clear customer-facing home for the business.</span></div>
+            <div><strong>We build the approval workflow</strong><span>Testing, correction, review, and version control.</span></div>
+            <div><strong>We set up the launch</strong><span>Defined discovery channels and customer handoffs.</span></div>
           </div>
           <aside class="delivery-side">
-            <strong>Done for you does not mean done without you.</strong>
-            <p>The expert supplies the knowledge, review, approval, and continuing boundaries.</p>
+            <strong>Done for you still needs you.</strong>
+            <p>You supply the expertise, the review, the approval, and the continuing boundaries.</p>
           </aside>
         </div>
       </div>
@@ -1418,33 +1465,33 @@
           <img src="site-leanne.jpg" alt="Leanne Ellington's health and wellness business website">
         </figure>
         <div class="proof-copy">
-          <h2 id="leanne-proof-title">Leanne is the emotional proof anchor.</h2>
-          <blockquote>Use her approved words to show what changed in her delivery model and what that made possible.</blockquote>
-          <p class="draft-hold"><strong>Presentation hold:</strong> Do not state a workload, income, or automation result until approved language and records define the before and after.</p>
+          <h2 id="leanne-proof-title">Leanne's story can show what this looks like when it works.</h2>
+          <blockquote>Add Leanne's approved words here. Her story should show how her delivery model changed and what that made possible.</blockquote>
+          <p class="draft-hold"><strong>Before this slide goes live:</strong> Use only approved language and records that define the workload, income, or automation result before and after.</p>
         </div>
       </div>
     </section>
 
     <section class="slide" id="guarantee" data-act="4" data-title="The launch guarantee" role="group" aria-roledescription="slide" aria-labelledby="guarantee-title">
       <div class="content guarantee">
-        <div class="guarantee-number"><div><strong class="hold-word">HOLD</strong><span>until written terms are complete</span></div></div>
+        <div class="guarantee-number"><div><strong class="hold-word">HOLD</strong><span>until the written terms are complete</span></div></div>
         <div class="guarantee-copy">
-          <h2 id="guarantee-title">Do not present the guarantee without its written terms.</h2>
-          <p>The VSL references a first AI version and the first 10 real beta users within 30 days on the launch timeline, or a full refund.</p>
-          <div class="guarantee-note">Before use, state eligibility, timeline start and pauses, AI and launch definitions, beta-user criteria, client duties, refund coverage, and refund process. It is not a revenue or paying-customer guarantee.</div>
+          <h2 id="guarantee-title">This guarantee cannot go live until the written terms are on the slide.</h2>
+          <p>The current VSL says qualifying clients receive a first AI version and the first 10 real beta users within 30 days on the launch timeline, or a full refund.</p>
+          <div class="guarantee-note">Before this goes live, define eligibility, when the timeline starts and pauses, what counts as the AI and launch, what counts as a beta user, what the client must do, and how the refund works. It is not a revenue or paying-customer guarantee.</div>
         </div>
       </div>
     </section>
 
     <section class="slide" id="decision-terms" data-act="4" data-title="What must be clear before deciding" role="group" aria-roledescription="slide" aria-labelledby="decision-terms-title">
       <div class="content">
-        <h2 id="decision-terms-title">Commercial terms are not supplied yet.</h2>
-        <p class="draft-hold"><strong>Presentation hold:</strong> Do not present pricing or invite a decision until every material term below is stated on screen and aloud.</p>
+        <h2 id="decision-terms-title">Before someone decides, they need the complete price and terms.</h2>
+        <p class="draft-hold"><strong>Before this slide goes live:</strong> These terms have not been supplied yet. State every material term below on screen and aloud before asking anyone to decide.</p>
         <div class="terms-grid">
-          <article class="term"><strong>Total cost</strong><p>Setup price, payment schedule, recurring fees, usage charges, software, hosting, processing, and support.</p></article>
-          <article class="term"><strong>Traffic costs</strong><p>Required ad spend, acquisition channels, lead definition, and who owns each account.</p></article>
-          <article class="term"><strong>Ownership</strong><p>Website, customer list, programs, data, source materials, and AI configuration.</p></article>
-          <article class="term"><strong>After launch</strong><p>Maintenance, updates, support term, cancellation, refund process, and continuing obligations.</p></article>
+          <article class="term"><strong>What does it cost?</strong><p>State the setup price, payment schedule, recurring fees, usage charges, software, hosting, processing, and support.</p></article>
+          <article class="term"><strong>What does traffic cost?</strong><p>State the required ad spend, acquisition channels, lead definition, and who owns each account.</p></article>
+          <article class="term"><strong>What do I own?</strong><p>State ownership of the website, customer list, programs, data, source materials, and AI configuration.</p></article>
+          <article class="term"><strong>What happens after launch?</strong><p>State maintenance, updates, support term, cancellation, refund process, and continuing obligations.</p></article>
         </div>
       </div>
     </section>
@@ -1453,12 +1500,12 @@
       <div class="content objection">
         <div class="question-mark" aria-hidden="true">?</div>
         <div>
-          <div class="act-label">Why take the next step</div>
-          <h2 id="accuracy-objection-title">Can AI really represent me and my business?</h2>
+          <div class="act-label">The first objection</div>
+          <h2 id="accuracy-objection-title">Can an AI actually represent how I think and work?</h2>
           <div class="answer-list">
-            <div><strong>It starts with focused interviews and approved material.</strong> The source should reflect how you actually think and work.</div>
-            <div><strong>You test and correct it before launch.</strong> Approval is a workflow, not a one-time assumption.</div>
-            <div><strong>It needs explicit boundaries.</strong> Uncertain, unsafe, or unsuitable questions should refuse or escalate.</div>
+            <div><strong>First, it learns from focused interviews and material you approve.</strong> The source needs to reflect how you actually think and work.</div>
+            <div><strong>Then you test and correct it before launch.</strong> Approval is a process, not a box we check once.</div>
+            <div><strong>And it needs clear boundaries.</strong> Uncertain, unsafe, or unsuitable questions need to stop or reach a human.</div>
           </div>
         </div>
       </div>
@@ -1466,19 +1513,19 @@
 
     <section class="slide" id="time-audience-objection" data-act="5" data-title="Do I need an audience or more time" role="group" aria-roledescription="slide" aria-labelledby="time-audience-objection-title">
       <div class="content">
-        <h2 id="time-audience-objection-title">Do I need a large audience or a second full-time job?</h2>
+        <h2 id="time-audience-objection-title">Do I need a huge audience or another full-time job?</h2>
         <div class="fit-grid">
           <article class="fit-card">
             <h3>Audience</h3>
             <div>A large social following is not presented as a requirement.</div>
-            <div>The actual acquisition channels and costs still need to be shown.</div>
-            <div>Customers should never be implied to arrive automatically.</div>
+            <div>But the actual acquisition channels and costs still need to be shown.</div>
+            <div>No one should imply that customers arrive automatically.</div>
           </article>
           <article class="fit-card">
             <h3>Time</h3>
             <div>The stated build input is approximately one hour per week.</div>
-            <div>Review, launch, updates, and ongoing oversight still require expert time.</div>
-            <div>The full workload should be defined before signing.</div>
+            <div>You still need time for review, launch, updates, and ongoing oversight.</div>
+            <div>The full workload needs to be clear before you sign.</div>
           </article>
         </div>
       </div>
@@ -1486,26 +1533,26 @@
 
     <section class="slide" id="difference-objection" data-act="5" data-title="How Kodara differs" role="group" aria-roledescription="slide" aria-labelledby="difference-objection-title">
       <div class="content">
-        <h2 id="difference-objection-title">How is this different from a course or a marketing agency?</h2>
+        <h2 id="difference-objection-title">So how is this different from a course or another agency?</h2>
         <div class="comparison">
-          <article class="compare-card"><strong>Course</strong><p>Packages knowledge, but the expert may still need to build, market, explain, and support it.</p></article>
-          <article class="compare-card"><strong>Agency</strong><p>Can create demand, but may not change how the expertise is delivered after a lead arrives.</p></article>
-          <article class="compare-card"><strong>Kodara model</strong><p>Connects approved knowledge, an interactive AI, digital programs, a customer journey, and launch setup in one implementation.</p></article>
+          <article class="compare-card"><strong>A course</strong><p>Packages your knowledge, but you may still need to build, market, explain, and support the whole thing.</p></article>
+          <article class="compare-card"><strong>An agency</strong><p>Can create demand, but may not change how your expertise is delivered after a lead arrives.</p></article>
+          <article class="compare-card"><strong>The Kodara model</strong><p>Connects your approved knowledge, an interactive AI, digital programs, the customer journey, and launch setup in one build.</p></article>
         </div>
       </div>
     </section>
 
     <section class="slide" id="common-questions" data-act="5" data-title="Common questions" role="group" aria-roledescription="slide" aria-labelledby="common-questions-title">
       <div class="content">
-        <h2 id="common-questions-title">Common questions</h2>
-        <p class="lede">These are prepared questions we hear often. The answers should use the exact product, contract, and compliance details for the current offer.</p>
+        <h2 id="common-questions-title">Common questions you should answer before asking someone to apply.</h2>
+        <p class="lede">Treat these as prepared questions. Every answer needs to match the exact product, contract, and compliance details for the current offer.</p>
         <div class="qa-grid">
-          <div class="qa-item"><strong>How do the first 10 beta users work?</strong>Define user, onboarding, qualification, timing, and whether the user pays.</div>
-          <div class="qa-item"><strong>What will this cost in total?</strong>State every setup, recurring, usage, software, traffic, and processing cost.</div>
-          <div class="qa-item"><strong>Who owns the business assets?</strong>State ownership of the site, list, programs, data, materials, and AI configuration.</div>
-          <div class="qa-item"><strong>How is data protected?</strong>Explain vendors, retention, access, deletion, consent, and breach process.</div>
-          <div class="qa-item"><strong>What if the AI is wrong?</strong>Show refusal, escalation, review, and correction.</div>
-          <div class="qa-item"><strong>Can I expect the same results?</strong>No individual client result is a guarantee or assumed typical result.</div>
+          <div class="qa-item"><strong>How do the first 10 beta users work?</strong>Define exactly who counts, how onboarding works, the timing, and whether the user pays.</div>
+          <div class="qa-item"><strong>What will this cost me in total?</strong>State every setup, recurring, usage, software, traffic, and processing cost.</div>
+          <div class="qa-item"><strong>What do I own?</strong>State ownership of the site, list, programs, data, materials, and AI configuration.</div>
+          <div class="qa-item"><strong>How is the data protected?</strong>Explain the vendors, retention, access, deletion, consent, and breach process.</div>
+          <div class="qa-item"><strong>What happens when the AI is wrong?</strong>Show the refusal, escalation, review, and correction process.</div>
+          <div class="qa-item"><strong>Can I expect the same result?</strong>No individual client result is a guarantee or automatically a typical result.</div>
         </div>
       </div>
     </section>
@@ -1513,24 +1560,24 @@
     <section class="slide" id="normalize-uncertainty" data-act="5" data-title="Reasonable questions are welcome" role="group" aria-roledescription="slide" aria-labelledby="normalize-uncertainty-title">
       <div class="content uncertainty">
         <blockquote id="normalize-uncertainty-title">You should have questions.</blockquote>
-        <p>This is your expertise, your reputation, and potentially your clients' health information. The next step is meant to determine whether this can be built responsibly for your specific business.</p>
+        <p>You are putting your expertise, your reputation, and potentially your clients' health information into this system. The next step is not about forcing a fit. It is about finding out whether this can be built responsibly for your business.</p>
       </div>
     </section>
 
     <section class="slide" id="fit-assessment" data-act="5" data-title="Complete the fit assessment" role="group" aria-roledescription="slide" aria-labelledby="fit-assessment-title">
       <div class="content close">
         <div>
-          <h2 id="fit-assessment-title">Find out whether your expertise is a fit.</h2>
-          <p class="lede">The intended assessment determines whether the problem, knowledge, use case, and required boundaries fit the done-for-you process.</p>
-          <div class="cta-line">Intended response: Complete the fit assessment</div>
+          <h2 id="fit-assessment-title">If this feels like the right direction, find out whether you are a fit.</h2>
+          <p class="lede">The assessment is designed to look at your problem, your knowledge, the use case, and the boundaries the system would need.</p>
+          <div class="cta-line">Complete the fit assessment</div>
           <p class="small-print" style="margin-top:16px">Not every applicant qualifies. The assessment is not medical, legal, or financial advice.</p>
         </div>
         <aside class="close-side">
-          <strong>Finish the production flow.</strong>
-          <div>Add the actual assessment URL.</div>
-          <div>State what information is collected and how it is used.</div>
+          <strong>Before this goes live</strong>
+          <div>Add the real assessment URL.</div>
+          <div>State what information you collect and how you use it.</div>
           <div>State who reviews fit and guarantee eligibility.</div>
-          <div>Show the actual post-assessment booking path.</div>
+          <div>Show the real path after the assessment.</div>
         </aside>
       </div>
     </section>
