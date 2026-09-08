@@ -371,6 +371,13 @@
     min-height: 760px;
   }
 
+  .brand-wordmark {
+    width: 196px;
+    height: auto;
+    display: block;
+  }
+
+  .title-slide .brand-wordmark { margin-bottom: 64px; }
   .title-slide h1 { max-width: 1580px; font-size: 104px; }
   .title-slide .lede { max-width: 980px; }
 
@@ -455,16 +462,55 @@
   .intent-path strong, .research-path strong, .downstream-path strong { display: block; margin-top: 10px; font-size: 25px; line-height: 1.18; }
   .intent-path p, .research-path p, .downstream-path p { margin-top: 12px; color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
 
-  .signal-list {
+  .demand-teaching {
     display: grid;
-    margin-top: 58px;
-    border-top: 1px solid var(--line);
+    grid-template-columns: minmax(0, 1.28fr) minmax(360px, 0.72fr);
+    gap: 44px;
+    align-items: stretch;
+    margin-top: 42px;
   }
 
-  .signal-list article { display: grid; grid-template-columns: 80px 360px 1fr; gap: 34px; align-items: baseline; padding: 30px 0; border-bottom: 1px solid var(--line); }
-  .signal-list span { color: var(--brand); font-size: 20px; font-weight: 700; }
-  .signal-list strong { font-size: 30px; }
-  .signal-list p { color: var(--ink-soft); font-size: 21px; line-height: 1.45; }
+  .demand-chart {
+    padding: 28px 30px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .demand-chart svg { display: block; width: 100%; height: 360px; overflow: visible; }
+  .demand-chart .grid-line { stroke: var(--line-strong); stroke-width: 1; }
+  .demand-chart .axis-label, .demand-chart .series-label { fill: var(--ink-faint); font-family: var(--font); font-size: 18px; }
+  .demand-chart .series-label { font-size: 19px; font-weight: 700; }
+  .demand-chart .trend { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  .demand-chart .trend-anxiety { stroke: #9aa49f; }
+  .demand-chart .trend-hormonal { stroke: #62a483; }
+  .demand-chart .trend-glp { stroke: var(--brand-dark); }
+
+  .demand-legend {
+    display: flex;
+    gap: 22px;
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-size: 18px;
+  }
+
+  .demand-legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .demand-legend i { width: 24px; height: 4px; border-radius: 999px; background: var(--line-strong); }
+  .demand-legend span:nth-child(2) i { background: #62a483; }
+  .demand-legend span:nth-child(3) i { background: var(--brand-dark); }
+
+  .demand-note {
+    margin-top: 18px;
+    color: var(--ink-faint);
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .search-signal-stack { display: grid; align-content: center; border-top: 1px solid var(--line); }
+  .search-signal-stack article { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .search-signal-stack span { color: var(--brand-dark); font-size: 16px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .search-signal-stack strong { display: block; margin-top: 7px; font-size: 27px; line-height: 1.15; }
+  .search-signal-stack p { margin-top: 7px; color: var(--ink-soft); font-size: 18px; line-height: 1.42; }
 
   .angle-tests {
     display: grid;
@@ -715,24 +761,24 @@
   .story-card strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 38px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
   .story-card p { color: var(--ink-soft); font-size: 20px; line-height: 1.5; }
 
-  .process-line {
+  .macro-process {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 54px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 34px;
+    margin-top: 62px;
   }
 
-  .process-item {
-    position: relative;
-    min-height: 190px;
-    padding: 22px 4px 0;
-    border-top: 2px solid var(--line-strong);
+  .macro-step {
+    min-height: 330px;
+    padding: 34px 36px;
+    border-top: 3px solid var(--brand);
+    background: var(--surface);
   }
 
-  .process-item:nth-child(even) { margin-top: 34px; }
-  .process-item:nth-child(1), .process-item:nth-child(6) { border-color: var(--brand); }
-  .process-item strong { display: block; margin-bottom: 12px; color: var(--brand-dark); font-size: 18px; }
-  .process-item p { color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
+  .macro-step:nth-child(2) { background: var(--brand-soft); }
+  .macro-step span { color: var(--brand-dark); font-size: 18px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .macro-step strong { display: block; margin-top: 38px; color: var(--ink); font-family: var(--font-display); font-size: 40px; font-weight: 650; line-height: 1.04; letter-spacing: -.035em; }
+  .macro-step p { margin-top: 20px; color: var(--ink-soft); font-size: 20px; line-height: 1.48; }
 
   .focus-layout {
     display: grid;
@@ -1008,18 +1054,35 @@
   .delivery-side strong { color: var(--brand-dark); font-family: var(--font-display); font-size: 38px; font-weight: 650; line-height: 1; letter-spacing: -.03em; }
   .delivery-side p { margin-top: 14px; color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
 
-  .proof-layout {
+  .client-story {
     display: grid;
-    grid-template-columns: 1fr 0.9fr;
-    gap: 54px;
+    grid-template-columns: minmax(360px, 0.74fr) minmax(0, 1.26fr);
+    gap: 64px;
     align-items: center;
   }
 
-  .proof-image { padding: 16px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
-  .proof-image img { display: block; width: 100%; max-height: 600px; object-fit: contain; border-radius: 12px; }
-  .proof-image figcaption { padding: 12px 4px 0; color: var(--ink-soft); font-size: 12px; line-height: 1.4; }
-  .proof-copy blockquote { margin-top: 28px; color: var(--ink-soft); font-family: var(--font-display); font-size: 30px; font-weight: 600; line-height: 1.22; letter-spacing: -.02em; }
-  .proof-copy .small-print { margin-top: 24px; }
+  .client-video {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    max-height: 720px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--ink);
+    box-shadow: var(--shadow);
+  }
+
+  .client-video video, .client-video .thumbnail-media-poster { width: 100%; height: 100%; display: block; border: 0; object-fit: cover; }
+  .client-story-copy h2 { max-width: 940px; font-size: 66px; }
+  .client-quote { max-width: 900px; margin-top: 30px; color: var(--ink-soft); font-family: var(--font-display); font-size: 31px; font-weight: 600; line-height: 1.24; letter-spacing: -.02em; }
+  .client-change { margin-top: 28px; padding: 22px 24px; border-left: 3px solid var(--brand); background: var(--brand-soft); color: var(--ink-soft); font-size: 20px; line-height: 1.45; }
+  .client-change strong { display: block; margin-bottom: 7px; color: var(--brand-dark); font-size: 15px; letter-spacing: .06em; text-transform: uppercase; }
+  .client-person { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
+  .client-person img { width: 58px; height: 58px; object-fit: cover; border-radius: 50%; }
+  .client-person strong, .client-person span { display: block; }
+  .client-person strong { font-size: 18px; }
+  .client-person span { margin-top: 3px; color: var(--ink-soft); font-size: 15px; }
+  .client-disclosure { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
 
   .guarantee {
     display: grid;
@@ -1128,45 +1191,42 @@
   .uncertainty blockquote { max-width: 1100px; color: var(--ink); font-family: var(--font-display); font-size: 76px; font-weight: 650; line-height: 1.04; letter-spacing: -.04em; }
   .uncertainty p { max-width: 780px; margin-top: 28px; color: var(--ink-soft); font-size: 18px; line-height: 1.5; }
 
-  .close {
+  .close-slide { background: var(--brand-dark); }
+  .qualification-close {
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 56px;
+    grid-template-columns: minmax(0, 1.18fr) minmax(380px, 0.82fr);
+    gap: 86px;
     align-items: center;
   }
 
-  .cta-line {
-    margin-top: 34px;
-    padding: 24px 28px;
-    border-left: 4px solid var(--brand);
-    background: var(--brand-soft);
-    color: var(--brand-dark);
-    font-size: 19px;
-    font-weight: 700;
-    text-align: left;
-  }
+  .qualification-close .brand-wordmark { width: 230px; margin-bottom: 64px; filter: brightness(0) invert(1); }
+  .qualification-close h2 { max-width: 1050px; color: var(--white); font-size: 84px; }
+  .qualification-close .lede { max-width: 920px; color: rgba(255, 255, 255, 0.72); }
+  .qualification-action { display: flex; align-items: center; gap: 24px; margin-top: 40px; }
+  .qualification-link { display: inline-flex; align-items: center; justify-content: center; min-height: 66px; padding: 0 30px; border-radius: 10px; background: var(--white); color: var(--brand-dark); font-size: 22px; font-weight: 700; text-decoration: none; }
+  .qualification-url { color: rgba(255, 255, 255, 0.7); font-size: 18px; }
+  .qualification-disclosure { margin-top: 20px; color: rgba(255, 255, 255, 0.58); font-size: 15px; line-height: 1.45; }
 
-  .close-side {
-    padding: 36px;
+  .qualification-list {
+    padding: 38px;
     border-radius: var(--radius);
-    background: var(--surface);
-    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .close-side strong { display: block; margin-bottom: 18px; color: var(--brand-dark); font-family: var(--font-display); font-size: 36px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
-  .close-side div { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: 15px; line-height: 1.4; }
-  .close-side div:last-child { border-bottom: 0; }
+  .qualification-list strong { display: block; margin-bottom: 20px; color: var(--white); font-family: var(--font-display); font-size: 36px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; }
+  .qualification-list div { padding: 18px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.72); font-size: 20px; line-height: 1.42; }
+  .qualification-list div:last-child { border-bottom: 0; }
 
   /* Type sizes are authored for the 1920 by 1080 stage, then scale as one unit. */
   .act-label { min-height: 28px; margin-bottom: 24px; padding-left: 14px; font-size: 17px; }
   .photo-frame .photo-caption { font-size: 20px; }
   .agenda-row strong { font-size: 28px; }
   .agenda-side p, .definition-list div, .search-item strong { font-size: 22px; }
-  .search-item p, .calendar-note, .equation-card p, .process-item p, .source span, .channel-row span, .delivery-main span, .guarantee-note { font-size: 19px; }
-  .alternative strong, .process-item strong, .approval-card strong, .demo-card strong, .term strong, .compare-card strong { font-size: 25px; }
-  .alternative p, .profile-point, .focus-panel p, .focus-list div, .source-output p, .brain-node, .brain-core span, .build-block p, .approval-card p, .demo-card p, .boundary-main div, .boundary-callout p, .fit-card div, .delivery-side p, .term p, .answer-list div, .compare-card p, .qa-item, .uncertainty p, .close-side div { font-size: 21px; }
+  .search-item p, .calendar-note, .equation-card p, .source span, .channel-row span, .delivery-main span, .guarantee-note { font-size: 19px; }
+  .alternative strong, .approval-card strong, .demo-card strong, .term strong, .compare-card strong { font-size: 25px; }
+  .alternative p, .profile-point, .focus-panel p, .focus-list div, .source-output p, .brain-node, .brain-core span, .build-block p, .approval-card p, .demo-card p, .boundary-main div, .boundary-callout p, .fit-card div, .delivery-side p, .term p, .answer-list div, .compare-card p, .qa-item, .uncertainty p { font-size: 21px; }
   .funnel-copy p, .guarantee-copy p { font-size: 23px; }
-  .cta-line { font-size: 25px; }
 
   .panel-toggle, .nav-button {
     display: grid;
@@ -1233,6 +1293,7 @@
   <main class="deck" id="deck">
     <section class="slide active" id="webinar-title" data-act="1" data-title="How to build the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="webinar-title-heading">
       <div class="content title-slide">
+        <img class="brand-wordmark" src="health/assets/kodara-wordmark.svg" alt="Kodara">
         <div class="act-label">A Kodara webinar for established health and wellness experts</div>
         <h1 id="webinar-title-heading">How To Build The <span class="brand">“AI Version Of You”</span> That Can Sell Itself To Clients &amp; Patients Online</h1>
         <p class="lede">You bring the knowledge and approval. Kodara builds the system that answers questions and guides people to the right next step.</p>
@@ -1364,13 +1425,34 @@
       </div>
     </section>
 
-    <section class="slide" id="search-signals" data-act="2" data-title="Three signals inside a search" role="group" aria-roledescription="slide" aria-labelledby="search-signals-title">
+    <section class="slide" id="search-signals" data-act="2" data-title="Map the demand before choosing the angle" role="group" aria-roledescription="slide" aria-labelledby="search-signals-title">
       <div class="content">
-        <h2 id="search-signals-title">The words in the search tell you what matters next.</h2>
-        <div class="signal-list">
-          <article><span>01</span><strong>The outcome</strong><p>What they want to change or understand.</p></article>
-          <article><span>02</span><strong>The explanation</strong><p>What they think is causing the problem.</p></article>
-          <article><span>03</span><strong>The readiness</strong><p>Whether they want information, an approach, or help.</p></article>
+        <h2 id="search-signals-title">Before you pick an angle, map where people are already looking for help.</h2>
+        <div class="demand-teaching">
+          <figure class="demand-chart">
+            <svg viewBox="0 0 840 360" role="img" aria-label="Illustrative indexed search-interest examples from 2016 through 2026">
+              <line class="grid-line" x1="60" y1="305" x2="720" y2="305"></line>
+              <line class="grid-line" x1="60" y1="230" x2="720" y2="230"></line>
+              <line class="grid-line" x1="60" y1="155" x2="720" y2="155"></line>
+              <line class="grid-line" x1="60" y1="80" x2="720" y2="80"></line>
+              <polyline class="trend trend-anxiety" points="60,305.2 126,302.8 192,299.0 258,294.1 324,287.9 390,279.2 456,268.1 522,253.2 588,237.1 654,219.8 720,201.2"></polyline>
+              <polyline class="trend trend-hormonal" points="60,305.2 126,302.3 192,296.6 258,288.4 324,278.0 390,264.4 456,248.3 522,228.5 588,202.5 654,174.0 720,141.8"></polyline>
+              <polyline class="trend trend-glp" points="60,305.2 126,304.0 192,300.8 258,294.1 324,283.0 390,264.4 456,233.4 522,191.3 588,146.8 654,117.0 720,82.4"></polyline>
+              <text class="axis-label" x="60" y="342">2016</text>
+              <text class="axis-label" x="370" y="342">2021</text>
+              <text class="axis-label" x="690" y="342">2026</text>
+              <text class="series-label" x="738" y="205">Anxiety</text>
+              <text class="series-label" x="738" y="145">Hormonal health</text>
+              <text class="series-label" x="738" y="86">GLP-1s</text>
+            </svg>
+            <div class="demand-legend" aria-hidden="true"><span><i></i>Anxiety</span><span><i></i>Hormonal health</span><span><i></i>GLP-1s</span></div>
+            <figcaption class="demand-note"><strong>Illustrative estimates for teaching only.</strong> Indexed to 2016 = 100. This shows the shape of the analysis, not measured market demand.</figcaption>
+          </figure>
+          <div class="search-signal-stack">
+            <article><span>Signal 1</span><strong>The outcome</strong><p>What they want to change or understand.</p></article>
+            <article><span>Signal 2</span><strong>The explanation</strong><p>What they think is causing the problem.</p></article>
+            <article><span>Signal 3</span><strong>The readiness</strong><p>Whether they want information, an approach, or help.</p></article>
+          </div>
         </div>
       </div>
     </section>
@@ -1563,7 +1645,7 @@
 
     <section class="slide" id="presenter" data-act="2" data-title="Why Lucas built Kodara" role="group" aria-roledescription="slide" aria-labelledby="presenter-title">
       <div class="content profile">
-        <img src="lucas-photo.jpg" alt="Lucas Tyson">
+        <img src="health/assets/lucas-tyson-speaking.jpg" alt="Lucas Tyson speaking at an event">
         <div>
           <h2 id="presenter-title">I already knew how to find people who wanted help. The hard part came next.</h2>
           <div class="profile-points">
@@ -1611,16 +1693,13 @@
       </div>
     </section>
 
-    <section class="slide" id="six-part-process" data-act="3" data-title="The six-part process" role="group" aria-roledescription="slide" aria-labelledby="six-part-process-title">
+    <section class="slide" id="six-part-process" data-act="3" data-title="The three-step build" role="group" aria-roledescription="slide" aria-labelledby="six-part-process-title">
       <div class="content">
-        <h2 id="six-part-process-title">Here is how we turn what you know into a virtual business.</h2>
-        <div class="process-line">
-          <article class="process-item"><strong>Select</strong><p>Choose one problem and one audience you are qualified to help.</p></article>
-          <article class="process-item"><strong>Extract</strong><p>Pull your knowledge from interviews and existing business materials.</p></article>
-          <article class="process-item"><strong>Build</strong><p>Turn that knowledge into a controlled AI Brain.</p></article>
-          <article class="process-item"><strong>Package</strong><p>Build the website, programs, and customer journey around it.</p></article>
-          <article class="process-item"><strong>Approve</strong><p>Test it, correct it, and set the boundaries before launch.</p></article>
-          <article class="process-item"><strong>Launch</strong><p>Connect approved discovery channels and the right next step.</p></article>
+        <h2 id="six-part-process-title">The whole build comes down to three things.</h2>
+        <div class="macro-process">
+          <article class="macro-step"><span>Step 1</span><strong>Share what you know.</strong><p>Give us focused interview time, existing materials, feedback, and the decisions only you can make.</p></article>
+          <article class="macro-step"><span>Step 2</span><strong>Review what we build.</strong><p>We create the AI system, programs, website, brand, and customer path. You test and approve them before launch.</p></article>
+          <article class="macro-step"><span>Step 3</span><strong>Launch and onboard users.</strong><p>We connect the approved discovery path, bring suitable beta users in, and learn what the first version needs next.</p></article>
         </div>
       </div>
     </section>
@@ -1816,19 +1895,24 @@
       </div>
     </section>
 
-    <section class="slide" id="leanne-proof" data-act="4" data-title="What credible client proof shows" role="group" aria-roledescription="slide" aria-labelledby="leanne-proof-title">
-      <div class="content proof-layout">
-        <figure class="proof-image">
-          <img src="site-leanne.jpg" alt="Health and wellness website shown for illustration only">
-          <figcaption>Website screenshot for illustration only. No client result is claimed.</figcaption>
-        </figure>
-        <div class="proof-copy">
-          <h2 id="leanne-proof-title">Credible client proof lets you see exactly what changed.</h2>
-          <div class="answer-list">
-            <div><strong>The work before.</strong> What the expert handled personally and what that required.</div>
-            <div><strong>The work after.</strong> What the system handled, supported by approved records.</div>
-            <div><strong>The boundary.</strong> What still needed the expert and what did not.</div>
+    <section class="slide" id="leanne-proof" data-act="4" data-title="Sandra Parker's client-acquisition story" role="group" aria-roledescription="slide" aria-labelledby="sandra-proof-title">
+      <div class="content client-story">
+        <div class="client-video">
+          <video controls playsinline preload="metadata" poster="health/assets/sandra-video-poster.jpg" data-thumbnail-poster="health/assets/sandra-video-poster.jpg" aria-label="Sandra Parker describes how her business became more consistent">
+            <source src="health/assets/sandra-client-story.mp4" type="video/mp4">
+            <track kind="captions" src="health/assets/sandra-client-story.en.vtt" srclang="en" label="English" default>
+          </video>
+        </div>
+        <div class="client-story-copy">
+          <div class="act-label">Client-acquisition story</div>
+          <h2 id="sandra-proof-title">Sandra's story shows why client acquisition is still part of the build.</h2>
+          <blockquote class="client-quote">“My business feels better now because it feels consistent, and I’m able to enjoy it more.”</blockquote>
+          <div class="client-change"><strong>What changed</strong>She says working with Lucas changed how she viewed the business, and a regular number of people enrolling each week felt better.</div>
+          <div class="client-person">
+            <img src="health/assets/sandra-parker.jpg" alt="Sandra Parker">
+            <div><strong>Sandra Parker</strong><span>Sobriety coach, Just The Tonic</span></div>
           </div>
+          <p class="client-disclosure">This describes Sandra's individual experience working with Lucas. It is not proof of a Kodara AI build or a typical result. No outcome is guaranteed.</p>
         </div>
       </div>
     </section>
@@ -1925,20 +2009,23 @@
       </div>
     </section>
 
-    <section class="slide" id="fit-assessment" data-act="5" data-title="Complete the fit assessment" role="group" aria-roledescription="slide" aria-labelledby="fit-assessment-title">
-      <div class="content close">
+    <section class="slide close-slide" id="fit-assessment" data-act="5" data-title="See if you qualify" role="group" aria-roledescription="slide" aria-labelledby="fit-assessment-title">
+      <div class="content qualification-close">
         <div>
-          <h2 id="fit-assessment-title">If this feels like the right direction, find out whether you are a fit.</h2>
-          <p class="lede">The assessment is designed to look at your problem, your knowledge, the use case, and the boundaries the system would need.</p>
-          <div class="cta-line">Complete the fit assessment</div>
-          <p class="small-print" style="margin-top:16px">Not every applicant qualifies. The assessment is not medical, legal, or financial advice.</p>
+          <img class="brand-wordmark" src="health/assets/kodara-wordmark.svg" alt="Kodara">
+          <h2 id="fit-assessment-title">Want us to build the first responsible version with you?</h2>
+          <p class="lede">Complete the short fit assessment. We will look at your angle, expertise, use case, and the boundaries the system needs.</p>
+          <div class="qualification-action">
+            <a class="qualification-link" href="https://kodarahealth.com/#kodara-triager" target="_blank" rel="noopener">See If You Qualify</a>
+            <span class="qualification-url">kodarahealth.com</span>
+          </div>
+          <p class="qualification-disclosure">Not every applicant qualifies. The assessment is not medical, legal, or financial advice.</p>
         </div>
-        <aside class="close-side">
-          <strong>What we will look at</strong>
+        <aside class="qualification-list">
+          <strong>We are looking for a responsible fit.</strong>
           <div>The problem you solve and the people you help.</div>
           <div>The knowledge and materials you can build from.</div>
-          <div>The professional and product boundaries involved.</div>
-          <div>The most responsible first version to build.</div>
+          <div>A first version that can be tested and approved.</div>
         </aside>
       </div>
     </section>
@@ -1987,6 +2074,13 @@
     const clone = slide.cloneNode(true);
     clone.removeAttribute('id');
     clone.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+    clone.querySelectorAll('[data-thumbnail-poster]').forEach(media => {
+      const poster = document.createElement('img');
+      poster.src = media.dataset.thumbnailPoster;
+      poster.alt = '';
+      poster.className = 'thumbnail-media-poster';
+      media.replaceWith(poster);
+    });
     wrapper.appendChild(clone);
     box.appendChild(wrapper);
     thumb.append(number, box);

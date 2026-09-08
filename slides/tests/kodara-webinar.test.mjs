@@ -27,7 +27,8 @@ for (const requiredCopy of [
   'The AI is not the starting point.',
   'A topic shows what you know. A search shows what they want.',
   'The same topic can hide five different levels of intent.',
-  'The words in the search tell you what matters next.',
+  'Before you pick an angle, map where people are already looking for help.',
+  'Illustrative estimates for teaching only.',
   'A keyword can reveal demand without giving you an angle.',
   'Before you optimize the angle, the idea has to pass four responsibility gates.',
   'Then the five filters make the idea harder to ignore.',
@@ -48,14 +49,20 @@ for (const requiredCopy of [
   'Your audience is already online.',
   'The calendar is the bottleneck.',
   'You supply the expertise and approval.',
+  'Share what you know.',
+  'Review what we build.',
+  'Launch and onboard users.',
   'So what does an AI version of you actually mean?',
   'Here is what you should see before you trust the system.',
   'Kodara is built for experts who already know how to solve a real problem.',
-  'Credible client proof lets you see exactly what changed.',
+  'Sandra\'s story shows why client acquisition is still part of the build.',
+  'My business feels better now because it feels consistent, and I’m able to enjoy it more.',
+  'She says working with Lucas changed how she viewed the business, and a regular number of people enrolling each week felt better.',
+  'This describes Sandra\'s individual experience working with Lucas. It is not proof of a Kodara AI build or a typical result. No outcome is guaranteed.',
   'A guarantee is only real when every term is in writing.',
   'You should see every cost and ownership term before you decide.',
   'These are the questions that matter before you apply.',
-  'Complete the fit assessment',
+  'See If You Qualify',
   'not a revenue or paying-customer guarantee',
 ]) {
   assert.ok(visibleText.includes(requiredCopy), `missing required webinar copy: ${requiredCopy}`);
@@ -89,7 +96,16 @@ for (const [earlier, later] of [
 }
 
 assert.ok(html.includes('lucas-photo.jpg'));
-assert.ok(html.includes('site-leanne.jpg'));
+assert.ok(html.includes('health/assets/lucas-tyson-speaking.jpg'));
+assert.ok((html.match(/health\/assets\/kodara-wordmark\.svg/g) || []).length >= 2);
+assert.ok(html.includes('health/assets/sandra-parker.jpg'));
+assert.ok(html.includes('health/assets/sandra-video-poster.jpg'));
+assert.ok(html.includes('health/assets/sandra-client-story.mp4'));
+assert.ok(html.includes('health/assets/sandra-client-story.en.vtt'));
+assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
+assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
+assert.ok(html.includes("clone.querySelectorAll('[data-thumbnail-poster]')"));
+assert.ok(html.includes('media.replaceWith(poster)'));
 assert.ok(html.includes('id="previousSlide"'));
 assert.ok(html.includes('id="nextSlide"'));
 assert.ok(html.includes('aria-controls="panel"'));
@@ -149,6 +165,10 @@ assert.ok(panelState[1].includes('updateDeckScale()'), 'panel changes should imm
 assert.doesNotMatch(html, /\[INSERT|PLACEHOLDER|TODO/i);
 assert.doesNotMatch(html, /[—–]/);
 assert.doesNotMatch(html, /(?:28%|260 million|\$50 million|350 health)/i);
+assert.doesNotMatch(visibleText, /(?:350\+|\$50M\+|105,000\+|30\+ health|\$500\s*-\s*\$2,000|Mayo Clinic|Johns Hopkins)/i);
+assert.doesNotMatch(visibleText, /(?:make double what I made last year|three and six ROAS|Replace with sourced)/i);
+assert.doesNotMatch(visibleText, /(?:story proves|better-fit calls|advertising work led by Lucas)/i);
+assert.doesNotMatch(html, /fast\.wistia\./i, 'the deck should use the reviewed local testimonial excerpt');
 assert.doesNotMatch(html, /(?:toxic poop|overnight weight loss|government pays|buyer pyramid)/i);
 assert.doesNotMatch(
   visibleText,
