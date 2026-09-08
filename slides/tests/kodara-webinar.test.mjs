@@ -12,9 +12,9 @@ const visibleText = html
 
 const slides = html.match(/<section class="slide(?: |")/g) || [];
 
-assert.equal(slides.length, 46, 'webinar should contain the complete 46-slide story');
-assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 46);
-assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 46);
+assert.equal(slides.length, 50, 'webinar should contain the complete 50-slide story');
+assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 50);
+assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 50);
 
 for (const requiredCopy of [
   'Take what you know and put it online.',
@@ -28,10 +28,21 @@ for (const requiredCopy of [
   'A topic tells us what you know. A search tells us what they want.',
   'People can search the same topic with completely different intent.',
   'The words they use tell us three things.',
-  'A strong angle has to pass four tests.',
-  'Here is how raw search data becomes one angle.',
-  'The research should end in one sentence.',
-  'Once the angle is clear, every downstream decision gets easier.',
+  'A keyword can reveal demand without giving you an angle.',
+  'The idea has to pass four responsibility gates before we optimize the angle.',
+  'The five filters help us make a responsible idea harder to ignore.',
+  'Originality',
+  'Leveraged authority',
+  'Speed',
+  'Ease',
+  'Newness',
+  'Here is how raw search data becomes one angle worth building.',
+  'Score every candidate from 1 to 3.',
+  'Start with Originality, Leveraged authority, and Speed.',
+  'The title of this webinar is an angle.',
+  'Same expertise. Different frame.',
+  'The work should end in one useful positioning sentence.',
+  'Keyword research finds the problem. The angle frames the path. Kodara builds the system.',
   'But the right angle can still create the wrong business.',
   'Your expertise should work beyond your calendar.',
   'The audience is already online.',
@@ -55,9 +66,13 @@ for (const [earlier, later] of [
   ['id="search-first"', 'id="topic-vs-search"'],
   ['id="topic-vs-search"', 'id="intent-ladder"'],
   ['id="intent-ladder"', 'id="search-signals"'],
-  ['id="search-signals"', 'id="angle-fit"'],
-  ['id="angle-fit"', 'id="research-process"'],
-  ['id="research-process"', 'id="positioning-output"'],
+  ['id="search-signals"', 'id="demand-not-angle"'],
+  ['id="demand-not-angle"', 'id="angle-fit"'],
+  ['id="angle-fit"', 'id="angle-filters"'],
+  ['id="angle-filters"', 'id="research-process"'],
+  ['id="research-process"', 'id="angle-scorecard"'],
+  ['id="angle-scorecard"', 'id="angle-example"'],
+  ['id="angle-example"', 'id="positioning-output"'],
   ['id="positioning-output"', 'id="angle-controls-build"'],
   ['id="angle-controls-build"', 'id="implementation-bridge"'],
   ['id="implementation-bridge"', 'id="calendar-bottleneck"'],
@@ -128,5 +143,6 @@ assert.ok(panelState[1].includes('updateDeckScale()'), 'panel changes should imm
 assert.doesNotMatch(html, /\[INSERT|PLACEHOLDER|TODO/i);
 assert.doesNotMatch(html, /[—–]/);
 assert.doesNotMatch(html, /(?:28%|260 million|\$50 million|350 health)/i);
+assert.doesNotMatch(html, /(?:toxic poop|overnight weight loss|government pays|buyer pyramid)/i);
 
 console.log('kodara webinar: 16:9 stage, teaching sequence, controls, and claim guardrails verified');
