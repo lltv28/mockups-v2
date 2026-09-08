@@ -115,6 +115,11 @@ assert.ok(
   !thumbnailActivation[1].includes('setPanelCollapsed(true)'),
   'selecting a slide should keep the selector open',
 );
+assert.match(
+  html,
+  /if \(event\.key === 'Enter' \|\| event\.key === ' '\) \{[\s\S]*?event\.stopPropagation\(\);[\s\S]*?activate\(\);/,
+  'keyboard thumbnail activation should not bubble into deck navigation',
+);
 
 const panelState = html.match(/function setPanelCollapsed\(collapsed\) \{([\s\S]*?)\n\s*\}/);
 assert.ok(panelState, 'panel state handler should exist');

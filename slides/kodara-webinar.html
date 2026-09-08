@@ -1903,6 +1903,7 @@
     thumb.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
+        event.stopPropagation();
         activate();
       }
     });
