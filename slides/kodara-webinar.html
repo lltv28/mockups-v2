@@ -1115,29 +1115,6 @@
   .deck-arrows .nav-button { position: static; }
   .nav-button:disabled { opacity: 0.35; cursor: default; }
 
-  .progress {
-    position: absolute;
-    z-index: 400;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 3px;
-    background: var(--brand);
-    transition: width 220ms ease;
-  }
-
-  .counter {
-    position: absolute;
-    z-index: 350;
-    left: 120px;
-    bottom: 36px;
-    color: var(--ink-faint);
-    font-size: 18px;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .counter .cur { color: var(--brand-dark); font-weight: 700; }
-
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       scroll-behavior: auto !important;
@@ -1800,16 +1777,12 @@
       <button class="nav-button" id="previousSlide" type="button" aria-label="Previous slide">‹</button>
       <button class="nav-button" id="nextSlide" type="button" aria-label="Next slide">›</button>
     </nav>
-    <div class="progress" id="progress"></div>
-    <div class="counter" id="counter"><span class="cur">01</span> / 46</div>
   </main>
 </div>
 
 <script>
   const slides = [...document.querySelectorAll('.slide:not([hidden])')];
   const panel = document.getElementById('panel');
-  const progress = document.getElementById('progress');
-  const counter = document.getElementById('counter');
   const panelToggle = document.getElementById('panelToggle');
   const previousSlide = document.getElementById('previousSlide');
   const nextSlide = document.getElementById('nextSlide');
@@ -1878,8 +1851,6 @@
     thumbs[current].classList.add('active');
     thumbs[current].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 
-    progress.style.width = ((current + 1) / slides.length * 100) + '%';
-    counter.innerHTML = '<span class="cur">' + String(current + 1).padStart(2, '0') + '</span> / ' + String(slides.length).padStart(2, '0');
     previousSlide.disabled = current === 0;
     nextSlide.disabled = current === slides.length - 1;
   }

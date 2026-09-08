@@ -88,6 +88,8 @@ assert.ok(html.includes("if (event.key === 'Escape' && !panel.classList.contains
 assert.ok(html.includes('function goTo(index)'));
 assert.ok(html.includes("event.key === 'Home'"));
 assert.ok(html.includes("event.key === 'End'"));
+assert.ok(!html.includes('id="progress"'), 'audience view should not show a progress bar');
+assert.ok(!html.includes('id="counter"'), 'audience view should not show a slide counter');
 assert.ok(html.includes('@media (prefers-reduced-motion: reduce)'));
 assert.ok(html.includes('--deck-width: 1920px'));
 assert.ok(html.includes('--deck-height: 1080px'));
