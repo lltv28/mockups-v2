@@ -77,7 +77,7 @@ for (const requiredCopy of [
   'These are the questions that matter before you apply.',
   'See If You Qualify',
   'Ready to see if Kodara can build this for you?',
-  'https://kodarahealth.com/webinar/',
+  'KodaraHealth.com/webinar',
   'not a revenue or paying-customer guarantee',
 ]) {
   assert.ok(visibleText.includes(requiredCopy), `missing required webinar copy: ${requiredCopy}`);
@@ -117,7 +117,8 @@ assert.match(html, /<iframe[^>]*src="https:\/\/customer-nguqf0yqc9xf45px\.cloudf
 assert.match(html, /<iframe[^>]*title="Sandra AI demonstration"[^>]*loading="lazy"[^>]*data-thumbnail-poster=/);
 assert.match(html, /<iframe[^>]*allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"[^>]*allowfullscreen/);
 assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
-assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>https:\/\/kodarahealth\.com\/webinar\/<\/a>/);
+assert.match(html, /\.final-cta-url \{[^}]*text-decoration: none;/);
+assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>KodaraHealth\.com\/webinar<\/a>/);
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
 assert.equal((html.match(/class="proof-client(?:\s[^"]*)?"/g) || []).length, 3, 'opening proof should show three clients');
 assert.equal((html.match(/id="leanne-proof"/g) || []).length, 1, 'client proof should appear only once');
