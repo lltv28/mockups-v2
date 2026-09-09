@@ -12,12 +12,14 @@ const visibleText = html
 
 const slides = html.match(/<section class="slide(?: |")/g) || [];
 
-assert.equal(slides.length, 52, 'webinar should contain the complete 52-slide story');
-assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 52);
-assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 52);
+assert.equal(slides.length, 43, 'webinar should contain the condensed 43-slide story');
+assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 43);
+assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 43);
 
 for (const requiredCopy of [
   'Health and wellness interest is already moving online.',
+  'Here is what the AI version of you can actually look like.',
+  'This is Sandra AI. Later, I’ll show you how the experience works.',
   'People are looking for answers, explanations, and next steps from their phones and computers.',
   'You have probably heard this before: take what you know and put it online.',
   'High-ticket coaching',
@@ -54,27 +56,10 @@ for (const requiredCopy of [
   'First, decide whether this is even a direction you want to go.',
   'Then you can decide whether you want Kodara to build it for you.',
   'How To Build The “AI Version Of You” That Can Sell Itself To Clients & Patients Online',
-  'So you have two problems to solve.',
-  'Most experts start with the wrong question.',
-  'The AI is not the starting point.',
   'A topic shows what you know. A search shows what they want.',
-  'The same topic can hide five different levels of intent.',
   'Illustrative estimates for teaching only.',
-  'A keyword can reveal demand without giving you an angle.',
-  'Before you optimize the angle, the idea has to pass four responsibility gates.',
-  'Then the five filters make the idea harder to ignore.',
-  'Originality',
-  'Leveraged authority',
-  'Speed',
-  'Ease',
-  'Newness',
-  'This is how search data becomes one angle worth building.',
-  'Score every candidate from 1 to 3.',
-  'Start with Originality, Leveraged authority, and Speed.',
   'The title of this webinar is an angle.',
   'Same expertise, but a different frame.',
-  'The result should fit into one useful positioning sentence.',
-  'Keyword research finds the problem. The angle frames the path. Kodara builds the system.',
   'But a strong angle can still build the wrong business.',
   'Your expertise should not stop working when your calendar fills.',
   'Your audience is already online.',
@@ -84,6 +69,7 @@ for (const requiredCopy of [
   'Review what we build.',
   'Launch and onboard users.',
   'So what does an AI version of you actually mean?',
+  'Here is Sandra AI in action.',
   'Here is what you should see before you trust the system.',
   'Kodara is built for experts who already know how to solve a real problem.',
   'A guarantee is only real when every term is in writing.',
@@ -98,7 +84,8 @@ for (const requiredCopy of [
 }
 
 for (const [earlier, later] of [
-  ['id="webinar-title"', 'id="search-signals"'],
+  ['id="webinar-title"', 'id="ai-preview"'],
+  ['id="ai-preview"', 'id="search-signals"'],
   ['id="search-signals"', 'id="opening"'],
   ['id="opening"', 'id="online-models"'],
   ['id="online-models"', 'id="presenter"'],
@@ -107,22 +94,12 @@ for (const [earlier, later] of [
   ['id="online-premise"', 'id="leanne-proof"'],
   ['id="leanne-proof"', 'id="independent-provider-demand"'],
   ['id="independent-provider-demand"', 'id="online-reality"'],
-  ['id="online-reality"', 'id="two-problems"'],
-  ['id="two-problems"', 'id="positioning-shift"'],
-  ['id="positioning-shift"', 'id="search-first"'],
-  ['id="search-first"', 'id="topic-vs-search"'],
-  ['id="topic-vs-search"', 'id="intent-ladder"'],
-  ['id="intent-ladder"', 'id="demand-not-angle"'],
-  ['id="demand-not-angle"', 'id="angle-fit"'],
-  ['id="angle-fit"', 'id="angle-filters"'],
-  ['id="angle-filters"', 'id="research-process"'],
-  ['id="research-process"', 'id="angle-scorecard"'],
-  ['id="angle-scorecard"', 'id="angle-example"'],
-  ['id="angle-example"', 'id="positioning-output"'],
-  ['id="positioning-output"', 'id="angle-controls-build"'],
-  ['id="angle-controls-build"', 'id="implementation-bridge"'],
+  ['id="online-reality"', 'id="topic-vs-search"'],
+  ['id="topic-vs-search"', 'id="angle-example"'],
+  ['id="angle-example"', 'id="implementation-bridge"'],
   ['id="implementation-bridge"', 'id="calendar-bottleneck"'],
-  ['id="definition"', 'id="mechanism-bridge"'],
+  ['id="definition"', 'id="ai-demonstration"'],
+  ['id="ai-demonstration"', 'id="mechanism-bridge"'],
   ['id="fit-assessment"', 'id="webinar-cta"'],
 ]) {
   assert.ok(html.indexOf(earlier) < html.indexOf(later), `${earlier} should appear before ${later}`);
@@ -134,11 +111,30 @@ assert.ok(html.includes('health/assets/dr-mike-poster.jpg'));
 assert.ok(html.includes('health/assets/martyn-buffler.jpg'));
 assert.ok(html.includes('health/assets/leanne.jpg'));
 assert.ok(html.includes('health/assets/gallup-healthcare-quality-24-year-low.png'));
+assert.match(html, /<img class="ai-preview-media"[^>]*thumbnail\.jpg\?time=10s&amp;height=720/);
+assert.equal((html.match(/<iframe\b/g) || []).length, 1, 'the deck should load one playable video');
+assert.match(html, /<iframe[^>]*src="https:\/\/customer-nguqf0yqc9xf45px\.cloudflarestream\.com\/efec3e7459738b6bdddbbb49f3f9b0b8\/iframe\?muted=true&amp;preload=true&amp;poster=/);
+assert.match(html, /<iframe[^>]*title="Sandra AI demonstration"[^>]*loading="lazy"[^>]*data-thumbnail-poster=/);
 assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
 assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>https:\/\/kodarahealth\.com\/webinar\/<\/a>/);
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
 assert.equal((html.match(/class="proof-client(?:\s[^"]*)?"/g) || []).length, 3, 'opening proof should show three clients');
 assert.equal((html.match(/id="leanne-proof"/g) || []).length, 1, 'client proof should appear only once');
+for (const removedSlideId of [
+  'two-problems',
+  'positioning-shift',
+  'search-first',
+  'intent-ladder',
+  'demand-not-angle',
+  'angle-fit',
+  'angle-filters',
+  'research-process',
+  'angle-scorecard',
+  'positioning-output',
+  'angle-controls-build',
+]) {
+  assert.ok(!html.includes(`id="${removedSlideId}"`), `${removedSlideId} should be removed from the condensed lesson`);
+}
 assert.ok(html.includes("clone.querySelectorAll('[data-thumbnail-poster]')"));
 assert.ok(html.includes('media.replaceWith(poster)'));
 assert.ok(html.includes('id="previousSlide"'));

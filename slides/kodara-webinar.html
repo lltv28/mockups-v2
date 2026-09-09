@@ -381,34 +381,28 @@
   .title-slide h1 { max-width: 1580px; font-size: 104px; }
   .title-slide .lede { max-width: 980px; }
 
-  .two-problem-layout {
+  .ai-preview {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 70px;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: minmax(0, .82fr) minmax(650px, 1.18fr);
+    gap: 78px;
+    align-items: center;
   }
 
-  .two-problem-layout article { min-height: 300px; padding: 46px 56px 46px 0; }
-  .two-problem-layout article + article { padding-right: 0; padding-left: 56px; border-left: 1px solid var(--line); }
-  .two-problem-layout span { color: var(--brand); font-size: 20px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-  .two-problem-layout strong { display: block; max-width: 600px; margin-top: 18px; font-size: 42px; line-height: 1.08; letter-spacing: -.03em; }
-  .two-problem-layout p { max-width: 620px; margin-top: 20px; color: var(--ink-soft); font-size: 23px; line-height: 1.48; }
+  .ai-preview h2 { max-width: 760px; font-size: 78px; }
+  .ai-preview .lede { max-width: 650px; }
+  .ai-preview-frame { width: 720px; max-width: 100%; margin: 0; }
+  .ai-preview-media { width: 100%; aspect-ratio: 1; display: block; object-fit: contain; border: 1px solid var(--line-strong); border-radius: var(--radius); background: #080808; box-shadow: var(--shadow); }
 
-  .question-shift {
+  .ai-demonstration {
     display: grid;
-    grid-template-columns: .82fr 1.18fr;
-    gap: 68px;
-    align-items: end;
-    margin-top: 74px;
+    grid-template-rows: auto minmax(0, 1fr);
+    justify-items: center;
+    gap: 30px;
   }
 
-  .question-shift article { padding-top: 34px; border-top: 2px solid var(--line-strong); }
-  .question-shift article:last-child { border-color: var(--brand); }
-  .question-shift span { color: var(--ink-faint); font-size: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-  .question-shift strong { display: block; margin-top: 18px; color: var(--ink); font-size: 40px; line-height: 1.12; letter-spacing: -.03em; }
-  .question-shift article:last-child strong { color: var(--brand-dark); font-size: 52px; }
-  .question-shift p { margin-top: 18px; color: var(--ink-soft); font-size: 22px; line-height: 1.48; }
+  .ai-demonstration h2 { font-size: 64px; text-align: center; }
+  .ai-video-shell { position: relative; width: 720px; max-width: 100%; aspect-ratio: 1; overflow: hidden; border: 1px solid var(--line-strong); border-radius: var(--radius); background: #080808; box-shadow: var(--shadow); }
+  .ai-video-shell iframe, .ai-video-shell .thumbnail-media-poster { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; object-fit: contain; }
 
   .topic-search {
     display: grid;
@@ -423,44 +417,6 @@
   .topic-search span { color: var(--ink-faint); font-size: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
   .topic-search strong { display: block; margin-top: 22px; font-size: 42px; line-height: 1.1; letter-spacing: -.03em; }
   .topic-search p { max-width: 640px; margin-top: 18px; color: var(--ink-soft); font-size: 22px; line-height: 1.48; }
-
-  .intent-path, .research-path, .downstream-path {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 28px;
-    margin-top: 78px;
-  }
-
-  .intent-path::before, .research-path::before, .downstream-path::before {
-    content: "";
-    position: absolute;
-    top: 15px;
-    right: 8%;
-    left: 8%;
-    height: 2px;
-    background: var(--line-strong);
-  }
-
-  .intent-path article, .research-path article, .downstream-path article { position: relative; padding-top: 52px; }
-  .intent-path article::before, .research-path article::before, .downstream-path article::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    top: 8px;
-    left: 0;
-    width: 16px;
-    height: 16px;
-    border: 4px solid var(--white);
-    border-radius: 50%;
-    background: var(--line-strong);
-    box-shadow: 0 0 0 1px var(--line-strong);
-  }
-
-  .intent-path article:last-child::before, .research-path article:last-child::before, .downstream-path article:first-child::before { background: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
-  .intent-path span, .research-path span, .downstream-path span { color: var(--brand-dark); font-size: 18px; font-weight: 700; }
-  .intent-path strong, .research-path strong, .downstream-path strong { display: block; margin-top: 10px; font-size: 25px; line-height: 1.18; }
-  .intent-path p, .research-path p, .downstream-path p { margin-top: 12px; color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
 
   .demand-teaching {
     display: grid;
@@ -512,18 +468,6 @@
   .search-signal-stack strong { display: block; margin-top: 7px; font-size: 27px; line-height: 1.15; }
   .search-signal-stack p { margin-top: 7px; color: var(--ink-soft); font-size: 18px; line-height: 1.42; }
 
-  .angle-tests {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 58px;
-    border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
-  }
-
-  .angle-tests article { min-height: 210px; padding: 34px 42px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .angle-tests strong { display: block; color: var(--brand-dark); font-size: 30px; }
-  .angle-tests p { max-width: 610px; margin-top: 12px; color: var(--ink-soft); font-size: 21px; line-height: 1.45; }
-
   .angle-note {
     max-width: 1240px;
     margin-top: 34px;
@@ -533,72 +477,6 @@
     font-size: 24px;
     line-height: 1.45;
   }
-
-  .angle-filter-grid {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 30px 34px;
-    margin-top: 46px;
-  }
-
-  .angle-filter {
-    grid-column: span 2;
-    min-height: 180px;
-    padding-top: 24px;
-    border-top: 2px solid var(--brand);
-  }
-
-  .angle-filter.supporting-filter {
-    grid-column: span 3;
-    min-height: 146px;
-    border-top-color: var(--line-strong);
-  }
-
-  .angle-filter span {
-    display: inline-grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--brand-soft);
-    color: var(--brand-dark);
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .angle-filter strong { display: block; margin-top: 16px; font-size: 27px; line-height: 1.15; }
-  .angle-filter p { max-width: 470px; margin-top: 10px; color: var(--ink-soft); font-size: 18px; line-height: 1.42; }
-
-  .research-path { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; }
-  .research-path strong { margin-top: 0; }
-
-  .scorecard-scale {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 38px;
-    margin-top: 64px;
-  }
-
-  .scorecard-scale article { padding-top: 28px; border-top: 2px solid var(--line-strong); }
-  .scorecard-scale article:last-child { border-top-color: var(--brand); }
-  .scorecard-scale span { color: var(--brand-dark); font-family: var(--font-display); font-size: 76px; font-weight: 650; line-height: 1; }
-  .scorecard-scale strong { display: block; margin-top: 14px; font-size: 30px; }
-  .scorecard-scale p { max-width: 440px; margin-top: 10px; color: var(--ink-soft); font-size: 20px; line-height: 1.42; }
-
-  .scorecard-focus {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 36px;
-    margin-top: 42px;
-    padding: 28px 32px;
-    border-radius: var(--radius);
-    background: var(--brand-soft);
-    color: var(--ink-soft);
-    font-size: 20px;
-    line-height: 1.45;
-  }
-
-  .scorecard-focus strong { color: var(--brand-dark); }
 
   .angle-example-grid {
     display: grid;
@@ -614,25 +492,6 @@
   .angle-example-grid strong { display: block; margin-top: 20px; font-size: 39px; line-height: 1.12; letter-spacing: -.03em; }
   .angle-example-grid article:last-child strong { color: var(--brand-dark); font-size: 46px; }
   .angle-example-grid p { max-width: 680px; margin-top: 18px; color: var(--ink-soft); font-size: 21px; line-height: 1.45; }
-
-  .positioning-formula.four-part { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
-  .positioning-formula.four-part .positioning-part { min-height: 215px; padding: 32px; }
-  .positioning-formula.four-part .positioning-part strong { font-size: 30px; }
-  #angle-controls-build-title { max-width: 1480px; font-size: 74px; }
-
-  .positioning-formula {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr auto 1fr;
-    gap: 28px;
-    align-items: center;
-    margin-top: 72px;
-  }
-
-  .positioning-part { min-height: 230px; padding: 36px; border-top: 2px solid var(--brand); background: var(--brand-soft); }
-  .positioning-part span { color: var(--brand-dark); font-size: 18px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-  .positioning-part strong { display: block; margin-top: 18px; font-size: 34px; line-height: 1.15; letter-spacing: -.025em; }
-  .positioning-plus { color: var(--brand); font-size: 42px; }
-  .positioning-output { margin-top: 40px; padding-left: 24px; border-left: 3px solid var(--brand); color: var(--ink-soft); font-size: 24px; line-height: 1.48; }
 
   .bottleneck {
     display: grid;
@@ -1336,6 +1195,18 @@
       </div>
     </section>
 
+    <section class="slide" id="ai-preview" data-act="1" data-title="Preview the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="ai-preview-title">
+      <div class="content ai-preview">
+        <div>
+          <h2 id="ai-preview-title">Here is what the AI version of you can <span class="brand">actually look like.</span></h2>
+          <p class="lede">This is Sandra AI. Later, I’ll show you how the experience works.</p>
+        </div>
+        <figure class="ai-preview-frame">
+          <img class="ai-preview-media" src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/thumbnails/thumbnail.jpg?time=10s&amp;height=720" alt="Preview of Sandra AI guiding a user through an alcohol-craving check-in">
+        </figure>
+      </div>
+    </section>
+
     <section class="slide" id="search-signals" data-act="1" data-title="Health and wellness interest is moving online" role="group" aria-roledescription="slide" aria-labelledby="search-signals-title">
       <div class="content">
         <h2 id="search-signals-title">Health and wellness interest is already <span class="brand">moving online.</span></h2>
@@ -1487,50 +1358,6 @@
       </div>
     </section>
 
-    <section class="slide" id="two-problems" data-act="2" data-title="Two different problems" role="group" aria-roledescription="slide" aria-labelledby="two-problems-title">
-      <div class="content">
-        <h2 id="two-problems-title">So you have two problems to solve.</h2>
-        <div class="two-problem-layout">
-          <article>
-            <span>Problem one</span>
-            <strong>What should you sell?</strong>
-            <p>Find a problem people already want solved, then make a promise your expertise can support.</p>
-          </article>
-          <article>
-            <span>Problem two</span>
-            <strong>How do you deliver it without becoming the entire business?</strong>
-            <p>Build a delivery system that does not need your live time at every step.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="positioning-shift" data-act="2" data-title="Start with the right question" role="group" aria-roledescription="slide" aria-labelledby="positioning-shift-title">
-      <div class="content">
-        <h2 id="positioning-shift-title">Most experts start with the wrong question.</h2>
-        <div class="question-shift">
-          <article>
-            <span>The usual question</span>
-            <strong>What can I teach?</strong>
-            <p>So you end up with a broad pile of lessons nobody asked for.</p>
-          </article>
-          <article>
-            <span>The better question</span>
-            <strong>What problem are people already trying to solve?</strong>
-            <p>Now your expertise connects to a problem people already want solved.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="search-first" data-act="2" data-title="The AI starts before the AI" role="group" aria-roledescription="slide" aria-labelledby="search-first-title">
-      <div class="content statement">
-        <div class="statement-rule" aria-hidden="true"></div>
-        <h2 id="search-first-title">The AI is not the starting point.</h2>
-        <p class="lede">The starting point is one specific problem people are already trying to solve.</p>
-      </div>
-    </section>
-
     <section class="slide" id="topic-vs-search" data-act="2" data-title="A topic is not a search" role="group" aria-roledescription="slide" aria-labelledby="topic-vs-search-title">
       <div class="content">
         <h2 id="topic-vs-search-title">A topic shows what you know. A search shows what they want.</h2>
@@ -1545,92 +1372,6 @@
             <strong>“Why am I still exhausted after changing my diet?”</strong>
             <p>Now you can see the problem in their language, plus the question they will probably ask next.</p>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="intent-ladder" data-act="2" data-title="Different searches reveal different intent" role="group" aria-roledescription="slide" aria-labelledby="intent-ladder-title">
-      <div class="content">
-        <h2 id="intent-ladder-title">The same topic can hide five different levels of intent.</h2>
-        <div class="intent-path" aria-label="Search intent from early research to choosing a provider">
-          <article><span>01</span><strong>Understand</strong><p>“What is happening to me?”</p></article>
-          <article><span>02</span><strong>Identify</strong><p>“Is this my problem?”</p></article>
-          <article><span>03</span><strong>Solve</strong><p>“What can I do?”</p></article>
-          <article><span>04</span><strong>Compare</strong><p>“Which approach fits me?”</p></article>
-          <article><span>05</span><strong>Choose</strong><p>“Who can help?”</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="demand-not-angle" data-act="2" data-title="Demand is not yet an angle" role="group" aria-roledescription="slide" aria-labelledby="demand-not-angle-title">
-      <div class="content">
-        <h2 id="demand-not-angle-title">A keyword can reveal demand without giving you an angle.</h2>
-        <div class="topic-search">
-          <article>
-            <span>The keyword</span>
-            <strong>Shows what people already want.</strong>
-            <p>It shows the problem, the language, and the intent already in the market.</p>
-          </article>
-          <article>
-            <span>The angle</span>
-            <strong>Gives them a credible reason to notice your path.</strong>
-            <p>It changes how they see the problem, the mechanism, or the first useful progress.</p>
-          </article>
-        </div>
-        <p class="angle-note">The expertise can stay the same. The framing changes. A made-up system name alone does not make the idea different.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="angle-fit" data-act="2" data-title="The responsibility gate" role="group" aria-roledescription="slide" aria-labelledby="angle-fit-title">
-      <div class="content">
-        <h2 id="angle-fit-title">Before you optimize the angle, the idea has to pass four responsibility gates.</h2>
-        <div class="angle-tests">
-          <article><strong>Demand</strong><p>Do real searches show that people are trying to solve this problem?</p></article>
-          <article><strong>Expertise</strong><p>Do you have the experience and approved knowledge to help responsibly?</p></article>
-          <article><strong>Clarity</strong><p>Can the right person recognize the problem and understand the next step?</p></article>
-          <article><strong>Deliverability</strong><p>Can the problem be supported safely without requiring your live time at every step?</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="angle-filters" data-act="2" data-title="The five angle filters" role="group" aria-roledescription="slide" aria-labelledby="angle-filters-title">
-      <div class="content">
-        <h2 id="angle-filters-title">Then the five filters make the idea harder to ignore.</h2>
-        <div class="angle-filter-grid" aria-label="The OLSEN angle filters">
-          <article class="angle-filter"><span>O</span><strong>Originality</strong><p>Lead with a frame people are not hearing everywhere.</p></article>
-          <article class="angle-filter"><span>L</span><strong>Leveraged authority</strong><p>Use documented evidence to support the premise. Never borrow an endorsement.</p></article>
-          <article class="angle-filter"><span>S</span><strong>Speed</strong><p>Bring useful insight or first progress closer. Do not promise the outcome.</p></article>
-          <article class="angle-filter supporting-filter"><span>E</span><strong>Ease</strong><p>Remove friction without pretending the work disappears.</p></article>
-          <article class="angle-filter supporting-filter"><span>N</span><strong>Newness</strong><p>Give a familiar problem a fresh frame without inventing a discovery.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="research-process" data-act="2" data-title="How raw search data becomes an angle" role="group" aria-roledescription="slide" aria-labelledby="research-process-title">
-      <div class="content">
-        <h2 id="research-process-title">This is how search data becomes one angle worth building.</h2>
-        <div class="research-path" aria-label="Six actions from search data to a positioning angle">
-          <article><strong>Collect</strong><p>Start with the real phrases people use.</p></article>
-          <article><strong>Group</strong><p>Find repeated problems and language.</p></article>
-          <article><strong>Separate</strong><p>Distinguish learning from buying intent.</p></article>
-          <article><strong>Generate</strong><p>Create several credible ways to frame the solution.</p></article>
-          <article><strong>Score</strong><p>Rate every candidate against the five filters.</p></article>
-          <article><strong>Choose</strong><p>Build the strongest angle that passes the gate.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="angle-scorecard" data-act="2" data-title="Score each angle candidate" role="group" aria-roledescription="slide" aria-labelledby="angle-scorecard-title">
-      <div class="content">
-        <h2 id="angle-scorecard-title">Score every candidate from 1 to 3.</h2>
-        <div class="scorecard-scale" aria-label="A three point angle score">
-          <article><span>1</span><strong>Weak</strong><p>The angle depends on a familiar claim or unsupported leap.</p></article>
-          <article><span>2</span><strong>Credible</strong><p>The idea is useful and believable, but not yet distinct.</p></article>
-          <article><span>3</span><strong>Distinct</strong><p>The frame is specific, responsible, and easy to recognize.</p></article>
-        </div>
-        <div class="scorecard-focus">
-          <p><strong>Start with Originality, Leveraged authority, and Speed.</strong> Ease and Newness help separate close candidates.</p>
-          <p>Only score ideas that already pass the responsibility gate. The score improves the framing, not the truth of the claim.</p>
         </div>
       </div>
     </section>
@@ -1651,32 +1392,6 @@
           </article>
         </div>
         <p class="angle-note">We changed the frame. We did not add a timeline, a revenue promise, or a promised client result.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="positioning-output" data-act="2" data-title="The positioning sentence" role="group" aria-roledescription="slide" aria-labelledby="positioning-output-title">
-      <div class="content">
-        <h2 id="positioning-output-title">The result should fit into one useful positioning sentence.</h2>
-        <div class="positioning-formula four-part" aria-label="A positioning formula">
-          <div class="positioning-part"><span>Who</span><strong>A specific person</strong></div>
-          <div class="positioning-part"><span>Problem</span><strong>A specific problem</strong></div>
-          <div class="positioning-part"><span>Path</span><strong>A credible, approved path</strong></div>
-          <div class="positioning-part"><span>Progress</span><strong>A first useful step</strong></div>
-        </div>
-        <p class="positioning-output">We help a specific person make useful progress on a specific problem through a credible, approved path.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="angle-controls-build" data-act="2" data-title="The angle controls the build" role="group" aria-roledescription="slide" aria-labelledby="angle-controls-build-title">
-      <div class="content">
-        <h2 id="angle-controls-build-title">Keyword research finds the problem. The angle frames the path. Kodara builds the system.</h2>
-        <div class="downstream-path" aria-label="The positioning angle informs the complete business build">
-          <article><span>01</span><strong>Knowledge</strong><p>What expertise to extract.</p></article>
-          <article><span>02</span><strong>AI</strong><p>Which questions it should answer.</p></article>
-          <article><span>03</span><strong>Program</strong><p>What next step to build.</p></article>
-          <article><span>04</span><strong>Website</strong><p>What message to lead with.</p></article>
-          <article><span>05</span><strong>Discovery</strong><p>Where the right people can find it.</p></article>
-        </div>
       </div>
     </section>
 
@@ -1762,6 +1477,15 @@
             <div>Boundaries tell the AI when to stop</div>
             <div>The right users can reach the right program</div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="ai-demonstration" data-act="3" data-title="Sandra AI in action" role="group" aria-roledescription="slide" aria-labelledby="ai-demonstration-title">
+      <div class="content ai-demonstration">
+        <h2 id="ai-demonstration-title">Here is <span class="brand">Sandra AI</span> in action.</h2>
+        <div class="ai-video-shell">
+          <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/iframe?muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fefec3e7459738b6bdddbbb49f3f9b0b8%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" title="Sandra AI demonstration" aria-label="Sandra AI demonstration" loading="lazy" data-thumbnail-poster="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/thumbnails/thumbnail.jpg?time=10s&amp;height=720" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
         </div>
       </div>
     </section>
