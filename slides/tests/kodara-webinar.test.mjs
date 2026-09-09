@@ -115,6 +115,7 @@ assert.match(html, /<img class="ai-preview-media"[^>]*thumbnail\.jpg\?time=10s&a
 assert.equal((html.match(/<iframe\b/g) || []).length, 1, 'the deck should load one playable video');
 assert.match(html, /<iframe[^>]*src="https:\/\/customer-nguqf0yqc9xf45px\.cloudflarestream\.com\/efec3e7459738b6bdddbbb49f3f9b0b8\/iframe\?muted=true&amp;preload=true&amp;poster=/);
 assert.match(html, /<iframe[^>]*title="Sandra AI demonstration"[^>]*loading="lazy"[^>]*data-thumbnail-poster=/);
+assert.match(html, /<iframe[^>]*allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"[^>]*allowfullscreen/);
 assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
 assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>https:\/\/kodarahealth\.com\/webinar\/<\/a>/);
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
