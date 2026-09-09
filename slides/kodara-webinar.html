@@ -848,6 +848,15 @@
     margin-top: 46px;
   }
 
+  .demo-sequence.four-jobs { grid-template-columns: repeat(4, 1fr); }
+  .demo-sequence.four-jobs .demo-card {
+    min-height: 240px;
+    padding: 28px 24px 0 0;
+    border: 0;
+    border-top: 3px solid var(--brand);
+    border-radius: 0;
+    background: transparent;
+  }
   .demo-card {
     min-height: 180px;
     padding: 28px;
@@ -1199,7 +1208,7 @@
       <div class="content ai-preview">
         <div>
           <h2 id="ai-preview-title">Here is what the AI version of you can <span class="brand">actually look like.</span></h2>
-          <p class="lede">This is Sandra AI. Later, I’ll show you how the experience works.</p>
+          <p class="lede">This is Sandra AI. Later, we’ll watch the full customer journey.</p>
         </div>
         <figure class="ai-preview-frame">
           <img class="ai-preview-media" src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/thumbnails/thumbnail.jpg?time=10s&amp;height=720" alt="Preview of Sandra AI guiding a user through an alcohol-craving check-in">
@@ -1261,13 +1270,13 @@
         <h2 id="online-models-title">Here is what we are going to figure out together.</h2>
         <div class="agenda">
           <div class="agenda-list">
-            <div class="agenda-row"><span>01</span><strong>Is taking your expertise online the right direction for you?</strong></div>
-            <div class="agenda-row"><span>02</span><strong>How do you find an angle people are already searching for?</strong></div>
-            <div class="agenda-row"><span>03</span><strong>How can that angle become an AI product without creating an entire second business?</strong></div>
+            <div class="agenda-row"><span>01</span><strong>Find an angle people are already searching for.</strong></div>
+            <div class="agenda-row"><span>02</span><strong>Turn that angle into a business that does not depend on your calendar.</strong></div>
+            <div class="agenda-row"><span>03</span><strong>See what Kodara can build for you.</strong></div>
           </div>
           <aside class="agenda-side">
             <strong>At the end</strong>
-            <p>And at the end, I’ll show you how Kodara can build and launch the entire system for you.</p>
+            <p>At the end, I’ll show you what working with Kodara looks like and the next step if you want our help.</p>
           </aside>
         </div>
       </div>
@@ -1350,14 +1359,6 @@
       </div>
     </section>
 
-    <section class="slide" id="online-reality" data-act="1" data-title="Decide whether this direction fits" role="group" aria-roledescription="slide" aria-labelledby="online-reality-title">
-      <div class="content statement">
-        <div class="statement-rule" aria-hidden="true"></div>
-        <h2 id="online-reality-title">First, decide whether this is even a direction <span class="brand">you want to go.</span></h2>
-        <p class="lede">Your expertise should not stop working when your calendar fills. Then you can decide whether you want Kodara to build it for you.</p>
-      </div>
-    </section>
-
     <section class="slide" id="topic-vs-search" data-act="2" data-title="A topic is not a search" role="group" aria-roledescription="slide" aria-labelledby="topic-vs-search-title">
       <div class="content">
         <h2 id="topic-vs-search-title">A topic shows what you know. A search shows what they want.</h2>
@@ -1391,24 +1392,23 @@
             <p>Same expertise, but a different frame. The mechanism shifts from more of your live time to a digital version of your expertise.</p>
           </article>
         </div>
-        <p class="angle-note">We changed the frame. We did not add a timeline, a revenue promise, or a promised client result.</p>
+        <p class="angle-note">Same expertise. A different frame. No timeline, revenue promise, or promised client result added. Next, we’ll test this against live search data.</p>
       </div>
     </section>
 
-    <section class="slide" id="implementation-bridge" data-act="2" data-title="The angle is only the first problem" role="group" aria-roledescription="slide" aria-labelledby="implementation-bridge-title">
+    <section class="slide" id="implementation-bridge" data-act="2" data-title="From angle to delivery" role="group" aria-roledescription="slide" aria-labelledby="implementation-bridge-title">
       <div class="content statement">
         <div class="statement-rule" aria-hidden="true"></div>
-        <h2 id="implementation-bridge-title">But a strong angle can still build the wrong business.</h2>
-        <p class="lede">If every answer, sale, and client result still needs your time, you have built yourself another job.</p>
+        <h2 id="implementation-bridge-title">Now we know who is raising their hand and what they want.</h2>
+        <p class="lede">That solves the marketing problem. It does not solve delivery.</p>
       </div>
     </section>
 
     <section class="slide" id="calendar-bottleneck" data-act="2" data-title="The calendar bottleneck" role="group" aria-roledescription="slide" aria-labelledby="calendar-bottleneck-title">
       <div class="content bottleneck">
         <div>
-          <div class="act-label">The real bottleneck</div>
-          <h2 id="calendar-bottleneck-title"><span class="brand">The calendar is the bottleneck.</span></h2>
-          <p class="lede">If every client result and every dollar needs another hour from you, growth means you work more.</p>
+          <h2 id="calendar-bottleneck-title">Better marketing can make the <span class="brand">calendar bottleneck</span> worse.</h2>
+          <p class="lede">More people raise their hand, but the same number of hours remain available. The calendar is the bottleneck.</p>
         </div>
         <div class="calendar" aria-label="A full appointment calendar">
           <span></span><span></span><span></span><span></span><span></span>
@@ -1420,62 +1420,19 @@
       </div>
     </section>
 
-    <section class="slide" id="reverse-funnel" data-act="2" data-title="The reverse funnel" role="group" aria-roledescription="slide" aria-labelledby="reverse-funnel-title">
+    <section class="slide" id="definition" data-act="3" data-title="The AI customer path" role="group" aria-roledescription="slide" aria-labelledby="definition-title">
       <div class="content">
-        <h2 id="reverse-funnel-title">Your current funnel filters the market through your calendar.</h2>
-        <div class="funnel-shell">
-          <div class="funnel" aria-label="Reverse funnel from online demand to appointments">
-            <div class="funnel-step">People searching for help</div>
-            <div class="funnel-step">People who find you</div>
-            <div class="funnel-step">People ready to trust you</div>
-            <div class="funnel-step">People who can get on your calendar</div>
-          </div>
-          <div class="funnel-copy">
-            <p>A lot of people may want help. But each requirement narrows the group until only people who can book, attend, and pay for your time reach you.</p>
-            <p>A virtual business creates another responsible path without taking another hour from you every time.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="more-leads" data-act="2" data-title="More leads can worsen the problem" role="group" aria-roledescription="slide" aria-labelledby="more-leads-title">
-      <div class="content">
-        <h2 id="more-leads-title">More leads can make the bottleneck worse.</h2>
-        <div class="equation" aria-label="More demand added to the same calendar creates more pressure">
-          <div class="equation-card"><div><strong>More people</strong><p>More people raise their hand and ask for help.</p></div></div>
-          <div class="equation-sign" aria-hidden="true">+</div>
-          <div class="equation-card"><div><strong>Same hours</strong><p>You still have the same calendar and the same delivery capacity.</p></div></div>
-          <div class="equation-sign" aria-hidden="true">=</div>
-          <div class="equation-card"><div><strong>More pressure</strong><p>More demand lands on the same person: you.</p></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="false-alternatives" data-act="2" data-title="Why common options fall short" role="group" aria-roledescription="slide" aria-labelledby="false-alternatives-title">
-      <div class="content">
-        <h2 id="false-alternatives-title">Each option can work. None removes you as the bottleneck <span class="brand">by itself.</span></h2>
-        <div class="alternatives">
-          <article class="alternative"><strong>More appointments</strong><p>You grow until the calendar fills again.</p></article>
-          <article class="alternative"><strong>A course you build yourself</strong><p>Now you have another offer to create, market, deliver, and manage.</p></article>
-          <article class="alternative"><strong>More social content</strong><p>More attention helps. But now you have a full-time content job too.</p></article>
-          <article class="alternative"><strong>Another marketing agency</strong><p>More leads do not fix what happens after a lead arrives.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="definition" data-act="3" data-title="What AI version means" role="group" aria-roledescription="slide" aria-labelledby="definition-title">
-      <div class="content">
-        <h2 id="definition-title">So what does <span class="brand">an AI version of you</span> actually mean?</h2>
+        <h2 id="definition-title">The AI is the <span class="brand">customer path</span> around your expertise.</h2>
         <div class="definition-grid">
           <div class="definition-main">
-            <strong>It is not a clone. It is a controlled system built from your knowledge.</strong>
-            <p>We use your interviews, methods, documents, and approved materials as the source. Then you test the digital business before it represents you.</p>
+            <strong>Your knowledge becomes something people can use online.</strong>
+            <p>Your approved knowledge can answer questions, understand context, guide people to the right next step, and know when to bring in a human.</p>
           </div>
           <div class="definition-list">
-            <div>Starts with your real knowledge</div>
-            <div>You test and correct the answers</div>
-            <div>Boundaries tell the AI when to stop</div>
-            <div>The right users can reach the right program</div>
+            <div>Built from your source material</div>
+            <div>Tested and corrected by you</div>
+            <div>Connected to the programs you approve</div>
+            <div>Bounded by when a human must take over</div>
           </div>
         </div>
       </div>
@@ -1490,333 +1447,85 @@
       </div>
     </section>
 
-    <section class="slide" id="mechanism-bridge" data-act="3" data-title="The mechanism" role="group" aria-roledescription="slide" aria-labelledby="mechanism-bridge-title">
-      <div class="content statement">
-        <div class="act-label">Now the mechanism</div>
-        <h2 id="mechanism-bridge-title"><span class="brand">You supply the expertise and approval.</span><br>Kodara builds the virtual business around it.</h2>
-        <p class="lede">We connect your knowledge to the boundaries, programs, and customer path. Leave one piece out and the model breaks.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="six-part-process" data-act="3" data-title="The three-step build" role="group" aria-roledescription="slide" aria-labelledby="six-part-process-title">
+    <section class="slide" id="ai-customer-path" data-act="3" data-title="The four jobs inside Sandra AI" role="group" aria-roledescription="slide" aria-labelledby="ai-customer-path-title">
       <div class="content">
-        <h2 id="six-part-process-title">The whole build comes down to three things.</h2>
-        <div class="macro-process">
-          <article class="macro-step"><span>Step 1</span><strong>Share what you know.</strong><p>Give us focused interview time, existing materials, feedback, and the decisions only you can make.</p></article>
-          <article class="macro-step"><span>Step 2</span><strong>Review what we build.</strong><p>We create the AI system, programs, website, brand, and customer path. You test and approve them before launch.</p></article>
-          <article class="macro-step"><span>Step 3</span><strong>Launch and onboard users.</strong><p>We connect the approved discovery path, bring suitable beta users in, and learn what the first version needs next.</p></article>
+        <h2 id="ai-customer-path-title">The four jobs inside the Sandra experience.</h2>
+        <div class="demo-sequence four-jobs">
+          <article class="demo-card"><strong>Understand the person</strong><p>Gather enough context to make the next response useful.</p></article>
+          <article class="demo-card"><strong>Answer from approved knowledge</strong><p>Use the expert’s source material instead of inventing an answer.</p></article>
+          <article class="demo-card"><strong>Guide the next step</strong><p>Connect the conversation to the right program or action.</p></article>
+          <article class="demo-card"><strong>Bring in a human when needed</strong><p>Stop when the question falls outside the approved boundaries.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="select-problem" data-act="3" data-title="Select the problem" role="group" aria-roledescription="slide" aria-labelledby="select-problem-title">
-      <div class="content focus-layout">
-        <div>
-          <h2 id="select-problem-title">We start with one problem you are <span class="brand">qualified to help solve.</span></h2>
-          <p class="lede">A clear problem makes the system easier to build, test, explain, and market responsibly.</p>
-        </div>
-        <aside class="focus-panel">
-          <strong>One problem. One audience. One responsible promise.</strong>
-          <p>The system needs to know who it helps, what it can help with, and exactly when it must stop or bring in a human.</p>
-        </aside>
-      </div>
-    </section>
-
-    <section class="slide" id="extract-expertise" data-act="3" data-title="Extract the expertise" role="group" aria-roledescription="slide" aria-labelledby="extract-expertise-title">
-      <div class="content">
-        <h2 id="extract-expertise-title">Then we pull your expertise out of your head and into the system.</h2>
-        <div class="source-flow">
-          <div class="sources">
-            <div class="source"><strong>Focused interviews</strong><span>Approximately one hour per week, depending on what the build requires.</span></div>
-            <div class="source"><strong>Your documents and frameworks</strong><span>Your methods, explanations, programs, and approved reference material.</span></div>
-            <div class="source"><strong>Your existing media</strong><span>Your training videos, lessons, examples, and stories.</span></div>
-            <div class="source"><strong>Your business context</strong><span>Your audience, offers, customer questions, and delivery boundaries.</span></div>
-          </div>
-          <aside class="source-output">
-            <strong>We need how you think, not just what you have posted.</strong>
-            <p>You decide what becomes source material, and you control what represents your business.</p>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="knowledge-system" data-act="3" data-title="Build the knowledge system" role="group" aria-roledescription="slide" aria-labelledby="knowledge-system-title">
-      <div class="content">
-        <h2 id="knowledge-system-title">Now your knowledge becomes <span class="brand">a system you can test.</span></h2>
-        <div class="product-demo-frame" aria-label="Kodara AI Brain onboarding screen">
-          <header class="product-demo-header">
-            <div class="product-demo-identity"><img src="health/assets/spinewell.svg" alt=""><strong>SpineWell Chiropractic</strong><span>AI Brain onboarding</span></div>
-            <span class="product-demo-state">Sources connected</span>
-          </header>
-          <div class="product-demo-body">
-            <img src="health/assets/figma-ai-brain-onboarding.png" alt="Six business files and Drive folders flowing into a central AI Brain.">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="virtual-business" data-act="3" data-title="Build the virtual business" role="group" aria-roledescription="slide" aria-labelledby="virtual-business-title">
-      <div class="content">
-        <h2 id="virtual-business-title">Then we build the business around that knowledge.</h2>
-        <div class="build-grid">
-          <article class="build-block"><div><strong>One connected customer journey</strong><p>From the first question to the right program or human handoff, using the delivery you approved.</p></div></article>
-          <article class="build-block"><strong>Your website and brand</strong><p>A clear home for your expertise, your programs, and your boundaries.</p></article>
-          <article class="build-block"><strong>Your digital programs</strong><p>Structured offers built around the problem and audience we selected.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="test-and-approve" data-act="3" data-title="Test and approve" role="group" aria-roledescription="slide" aria-labelledby="test-and-approve-title">
-      <div class="content">
-        <h2 id="test-and-approve-title">Before the AI represents you, <span class="brand">you test it.</span></h2>
-        <div class="approval-loop">
-          <article class="approval-card"><strong>Test</strong><p>Ask the questions a real customer would ask, including the difficult ones.</p></article>
-          <div class="approval-arrow" aria-hidden="true">›</div>
-          <article class="approval-card"><strong>Correct</strong><p>Fix the source, the answer, the next step, or the boundary.</p></article>
-          <div class="approval-arrow" aria-hidden="true">›</div>
-          <article class="approval-card"><strong>Approve</strong><p>You decide what can go live and what must always reach a human.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="launch-and-discover" data-act="3" data-title="Launch and discover clients" role="group" aria-roledescription="slide" aria-labelledby="launch-and-discover-title">
-      <div class="content channel-layout">
-        <div>
-          <h2 id="launch-and-discover-title">Then we connect the business to real ways people can find it.</h2>
-          <p class="lede">You should see where users come from, what traffic costs, and why the system chooses each next step.</p>
-        </div>
-        <div class="channel-stack">
-          <div class="channel-row"><strong>Traffic source</strong><span>Named and documented</span></div>
-          <div class="channel-row"><strong>User intent</strong><span>Defined, not guessed</span></div>
-          <div class="channel-row"><strong>AI conversation</strong><span>Grounded in approved material</span></div>
-          <div class="channel-row"><strong>Next step</strong><span>The right program or the right human</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="live-demo" data-act="3" data-title="What the system should prove" role="group" aria-roledescription="slide" aria-labelledby="live-demo-title">
-      <div class="content">
-        <h2 id="live-demo-title">Here is what you should see <span class="brand">before you trust the system.</span></h2>
-        <div class="demo-sequence">
-          <article class="demo-card"><strong>Ask</strong><p>A real prospective user asks a real question.</p></article>
-          <article class="demo-card"><strong>Clarify</strong><p>The system gathers only what it needs before answering.</p></article>
-          <article class="demo-card"><strong>Answer</strong><p>Every response points back to an approved source.</p></article>
-          <article class="demo-card"><strong>Route</strong><p>The user reaches the right program or responsible next step.</p></article>
-          <article class="demo-card"><strong>Review</strong><p>You can correct the answer and approve the change.</p></article>
-          <article class="demo-card"><strong>Escalate</strong><p>Unsafe or uncertain questions stop or reach a human.</p></article>
-        </div>
-        <p class="draft-hold"><strong>The standard:</strong> Every answer traces back to an approved source, boundary, or handoff.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="safety-boundaries" data-act="3" data-title="Safety and control" role="group" aria-roledescription="slide" aria-labelledby="safety-boundaries-title">
-      <div class="content">
-        <h2 id="safety-boundaries-title">Your source material can be approved and the AI can still get an answer wrong.</h2>
-        <div class="boundary-layout">
-          <div class="boundary-main">
-            <div>What information can the AI use?</div>
-            <div>When must a licensed professional take over?</div>
-            <div>What happens when the AI is uncertain?</div>
-            <div>Who collects, stores, shares, and deletes the data?</div>
-          </div>
-          <aside class="boundary-callout">
-            <strong>The boundaries are part of the product.</strong>
-            <p>Privacy, consent, licensing, health claims, human escalation, and product category have to be resolved for each use case.</p>
-            <p class="draft-hold"><strong>The exact setup depends on the use case.</strong> Product configuration and counsel-approved disclosures must match the business before launch.</p>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="elevator-pitch" data-act="4" data-title="What Kodara does" role="group" aria-roledescription="slide" aria-labelledby="elevator-pitch-title">
+    <section class="slide" id="mechanism-bridge" data-act="4" data-title="What Kodara does" role="group" aria-roledescription="slide" aria-labelledby="mechanism-bridge-title">
       <div class="content elevator">
-        <div class="act-label">Why Kodara</div>
-        <h2 id="elevator-pitch-title">Kodara builds the virtual business around your approved expertise.</h2>
-        <p>We interview you for approximately one hour per week during the build, depending on what your project requires. Review, launch, updates, and ongoing oversight take additional time.</p>
+        <h2 id="mechanism-bridge-title">You bring the expertise and approval. <span class="brand">Kodara builds the system around it.</span></h2>
+        <p>The research, AI, programs, customer journey, and launch have to work as one system. That is the work we do for you.</p>
       </div>
     </section>
 
-    <section class="slide" id="who-fits" data-act="4" data-title="Who this is for" role="group" aria-roledescription="slide" aria-labelledby="who-fits-title">
+    <section class="slide" id="kodara-build" data-act="4" data-title="The Kodara build" role="group" aria-roledescription="slide" aria-labelledby="kodara-build-title">
       <div class="content">
-        <h2 id="who-fits-title">Kodara is built for experts who already know how to solve a real problem.</h2>
+        <h2 id="kodara-build-title">The Kodara build</h2>
+        <div class="build-grid">
+          <article class="build-block"><div><strong>The Brain</strong><p>We turn focused interviews and your approved materials into a knowledge system with clear boundaries.</p></div></article>
+          <article class="build-block"><strong>The Business</strong><p>We build the positioning, programs, website, brand, and customer journey around that knowledge.</p></article>
+          <article class="build-block"><strong>The Launch</strong><p>We connect the offer to a defined acquisition path, test the first version, and learn what needs to improve.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="responsibility-split" data-act="4" data-title="What you do and what Kodara does" role="group" aria-roledescription="slide" aria-labelledby="responsibility-split-title">
+      <div class="content">
+        <h2 id="responsibility-split-title">What you do. <span class="brand">What Kodara does.</span></h2>
         <div class="fit-grid">
           <article class="fit-card">
-            <h3>You may be a strong fit if</h3>
-            <div>You have meaningful expertise around one specific problem.</div>
-            <div>Your income, impact, or freedom is constrained by personal delivery.</div>
-            <div>You are willing to interview, review, correct, and approve.</div>
-            <div>You take professional and regulatory boundaries seriously.</div>
+            <h3>You bring the knowledge</h3>
+            <div>Your expertise and existing materials</div>
+            <div>Focused interview time</div>
+            <div>Review, correction, and approval</div>
+            <div>Professional judgment and ongoing oversight</div>
           </article>
           <article class="fit-card">
-            <h3>You are still in control</h3>
-            <div>The system still needs your judgment.</div>
-            <div>The knowledge still needs your updates.</div>
-            <div>Unsafe or unsuitable questions still need escalation.</div>
-            <div>Ongoing oversight is part of using it responsibly.</div>
+            <h3>Kodara builds the system</h3>
+            <div>Demand research and positioning</div>
+            <div>The AI, programs, website, and brand</div>
+            <div>Testing and launch setup</div>
+            <div>The customer path and human handoffs</div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="slide" id="who-does-not-fit" data-act="4" data-title="Who this is not for" role="group" aria-roledescription="slide" aria-labelledby="who-does-not-fit-title">
+    <section class="slide" id="fit-and-next" data-act="4" data-title="Fit and next steps" role="group" aria-roledescription="slide" aria-labelledby="fit-and-next-title">
       <div class="content">
-        <h2 id="who-does-not-fit-title">This is not passive income with you removed from the business.</h2>
+        <h2 id="fit-and-next-title">A strong fit starts with real expertise and a clear problem.</h2>
         <div class="fit-grid">
           <article class="fit-card">
-            <h3>This is not a fit if</h3>
-            <div>There is no proven expertise to build from.</div>
-            <div>You are not willing to review or maintain the system.</div>
-            <div>The proposed use is unsafe, unsupported, or misleading.</div>
-            <div>You expect guaranteed revenue or profit.</div>
+            <h3>Kodara may fit your business if</h3>
+            <div>You already know how to help with a defined problem.</div>
+            <div>Your calendar limits how many people you can serve.</div>
+            <div>You want to review and approve what represents you.</div>
+            <div>You take professional boundaries seriously.</div>
           </article>
           <article class="fit-card">
-            <h3>Keep this clear</h3>
-            <div>Onboarding beta users does not mean you generated revenue.</div>
-            <div>One client story does not automatically show a typical result.</div>
-            <div>A digital program does not replace medical care when medical care is needed.</div>
-            <div>Fit depends on your expertise and the use case.</div>
+            <h3>The first conversation should make the decision clear.</h3>
+            <div>Your strongest angle</div>
+            <div>The responsible use case</div>
+            <div>What Kodara would build</div>
+            <div>The exact scope, price, ownership, support, and terms</div>
           </article>
         </div>
-      </div>
-    </section>
-
-    <section class="slide" id="what-we-build" data-act="4" data-title="What Kodara builds" role="group" aria-roledescription="slide" aria-labelledby="what-we-build-title">
-      <div class="content">
-        <h2 id="what-we-build-title">You bring the expertise. One team connects the rest.</h2>
-        <div class="deliverables">
-          <div class="delivery-main">
-            <div><strong>We extract your knowledge</strong><span>Focused interviews and organized, approved source material.</span></div>
-            <div><strong>We build the AI system</strong><span>Controlled answers, routing, and escalation design.</span></div>
-            <div><strong>We build the programs</strong><span>Digital offers around the problem you solve.</span></div>
-            <div><strong>We build the website and brand</strong><span>A clear customer-facing home for the business.</span></div>
-            <div><strong>We build the approval workflow</strong><span>Testing, correction, review, and version control.</span></div>
-            <div><strong>We set up the launch</strong><span>Defined discovery channels and customer handoffs.</span></div>
-          </div>
-          <aside class="delivery-side">
-            <strong>Done for you still requires you.</strong>
-            <p>You supply the expertise, the review, the approval, and the continuing boundaries.</p>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="guarantee" data-act="4" data-title="What makes a guarantee real" role="group" aria-roledescription="slide" aria-labelledby="guarantee-title">
-      <div class="content guarantee">
-        <div class="guarantee-number"><div><strong class="hold-word">Not yet</strong><span>no guarantee until the complete terms are in writing</span></div></div>
-        <div class="guarantee-copy">
-          <h2 id="guarantee-title">A guarantee is only real when every term is in writing.</h2>
-          <p>Kodara has considered a 30-day launch promise involving a first AI version and 10 beta users. Until the complete terms are supplied to you, treat that proposal as no guarantee.</p>
-          <div class="guarantee-note">The written terms must define eligibility, timing, each milestone, your responsibilities, and the refund process. Even then, a launch promise is not a revenue or paying-customer guarantee.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="decision-terms" data-act="4" data-title="What must be clear before deciding" role="group" aria-roledescription="slide" aria-labelledby="decision-terms-title">
-      <div class="content">
-        <h2 id="decision-terms-title">You should see every cost and ownership term before you decide.</h2>
-        <p class="lede">These four answers belong on screen and in writing.</p>
-        <div class="terms-grid">
-          <article class="term"><strong>What does it cost?</strong><p>The setup price, payment schedule, recurring fees, usage charges, software, hosting, processing, and support.</p></article>
-          <article class="term"><strong>What does traffic cost?</strong><p>Required ad spend, acquisition channels, lead definition, and account ownership.</p></article>
-          <article class="term"><strong>What do I own?</strong><p>Ownership of the website, customer list, programs, data, source materials, and AI configuration.</p></article>
-          <article class="term"><strong>What happens after launch?</strong><p>Maintenance, updates, support term, cancellation, refund process, and continuing obligations.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="accuracy-objection" data-act="5" data-title="Can AI represent me accurately" role="group" aria-roledescription="slide" aria-labelledby="accuracy-objection-title">
-      <div class="content objection">
-        <div class="question-mark" aria-hidden="true">?</div>
-        <div>
-          <div class="act-label">The first objection</div>
-          <h2 id="accuracy-objection-title">Can an AI actually represent how I think and work?</h2>
-          <div class="answer-list">
-            <div><strong>First, we build it from focused interviews and material you approve.</strong> The source needs to reflect how you think and work.</div>
-            <div><strong>Then you test and correct it before launch.</strong> Approval is a process, not a box we check once.</div>
-            <div><strong>And it needs clear boundaries.</strong> Uncertain, unsafe, or unsuitable questions need to stop or reach a human.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="time-audience-objection" data-act="5" data-title="Do I need an audience or more time" role="group" aria-roledescription="slide" aria-labelledby="time-audience-objection-title">
-      <div class="content">
-        <h2 id="time-audience-objection-title">Do I need a huge audience or another full-time job?</h2>
-        <div class="fit-grid">
-          <article class="fit-card">
-            <h3>Audience</h3>
-            <div>You do not need a huge social following.</div>
-            <div>But you do need a named acquisition channel and clear costs.</div>
-            <div>Customers do not arrive automatically.</div>
-          </article>
-          <article class="fit-card">
-            <h3>Time</h3>
-            <div>Plan on approximately one hour per week for interviews during the build, depending on what the project requires.</div>
-            <div>Review, launch, updates, and ongoing oversight take additional time.</div>
-            <div>You should see the full workload before you sign.</div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="difference-objection" data-act="5" data-title="How Kodara differs" role="group" aria-roledescription="slide" aria-labelledby="difference-objection-title">
-      <div class="content">
-        <h2 id="difference-objection-title">So how is this different from a course or another agency?</h2>
-        <div class="comparison">
-          <article class="compare-card"><strong>A course</strong><p>Packages your knowledge, but you may still need to build, market, explain, and support the whole thing.</p></article>
-          <article class="compare-card"><strong>An agency</strong><p>Can create demand, but may not change how your expertise is delivered after a lead arrives.</p></article>
-          <article class="compare-card"><strong>The Kodara model</strong><p>Connects approved knowledge to an interactive AI, digital programs, customer journey, and launch setup in one build.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="common-questions" data-act="5" data-title="Common questions" role="group" aria-roledescription="slide" aria-labelledby="common-questions-title">
-      <div class="content">
-        <h2 id="common-questions-title">These are the questions that matter before you apply.</h2>
-        <p class="lede">Every answer should come from the current product, contract, and compliance details.</p>
-        <div class="qa-grid">
-          <div class="qa-item"><strong>How do the first 10 beta users work?</strong>Who counts, how onboarding works, when the timeline starts, and whether the user pays.</div>
-          <div class="qa-item"><strong>What will this cost me in total?</strong>Every setup, recurring, usage, software, traffic, and processing cost.</div>
-          <div class="qa-item"><strong>What do I own?</strong>Ownership of the site, list, programs, data, materials, and AI configuration.</div>
-          <div class="qa-item"><strong>How is the data protected?</strong>Vendors, retention, access, deletion, consent, and breach process.</div>
-          <div class="qa-item"><strong>What happens when the AI is wrong?</strong>Refusal, escalation, review, and correction process.</div>
-          <div class="qa-item"><strong>Can I expect the same result?</strong>No individual client result is automatically typical or guaranteed.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="normalize-uncertainty" data-act="5" data-title="Reasonable questions are welcome" role="group" aria-roledescription="slide" aria-labelledby="normalize-uncertainty-title">
-      <div class="content uncertainty">
-        <blockquote id="normalize-uncertainty-title">You should have questions.</blockquote>
-        <p>You are putting your expertise, your reputation, and potentially your clients' health information into this system. The next step is not about forcing a fit. It is about finding out whether this can be built responsibly for your business.</p>
-      </div>
-    </section>
-
-    <section class="slide close-slide" id="fit-assessment" data-act="5" data-title="See if you qualify" role="group" aria-roledescription="slide" aria-labelledby="fit-assessment-title">
-      <div class="content qualification-close">
-        <div>
-          <img class="brand-wordmark" src="health/assets/kodara-wordmark.svg" alt="Kodara">
-          <h2 id="fit-assessment-title">Want us to build the first responsible version with you?</h2>
-          <p class="lede">Complete the short fit assessment. We will look at your angle, expertise, use case, and the boundaries the system needs.</p>
-          <div class="qualification-action">
-            <a class="qualification-link" href="https://kodarahealth.com/#kodara-triager" target="_blank" rel="noopener">See If You Qualify</a>
-            <span class="qualification-url">kodarahealth.com</span>
-          </div>
-          <p class="qualification-disclosure">Not every applicant qualifies. The assessment is not medical, legal, or financial advice.</p>
-        </div>
-        <aside class="qualification-list">
-          <strong>We are looking for a responsible fit.</strong>
-          <div>The problem you solve and the people you help.</div>
-          <div>The knowledge and materials you can build from.</div>
-          <div>A first version that can be tested and approved.</div>
-        </aside>
+        <p class="proof-disclosure">Client stories are individual experiences. No revenue or client outcome is guaranteed.</p>
       </div>
     </section>
 
     <section class="slide close-slide" id="webinar-cta" data-act="5" data-title="Book your session" role="group" aria-roledescription="slide" aria-labelledby="webinar-cta-title">
       <div class="content final-cta">
         <img class="brand-wordmark" src="health/assets/kodara-wordmark.svg" alt="Kodara">
-        <h2 id="webinar-cta-title">Ready to see if Kodara can build this for you?</h2>
+        <h2 id="webinar-cta-title">See if Kodara can build this for you.</h2>
         <a class="final-cta-url" href="https://kodarahealth.com/webinar/" target="_blank" rel="noopener">KodaraHealth.com/webinar</a>
       </div>
     </section>

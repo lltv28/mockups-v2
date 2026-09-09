@@ -12,24 +12,24 @@ const visibleText = html
 
 const slides = html.match(/<section class="slide(?: |")/g) || [];
 
-assert.equal(slides.length, 43, 'webinar should contain the condensed 43-slide story');
-assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 43);
-assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 43);
+assert.equal(slides.length, 22, 'webinar should contain the focused 22-slide story');
+assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 22);
+assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 22);
 
 for (const requiredCopy of [
   'Health and wellness interest is already moving online.',
   'Here is what the AI version of you can actually look like.',
-  'This is Sandra AI. Later, I’ll show you how the experience works.',
+  'This is Sandra AI. Later, we’ll watch the full customer journey.',
   'People are looking for answers, explanations, and next steps from their phones and computers.',
   'You have probably heard this before: take what you know and put it online.',
   'High-ticket coaching',
   'But most people on this webinar have not seen massive success with those models.',
   'The offer, content, funnel, sales, technology, support, and delivery become an entire second business.',
   'Here is what we are going to figure out together.',
-  'Is taking your expertise online the right direction for you?',
-  'How do you find an angle people are already searching for?',
-  'How can that angle become an AI product without creating an entire second business?',
-  'And at the end, I’ll show you how Kodara can build and launch the entire system for you.',
+  'Find an angle people are already searching for.',
+  'Turn that angle into a business that does not depend on your calendar.',
+  'See what Kodara can build for you.',
+  'At the end, I’ll show you what working with Kodara looks like and the next step if you want our help.',
   'My name is Lucas Tyson. I’m the founder and CEO of Kodara.',
   '$50M+',
   'Online marketing agency built by age 25.',
@@ -53,32 +53,35 @@ for (const requiredCopy of [
   'This is one reason independent providers are in demand.',
   'When confidence in the system falls, people can become more open to credible alternatives.',
   'Gallup measures public views of U.S. healthcare quality. It does not measure demand for independent providers directly.',
-  'First, decide whether this is even a direction you want to go.',
-  'Then you can decide whether you want Kodara to build it for you.',
   'How To Build The “AI Version Of You” That Can Sell Itself To Clients & Patients Online',
   'A topic shows what you know. A search shows what they want.',
   'Illustrative estimates for teaching only.',
   'The title of this webinar is an angle.',
   'Same expertise, but a different frame.',
-  'But a strong angle can still build the wrong business.',
-  'Your expertise should not stop working when your calendar fills.',
-  'Your audience is already online.',
+  'Next, we’ll test this against live search data.',
+  'Now we know who is raising their hand and what they want.',
+  'That solves the marketing problem. It does not solve delivery.',
+  'Better marketing can make the calendar bottleneck worse.',
   'The calendar is the bottleneck.',
-  'You supply the expertise and approval.',
-  'Share what you know.',
-  'Review what we build.',
-  'Launch and onboard users.',
-  'So what does an AI version of you actually mean?',
+  'The AI is the customer path around your expertise.',
+  'Your approved knowledge can answer questions, understand context, guide people to the right next step, and know when to bring in a human.',
   'Here is Sandra AI in action.',
-  'Here is what you should see before you trust the system.',
-  'Kodara is built for experts who already know how to solve a real problem.',
-  'A guarantee is only real when every term is in writing.',
-  'You should see every cost and ownership term before you decide.',
-  'These are the questions that matter before you apply.',
-  'See If You Qualify',
-  'Ready to see if Kodara can build this for you?',
+  'The four jobs inside the Sandra experience.',
+  'Understand the person',
+  'Answer from approved knowledge',
+  'Guide the next step',
+  'Bring in a human when needed',
+  'You bring the expertise and approval. Kodara builds the system around it.',
+  'The Kodara build',
+  'The Brain',
+  'The Business',
+  'The Launch',
+  'What you do. What Kodara does.',
+  'A strong fit starts with real expertise and a clear problem.',
+  'The first conversation should make the decision clear.',
+  'No revenue or client outcome is guaranteed.',
+  'See if Kodara can build this for you.',
   'KodaraHealth.com/webinar',
-  'not a revenue or paying-customer guarantee',
 ]) {
   assert.ok(visibleText.includes(requiredCopy), `missing required webinar copy: ${requiredCopy}`);
 }
@@ -93,14 +96,18 @@ for (const [earlier, later] of [
   ['id="michelle-story"', 'id="online-premise"'],
   ['id="online-premise"', 'id="leanne-proof"'],
   ['id="leanne-proof"', 'id="independent-provider-demand"'],
-  ['id="independent-provider-demand"', 'id="online-reality"'],
-  ['id="online-reality"', 'id="topic-vs-search"'],
+  ['id="independent-provider-demand"', 'id="topic-vs-search"'],
   ['id="topic-vs-search"', 'id="angle-example"'],
   ['id="angle-example"', 'id="implementation-bridge"'],
   ['id="implementation-bridge"', 'id="calendar-bottleneck"'],
+  ['id="calendar-bottleneck"', 'id="definition"'],
   ['id="definition"', 'id="ai-demonstration"'],
-  ['id="ai-demonstration"', 'id="mechanism-bridge"'],
-  ['id="fit-assessment"', 'id="webinar-cta"'],
+  ['id="ai-demonstration"', 'id="ai-customer-path"'],
+  ['id="ai-customer-path"', 'id="mechanism-bridge"'],
+  ['id="mechanism-bridge"', 'id="kodara-build"'],
+  ['id="kodara-build"', 'id="responsibility-split"'],
+  ['id="responsibility-split"', 'id="fit-and-next"'],
+  ['id="fit-and-next"', 'id="webinar-cta"'],
 ]) {
   assert.ok(html.indexOf(earlier) < html.indexOf(later), `${earlier} should appear before ${later}`);
 }
@@ -116,13 +123,37 @@ assert.equal((html.match(/<iframe\b/g) || []).length, 1, 'the deck should load o
 assert.match(html, /<iframe[^>]*src="https:\/\/customer-nguqf0yqc9xf45px\.cloudflarestream\.com\/efec3e7459738b6bdddbbb49f3f9b0b8\/iframe\?muted=true&amp;preload=true&amp;poster=/);
 assert.match(html, /<iframe[^>]*title="Sandra AI demonstration"[^>]*loading="lazy"[^>]*data-thumbnail-poster=/);
 assert.match(html, /<iframe[^>]*allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"[^>]*allowfullscreen/);
-assert.ok(html.includes('https://kodarahealth.com/#kodara-triager'));
 assert.match(html, /\.final-cta-url \{[^}]*text-decoration: none;/);
 assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>KodaraHealth\.com\/webinar<\/a>/);
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');
 assert.equal((html.match(/class="proof-client(?:\s[^"]*)?"/g) || []).length, 3, 'opening proof should show three clients');
 assert.equal((html.match(/id="leanne-proof"/g) || []).length, 1, 'client proof should appear only once');
 for (const removedSlideId of [
+  'online-reality',
+  'reverse-funnel',
+  'more-leads',
+  'false-alternatives',
+  'six-part-process',
+  'select-problem',
+  'extract-expertise',
+  'knowledge-system',
+  'virtual-business',
+  'test-and-approve',
+  'launch-and-discover',
+  'live-demo',
+  'safety-boundaries',
+  'elevator-pitch',
+  'who-fits',
+  'who-does-not-fit',
+  'what-we-build',
+  'guarantee',
+  'decision-terms',
+  'accuracy-objection',
+  'time-audience-objection',
+  'difference-objection',
+  'common-questions',
+  'normalize-uncertainty',
+  'fit-assessment',
   'two-problems',
   'positioning-shift',
   'search-first',
