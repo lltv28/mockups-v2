@@ -383,15 +383,19 @@
 
   .ai-preview {
     display: grid;
-    grid-template-columns: minmax(0, .82fr) minmax(650px, 1.18fr);
-    gap: 78px;
-    align-items: center;
+    grid-template-rows: auto minmax(0, 1fr);
+    justify-items: center;
+    align-content: center;
+    gap: 4px;
+    min-height: 888px;
+    text-align: center;
   }
 
-  .ai-preview h2 { max-width: 760px; font-size: 78px; }
-  .ai-preview .lede { max-width: 650px; }
-  .ai-preview-frame { width: 720px; max-width: 100%; margin: 0; }
-  .ai-preview-media { width: 100%; aspect-ratio: 1; display: block; object-fit: contain; border: 1px solid var(--line-strong); border-radius: var(--radius); background: #080808; box-shadow: var(--shadow); }
+  .ai-preview > div { display: grid; justify-items: center; }
+  .ai-preview h2 { max-width: 1680px; font-size: 44px; }
+  .ai-preview .lede { max-width: 880px; margin-top: 4px; font-size: 24px; }
+  .ai-preview-frame { position: relative; width: 800px; max-width: 100%; aspect-ratio: 1; overflow: hidden; margin: 0; border: 1px solid var(--line-strong); border-radius: var(--radius); background: #080808; box-shadow: var(--shadow); }
+  .ai-preview-frame iframe, .ai-preview-frame .thumbnail-media-poster { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; object-fit: contain; }
 
   .ai-demonstration {
     display: grid;
@@ -1211,7 +1215,7 @@
           <p class="lede">This is Sandra AI. Later, we’ll watch the full customer journey.</p>
         </div>
         <figure class="ai-preview-frame">
-          <img class="ai-preview-media" src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/thumbnails/thumbnail.jpg?time=10s&amp;height=720" alt="Preview of Sandra AI guiding a user through an alcohol-craving check-in">
+          <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/iframe?controls=true&amp;muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fefec3e7459738b6bdddbbb49f3f9b0b8%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" title="Sandra AI preview" aria-label="Sandra AI preview" loading="eager" data-thumbnail-poster="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/thumbnails/thumbnail.jpg?time=10s&amp;height=720" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
         </figure>
       </div>
     </section>
