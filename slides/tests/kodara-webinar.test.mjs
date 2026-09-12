@@ -124,7 +124,7 @@ assert.match(html, /<iframe[^>]*src="https:\/\/customer-nguqf0yqc9xf45px\.cloudf
 assert.match(html, /<iframe[^>]*title="Sandra AI demonstration"[^>]*loading="lazy"[^>]*data-thumbnail-poster=/);
 assert.match(html, /<iframe[^>]*allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"[^>]*allowfullscreen/);
 assert.match(html, /\.ai-preview \{[^}]*justify-items: center;[^}]*text-align: center;/s);
-assert.match(html, /\.ai-preview-frame \{[^}]*width: 800px;[^}]*aspect-ratio: 1;/s);
+assert.match(html, /\.ai-preview-frame \{[^}]*width: 680px;[^}]*aspect-ratio: 1;/s);
 assert.match(html, /\.final-cta-url \{[^}]*text-decoration: none;/);
 assert.match(html, /<a class="final-cta-url" href="https:\/\/kodarahealth\.com\/webinar\/"[^>]*>KodaraHealth\.com\/webinar<\/a>/);
 assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its presenter-note key');

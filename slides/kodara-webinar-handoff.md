@@ -104,9 +104,10 @@ Serve both files from the same origin. Share only the audience window or browser
 
 ## Sandra video behavior
 
-- Slide 2 contains an 800px centered Cloudflare Stream player.
+- Slides 2 and 16 share one 680px square media frame. The source video is 1:1, so a 16:9 frame would letterbox it.
+- Both embeds use the same Cloudflare video. The poster is the 10-second frame, which shows the Sandra AI chat instead of the opening ad copy.
 - Slide 2 loads eagerly and exposes play, seek, mute, settings, picture-in-picture, and fullscreen controls.
-- Slide 16 contains the full Sandra demonstration and loads lazily.
+- Slide 16 loads lazily.
 - The slide selector replaces video iframes with static poster images so thumbnail rendering does not create extra players.
 - Two playable Sandra embeds are now intentional. This supersedes the older spec that called for a static opening preview and one playable embed.
 - Playback depends on Cloudflare Stream and an internet connection. `slides/health/assets/sandra-video-poster.jpg` and `slides/health/assets/sandra-client-story.mp4` remain available as local fallback material, but the current audience deck does not use them.
@@ -172,6 +173,11 @@ The checked-in `.github/workflows/deploy.yml` listens for pushes to `main`, whil
 
 - Preserve the fixed 1920 by 1080 stage and proportional browser scaling.
 - Preserve the existing Instrument Sans typeface, green Kodara accent, 12px corner radius, and restrained light visual system.
+- Use the type tokens in `:root` (`--fs-display` through `--fs-small`, `--w-heading`, `--w-body`, `--track-display`, `--track-label`). Do not add raw font sizes. Body text floor is 24px and caption floor is 20px so copy survives Zoom compression.
+- Every slide carries a fixed-position `act-label` eyebrow as the first child of its section. It shows the act number and name and replaces the progress bar for wayfinding.
+- Use the four layout templates: `stack` (headline top, body centered in the remaining height, footer pinned), split (`profile`, `origin-story`, `provider-demand`, `bottleneck`), `statement` (bridge slides), and the media template (`ai-preview`, `ai-demonstration`). Add `dense` to drop a long headline to the smaller h2 size.
+- Use the three surfaces: neutral card (default), `is-emphasis` (brand tint and border, reserved for the Kodara or answer side), and inverse (`agenda-side`, `origin-conclusion`, `close-slide`). Photos, screenshots, and video share the `media-frame` treatment.
+- Highlight at most one span per headline in brand green, and only on the payoff word.
 - Keep audience slides sparse enough to support Lucas on camera rather than repeat his full script.
 - Keep stable slide IDs whenever possible because URLs, presenter notes, tests, and synchronization depend on them.
 - Apply the Lucas writing style to all new audience-visible marketing copy.
