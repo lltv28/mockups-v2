@@ -26,9 +26,9 @@ for (const requiredCopy of [
   'But most people on this webinar have not seen massive success with those models.',
   'The offer, content, funnel, sales, technology, support, and delivery become an entire second business.',
   'Here is what we are going to figure out together.',
-  'Find an angle people are already searching for.',
-  'Turn that angle into a business that does not depend on your calendar.',
-  'See what Kodara can build for you.',
+  'Find your next growth opportunity.',
+  'Serve more people without filling your calendar.',
+  'Get the system built for you.',
   'At the end, I’ll show you what working with Kodara looks like and the next step if you want our help.',
   'My name is Lucas Tyson. I’m the founder and CEO of Kodara.',
   '$50M+',
@@ -51,34 +51,35 @@ for (const requiredCopy of [
   'Her virtual business reduced dependence on one-to-one delivery and created time for a passion project.',
   'These are individual client experiences. Results vary, and no specific outcome is guaranteed.',
   'This is one reason independent providers are in demand.',
-  'When confidence in the system falls, people can become more open to credible alternatives.',
   'Gallup measures public views of U.S. healthcare quality. It does not measure demand for independent providers directly.',
   'How To Build The “AI Version Of You” That Can Sell Itself To Clients & Patients Online',
-  'A topic shows what you know. A search shows what they want.',
+  'Start with evidence of what people already want.',
   'Illustrative estimates for teaching only.',
-  'The title of this webinar is an angle.',
-  'Same expertise, but a different frame.',
-  'Next, we’ll test this against live search data.',
-  'Now we know who is raising their hand and what they want.',
-  'That solves the marketing problem. It does not solve delivery.',
+  'One problem can lead us to a whole set of searches.',
+  'Mine related searches',
+  'Let’s open the keyword tool and look at real searches together.',
+  'Now we have two ways to reach those people.',
+  'Search activity is a demand signal. It does not prove willingness to pay or guarantee clients.',
   'Better marketing can make the calendar bottleneck worse.',
   'The calendar is the bottleneck.',
   'The AI is the customer path around your expertise.',
   'Your approved knowledge can answer questions, understand context, guide people to the right next step, and know when to bring in a human.',
   'Here is Sandra AI in action.',
-  'The four jobs inside the Sandra experience.',
-  'Understand the person',
-  'Answer from approved knowledge',
-  'Guide the next step',
+  'How the Sandra AI customer path can work.',
+  'AI marketer',
+  'AI salesperson',
+  'AI program',
   'Bring in a human when needed',
-  'You bring the expertise and approval. Kodara builds the system around it.',
-  'The Kodara build',
-  'The Brain',
-  'The Business',
-  'The Launch',
-  'What you do. What Kodara does.',
-  'A strong fit starts with real expertise and a clear problem.',
-  'The first conversation should make the decision clear.',
+  'You bring the expertise, review, and approval. Kodara builds the system around it.',
+  'Here is what Kodara builds for you.',
+  'Your approved AI knowledge system',
+  'Your website and brand',
+  'Launch setup and acquisition path',
+  'Professional judgment and ongoing oversight stay with you.',
+  '$8,000',
+  '$15,000',
+  'Pay once. Own it forever.',
+  'A recurring yearly subscription.',
   'No revenue or client outcome is guaranteed.',
   'See if Kodara can build this for you.',
   'KodaraHealth.com/webinar',
@@ -92,25 +93,42 @@ for (const [earlier, later] of [
   ['id="search-signals"', 'id="opening"'],
   ['id="opening"', 'id="online-models"'],
   ['id="online-models"', 'id="presenter"'],
-  ['id="presenter"', 'id="michelle-story"'],
+  ['id="presenter"', 'id="founder-proof-1"'],
+  ['id="founder-proof-1"', 'id="founder-proof-2"'],
+  ['id="founder-proof-2"', 'id="michelle-story"'],
   ['id="michelle-story"', 'id="online-premise"'],
   ['id="online-premise"', 'id="leanne-proof"'],
   ['id="leanne-proof"', 'id="independent-provider-demand"'],
-  ['id="independent-provider-demand"', 'id="topic-vs-search"'],
-  ['id="topic-vs-search"', 'id="angle-example"'],
-  ['id="angle-example"', 'id="implementation-bridge"'],
-  ['id="implementation-bridge"', 'id="calendar-bottleneck"'],
+  ['id="independent-provider-demand"', 'id="demand-signals"'],
+  ['id="demand-signals"', 'id="keyword-research"'],
+  ['id="keyword-research"', 'id="demand-acquisition"'],
+  ['id="demand-acquisition"', 'id="calendar-bottleneck"'],
   ['id="calendar-bottleneck"', 'id="definition"'],
-  ['id="definition"', 'id="ai-demonstration"'],
-  ['id="ai-demonstration"', 'id="ai-customer-path"'],
-  ['id="ai-customer-path"', 'id="mechanism-bridge"'],
-  ['id="mechanism-bridge"', 'id="kodara-build"'],
-  ['id="kodara-build"', 'id="responsibility-split"'],
-  ['id="responsibility-split"', 'id="fit-and-next"'],
-  ['id="fit-and-next"', 'id="webinar-cta"'],
+  ['id="definition"', 'id="ai-business-flow"'],
+  ['id="ai-business-flow"', 'id="ai-demonstration"'],
+  ['id="ai-demonstration"', 'id="kodara-build"'],
+  ['id="kodara-build"', 'id="license-options"'],
+  ['id="license-options"', 'id="webinar-cta"'],
 ]) {
   assert.ok(html.indexOf(earlier) < html.indexOf(later), `${earlier} should appear before ${later}`);
 }
+
+function slideMarkup(id) {
+  const section = html.match(new RegExp(`<section[^>]*id="${id}"[^>]*>[\\s\\S]*?</section>`));
+  assert.ok(section, `missing slide: ${id}`);
+  return section[0];
+}
+
+for (const id of ['founder-proof-1', 'founder-proof-2']) {
+  assert.match(slideMarkup(id), /class="proof-image-space"[^>]*role="img"/, 'each proof slide needs its image space');
+}
+assert.equal((slideMarkup('michelle-story').match(/class="personal-image"/g) || []).length, 3);
+const healthcareProof = slideMarkup('independent-provider-demand');
+assert.ok(healthcareProof.indexOf('gallup-healthcare-quality') < healthcareProof.indexOf('class="proof-image-space"'), 'Gallup should precede the second screenshot space');
+assert.match(healthcareProof, /aria-label="Space for a second healthcare proof screenshot"/);
+assert.equal((slideMarkup('kodara-build').match(/<ul>/g) || []).length, 2, 'offer should use two bullet columns');
+assert.match(slideMarkup('license-options'), /\$8,000<span>per year<\/span>/);
+assert.match(slideMarkup('license-options'), /\$15,000<span>one time<\/span>/);
 
 assert.ok(html.includes('health/assets/lucas-tyson-speaking.jpg'));
 assert.ok((html.match(/health\/assets\/kodara-wordmark\.svg/g) || []).length >= 2);
@@ -131,6 +149,13 @@ assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its pre
 assert.equal((html.match(/class="proof-client(?:\s[^"]*)?"/g) || []).length, 3, 'opening proof should show three clients');
 assert.equal((html.match(/id="leanne-proof"/g) || []).length, 1, 'client proof should appear only once');
 for (const removedSlideId of [
+  'ai-customer-path',
+  'topic-vs-search',
+  'angle-example',
+  'implementation-bridge',
+  'mechanism-bridge',
+  'responsibility-split',
+  'fit-and-next',
   'online-reality',
   'reverse-funnel',
   'more-leads',

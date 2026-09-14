@@ -231,7 +231,7 @@
   .lede { max-width: 1020px; margin-top: 28px; font-size: var(--fs-lead); }
 
   .label,
-  .topic-search span, .angle-example-grid span, .search-signal-stack span {
+  .search-signal-stack span {
     display: block;
     color: var(--ink-faint);
     font-size: var(--fs-small);
@@ -241,7 +241,7 @@
   }
 
   .card-title,
-  .story-card strong, .definition-main strong, .topic-search strong, .angle-example-grid strong,
+  .story-card strong, .definition-main strong,
   .agenda-side strong, .origin-conclusion strong, .origin-conclusion span {
     display: block;
     font-family: var(--font-display);
@@ -281,7 +281,7 @@
 
   /* Layout template: stack. Headline top, body centered in the remaining height, footer pinned. */
   .stack { display: flex; flex-direction: column; }
-  .stack > :is(.demand-teaching, .story-card, .agenda, .proof-grid, .topic-search, .angle-example-grid, .definition-grid, .demo-sequence, .build-grid, .fit-grid, .personal-images) {
+  .stack > :is(.demand-teaching, .story-card, .agenda, .proof-grid, .definition-grid, .demo-sequence, .build-grid, .fit-grid, .personal-images) {
     flex: 1;
     align-content: center;
     margin-top: 40px;
@@ -327,7 +327,6 @@
 
   .is-emphasis { border-color: var(--brand); background: var(--brand-soft); }
   .is-emphasis strong, .is-emphasis h3 { color: var(--brand-dark); }
-  .topic-search article.is-emphasis, .angle-example-grid article.is-emphasis { border-top-color: var(--brand); background: none; }
 
   .agenda-side, .origin-conclusion {
     padding: 48px;
@@ -350,7 +349,6 @@
   }
 
   .media-frame img { width: 100%; display: block; }
-  .provider-demand-source .media-frame img { margin-top: -5.9%; }
   .provider-demand-source figcaption { margin-top: 14px; }
   .personal-image { display: grid; place-items: center; aspect-ratio: 4 / 3; border-style: dashed; color: var(--ink-faint); font-size: var(--fs-body); }
 
@@ -425,7 +423,7 @@
   .proof-client:last-child { padding-right: 0; }
   .proof-client + .proof-client { border-left: 1px solid var(--line); }
   .proof-client img { width: 180px; height: 180px; display: block; object-fit: cover; object-position: center 20%; border: 1px solid var(--line-strong); border-radius: 50%; box-shadow: var(--shadow); }
-  .proof-client--martyn img { object-position: center 16%; }
+  .proof-client--martyn img { object-position: center 64%; }
   .proof-client--leanne img { object-position: center; }
   .proof-client strong { margin-top: 28px; }
   .proof-client span { display: block; margin-top: 8px; color: var(--brand-dark); font-size: var(--fs-small); font-weight: var(--w-heading); }
@@ -435,12 +433,6 @@
   .provider-demand .lede { max-width: 680px; }
   .provider-demand-boundary { max-width: 640px; margin-top: 28px; }
   .provider-demand-source { margin: 0; }
-
-  /* Comparison grids */
-  .topic-search, .angle-example-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: stretch; }
-  .topic-search article, .angle-example-grid article { padding-top: 36px; border-top: 2px solid var(--line-strong); }
-  .topic-search strong, .angle-example-grid strong { margin-top: 20px; }
-  .topic-search p, .angle-example-grid p { max-width: 720px; margin-top: 18px; }
 
   /* Calendar */
   .calendar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 32px; }
@@ -455,20 +447,34 @@
   .definition-list div { padding: 18px 0; border-bottom: 1px solid var(--line); font-size: var(--fs-body); line-height: 1.4; }
   .definition-list div:last-child { border-bottom: 0; }
 
-  /* Four jobs */
-  .demo-sequence { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
-  .demo-card { padding: 28px 24px 0 0; border-top: 2px solid var(--line-strong); }
-  .demo-card strong { margin-bottom: 14px; }
-
-  /* Build */
-  .build-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .build-block strong { margin-bottom: 14px; }
-
-  /* Fit */
-  .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .fit-card h3 { margin-bottom: 16px; }
-  .fit-card div { padding: 16px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: var(--fs-body); line-height: 1.4; }
-  .fit-card div:last-child { border-bottom: 0; }
+  /* Proof, demand research, customer flow, and offer. */
+  .proof-image-space { display: grid; place-items: center; min-height: 0; border: 2px dashed var(--line-strong); border-radius: var(--radius); background: var(--surface); color: var(--ink-faint); font-size: var(--fs-body); }
+  .stack > .proof-image-space { flex: 1; margin-top: 40px; }
+  .evidence-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 32px; }
+  .evidence-pair .media-frame, .evidence-pair > .proof-image-space { height: 530px; }
+  .evidence-pair .media-frame img { width: 100%; height: 100%; object-fit: contain; }
+  .research-signals, .research-steps, .acquisition-paths, .ai-flow, .offer-columns, .license-options { display: grid; gap: 40px; flex: 1; align-content: center; margin-top: 40px; }
+  .research-signals, .ai-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .research-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; }
+  .research-signals article, .research-steps li, .acquisition-paths article { border-top: 2px solid var(--brand); padding-top: 28px; }
+  .research-signals h3, .research-steps h3, .acquisition-paths h3, .ai-flow h3 { margin: 20px 0; }
+  .research-steps h3 { font-size: var(--fs-h4); }
+  .demo-cue { margin-top: 32px; color: var(--brand-dark); font-size: var(--fs-lead); }
+  .acquisition-paths, .offer-columns, .license-options { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; }
+  .path-result { margin-top: 32px; color: var(--brand-dark); font-weight: var(--w-heading); }
+  .ai-flow { gap: 64px; list-style: none; }
+  .ai-flow li { position: relative; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .ai-flow li + li::before { content: '→'; position: absolute; left: -50px; top: 44%; color: var(--brand); font-size: var(--fs-h3); }
+  .ai-flow strong { display: block; margin-top: 28px; color: var(--brand-dark); font-size: var(--fs-body); line-height: 1.4; }
+  .flow-oversight { margin-top: 32px; padding: 24px 28px; border-left: 3px solid var(--brand); background: var(--brand-soft); color: var(--brand-dark); }
+  .offer-columns ul { padding-left: 30px; }
+  .offer-columns li { padding-left: 10px; margin: 22px 0; font-size: var(--fs-lead); line-height: 1.35; }
+  .offer-columns li::marker { color: var(--brand); }
+  .license-options article { padding: 48px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .license-options .founding-license { border-color: var(--brand); background: var(--brand-soft); }
+  .license-price { margin: 36px 0; color: var(--ink); font-size: var(--fs-display); font-weight: var(--w-heading); letter-spacing: var(--track-display); line-height: 1; }
+  .license-price span { display: block; margin-top: 16px; color: var(--ink-soft); font-size: var(--fs-lead); font-weight: var(--w-body); letter-spacing: normal; }
+  .license-options h3 { font-size: var(--fs-h4); }
 
   /* Close */
   .close-slide { background: var(--brand-dark); }
@@ -619,9 +625,9 @@
         <h2 id="online-models-title">Here is what we are going to figure out together.</h2>
         <div class="agenda">
           <div class="agenda-list">
-            <div class="agenda-row"><span>01</span><strong>Find an angle people are already searching for.</strong></div>
-            <div class="agenda-row"><span>02</span><strong>Turn that angle into a business that does not depend on your calendar.</strong></div>
-            <div class="agenda-row"><span>03</span><strong>See what Kodara can build for you.</strong></div>
+            <div class="agenda-row"><span>01</span><strong>Find your next growth opportunity.</strong></div>
+            <div class="agenda-row"><span>02</span><strong>Serve more people without filling your calendar.</strong></div>
+            <div class="agenda-row"><span>03</span><strong>Get the system built for you.</strong></div>
           </div>
           <aside class="agenda-side">
             <strong>At the end</strong>
@@ -642,6 +648,22 @@
             <div class="credential-stat"><strong>100,000+</strong><span>Leads and appointments generated, including for health and wellness businesses.</span></div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="slide" id="founder-proof-1" data-act="1" data-title="A closer look at the work." role="group" aria-roledescription="slide" aria-labelledby="founder-proof-1-title">
+      <div class="act-label"><span>01</span>The opportunity</div>
+      <div class="content stack">
+        <h2 id="founder-proof-1-title">A closer look at the work.</h2>
+        <div class="proof-image-space" role="img" aria-label="Space for proof image 1">Proof image 1</div>
+      </div>
+    </section>
+
+    <section class="slide" id="founder-proof-2" data-act="1" data-title="What clients have shared." role="group" aria-roledescription="slide" aria-labelledby="founder-proof-2-title">
+      <div class="act-label"><span>01</span>The opportunity</div>
+      <div class="content stack">
+        <h2 id="founder-proof-2-title">What clients have shared.</h2>
+        <div class="proof-image-space" role="img" aria-label="Space for proof image 2">Proof image 2</div>
       </div>
     </section>
 
@@ -700,71 +722,63 @@
       </div>
     </section>
 
-    <section class="slide" id="independent-provider-demand" data-act="1" data-title="Why independent providers are in demand" role="group" aria-roledescription="slide" aria-labelledby="independent-provider-demand-title">
+    <section class="slide" id="independent-provider-demand" data-act="1" data-title="This is one reason independent providers are in demand." role="group" aria-roledescription="slide" aria-labelledby="independent-provider-demand-title">
       <div class="act-label"><span>01</span>The opportunity</div>
-      <div class="content dense provider-demand">
-        <div>
-          <h2 id="independent-provider-demand-title">This is one reason independent providers are in demand.</h2>
-          <p class="lede">When confidence in the system falls, people can become more open to credible alternatives.</p>
-          <p class="provider-demand-boundary">Gallup measures public views of U.S. healthcare quality. It does not measure demand for independent providers directly.</p>
+      <div class="content stack dense">
+        <h2 id="independent-provider-demand-title">This is one reason independent providers are in demand.</h2>
+        <div class="evidence-pair">
+          <figure class="provider-demand-source">
+            <div class="media-frame"><img src="health/assets/gallup-healthcare-quality-24-year-low.png" alt="Gallup article titled View of U.S. Healthcare Quality Declines to 24-Year Low"></div>
+            <figcaption>Source: Gallup screenshot supplied for this presentation.</figcaption>
+          </figure>
+          <div class="proof-image-space" role="img" aria-label="Space for a second healthcare proof screenshot">Additional proof screenshot</div>
         </div>
-        <figure class="provider-demand-source">
-          <div class="media-frame"><img src="health/assets/gallup-healthcare-quality-24-year-low.png" alt="Gallup article titled View of U.S. Healthcare Quality Declines to 24-Year Low"></div>
-          <figcaption>Source: Gallup screenshot supplied for this presentation.</figcaption>
-        </figure>
+        <p class="proof-disclosure">Gallup measures public views of U.S. healthcare quality. It does not measure demand for independent providers directly.</p>
       </div>
     </section>
 
-    <section class="slide" id="topic-vs-search" data-act="2" data-title="A topic is not a search" role="group" aria-roledescription="slide" aria-labelledby="topic-vs-search-title">
-      <div class="act-label"><span>02</span>Find the angle</div>
-      <div class="content stack">
-        <h2 id="topic-vs-search-title">A topic shows what you know. A search shows what they want.</h2>
-        <div class="topic-search">
-          <article>
-            <span>A topic</span>
-            <strong>Hormone health</strong>
-            <p>You may know this deeply. But the topic alone does not tell us what someone needs today.</p>
-          </article>
-          <article class="is-emphasis">
-            <span>A search</span>
-            <strong>“Why am I still exhausted after changing my diet?”</strong>
-            <p>Now you can see the problem in their language, plus the question they will probably ask next.</p>
-          </article>
+    <section class="slide" id="demand-signals" data-act="2" data-title="Start with evidence of what people already want." role="group" aria-roledescription="slide" aria-labelledby="demand-signals-title">
+      <div class="act-label"><span>02</span>Find the demand</div>
+      <div class="content stack dense">
+        <h2 id="demand-signals-title">Start with evidence of what people already want.</h2>
+        <div class="research-signals">
+          <article><span class="label">Their words</span><h3>What are they asking?</h3><p>Look for the problems, questions, and outcomes people put into search.</p></article>
+          <article><span class="label">Search activity</span><h3>Are people looking?</h3><p>Check estimated searches, related terms, and patterns over time.</p></article>
+          <article><span class="label">Your expertise</span><h3>Can you help?</h3><p>Find the overlap between what people want and what you can responsibly deliver.</p></article>
         </div>
+        <p class="proof-disclosure">Search activity is a demand signal. It does not prove willingness to pay or guarantee clients.</p>
       </div>
     </section>
 
-    <section class="slide" id="angle-example" data-act="2" data-title="The webinar title as an angle" role="group" aria-roledescription="slide" aria-labelledby="angle-example-title">
-      <div class="act-label"><span>02</span>Find the angle</div>
-      <div class="content stack">
-        <h2 id="angle-example-title">The title of this webinar is an angle.</h2>
-        <div class="angle-example-grid">
-          <article>
-            <span>The generic idea</span>
-            <strong>Take your health and wellness knowledge online.</strong>
-            <p>Clear category. Familiar promise. Easy to compare with every course and coaching offer.</p>
-          </article>
-          <article class="is-emphasis">
-            <span>The angle</span>
-            <strong>Build the “AI version of you” that can sell itself to clients and patients online.</strong>
-            <p>Same expertise, but a different frame. The mechanism shifts from more of your live time to a digital version of your expertise.</p>
-          </article>
-        </div>
-        <p class="angle-note">Same expertise. A different frame. No timeline, revenue promise, or promised client result added. Next, we’ll test this against live search data.</p>
+    <section class="slide" id="keyword-research" data-act="2" data-title="One problem can lead us to a whole set of searches." role="group" aria-roledescription="slide" aria-labelledby="keyword-research-title">
+      <div class="act-label"><span>02</span>Find the demand</div>
+      <div class="content stack dense">
+        <h2 id="keyword-research-title">One problem can lead us to a whole set of searches.</h2>
+        <ol class="research-steps">
+          <li><span class="label">Start</span><h3>Choose a problem</h3><p>Begin with a problem your expertise can help address.</p></li>
+          <li><span class="label">Expand</span><h3>Mine related searches</h3><p>Explore related keywords, questions, and the language people repeat.</p></li>
+          <li><span class="label">Group</span><h3>Find the intent</h3><p>Separate learning about a problem from comparing ways to get help.</p></li>
+          <li><span class="label">Check</span><h3>Pick what to test</h3><p>Review search estimates, competition, and the fit with your expertise.</p></li>
+        </ol>
+        <p class="demo-cue">Let’s open the keyword tool and look at real searches together.</p>
       </div>
     </section>
 
-    <section class="slide" id="implementation-bridge" data-act="2" data-title="From angle to delivery" role="group" aria-roledescription="slide" aria-labelledby="implementation-bridge-title">
-      <div class="act-label"><span>02</span>Find the angle</div>
-      <div class="content statement">
-        <div class="statement-rule" aria-hidden="true"></div>
-        <h2 id="implementation-bridge-title">Now we know who is raising their hand and what they want.</h2>
-        <p class="lede">That solves the marketing problem. It does not solve delivery.</p>
+    <section class="slide" id="demand-acquisition" data-act="2" data-title="Now we have two ways to reach those people." role="group" aria-roledescription="slide" aria-labelledby="demand-acquisition-title">
+      <div class="act-label"><span>02</span>Find the demand</div>
+      <div class="content stack dense">
+        <h2 id="demand-acquisition-title">Now we have two ways to reach those people.</h2>
+        <div class="acquisition-paths">
+          <article><span class="label">Organic</span><h3>Create answers people can find.</h3><p>Use the questions we found to shape useful articles, videos, and search pages.</p><p class="path-result">Search or content brings them to your offer.</p></article>
+          <article><span class="label">Paid</span><h3>Test messages against that demand.</h3><p>Use the same language to shape ads and landing pages, then measure the response.</p><p class="path-result">An ad brings them to your offer.</p></article>
+        </div>
+        <p class="demo-cue">The next question: what happens after someone clicks?</p>
+        <p class="proof-disclosure">Both paths require testing. Paid ads involve spend; search interest does not guarantee sales.</p>
       </div>
     </section>
 
     <section class="slide" id="calendar-bottleneck" data-act="2" data-title="The calendar bottleneck" role="group" aria-roledescription="slide" aria-labelledby="calendar-bottleneck-title">
-      <div class="act-label"><span>02</span>Find the angle</div>
+      <div class="act-label"><span>02</span>Find the demand</div>
       <div class="content dense bottleneck">
         <div>
           <h2 id="calendar-bottleneck-title">Better marketing can make the <span class="brand">calendar bottleneck</span> worse.</h2>
@@ -799,6 +813,20 @@
       </div>
     </section>
 
+    <section class="slide" id="ai-business-flow" data-act="3" data-title="How the Sandra AI customer path can work." role="group" aria-roledescription="slide" aria-labelledby="ai-business-flow-title">
+      <div class="act-label"><span>03</span>The AI version of you</div>
+      <div class="content stack dense">
+        <h2 id="ai-business-flow-title">How the Sandra AI customer path can work.</h2>
+        <ol class="ai-flow" aria-label="AI marketer, then AI salesperson, then AI program">
+          <li><span class="label">Attract</span><h3>AI marketer</h3><p>Creates content and ads around Sandra’s approved expertise.</p><strong>Someone clicks.</strong></li>
+          <li><span class="label">Convert</span><h3>AI salesperson</h3><p>Meets the person, asks questions, and explains the approved offer.</p><strong>The person chooses whether to buy.</strong></li>
+          <li><span class="label">Deliver</span><h3>AI program</h3><p>Guides the client through Sandra’s approved program and knowledge.</p><strong>The client gets guidance.</strong></li>
+        </ol>
+        <p class="flow-oversight">Sandra’s knowledge and approval guide every stage. Bring in a human when needed.</p>
+        <p class="proof-disclosure">Illustrative customer journey. AI does not replace professional judgment or guarantee sales or health outcomes.</p>
+      </div>
+    </section>
+
     <section class="slide" id="ai-demonstration" data-act="3" data-title="Sandra AI in action" role="group" aria-roledescription="slide" aria-labelledby="ai-demonstration-title">
       <div class="act-label"><span>03</span>The AI version of you</div>
       <div class="content ai-demonstration">
@@ -809,84 +837,41 @@
       </div>
     </section>
 
-    <section class="slide" id="ai-customer-path" data-act="3" data-title="The four jobs inside Sandra AI" role="group" aria-roledescription="slide" aria-labelledby="ai-customer-path-title">
-      <div class="act-label"><span>03</span>The AI version of you</div>
-      <div class="content stack">
-        <h2 id="ai-customer-path-title">The four jobs inside the Sandra experience.</h2>
-        <div class="demo-sequence four-jobs">
-          <article class="demo-card"><strong>Understand the person</strong><p>Gather enough context to make the next response useful.</p></article>
-          <article class="demo-card"><strong>Answer from approved knowledge</strong><p>Use the expert’s source material instead of inventing an answer.</p></article>
-          <article class="demo-card"><strong>Guide the next step</strong><p>Connect the conversation to the right program or action.</p></article>
-          <article class="demo-card"><strong>Bring in a human when needed</strong><p>Stop when the question falls outside the approved boundaries.</p></article>
+    <section class="slide" id="kodara-build" data-act="4" data-title="Here is what Kodara builds for you." role="group" aria-roledescription="slide" aria-labelledby="kodara-build-title">
+      <div class="act-label"><span>04</span>Working with Kodara</div>
+      <div class="content stack dense">
+        <h2 id="kodara-build-title">Here is what Kodara builds for you.</h2>
+        <div class="offer-columns">
+          <ul>
+            <li>Demand research and positioning</li>
+            <li>Focused interviews to capture your expertise</li>
+            <li>Your approved AI knowledge system</li>
+            <li>Your AI marketing content and ads</li>
+            <li>Your AI sales conversations</li>
+            <li>Your AI program and delivery experience</li>
+          </ul>
+          <ul>
+            <li>Your website and brand</li>
+            <li>Your offer and customer journey</li>
+            <li>Connections to your approved programs</li>
+            <li>Professional boundaries and human handoffs</li>
+            <li>Testing, correction, and expert review</li>
+            <li>Launch setup and acquisition path</li>
+          </ul>
         </div>
+        <p class="flow-oversight">You bring the expertise, review, and approval. Kodara builds the system around it.</p>
+        <p class="proof-disclosure">Professional judgment and ongoing oversight stay with you. No revenue or client outcome is guaranteed.</p>
       </div>
     </section>
 
-    <section class="slide" id="mechanism-bridge" data-act="4" data-title="What Kodara does" role="group" aria-roledescription="slide" aria-labelledby="mechanism-bridge-title">
-      <div class="act-label"><span>04</span>Working with Kodara</div>
-      <div class="content statement">
-        <div class="statement-rule" aria-hidden="true"></div>
-        <h2 id="mechanism-bridge-title">You bring the expertise and approval. <span class="brand">Kodara builds the system around it.</span></h2>
-        <p class="lede">The research, AI, programs, customer journey, and launch have to work as one system. That is the work we do for you.</p>
-      </div>
-    </section>
-
-    <section class="slide" id="kodara-build" data-act="4" data-title="The Kodara build" role="group" aria-roledescription="slide" aria-labelledby="kodara-build-title">
+    <section class="slide" id="license-options" data-act="4" data-title="Choose how you want to own the system." role="group" aria-roledescription="slide" aria-labelledby="license-options-title">
       <div class="act-label"><span>04</span>Working with Kodara</div>
       <div class="content stack">
-        <h2 id="kodara-build-title">The Kodara build</h2>
-        <div class="build-grid">
-          <article class="build-block is-emphasis"><strong>The Brain</strong><p>We turn focused interviews and your approved materials into a knowledge system with clear boundaries.</p></article>
-          <article class="build-block"><strong>The Business</strong><p>We build the positioning, programs, website, brand, and customer journey around that knowledge.</p></article>
-          <article class="build-block"><strong>The Launch</strong><p>We connect the offer to a defined acquisition path, test the first version, and learn what needs to improve.</p></article>
+        <h2 id="license-options-title">Choose how you want to own the system.</h2>
+        <div class="license-options">
+          <article><span class="label">Annual subscription</span><p class="license-price">$8,000<span>per year</span></p><h3>A recurring yearly subscription.</h3></article>
+          <article class="founding-license"><span class="label">Founding license</span><p class="license-price">$15,000<span>one time</span></p><h3>Pay once. Own it forever.</h3></article>
         </div>
-      </div>
-    </section>
-
-    <section class="slide" id="responsibility-split" data-act="4" data-title="What you do and what Kodara does" role="group" aria-roledescription="slide" aria-labelledby="responsibility-split-title">
-      <div class="act-label"><span>04</span>Working with Kodara</div>
-      <div class="content stack">
-        <h2 id="responsibility-split-title">What you do. <span class="brand">What Kodara does.</span></h2>
-        <div class="fit-grid">
-          <article class="fit-card">
-            <h3>You bring the knowledge</h3>
-            <div>Your expertise and existing materials</div>
-            <div>Focused interview time</div>
-            <div>Review, correction, and approval</div>
-            <div>Professional judgment and ongoing oversight</div>
-          </article>
-          <article class="fit-card is-emphasis">
-            <h3>Kodara builds the system</h3>
-            <div>Demand research and positioning</div>
-            <div>The AI, programs, website, and brand</div>
-            <div>Testing and launch setup</div>
-            <div>The customer path and human handoffs</div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" id="fit-and-next" data-act="4" data-title="Fit and next steps" role="group" aria-roledescription="slide" aria-labelledby="fit-and-next-title">
-      <div class="act-label"><span>04</span>Working with Kodara</div>
-      <div class="content stack">
-        <h2 id="fit-and-next-title">A strong fit starts with real expertise and a clear problem.</h2>
-        <div class="fit-grid">
-          <article class="fit-card is-emphasis">
-            <h3>Kodara may fit your business if</h3>
-            <div>You already know how to help with a defined problem.</div>
-            <div>Your calendar limits how many people you can serve.</div>
-            <div>You want to review and approve what represents you.</div>
-            <div>You take professional boundaries seriously.</div>
-          </article>
-          <article class="fit-card">
-            <h3>The first conversation should make the decision clear.</h3>
-            <div>Your strongest angle</div>
-            <div>The responsible use case</div>
-            <div>What Kodara would build</div>
-            <div>The exact scope, price, ownership, support, and terms</div>
-          </article>
-        </div>
-        <p class="proof-disclosure">Client stories are individual experiences. No revenue or client outcome is guaranteed.</p>
       </div>
     </section>
 

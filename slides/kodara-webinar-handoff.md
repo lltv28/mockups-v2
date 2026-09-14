@@ -1,6 +1,6 @@
 # Kodara Webinar Project Handoff
 
-This document hands off the current Kodara health and wellness webinar deck, its presenter controls, speaker script, tests, and GitHub Pages deployment. The public deck is working and deployed. The main unfinished task is bringing the long speaker script back into alignment with the condensed 22-slide deck.
+This document hands off the current Kodara health and wellness webinar deck, its presenter controls, speaker script, tests, and GitHub Pages deployment. The public deck is deployed; the September 14 content revision is committed locally and has not been published. The main unfinished task is bringing the long speaker script back into alignment with the condensed 22-slide deck.
 
 ## Current state
 
@@ -10,7 +10,7 @@ This document hands off the current Kodara health and wellness webinar deck, its
 - Live Sandra preview: <https://lltv28.github.io/mockups-v2/slides/kodara-webinar.html?slide=2>
 - Primary CTA: `KodaraHealth.com/webinar`
 - Git branch: `master`
-- Current deployed commit: `81d3cd3`
+- Last verified deployed commit: `90db54c` (September 14, before this content revision)
 - Current deck length: 22 slides
 - Authored stage: 1920 by 1080
 
@@ -25,50 +25,53 @@ This repository contains other prototypes. Treat the files named `kodara-webinar
 | `slides/kodara-webinar-presenter.html` | Private presenter window with current and next slide previews, timer, notes, and remote navigation | Primary source for presenter behavior |
 | `slides/tests/kodara-webinar-presenter.test.mjs` | Contract for presenter synchronization, notes, timer, and controls | Primary verification source |
 | `slides/kodara-webinar-optimized-transcript.md` | Long-form speaker script and Zoom operating notes | Useful draft, but currently out of sync with the 22-slide deck |
+| `slides/docs/superpowers/specs/2026-09-14-kodara-demand-and-offer.md` | Current revision scope, confirmed pricing, draft choices, and verification results | Current revision brief |
 | `slides/docs/superpowers/specs/2026-09-08-kodara-*.md` | Historical product and narrative decisions | Background only. Several documents refer to older 43-slide or 50-slide versions |
 
 When a historical spec conflicts with the current HTML or tests, follow the current HTML and tests.
 
 ## Current webinar flow
 
-### Act 1 Opportunity authority and proof
+### Act 1 Opportunity, authority, and proof
 
 1. How to build the AI version of you
 2. Preview the AI version of you
 3. Health and wellness interest is moving online
 4. The vehicle decides whether this works
-5. What we will cover
+5. Broader growth agenda: opportunity, capacity, and done-for-you implementation
 6. Why you should listen to Lucas
-7. Why this became personal
-8. Why Lucas built Kodara
-9. What Kodara clients have built
-10. Why independent providers are in demand
+7. A closer look at the work: proof image space
+8. What clients have shared: proof image space
+9. Michelle's story with three image spaces
+10. Why Lucas built Kodara
+11. What Kodara clients have built
+12. Healthcare evidence: Gallup left, additional screenshot space right
 
-### Act 2 Angle and delivery problem
+### Act 2 Demand and acquisition
 
-11. A topic is not a search
-12. The webinar title as an angle
-13. From angle to delivery
-14. The calendar bottleneck
+13. Evidence of what people already want
+14. Mine related keywords and group intent
+15. Organic and paid paths to the offer
+16. The calendar bottleneck
 
-The presenter moves into a live keyword-research screen share after slide 12, then returns to the deck for slide 13.
+Leave the deck after slide 14 for the live keyword-tool demonstration. Return to slide 15 to explain how those searches can inform organic content and paid ads. Tool estimates show search activity; they do not prove buying intent or guarantee customers.
 
 ### Act 3 AI mechanism and demonstration
 
-15. The AI customer path
-16. Sandra AI in action
-17. The four jobs inside Sandra AI
+17. The AI customer path around approved expertise
+18. AI marketer, AI salesperson, AI program: an illustrative connected flow
+19. Sandra AI demonstration
 
-### Act 4 Kodara offer and fit
+### Act 4 Offer and ownership
 
-18. What Kodara does
-19. The Kodara build
-20. What you do and what Kodara does
-21. Fit and next steps
+20. One two-column list of the done-for-you build
+21. Annual subscription: $8,000 per year. Founding license: $15,000 one time, own it forever. No bonuses listed.
 
 ### Act 5 Call to action
 
 22. Book your session at `KodaraHealth.com/webinar`
+
+The September 14 revision is specified in `slides/docs/superpowers/specs/2026-09-14-kodara-demand-and-offer.md`. Two new proof slides and one pricing slide replace space recovered by consolidating the four-slide offer section. The total remains 22.
 
 ## Audience deck controls
 
@@ -98,19 +101,19 @@ The presenter window includes:
 - previous and next controls;
 - left and right arrow-key navigation when the notes field does not have focus.
 
-The audience deck remains the source of truth. Both windows synchronize through the native `BroadcastChannel` API using the `kodara-webinar` channel.
+The audience deck remains the source of truth. Both windows synchronize through the native `BroadcastChannel` API using the `kodara-webinar` channel. Keep only one audience deck open per origin and browser profile because the channel has no session identifier.
 
 Serve both files from the same origin. Share only the audience window or browser tab in Zoom. Sharing the entire desktop can expose the presenter window and private notes.
 
 ## Sandra video behavior
 
-- Slides 2 and 16 share one 680px square media frame. The source video is 1:1, so a 16:9 frame would letterbox it.
+- Slides 2 and 19 share one 680px square media frame. The source video is 1:1, so a 16:9 frame would letterbox it.
 - Both embeds use the same Cloudflare video. The poster is the 10-second frame, which shows the Sandra AI chat instead of the opening ad copy.
 - Slide 2 loads eagerly and exposes play, seek, mute, settings, picture-in-picture, and fullscreen controls.
-- Slide 16 loads lazily.
+- Slide 19 loads lazily.
 - The slide selector replaces video iframes with static poster images so thumbnail rendering does not create extra players.
 - Two playable Sandra embeds are now intentional. This supersedes the older spec that called for a static opening preview and one playable embed.
-- Playback depends on Cloudflare Stream and an internet connection. `slides/health/assets/sandra-video-poster.jpg` and `slides/health/assets/sandra-client-story.mp4` remain available as local fallback material, but the current audience deck does not use them.
+- Playback depends on Cloudflare Stream and an internet connection. The older `slides/health/assets/sandra-video-poster.jpg` and `slides/health/assets/sandra-client-story.mp4` belong to a client testimonial, not this AI demonstration. Prepare an approved static AI-demo fallback separately.
 
 ## Local preview
 
@@ -139,7 +142,7 @@ node --test slides/tests/kodara-webinar-presenter.test.mjs
 
 Before shipping a change, also inspect the affected slide in a real browser at its authored 16:9 proportions. For video changes, confirm the Cloudflare player loads and that play and fullscreen controls are visible.
 
-Current tests protect:
+The tests below inspect source text. They do not execute navigation, notes, or cross-window synchronization; browser checks are required for those behaviors. Static contracts cover:
 
 - the 22-slide order;
 - required audience copy and disclosures;
@@ -179,7 +182,7 @@ The checked-in `.github/workflows/deploy.yml` listens for pushes to `main`, whil
 - Use the three surfaces: neutral card (default), `is-emphasis` (brand tint and border, reserved for the Kodara or answer side), and inverse (`agenda-side`, `origin-conclusion`, `close-slide`). Photos, screenshots, and video share the `media-frame` treatment.
 - Highlight at most one span per headline in brand green, and only on the payoff word.
 - Keep audience slides sparse enough to support Lucas on camera rather than repeat his full script.
-- Keep stable slide IDs whenever possible because URLs, presenter notes, tests, and synchronization depend on them.
+- Keep stable slide IDs for unchanged subjects because presenter notes depend on them. Slide URLs and navigation use numeric positions, so reordering changes numeric deep links.
 - Apply the Lucas writing style to all new audience-visible marketing copy.
 - Keep the offer framed as done for you, with the expert providing knowledge, review, approval, professional judgment, and oversight.
 
@@ -198,6 +201,10 @@ Do not reintroduce claims that AI fully replaces an expert, achieves a stated pe
 
 ## Known issues and handoff risks
 
+- Proof image spaces still need user assets: two founder proof images, three Michelle images, and one healthcare screenshot.
+- The keyword lesson is a draft for refinement with the sales manager. The speaker transcript and saved notes need review against the new order and copy.
+- Founding ownership wording and both prices are user-confirmed. No bonus, ongoing support, or third-party operating-cost terms were supplied or invented.
+
 1. **Speaker script mismatch:** `kodara-webinar-optimized-transcript.md` still describes a 43-slide version. Its production advice and claim lock remain useful, but its slide numbers and much of its second half no longer match the live 22-slide deck.
 2. **Historical specs are stale:** Several September 8 specs refer to 43-slide or 50-slide versions. They explain intent but should not drive current slide count or order.
 3. **Deployment workflow mismatch:** `.github/workflows/deploy.yml` targets `main`; active Pages deployment comes from `master` through the branch-based Pages workflow.
@@ -212,4 +219,3 @@ Do not reintroduce claims that AI fully replaces an expert, achieves a stated pe
 2. Rehearse the audience deck, presenter window, Sandra playback, and keyword screen share in the exact Zoom sharing setup.
 3. Prepare one static Sandra fallback and one static keyword-research fallback in the same shared browser window.
 4. Decide whether to repair or remove the unused `main`-branch deployment workflow.
-
