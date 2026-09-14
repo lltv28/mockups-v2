@@ -1,6 +1,6 @@
 # Kodara Webinar Project Handoff
 
-This document hands off the current Kodara health and wellness webinar deck, its presenter controls, speaker script, tests, and GitHub Pages deployment. The public deck is deployed; the September 14 content revision is committed locally and has not been published. The main unfinished task is bringing the long speaker script back into alignment with the condensed 22-slide deck.
+This document hands off the current Kodara health and wellness webinar deck, its presenter controls, speaker script, tests, and GitHub Pages deployment. The September 14 content revision was deployed. Check the latest successful GitHub Pages run for the currently deployed commit. The main unfinished task is bringing the long speaker script back into alignment with the condensed 22-slide deck.
 
 ## Current state
 
@@ -10,7 +10,7 @@ This document hands off the current Kodara health and wellness webinar deck, its
 - Live Sandra preview: <https://lltv28.github.io/mockups-v2/slides/kodara-webinar.html?slide=2>
 - Primary CTA: `KodaraHealth.com/webinar`
 - Git branch: `master`
-- Last verified deployed commit: `90db54c` (September 14, before this content revision)
+- Deployment status: inspect the latest successful `pages-build-deployment` run on `master`.
 - Current deck length: 22 slides
 - Authored stage: 1920 by 1080
 
@@ -38,7 +38,7 @@ When a historical spec conflicts with the current HTML or tests, follow the curr
 2. Preview the AI version of you
 3. Health and wellness interest is moving online
 4. The vehicle decides whether this works
-5. Broader growth agenda: opportunity, capacity, and done-for-you implementation
+5. How to scale your health and wellness business with AI: health searches, expertise fit, and testing an online offer
 6. Why you should listen to Lucas
 7. A closer look at the work: proof image space
 8. What clients have shared: proof image space
