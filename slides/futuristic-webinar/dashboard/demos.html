@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kodara, Expertise to Growth Demo</title>
+<style>
+  @font-face {
+    font-family: 'Instrument Sans Local';
+    src: url('assets/InstrumentSans.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+  }
+
+  :root {
+    --white: #ffffff;
+    --canvas: #f6f6f7;
+    --ink: #1a1a1a;
+    --border: #e5e5e8;
+    --card-border: #d5d7db;
+    --al-25: rgba(26,26,26,0.04);
+    --al-50: rgba(26,26,26,0.06);
+    --al-100: rgba(26,26,26,0.09);
+    --al-200: rgba(26,26,26,0.20);
+    --al-300: rgba(26,26,26,0.28);
+    --al-400: rgba(26,26,26,0.36);
+    --al-500: rgba(26,26,26,0.48);
+    --al-600: rgba(26,26,26,0.60);
+    --al-900: rgba(26,26,26,0.80);
+    --brand-50: rgba(46,125,82,0.06);
+    --brand-100: rgba(46,125,82,0.08);
+    --brand-200: rgba(46,125,82,0.12);
+    --brand-300: rgba(46,125,82,0.18);
+    --brand-600: rgba(46,125,82,0.55);
+    --brand-950: rgba(46,125,82,0.92);
+    --btn-primary: #2e7d52;
+    --gradient-cta: linear-gradient(to bottom, #087a50, #075e3f);
+    --amber: #8a5a00;
+    --amber-bg: #fff7e6;
+    --amber-border: #f1dfb5;
+    --n50: #fafafa;
+    --font: 'Instrument Sans Local', sans-serif;
+    --shadow-card: 0 8px 16px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-avatar: 0 13px 5px rgba(12,48,70,0.02), 0 7px 4px rgba(12,48,70,0.07), 0 3px 3px rgba(12,48,70,0.12), 0 1px 2px rgba(12,48,70,0.14);
+    --control-radius: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; background: var(--white); color: var(--al-900); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  button { font: inherit; }
+  img { display: block; }
+
+  /* ===== Deck chrome ===== */
+  .app { display: flex; width: 100vw; height: 100vh; overflow: hidden; }
+  .panel { width: 220px; min-width: 220px; height: 100vh; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; background: var(--n50); border-right: 1px solid var(--al-50); z-index: 200; scrollbar-width: thin; scrollbar-color: var(--al-200) transparent; transition: margin-left 250ms ease-out, opacity 200ms ease-out; }
+  .panel.collapsed { margin-left: -220px; opacity: 0; pointer-events: none; }
+  .thumb { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 6px; border-radius: 8px; cursor: pointer; transition: background 150ms ease-out; }
+  .thumb:hover { background: var(--al-50); }
+  .thumb.active { background: var(--brand-50); }
+  .thumb-num { padding-left: 2px; color: var(--al-400); font-size: 10px; font-weight: 500; }
+  .thumb.active .thumb-num { color: var(--brand-950); font-weight: 700; }
+  .thumb-box { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1.5px solid var(--al-100); border-radius: 6px; background: var(--white); }
+  .thumb.active .thumb-box { border-color: var(--brand-950); box-shadow: 0 0 0 1px var(--brand-950); }
+  .thumb-clone { position: absolute; top: 50%; left: 50%; width: 1600px; height: 900px; overflow: hidden; pointer-events: none; transform: translate(-50%, -50%) scale(var(--thumb-scale, 0.122)); }
+  .thumb-clone > .slide { position: absolute !important; inset: 0 !important; width: 1600px !important; height: 900px !important; padding: 20px 30px !important; display: flex !important; opacity: 1 !important; visibility: visible !important; }
+  .thumb-clone *, .thumb-clone *::before, .thumb-clone *::after { animation: none !important; transition: none !important; }
+  .thumb-clone .rv { opacity: 1 !important; transform: none !important; }
+
+  .deck { position: relative; flex: 1; height: 100vh; overflow: hidden; }
+  .slide { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 8px 12px; background: var(--white); opacity: 0; visibility: hidden; transition: opacity 450ms cubic-bezier(.4,0,.2,1), visibility 450ms; }
+  .slide.active { opacity: 1; visibility: visible; }
+  .rv { opacity: 0; transform: translateY(8px); transition: opacity 180ms ease-out, transform 180ms ease-out; }
+  .slide.active .rv { opacity: 1; transform: translateY(0); }
+  .rv.d2 { transition-delay: 70ms; }
+
+  .content-wide { width: 100%; max-width: 1520px; }
+  .slide-header { width: 100%; height: 52px; padding-left: 60px; display: flex; flex-direction: column; justify-content: center; }
+  .slide-header > * { max-width: 1120px; }
+  .h-lg { color: var(--al-900); font-size: clamp(24px, 2vw, 30px); font-weight: 650; line-height: 1.08; letter-spacing: -1px; text-wrap: balance; }
+  .brand-text { color: var(--brand-950); }
+
+  .panel-toggle { position: absolute; top: 20px; left: 24px; z-index: 130; width: 36px; height: 36px; border: 1px solid var(--al-100); border-radius: 8px; background: rgba(255,255,255,0.78); box-shadow: var(--shadow-card); color: var(--al-600); cursor: pointer; display: grid; place-items: center; transition: background 150ms ease-out, border-color 150ms ease-out, transform 150ms ease-out; }
+  .panel-toggle:hover { background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-950); }
+  .panel-toggle:active { transform: translateY(1px); }
+  .grid-icon { width: 16px; height: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; }
+  .grid-icon i { display: block; border: 1.5px solid currentColor; border-radius: 2px; }
+  .deck-arrows { position: fixed; right: 24px; bottom: 20px; z-index: 130; display: flex; gap: 8px; }
+  .deck-arrows .panel-toggle { position: static; font-size: 24px; line-height: 1; }
+  .deck-arrows .panel-toggle:disabled { cursor: default; opacity: 0.28; }
+  .progress { position: fixed; left: 0; bottom: 0; height: 2px; background: var(--brand-600); z-index: 140; transition: width 400ms ease; }
+  .counter { position: fixed; left: 32px; bottom: 24px; color: var(--al-400); font-size: 12px; font-weight: 500; letter-spacing: .5px; z-index: 140; }
+  .counter .cur { color: var(--al-900); font-weight: 700; }
+
+  /* ===== App shell (fake browser + product chrome) ===== */
+  .shell { position: relative; width: min(1520px, 100%); height: 824px; margin: 0 auto; display: grid; grid-template-rows: 38px minmax(0, 1fr); overflow: hidden; border: 1px solid rgba(26,26,26,.14); border-radius: 14px; background: var(--white); box-shadow: 0 24px 70px rgba(16,68,45,.10), 0 2px 10px rgba(26,26,26,.05); color: var(--ink); font-size: 13px; line-height: 1.4; }
+  .shell-bar { display: grid; grid-template-columns: 64px 1fr 64px; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--border); background: #f1f1f3; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic i { display: block; width: 11px; height: 11px; border-radius: 50%; }
+  .traffic i:nth-child(1) { background: #ff5f57; } .traffic i:nth-child(2) { background: #febc2e; } .traffic i:nth-child(3) { background: #28c840; }
+  .url { justify-self: center; width: min(440px, 100%); height: 24px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--border); border-radius: 6px; background: var(--white); color: var(--al-500); font-size: 11.5px; }
+  .url svg { width: 10px; height: 10px; }
+  .url b { color: var(--ink); font-weight: 500; }
+  .shell-body { min-height: 0; display: grid; grid-template-columns: 208px minmax(0, 1fr); }
+
+  .shell-nav { display: flex; flex-direction: column; padding: 14px 10px; border-right: 1px solid var(--border); background: var(--n50); }
+  .nav-brand { display: flex; align-items: center; gap: 9px; padding: 4px 8px 14px; }
+  .nav-brand img { width: 26px; height: 26px; }
+  .nav-brand strong { display: block; font-size: 13.5px; font-weight: 600; line-height: 1.15; }
+  .nav-brand span { display: block; color: var(--al-500); font-size: 10.5px; }
+  .nav-group { margin: 10px 8px 6px; color: var(--al-400); font-size: 10px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; }
+  .nav-item { width: 100%; display: flex; align-items: center; gap: 9px; padding: 7px 9px; border: 0; border-radius: 8px; background: transparent; color: var(--al-600); font-size: 13px; font-weight: 500; text-align: left; cursor: pointer; }
+  .nav-item:hover { background: var(--al-25); }
+  .nav-item.active { background: var(--brand-100); color: var(--btn-primary); font-weight: 600; }
+  .nav-item b { margin-left: auto; min-width: 18px; padding: 1px 6px; border-radius: 999px; background: var(--btn-primary); color: #fff; font-size: 10px; font-weight: 600; text-align: center; }
+  .nav-item em { margin-left: auto; width: 7px; height: 7px; border-radius: 50%; background: #e0a300; }
+  .nav-foot { margin-top: auto; padding: 12px 8px 2px; display: flex; align-items: center; gap: 9px; border-top: 1px solid var(--border); }
+  .nav-foot img { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 50%; object-fit: cover; }
+  .nav-foot strong { display: block; font-size: 12.5px; font-weight: 600; }
+  .nav-foot span { display: block; color: var(--al-500); font-size: 10.5px; }
+
+  .shell-main { min-width: 0; min-height: 0; display: grid; grid-template-rows: 52px minmax(0, 1fr); background: var(--canvas); }
+  .shell-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--white); }
+  .crumbs { display: flex; align-items: center; gap: 8px; color: var(--al-500); font-size: 13px; }
+  .crumbs b { color: var(--ink); font-weight: 600; }
+  .crumbs i { color: var(--al-300); font-style: normal; }
+  .head-tools { display: flex; align-items: center; gap: 10px; }
+  .sync { display: inline-flex; align-items: center; gap: 6px; color: var(--al-500); font-size: 11.5px; }
+  .sync::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #28c840; }
+  .icon-btn { position: relative; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 8px; background: var(--white); color: var(--al-600); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .icon-btn.dot::after { content: ''; position: absolute; top: 6px; right: 7px; width: 6px; height: 6px; border: 1.5px solid #fff; border-radius: 50%; background: #e5484d; }
+  .ico { width: 15px; height: 15px; flex: 0 0 15px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+  .screen { min-width: 0; min-height: 0; padding: 22px 26px 26px; overflow: hidden; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 16px; }
+  .screen-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .screen-head h2 { font-size: 20px; font-weight: 600; line-height: 1.2; letter-spacing: -.4px; }
+  .screen-head p { margin-top: 4px; color: var(--al-500); font-size: 12.5px; }
+  .screen-actions { display: flex; align-items: center; gap: 8px; }
+
+  /* ===== Controls ===== */
+  .btn { min-height: 34px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--border); border-radius: 9px; background: var(--white); color: var(--ink); font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: filter 120ms ease, transform 120ms ease, background 120ms ease; }
+  .btn:hover { background: var(--al-25); }
+  .btn:active { transform: scale(.98); }
+  .btn.primary { border-color: transparent; background: var(--gradient-cta); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.confirmed { border-color: var(--btn-primary); background: var(--btn-primary); color: #fff; filter: none; }
+  .btn.block { width: 100%; }
+  .shell button:focus-visible { outline: 2px solid var(--brand-950); outline-offset: 2px; }
+  .pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border: 1px solid var(--border); border-radius: 999px; background: var(--white); color: var(--al-600); font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .pill.ok { border-color: var(--brand-200); background: var(--brand-50); color: var(--btn-primary); }
+  .pill.warn { border-color: var(--amber-border); background: var(--amber-bg); color: var(--amber); }
+  .pill.auto::before, .pill.warn::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--btn-primary); }
+  .pill.warn::before { background: #e0a300; }
+  .card { min-width: 0; border: 1px solid var(--card-border); border-radius: var(--control-radius); background: var(--white); box-shadow: var(--shadow-card); }
+  .card > header { min-height: 46px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--border); }
+  .card > header strong { font-size: 14px; font-weight: 600; }
+  .bar { height: 5px; overflow: hidden; border-radius: 3px; background: var(--al-50); }
+  .bar i { display: block; height: 100%; border-radius: inherit; background: var(--btn-primary); }
+  .bar.pulse i { background: linear-gradient(90deg, var(--btn-primary) 0 55%, #55b585 75%, var(--btn-primary)); background-size: 200% 100%; animation: bar 1.6s linear infinite; }
+  @keyframes bar { to { background-position: -200% 0; } }
+  .spin { width: 18px; height: 18px; border: 2px solid var(--brand-300); border-top-color: var(--btn-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .meta { color: var(--al-500); font-size: 11px; }
+  mark { padding: 1px 3px; border-bottom: 2px solid var(--btn-primary); border-radius: 4px 4px 2px 2px; background: var(--brand-100); color: inherit; }
+  .composer { display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--white); color: var(--al-400); font-size: 13px; }
+  .composer span { flex: 1; }
+  .composer b { padding: 7px 12px; border-radius: 7px; background: var(--btn-primary); color: #fff; font-size: 12px; font-weight: 600; }
+  .toast { position: absolute; left: 50%; bottom: 22px; z-index: 5; padding: 9px 14px; border-radius: 9px; background: var(--ink); color: #fff; font-size: 12.5px; white-space: nowrap; opacity: 0; pointer-events: none; transform: translate(-50%, 10px); transition: opacity 180ms ease, transform 180ms ease; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ===== Screen 1: niches ===== */
+  .niche-grid { min-height: 0; display: grid; gap: 14px; align-content: start; }
+  .detail-cols { display: grid; grid-template-columns: 1.1fr 1fr 1.25fr; }
+  .detail-col { padding: 14px 18px 16px; }
+  .detail-col + .detail-col { border-left: 1px solid var(--border); }
+  .detail-col h4 { margin-bottom: 10px; color: var(--al-500); font-size: 10.5px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+  .phrases { display: grid; gap: 8px; }
+  .phrases div { display: grid; grid-template-columns: minmax(0, 1fr) 44px; gap: 3px 8px; align-items: center; font-size: 12.5px; }
+  .phrases b { color: var(--al-500); font-size: 11px; font-weight: 500; text-align: right; }
+  .phrases .bar { grid-column: 1 / -1; height: 4px; }
+  .facts { display: grid; gap: 8px; }
+  .facts div { display: flex; justify-content: space-between; gap: 10px; font-size: 12.5px; }
+  .facts span { color: var(--al-500); }
+  .facts b { font-weight: 600; text-align: right; }
+  .draft { display: grid; gap: 9px; }
+  .draft label { display: block; color: var(--al-500); font-size: 10.5px; }
+  .draft p { font-size: 13.5px; font-weight: 600; line-height: 1.35; }
+  .draft p.sub { color: var(--al-900); font-size: 12.5px; font-weight: 400; }
+  .draft .cursor::after { content: '▍'; color: var(--btn-primary); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding: 14px 18px; }
+  .step { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; align-items: start; }
+  .step > i { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: var(--btn-primary); color: #fff; font-size: 11px; font-style: normal; font-weight: 700; }
+  .step strong { display: block; font-size: 13px; font-weight: 600; }
+  .step span { display: block; margin-top: 1px; color: var(--al-500); font-size: 11px; }
+  .step .bar { width: 80%; margin-top: 7px; }
+  .results { align-self: start; overflow: hidden; }
+  .table-foot { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; border-top: 1px solid var(--border); color: var(--al-500); font-size: 11.5px; }
+  .table-foot b { color: var(--btn-primary); font-weight: 600; }
+  .table-head, .row { display: grid; grid-template-columns: 34px 1.1fr 1.7fr 1fr 96px 118px; gap: 16px; align-items: center; padding: 0 18px; border-bottom: 1px solid var(--border); }
+  .table-head { color: var(--al-400); font-size: 10.5px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+  .row { padding: 12px 18px; }
+  .row:last-child { border-bottom: 0; }
+  .row.selected { background: var(--brand-50); box-shadow: inset 3px 0 0 var(--btn-primary); }
+  .row > b { color: var(--btn-primary); font-size: 12px; font-weight: 700; }
+  .row strong { display: block; font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .row .sub { display: block; margin-top: 2px; color: var(--al-500); font-size: 11.5px; }
+  .row p { color: var(--al-900); font-size: 13px; line-height: 1.45; text-wrap: pretty; }
+  .row .ev strong { font-size: 13px; }
+  .fit { display: grid; gap: 5px; }
+  .fit strong { font-size: 14px; }
+
+  /* ===== Screen 2: AI Brain ===== */
+  .brain-layout { min-height: 0; display: grid; grid-template-rows: auto 112px minmax(0, 1fr); gap: 14px; }
+  .sources { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+  .source { position: relative; display: grid; grid-template-columns: 38px minmax(0, 1fr); column-gap: 10px; row-gap: 8px; padding: 12px; }
+  .source.live { border-color: var(--brand-600); }
+  .file-ico { grid-row: 1 / -1; width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--brand-200); border-radius: 9px; background: var(--brand-50); color: var(--btn-primary); font-size: 9.5px; font-weight: 700; letter-spacing: .3px; }
+  .file-ico.doc { border-color: #d6e0fb; background: #eef3ff; color: #2f5bd6; }
+  .file-ico.mp3 { border-color: #f6dcc6; background: #fff3e8; color: #c25e00; }
+  .file-ico.drive { border-color: #f1e2b0; background: #fff8e1; color: #9a6b00; }
+  .file-ico.hs { border-color: #ffd6c9; background: #fff1ec; color: #e0562e; }
+  .source strong { display: block; overflow: hidden; font-size: 12.5px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+  .source .meta { display: block; margin-top: 1px; }
+  .source .pill { justify-self: start; }
+  .source .bar { grid-column: 2; }
+  .converge { position: relative; }
+  .converge svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .converge path { fill: none; stroke: var(--brand-300); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  .orb { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border: 1px solid var(--border); border-radius: 999px; background: var(--white); box-shadow: var(--shadow-card); white-space: nowrap; }
+  .orb i { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #e3ffe9 0, #3fcf8a 40%, #0b6b45 85%); box-shadow: 0 6px 14px rgba(16,104,68,.25); }
+  .orb strong { display: block; font-size: 13px; font-weight: 600; }
+  .orb span { display: block; color: var(--al-500); font-size: 11px; }
+  .brain-bottom { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 480px; gap: 14px; align-items: start; }
+  .ask { display: flex; flex-direction: column; }
+  .qa { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 12px; padding: 14px 16px; }
+  .qa + .qa { border-top: 1px solid var(--border); }
+  .qa > span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 7px; background: var(--al-50); color: var(--al-600); font-size: 11px; font-weight: 700; }
+  .qa.answer > span { background: var(--btn-primary); color: #fff; }
+  .qa p { font-size: 13.5px; line-height: 1.5; text-wrap: pretty; }
+  .cites { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .ask .composer { margin: 4px 14px 14px; }
+  .video { aspect-ratio: 16 / 9; background: var(--canvas); }
+  .video iframe { width: 100%; height: 100%; display: block; border: 0; }
+
+  /* ===== Screen 3: conversations ===== */
+  .selling-showcase { width: min(1520px, 100%); height: 824px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; }
+  .selling-showcase .shell { width: 100%; height: 100%; }
+  .convo { grid-template-rows: minmax(0, 1fr); grid-template-columns: 200px minmax(0, 1fr) 280px; gap: 14px; }
+  .inbox { display: flex; flex-direction: column; overflow: hidden; }
+  .search { margin: 10px 10px 4px; padding: 7px 10px; display: flex; align-items: center; gap: 7px; border: 1px solid var(--border); border-radius: 8px; color: var(--al-400); font-size: 12px; }
+  .search .ico { width: 13px; height: 13px; flex-basis: 13px; }
+  .convo-item { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 9px; align-items: center; padding: 10px 12px; border-radius: 9px; }
+  .convo-item.active { margin: 0 6px; padding-inline: 6px; background: var(--brand-50); }
+  .convo-item img, .init { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+  .init { display: grid; place-items: center; background: var(--al-50); color: var(--al-600); font-size: 11px; font-weight: 700; }
+  .convo-item strong { display: block; overflow: hidden; font-size: 12.5px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+  .convo-item .meta { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .convo-item time { position: absolute; top: 10px; right: 12px; color: var(--al-400); font-size: 10px; }
+  .convo-item.active time { right: 6px; }
+  .convo-item .unread { position: absolute; right: 12px; bottom: 14px; width: 7px; height: 7px; border-radius: 50%; background: var(--btn-primary); }
+  .thread { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; }
+  .thread-head { min-height: 64px; padding: 10px 16px; display: flex; align-items: center; gap: 11px; border-bottom: 1px solid var(--border); }
+  .thread-head img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+  .thread-head strong { display: block; font-size: 14px; font-weight: 600; }
+  .thread-head .tags { margin-left: auto; display: flex; gap: 6px; }
+  .stream { min-height: 0; padding: 14px 16px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; overflow: hidden; }
+  .day { align-self: center; color: var(--al-400); font-size: 10.5px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; }
+  .turn { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 10px; align-items: start; }
+  .turn img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow-avatar); }
+  .ava { position: relative; width: 32px; height: 32px; }
+  .ava b { position: absolute; right: -4px; bottom: -3px; padding: 0 3px; border: 1.5px solid #fff; border-radius: 4px; background: var(--btn-primary); color: #fff; font-size: 7.5px; font-weight: 700; letter-spacing: .3px; line-height: 12px; }
+  .by { display: flex; align-items: baseline; gap: 8px; }
+  .by strong { font-size: 12.5px; font-weight: 600; }
+  .by time { color: var(--al-400); font-size: 10.5px; }
+  .turn p { margin-top: 2px; font-size: 13.5px; line-height: 1.5; text-wrap: pretty; }
+  .turn a { color: var(--btn-primary); font-weight: 500; text-decoration: underline; text-decoration-color: var(--brand-300); }
+  .why { margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; color: var(--btn-primary); font-size: 11px; font-weight: 600; }
+  .why::before { width: 12px; height: 1px; background: var(--btn-primary); content: ''; }
+  .event { display: flex; align-items: center; gap: 8px; margin-left: 42px; padding: 7px 10px; border: 1px solid var(--brand-200); border-radius: 8px; background: var(--brand-50); color: var(--al-900); font-size: 12px; }
+  .event i { width: 16px; height: 16px; display: grid; place-items: center; border-radius: 50%; background: var(--btn-primary); color: #fff; font-size: 9px; font-style: normal; font-weight: 700; }
+  .event b { font-weight: 600; }
+  .thread .composer { margin: 0 14px 14px; }
+  .journey { padding: 0 16px 16px; display: flex; flex-direction: column; }
+  .journey > header { margin: 0 -16px; }
+  .matched { padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .matched strong { display: block; margin: 3px 0 4px; font-size: 14px; font-weight: 600; line-height: 1.35; }
+  .timeline { margin-top: 12px; list-style: none; }
+  .timeline li { position: relative; min-height: 44px; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 9px; align-items: start; }
+  .timeline li:not(:last-child)::after { position: absolute; top: 22px; bottom: 0; left: 10px; width: 1px; background: var(--border); content: ''; }
+  .timeline i { position: relative; z-index: 1; width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--card-border); border-radius: 50%; background: var(--white); color: var(--al-500); font-size: 10px; font-style: normal; font-weight: 700; }
+  .timeline .done i { border-color: var(--btn-primary); background: var(--btn-primary); color: #fff; }
+  .timeline .next i { border-style: dashed; }
+  .timeline strong { display: block; font-size: 13px; font-weight: 600; line-height: 1.35; }
+  .timeline .next strong { color: var(--al-600); }
+  .timeline span { display: block; margin-top: 1px; color: var(--al-500); font-size: 10.5px; }
+  .journey-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); }
+  .journey-foot strong { display: block; margin: 3px 0 9px; font-size: 13px; font-weight: 600; }
+
+  .phone-panel { display: flex; flex-direction: column; overflow: hidden; }
+  .phone-wrap { flex: 1; display: grid; place-items: center; padding: 18px; background: linear-gradient(160deg, #f1f6f3, #e6efe9); }
+  .phone { width: 300px; height: 618px; display: flex; flex-direction: column; overflow: hidden; border: 9px solid #141414; border-radius: 38px; background: #fff; box-shadow: 0 30px 60px rgba(16,68,45,.18); font-size: 11.5px; }
+  .phone-status { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px 6px; font-size: 11px; font-weight: 600; }
+  .phone-status i { display: inline-block; width: 46px; height: 12px; border: 1.5px solid #141414; border-radius: 3px; background: linear-gradient(90deg, #141414 0 78%, transparent 78%); }
+  .ig-head { display: flex; align-items: center; gap: 9px; padding: 8px 14px; }
+  .ig-head img { width: 30px; height: 30px; padding: 3px; border: 1.5px solid #dd2a7b; border-radius: 50%; }
+  .ig-head strong { display: block; font-size: 12px; font-weight: 600; }
+  .ig-head span { display: block; color: var(--al-500); font-size: 10.5px; }
+  .ig-head b { margin-left: auto; color: var(--al-500); letter-spacing: 1px; }
+  .ig-media { position: relative; aspect-ratio: 4 / 5; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; padding: 18px; background: radial-gradient(120% 80% at 80% 10%, #cfe9d8 0, transparent 60%), linear-gradient(160deg, #0f5d3c, #0a3f2a); color: #fff; }
+  .ig-media strong { font-size: 24px; font-weight: 600; line-height: 1.1; letter-spacing: -.6px; }
+  .ig-media span { color: rgba(255,255,255,.75); font-size: 11.5px; }
+  .ig-media em { position: absolute; top: 14px; left: 14px; padding: 3px 8px; border-radius: 999px; background: rgba(255,255,255,.16); color: #fff; font-size: 10px; font-style: normal; font-weight: 600; letter-spacing: .3px; }
+  .ig-cta { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 12px; font-weight: 600; }
+  .ig-cta i { color: var(--al-500); font-style: normal; }
+  .ig-actions { display: flex; gap: 14px; padding: 10px 14px 4px; }
+  .ig-actions .ico { width: 20px; height: 20px; flex-basis: 20px; }
+  .ig-likes { padding: 0 14px; font-size: 11.5px; font-weight: 600; }
+  .ig-caption { padding: 4px 14px 10px; line-height: 1.45; }
+  .ig-caption b { font-weight: 600; }
+  .ig-caption span { color: #2f5bd6; }
+  .ig-dm { margin: auto 14px 16px; padding: 10px; border-radius: 9px; background: #141414; color: #fff; font-size: 12px; font-weight: 600; text-align: center; }
+
+  /* ===== Screen 4: growth ===== */
+  .growth-layout { min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 14px; }
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .kpi { padding: 12px 16px; }
+  .kpi span { display: block; color: var(--al-500); font-size: 11px; }
+  .kpi strong { display: block; margin-top: 2px; font-size: 22px; font-weight: 600; letter-spacing: -.5px; line-height: 1.1; }
+  .kpi small { display: block; margin-top: 3px; color: var(--al-500); font-size: 11px; }
+  .kpi small b { color: var(--btn-primary); font-weight: 600; }
+  .chain { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1.1fr) 24px minmax(0, 1fr); align-items: start; }
+  .link { align-self: stretch; display: grid; place-items: center; color: var(--btn-primary); font-size: 20px; font-style: normal; }
+  .stage { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .stage.focus { border-color: var(--brand-950); background: var(--brand-50); }
+  .stage-label { color: var(--al-500); font-size: 11px; font-weight: 600; }
+  .stage h3 { font-size: 17px; font-weight: 600; line-height: 1.3; }
+  .share { display: grid; gap: 6px; }
+  .share span { color: var(--al-600); font-size: 11.5px; }
+  .share b { color: var(--ink); font-weight: 600; }
+  .snips { list-style: none; display: grid; gap: 8px; }
+  .snips li { padding: 9px 11px; border-left: 3px solid var(--btn-primary); background: var(--brand-50); }
+  .snips p { font-size: 12.5px; line-height: 1.4; }
+  .snips span { display: block; margin-top: 3px; color: var(--al-500); font-size: 10.5px; }
+  .stage .modules { list-style: none; display: grid; gap: 6px; }
+  .modules li { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--white); font-size: 12.5px; }
+  .modules li i { width: 16px; height: 16px; display: grid; place-items: center; border-radius: 50%; background: var(--btn-primary); color: #fff; font-size: 9px; font-style: normal; font-weight: 700; }
+  .modules li.live { color: var(--al-600); }
+  .modules li.live i { background: transparent; }
+  .modules li.live .spin { width: 14px; height: 14px; }
+  .modules em { margin-left: auto; color: var(--al-400); font-size: 11px; font-style: normal; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stage .btn { margin-top: auto; }
+  .proj { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .proj div { padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; background: var(--white); }
+  .proj span { display: block; color: var(--al-500); font-size: 10.5px; }
+  .proj strong { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; letter-spacing: -.3px; white-space: nowrap; }
+  .proj .hi { grid-column: 1 / -1; border-color: var(--brand-200); background: var(--brand-50); }
+  .proj .hi strong { color: var(--btn-primary); font-size: 22px; }
+  .compare { display: grid; gap: 8px; }
+  .compare div { display: grid; grid-template-columns: 90px minmax(0, 1fr) 62px; gap: 10px; align-items: center; font-size: 11.5px; color: var(--al-600); }
+  .compare b { color: var(--ink); font-weight: 600; text-align: right; }
+  .compare .bar { height: 8px; }
+  .compare .bar.soft i { background: var(--brand-300); }
+  .disclaimer { margin-top: auto; color: var(--al-500); font-size: 10.5px; line-height: 1.4; }
+
+  /* ===== Slide 5: offer recap and pricing ===== */
+  .pricing-recap { width: min(1420px, 100%); height: 760px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(470px, .92fr); overflow: hidden; border: 1px solid rgba(26,26,26,.14); border-radius: var(--control-radius); background: var(--white); box-shadow: var(--shadow-card); color: var(--ink); }
+  .pricing-included { min-width: 0; padding: 54px 58px 48px; display: flex; flex-direction: column; }
+  .pricing-included h3 { font-size: 34px; font-weight: 600; line-height: 1.15; letter-spacing: -.7px; }
+  .pricing-included > p { max-width: 560px; margin-top: 10px; color: var(--al-600); font-size: 17px; line-height: 1.5; }
+  .delivery-list { margin-top: 38px; display: grid; }
+  .delivery-item { min-height: 112px; padding: 20px 0; display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: start; gap: 24px; border-top: 1px solid var(--border); }
+  .delivery-item strong { font-size: 20px; font-weight: 600; line-height: 1.25; }
+  .delivery-item p { color: var(--al-600); font-size: 15px; line-height: 1.5; }
+  .owner-workload { margin-top: auto; padding-top: 24px; display: flex; align-items: baseline; justify-content: space-between; gap: 24px; border-top: 1px solid var(--border); }
+  .owner-workload span { color: var(--al-500); font-size: 14px; font-weight: 600; }
+  .owner-workload strong { color: var(--btn-primary); font-size: 31px; font-weight: 650; letter-spacing: -.6px; white-space: nowrap; }
+  .pricing-investment { min-width: 0; padding: 54px 52px 48px; display: flex; flex-direction: column; border-left: 1px solid var(--brand-200); background: var(--brand-50); }
+  .pricing-investment h3 { font-size: 18px; font-weight: 600; }
+  .comparison-cost { margin-top: 18px; }
+  .comparison-cost strong { display: block; color: var(--al-900); font-size: 62px; font-weight: 600; line-height: 1; letter-spacing: -2.4px; }
+  .comparison-cost span { display: block; margin-top: 8px; color: var(--al-600); font-size: 16px; line-height: 1.4; }
+  .pricing-choice { margin-top: 38px; padding-top: 34px; border-top: 1px solid var(--brand-300); }
+  .pricing-choice > span { color: var(--btn-primary); font-size: 15px; font-weight: 650; }
+  .pricing-options { margin-top: 18px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 18px; }
+  .price-option strong { display: block; color: var(--btn-primary); font-size: 50px; font-weight: 650; line-height: 1; letter-spacing: -1.8px; white-space: nowrap; }
+  .price-option span { display: block; margin-top: 8px; color: var(--al-600); font-size: 14px; font-weight: 600; }
+  .price-or { padding-bottom: 25px; color: var(--al-400); font-size: 14px; font-weight: 600; }
+  .pricing-guarantee { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--brand-300); }
+  .pricing-guarantee span { color: var(--btn-primary); font-size: 14px; font-weight: 650; }
+  .pricing-guarantee strong { display: block; max-width: 510px; margin-top: 8px; font-size: 21px; font-weight: 600; line-height: 1.32; letter-spacing: -.25px; }
+  .pricing-guarantee small { display: block; margin-top: 9px; color: var(--al-500); font-size: 12px; line-height: 1.4; }
+  .investment-summary { margin-top: auto; padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid var(--brand-300); }
+  .investment-summary span { color: var(--al-600); font-size: 14px; }
+  .investment-summary strong { font-size: 17px; font-weight: 600; text-align: right; }
+
+
+  /* ===== Dark skin: tokens, mapped onto the shell's variables ===== */
+  .slide.dark {
+    --surface-0: #070c0a; --surface-1: #0c1310; --surface-2: #121b16;
+    --line-1: rgba(255,255,255,0.06); --line-2: rgba(255,255,255,0.10);
+    --fg-1: rgba(255,255,255,0.92); --fg-2: rgba(255,255,255,0.6); --fg-3: rgba(255,255,255,0.38);
+    --accent: #5fe3a1; --danger: #ff7a6b; --warn: #f2c46d;
+    --r-1: 6px; --r-2: 10px; --r-3: 16px;
+    --white: var(--surface-1); --canvas: var(--surface-0); --n50: var(--surface-1); --ink: var(--fg-1);
+    --border: var(--line-1); --card-border: var(--line-2);
+    --al-25: rgba(255,255,255,0.03); --al-50: var(--line-1); --al-100: var(--line-2); --al-200: rgba(255,255,255,0.16); --al-300: rgba(255,255,255,0.26); --al-400: var(--fg-3); --al-500: rgba(255,255,255,0.5); --al-600: var(--fg-2); --al-900: var(--fg-1);
+    --brand-50: rgba(95,227,161,0.06); --brand-100: rgba(95,227,161,0.10); --brand-200: rgba(95,227,161,0.18); --brand-300: rgba(95,227,161,0.28); --brand-600: rgba(95,227,161,0.6); --brand-950: var(--accent);
+    --btn-primary: var(--accent); --gradient-cta: var(--accent);
+    --amber: var(--warn); --amber-bg: rgba(242,196,109,0.10); --amber-border: rgba(242,196,109,0.28);
+    --shadow-card: none; --control-radius: var(--r-2);
+    background: #050907; font-variant-numeric: tabular-nums;
+  }
+  .slide.dark .h-lg { color: var(--fg-1); font-weight: 500; letter-spacing: -.5px; }
+  .slide.dark .shell { border-color: var(--line-2); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.45); }
+  .slide.dark .shell-bar { background: var(--surface-0); }
+  .slide.dark .url { background: var(--surface-1); }
+  .slide.dark .btn, .slide.dark .nav-item, .slide.dark .icon-btn { border-radius: var(--r-1); }
+  .slide.dark .btn.primary, .slide.dark .nav-item b, .slide.dark .composer b { color: #04150c; }
+  .slide.dark .toast { background: #f4fff9; color: #04150c; }
+  .slide.dark .icon-btn.dot::after { border-color: var(--surface-1); }
+  .slide.dark .sync::before { background: var(--accent); }
+  .nav-item em.live { background: var(--btn-primary); }
+
+  /* ===== Nav micro-details (all screens) ===== */
+  .nav-brand { position: relative; }
+  .nav-brand .chev { position: absolute; right: 8px; top: 10px; width: 13px; height: 13px; flex-basis: 13px; color: var(--al-400); }
+  .nav-group { display: flex; align-items: center; justify-content: space-between; }
+  .nav-group::after { content: ''; width: 5px; height: 5px; margin: 0 4px 3px 0; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); opacity: .7; }
+  .nav-usage { margin: 12px 8px 10px; }
+  .nav-usage div:first-child { display: flex; justify-content: space-between; color: var(--al-500); font-size: 10.5px; }
+  .nav-usage b { color: var(--al-600); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .nav-usage .bar { height: 3px; margin-top: 6px; }
+  .icon-btn[data-count]::after { content: attr(data-count); top: -5px; right: -5px; width: auto; min-width: 15px; height: 15px; padding: 0 4px; border-radius: 999px; font-size: 9px; font-weight: 700; line-height: 12px; text-align: center; color: #fff; }
+
+  /* ===== Screen 6: telehealth clinic ===== */
+  .screen.clinic { grid-template-rows: auto auto minmax(0, 1fr); gap: 14px; }
+  .screen.clinic .screen-head h2 { font-size: 18px; }
+  .screen.clinic .screen-head p { font-size: 12px; color: var(--fg-3); }
+  .screen.clinic .screen-head p b { color: var(--fg-2); font-weight: 600; }
+  .toolbar { display: flex; align-items: center; gap: 8px; }
+  .tabs { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line-1); border-radius: var(--r-1); background: var(--surface-1); }
+  .tabs button { height: 26px; padding: 0 10px; border: 0; border-radius: 4px; background: transparent; color: var(--fg-2); font-size: 12px; font-weight: 500; cursor: pointer; }
+  .tabs button b { margin-left: 5px; color: var(--fg-3); font-weight: 500; }
+  .tabs button.on { background: var(--surface-2); color: var(--fg-1); box-shadow: 0 0 0 1px var(--line-2); }
+  .tabs button.on b { color: var(--fg-2); }
+  .tb-chip { height: 32px; padding: 0 10px; font-size: 12px; color: var(--fg-2); }
+  .tb-chip .ico { width: 12px; height: 12px; flex-basis: 12px; }
+  .tb-search { display: flex; align-items: center; gap: 7px; width: 250px; height: 32px; padding: 0 10px; border: 1px solid var(--line-1); border-radius: var(--r-1); background: var(--surface-1); color: var(--fg-3); font-size: 12px; }
+  .tb-search .ico { width: 13px; height: 13px; flex-basis: 13px; }
+  .tb-search span { flex: 1; }
+  .tb-search kbd { padding: 1px 5px; border: 1px solid var(--line-2); border-radius: 4px; color: var(--fg-3); font: 10px var(--font); }
+  .tb-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .seg { display: flex; padding: 3px; border: 1px solid var(--line-1); border-radius: var(--r-1); background: var(--surface-1); }
+  .seg button { width: 26px; height: 26px; display: grid; place-items: center; border: 0; border-radius: 4px; background: transparent; color: var(--fg-3); cursor: pointer; }
+  .seg button.on { background: var(--surface-2); color: var(--fg-1); box-shadow: 0 0 0 1px var(--line-2); }
+  .seg .ico { width: 13px; height: 13px; flex-basis: 13px; }
+  .clinic-layout { min-height: 0; display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 14px; }
+  .floor-wrap { position: relative; min-height: 0; display: grid; }
+  .floor { min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 152px; gap: 12px; align-content: start; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--al-200) transparent; }
+  .floor::-webkit-scrollbar { width: 6px; } .floor::-webkit-scrollbar-thumb { border-radius: 3px; background: var(--al-200); }
+  .newpill { position: absolute; top: 8px; left: 50%; z-index: 2; display: inline-flex; align-items: center; gap: 7px; height: 28px; padding: 0 12px 0 9px; border: 1px solid var(--brand-300); border-radius: 999px; background: var(--surface-2); color: var(--fg-1); font-size: 12px; font-weight: 500; opacity: 0; pointer-events: none; transform: translate(-50%, -10px); transition: opacity 200ms ease, transform 200ms ease; }
+  .newpill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .newpill.show { opacity: 1; transform: translate(-50%, 0); }
+  .pt { position: relative; padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; overflow: hidden; cursor: pointer; transition: background 120ms ease, border-color 120ms ease, transform 120ms ease; }
+  .pt:hover { background: var(--surface-2); border-color: var(--al-200); transform: translateY(-1px); }
+  .pt.enter { animation: enter 320ms ease-out; }
+  @keyframes enter { from { opacity: 0; transform: translateY(-8px); } }
+  .pt-head { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; column-gap: 9px; align-items: center; }
+  .pt-head img, .pt-head .init { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+  .pt-head strong { display: block; overflow: hidden; font-size: 13px; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+  .pt-head .meta { display: flex; align-items: center; gap: 4px; overflow: hidden; white-space: nowrap; color: var(--fg-3); }
+  .pt-head .meta .ico { width: 11px; height: 11px; flex-basis: 11px; }
+  .pt-head time { align-self: start; color: var(--fg-3); font-size: 11px; white-space: nowrap; }
+  .st { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 2px 8px 2px 7px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--fg-2); font-size: 11px; font-weight: 500; }
+  .st::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--fg-3); }
+  .st.ok { color: var(--accent); border-color: var(--brand-300); } .st.ok::before { background: var(--accent); }
+  .st.day { color: var(--fg-1); } .st.day::before { background: var(--accent); }
+  .st.warn { color: var(--warn); border-color: var(--amber-border); } .st.warn::before { background: var(--warn); }
+  .pt p { color: var(--al-900); font-size: 12.5px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .pt p b { color: var(--fg-2); font-weight: 600; }
+  .pt.unread p { color: var(--fg-1); font-weight: 500; }
+  .pt .reply b { color: var(--accent); }
+  .pt-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--fg-3); font-size: 11px; white-space: nowrap; }
+  .pt-foot span { display: inline-flex; align-items: center; gap: 5px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .pt-foot .ico { width: 11px; height: 11px; flex-basis: 11px; }
+  .pt-foot .hot { color: var(--fg-1); font-weight: 600; }
+  .pt-foot .hot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .pt-foot .needs { color: var(--warn); font-weight: 600; }
+  .pt .typing { display: none; gap: 4px; align-items: center; height: 18px; color: var(--fg-3); font-size: 11px; }
+  .pt .typing i { width: 5px; height: 5px; border-radius: 50%; background: var(--fg-3); animation: tdot 1.2s infinite; }
+  .pt .typing i:nth-child(2) { animation-delay: .2s; } .pt .typing i:nth-child(3) { animation-delay: .4s; }
+  .pt .typing span { margin-left: 4px; }
+  @keyframes tdot { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-2px); } }
+  .pt .reply { display: none; }
+  .pt.is-typing .ask { -webkit-line-clamp: 1; }
+  .pt.is-typing .typing { display: inline-flex; }
+  .pt.is-replied .ask { display: none; }
+  .pt.is-replied .reply { display: -webkit-box; }
+  .pt.is-replied { border-color: var(--brand-600); }
+  .init.c1 { background: rgba(95,227,161,.14); color: #8eeebd; } .init.c2 { background: rgba(110,168,255,.14); color: #9cc2ff; } .init.c3 { background: rgba(167,139,250,.14); color: #c4b1ff; } .init.c4 { background: rgba(242,196,109,.14); color: #f5d38f; } .init.c5 { background: rgba(255,143,163,.14); color: #ffb0bf; } .init.c6 { background: rgba(95,212,227,.14); color: #93e2ec; }
+  .skel { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; border-style: dashed; }
+  .skel i { display: block; height: 9px; border-radius: 4px; background: linear-gradient(90deg, var(--al-50) 0%, var(--al-100) 50%, var(--al-50) 100%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .skel .row { display: grid; grid-template-columns: 30px 1fr; gap: 9px; align-items: center; } .skel .row i:first-child { width: 30px; height: 30px; border-radius: 50%; }
+  .rail { min-height: 0; display: grid; gap: 12px; align-content: start; }
+  .brain { padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 12px; }
+  .brain-you { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 12px; align-items: center; }
+  .ring { position: relative; width: 48px; height: 48px; padding: 2px; border-radius: 50%; box-shadow: 0 0 0 1px var(--brand-600); }
+  .ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+  .ring::after { content: ''; position: absolute; right: 0; bottom: 0; width: 11px; height: 11px; border: 2px solid var(--surface-1); border-radius: 50%; background: var(--accent); }
+  .brain-you strong { display: block; font-size: 13px; font-weight: 600; }
+  .brain-you .meta { display: block; margin: 1px 0 5px; color: var(--fg-3); }
+  .spark { padding-top: 12px; border-top: 1px solid var(--border); }
+  .spark-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .spark-head span { color: var(--fg-3); font-size: 11px; } .spark-head b { font-size: 12px; font-weight: 600; }
+  .spark-head b small { margin-left: 5px; color: var(--fg-3); font-size: 11px; font-weight: 500; }
+  .bars { margin-top: 8px; height: 40px; display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; align-items: end; }
+  .bars i { display: block; border-radius: 2px 2px 0 0; background: var(--al-200); }
+  .bars i.now { background: var(--accent); }
+  .axis { display: flex; justify-content: space-between; margin-top: 4px; color: var(--fg-3); font-size: 9.5px; }
+  .roles { list-style: none; display: grid; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .roles li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 9px; align-items: center; }
+  .roles li i { width: 24px; height: 24px; display: grid; place-items: center; border-radius: var(--r-1); background: var(--brand-100); color: var(--accent); }
+  .roles li i .ico { width: 13px; height: 13px; flex-basis: 13px; }
+  .roles strong { display: block; font-size: 12px; font-weight: 600; }
+  .roles span { display: block; margin-top: 1px; color: var(--fg-3); font-size: 11px; }
+  .roles em { color: var(--fg-2); font-size: 11px; font-style: normal; }
+  .brain-foot { display: flex; align-items: center; gap: 7px; padding-top: 11px; border-top: 1px solid var(--border); color: var(--fg-2); font-size: 11px; font-weight: 500; }
+  .brain-foot .ico { width: 12px; height: 12px; flex-basis: 12px; color: var(--accent); }
+  .qrow { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 9px; align-items: center; padding: 9px 16px; border-bottom: 1px solid var(--border); transition: opacity 250ms ease; }
+  .qrow.leave { opacity: 0; }
+  .qrow .init { width: 28px; height: 28px; font-size: 10px; }
+  .qrow strong { display: block; font-size: 12.5px; font-weight: 600; }
+  .qrow .meta { display: block; color: var(--fg-3); }
+  .qrow time { color: var(--fg-2); font-size: 11.5px; }
+  .qnote { padding: 9px 16px 11px; color: var(--fg-3); font-size: 11px; line-height: 1.4; }
+
+  /* ===== Screen 7: team, v4 ===== */
+  .screen.team { grid-template-rows: minmax(0, 1fr); }
+  .screen.team .screen-head h2 { font-size: 18px; }
+  .screen.team .screen-head p { font-size: 12.5px; color: var(--fg-3); }
+  .team-layout { min-height: 0; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 20px; }
+  .stream { min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); }
+  .stream > header span { color: var(--fg-3); font-size: 11.5px; }
+  .events { list-style: none; min-height: 0; overflow-y: auto; padding: 4px 0 0; scrollbar-width: thin; scrollbar-color: var(--al-200) transparent; }
+  .events::-webkit-scrollbar { width: 6px; } .events::-webkit-scrollbar-thumb { border-radius: 3px; background: var(--al-200); }
+  .ev { display: grid; grid-template-columns: 34px 8px minmax(0, 1fr); gap: 9px; align-items: start; padding: 10px 14px 10px 16px; border-bottom: 1px solid var(--line-1); }
+  .ev time { padding-top: 1px; color: var(--fg-3); font-size: 12px; }
+  .ev i { width: 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--al-300); }
+  .ev.money i { background: var(--fg-1); } .ev.warn i { background: var(--warn); }
+  .ev strong { display: -webkit-box; overflow: hidden; color: var(--fg-2); font-size: 13px; font-weight: 500; line-height: 1.35; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .ev.money strong { color: var(--fg-1); font-weight: 600; } .ev.warn strong { color: var(--fg-1); }
+  .ev span { display: none; }
+  .ev.enter { animation: enter 320ms ease-out; }
+  .org { min-height: 0; display: flex; flex-direction: column; }
+  .hero { display: grid; grid-template-columns: 220px 210px repeat(4, minmax(0, 1fr)); align-items: center; }
+  .hero > div { padding: 8px 16px; border-left: 1px solid var(--line-1); }
+  .hero > div:first-child { border-left: 0; }
+  .hero span { display: block; color: var(--fg-3); font-size: 11.5px; }
+  .hero strong { display: block; margin-top: 4px; font-size: 22px; font-weight: 600; letter-spacing: -.4px; line-height: 1; }
+  .hero .rev strong { font-size: 34px; letter-spacing: -1px; }
+  .hero .chart { padding-top: 12px; padding-bottom: 10px; }
+  .hero .bars { height: 34px; margin-top: 6px; }
+  .hero .axis { margin-top: 3px; }
+  .lead-line { margin-top: 12px; display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 14px; align-items: center; padding: 2px 4px 9px; border-bottom: 1px solid var(--line-1); }
+  .brain-ring { position: relative; display: block; width: 40px; height: 40px; }
+  .brain-ring img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1px var(--line-2); }
+  .brain-ring i { position: absolute; right: -4px; bottom: -4px; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: var(--surface-1); color: var(--accent); box-shadow: 0 0 0 1px var(--line-2); }
+  .brain-ring i .ico { width: 11px; height: 11px; flex-basis: 11px; }
+  .lead-line strong { display: block; font-size: 14px; font-weight: 600; }
+  .lead-line .meta { display: block; margin-top: 1px; color: var(--fg-3); }
+  .lead-line .on { display: inline-flex; align-items: center; gap: 7px; margin-top: 3px; color: var(--fg-2); font-size: 12.5px; }
+  .lead-line .on::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .org-v { width: 1px; height: 16px; margin: 0 auto; background: var(--line-2); }
+  .org-split { position: relative; height: 22px; }
+  .org-split::before { content: ''; position: absolute; left: 15.85%; right: 15.85%; top: 0; border-top: 1px solid var(--line-2); }
+  .org-split span { position: absolute; top: 0; bottom: -1px; width: 1px; background: var(--line-2); }
+  .org-depts { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .dept-col { position: relative; min-height: 0; padding: 0 12px 12px; border: 1px solid var(--line-1); border-radius: 12px; background: rgba(255,255,255,0.025); }
+  .dept-col::before { content: ''; position: absolute; left: 50%; top: -6px; width: 7px; height: 7px; border-radius: 50%; background: var(--surface-0); box-shadow: 0 0 0 1.5px var(--line-2); transform: translateX(-50%); }
+  .dept-col > header { display: flex; align-items: baseline; justify-content: space-between; padding: 12px 8px 10px; border-bottom: 1px solid var(--line-1); }
+  .dept-col > header strong { font-size: 14px; font-weight: 600; }
+  .dept-col > header span { color: var(--fg-3); font-size: 11.5px; }
+  .agents { min-height: 0; display: grid; grid-template-rows: 1fr 1fr; gap: 10px; padding-top: 10px; }
+  .dept-col { display: flex; flex-direction: column; }
+  .dept-col .agents { flex: 1; }
+  .agent-card { min-height: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; grid-template-rows: auto minmax(0, 1fr) auto; column-gap: 12px; row-gap: 7px; align-items: center; padding: 10px 14px 10px; transition: background 120ms ease, border-color 120ms ease; }
+  .agent-card.is-hover, .agent-card:hover { background: var(--surface-2); border-color: var(--al-200); }
+  .agent-ava { position: relative; display: block; width: 44px; height: 44px; border-radius: 50%; }
+  .agent-ava img { display: block; width: 44px; height: 44px; border-radius: 50%; object-fit: cover; animation: orbspin 48s linear infinite; }
+  .agent-ava::after { content: ''; position: absolute; inset: 0; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10), 0 0 0 2px var(--surface-1), 0 0 0 3px rgba(255,255,255,0.16), 0 3px 8px rgba(0,0,0,0.5); pointer-events: none; }
+  .agent-card.is-hover .agent-ava::after, .agent-card:hover .agent-ava::after { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10), 0 0 0 2px var(--surface-2), 0 0 0 3px rgba(255,255,255,0.18), 0 3px 8px rgba(0,0,0,0.5); }
+  .agent-ava .pres { border: 2px solid var(--surface-1); box-shadow: 0 0 0 1px rgba(255,255,255,0.16); }
+  .agent-card.is-hover .agent-ava .pres { border-color: var(--surface-2); }
+  .agent-card.typing .agent-ava img { animation-duration: 14s; }
+  .agent-ava:has(.pres.idle) img, .agent-ava:has(.pres.wait) img { animation-play-state: paused; }
+  @keyframes orbspin { to { transform: rotate(360deg); } }
+  .agent-ava .pres { z-index: 2; }
+  .lead-line .brain-ring i.orb-mini { overflow: hidden; background: var(--surface-1); box-shadow: 0 0 0 2px #050907, 0 0 0 3px rgba(255,255,255,0.16); }
+  .lead-line .brain-ring img { box-shadow: 0 0 0 2px #050907, 0 0 0 3px rgba(255,255,255,0.14); }
+  .orb-mini img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+  .agent-ava .pres { position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border: 2px solid var(--surface-1); border-radius: 50%; background: var(--accent); }
+  .agent-card.is-hover .agent-ava .pres { border-color: var(--surface-2); }
+  .agent-ava .pres.wait { background: var(--warn); } .agent-ava .pres.idle { background: var(--al-300); }
+  .agent-card .who { min-width: 0; }
+  .agent-card .who strong { display: block; font-size: 14px; font-weight: 600; }
+  .agent-card .who span { display: block; margin-top: 1px; color: var(--fg-3); font-size: 11.5px; white-space: nowrap; }
+  .agent-card .who span.wait { color: var(--warn); }
+  .agent-card .say { grid-column: 1 / -1; margin: 0; display: flex; align-items: center; gap: 8px; min-height: 20px; color: var(--fg-2); font-size: 13px; line-height: 1.45; }
+  .agent-card .say.talk { color: var(--fg-1); }
+  .agent-card .say .txt { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .agent-card .say .caret { display: none; flex: 0 0 1.5px; width: 1.5px; height: 14px; margin-left: -4px; background: var(--fg-1); animation: blink 1s steps(1) infinite; }
+  .agent-card.typing .say .caret { display: inline-block; }
+  .agent-card .say .to { flex: 0 0 20px; width: 20px; height: 20px; margin-left: auto; font-size: 8px; }
+  .agent-card .rev-at { text-align: right; align-self: center; }
+  .agent-card .rev-at b { display: block; font-size: 16px; font-weight: 600; letter-spacing: -.3px; line-height: 1.1; }
+  .agent-card .rev-at span { display: block; margin-top: 2px; color: var(--fg-3); font-size: 11px; }
+  .agent-card .win { grid-column: 1 / -1; align-self: stretch; min-height: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line-1); border-radius: 8px; background: var(--surface-0); }
+  .win-title { display: flex; align-items: center; gap: 7px; height: 24px; padding: 0 10px; border-bottom: 1px solid var(--line-1); background: rgba(255,255,255,0.02); font-size: 11px; white-space: nowrap; }
+  .win-title::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--al-200); }
+  .win-title .where { color: var(--fg-3); }
+  .win-title .with { overflow: hidden; color: var(--fg-2); font-weight: 500; text-overflow: ellipsis; }
+  .agent-card .steps { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; gap: 0; margin: 0; padding: 7px 10px 6px; border-bottom: 1px solid var(--line-1); }
+  .agent-card .steps li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; color: var(--fg-3); font-size: 10px; }
+  .agent-card .steps li span { max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .agent-card .steps li::before, .steps li::after { content: ''; position: absolute; top: 3px; height: 2px; background: var(--al-100); }
+  .agent-card .steps li::before { left: 0; right: 50%; }
+  .agent-card .steps li::after { left: 50%; right: 0; }
+  .agent-card .steps li:first-child::before, .steps li:last-child::after { display: none; }
+  .agent-card .steps li.done::before, .steps li.on::before, .steps li.done::after { background: var(--al-600); }
+  .agent-card .steps li i { position: relative; z-index: 1; width: 8px; height: 8px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--al-300); background: var(--surface-0); }
+  .agent-card .steps li.done i { border: 0; background: var(--al-600); }
+  .agent-card .steps li.on { color: var(--fg-1); font-weight: 600; }
+  .agent-card .steps li.on i { border: 2px solid var(--accent); box-shadow: 0 0 0 3px rgba(95,227,161,0.18); }
+  .agent-card .steps.chev { gap: 3px; padding: 7px 10px 7px; }
+  .agent-card .steps.chev li { align-items: stretch; gap: 0; }
+  .agent-card .steps.chev li::before, .agent-card .steps.chev li::after, .agent-card .steps.chev li i { display: none; }
+  .agent-card .steps.chev li span { display: block; width: 100%; max-width: none; height: 22px; padding: 0 5px; text-align: center; background: var(--al-50); color: var(--fg-3); font-size: 9.5px; letter-spacing: -.1px; line-height: 22.5px; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%, 8px 50%); }
+  .agent-card .steps.chev li:first-child span { padding: 0 7px 0 3px; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
+  .agent-card .steps.chev li.done span { background: var(--al-200); color: var(--fg-2); }
+  .agent-card .steps.chev li.on { font-weight: 600; }
+  .agent-card .steps.chev li.on span { background: rgba(95,227,161,0.3); color: #ffffff; }
+  .agent-card .win .say { flex: 1; min-height: 0; align-items: center; margin: 0; padding: 6px 10px 7px; }
+  .agent-card .conv { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; margin: 0; padding-top: 8px; border-top: 1px solid var(--line-1); color: var(--fg-2); font-size: 12.5px; }
+  .agent-card .conv p { margin: 0; }
+  .agent-card .conv .bar { height: 4px; background: var(--al-50); }
+  .agent-card .conv .bar i { background: var(--al-600); transition: width 400ms ease; }
+  .agent-card .who span .task { font-style: normal; }
+  .agent-card.typing .agent-ava .pres { animation: pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 4px rgba(95,227,161,.18); } }
+
+  /* ===== Agent detail modal ===== */
+  .agent-card { cursor: pointer; }
+  .amodal { position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; }
+  .amodal[hidden] { display: none; }
+  .amodal-back { position: absolute; inset: 0; background: rgba(0,0,0,0.58); backdrop-filter: blur(2px); }
+  .amodal-panel { position: relative; width: min(1100px, 93%); max-height: 92%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; border: 1px solid var(--line-2); border-radius: 14px; background: var(--surface-1); box-shadow: 0 30px 80px rgba(0,0,0,0.6); animation: enter 220ms ease-out; }
+  .am-head { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto auto; column-gap: 16px; align-items: center; padding: 16px 22px; border-bottom: 1px solid var(--line-1); }
+  .am-head .agent-ava, .am-head .agent-ava img { width: 56px; height: 56px; }
+  .am-head .agent-ava .pres { width: 12px; height: 12px; right: 0; bottom: 0; }
+  .am-head strong { display: block; font-size: 18px; font-weight: 600; }
+  .am-head .sub { display: block; margin-top: 3px; color: var(--fg-3); font-size: 12.5px; }
+  .am-head .sub .task { font-style: normal; }
+  .am-rev { text-align: right; }
+  .am-rev b { display: block; font-size: 24px; font-weight: 600; letter-spacing: -.5px; line-height: 1.1; }
+  .am-rev span { display: block; margin-top: 3px; color: var(--fg-3); font-size: 11.5px; }
+  .am-actions { display: flex; gap: 8px; margin-left: 8px; }
+  .am-body { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; padding: 16px 22px; overflow: hidden; }
+  .am-win { min-height: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line-1); border-radius: 10px; background: var(--surface-0); }
+  .am-title { display: flex; align-items: center; gap: 9px; height: 38px; padding: 0 14px; border-bottom: 1px solid var(--line-1); background: rgba(255,255,255,0.02); font-size: 13px; white-space: nowrap; }
+  .am-title::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--al-200); }
+  .am-title .where { color: var(--fg-3); }
+  .am-title .with { color: var(--fg-1); font-weight: 500; }
+  .am-title .ctx { margin-left: auto; overflow: hidden; color: var(--fg-3); font-size: 12px; text-overflow: ellipsis; }
+  .am-steps { list-style: none; margin: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 4px; padding: 14px 14px 12px; border-bottom: 1px solid var(--line-1); }
+  .am-steps li { min-width: 0; }
+  .am-steps li span { display: block; height: 28px; padding: 0 6px 0 14px; text-align: center; background: var(--al-50); color: var(--fg-3); font-size: 12px; line-height: 28px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%, 10px 50%); }
+  .am-steps li:first-child span { padding-left: 4px; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%); }
+  .am-steps li.done span { background: var(--al-200); color: var(--fg-2); }
+  .am-steps li.on span { background: rgba(95,227,161,0.3); color: #ffffff; font-weight: 600; }
+  .am-steps li small { display: block; margin-top: 8px; padding: 0 4px; color: var(--fg-3); font-size: 11.5px; line-height: 1.4; }
+  .am-steps li small b { display: block; color: var(--fg-2); font-weight: 500; }
+  .am-steps li.on small b { color: var(--accent); }
+  .am-thread { min-height: 0; overflow: auto; padding: 12px 14px 14px; display: grid; gap: 12px; align-content: start; scrollbar-width: thin; scrollbar-color: var(--al-200) transparent; }
+  .msg { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; }
+  .msg .init, .msg img { width: 28px; height: 28px; border-radius: 50%; font-size: 9px; object-fit: cover; }
+  .msg .by { display: flex; align-items: baseline; gap: 8px; }
+  .msg .by strong { font-size: 12.5px; font-weight: 600; }
+  .msg .by time { color: var(--fg-3); font-size: 11px; }
+  .msg p { margin: 3px 0 0; color: var(--fg-2); font-size: 13px; line-height: 1.5; }
+  .msg.agent p { color: var(--fg-1); }
+  .msg .caret { display: inline-block; width: 1.5px; height: 14px; margin-left: 1px; vertical-align: -2px; background: var(--fg-1); animation: blink 1s steps(1) infinite; }
+  .am-event { margin-left: 38px; padding: 7px 10px; border: 1px solid var(--brand-200); border-radius: 6px; background: var(--brand-50); color: var(--fg-1); font-size: 12px; }
+  .am-event time { margin-left: 8px; color: var(--fg-3); }
+  .am-table { padding: 12px 14px 14px; }
+  .am-table table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .am-table th { padding: 6px 8px; border-bottom: 1px solid var(--line-1); color: var(--fg-3); font-size: 10.5px; font-weight: 600; letter-spacing: .4px; text-align: left; text-transform: uppercase; }
+  .am-table td { padding: 9px 8px; border-bottom: 1px solid var(--line-1); color: var(--fg-2); }
+  .am-table td:first-child { color: var(--fg-1); font-weight: 500; }
+  .am-table tr:last-child td { border-bottom: 0; }
+  .am-side { min-height: 0; display: grid; gap: 12px; align-content: start; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--al-200) transparent; }
+  .am-card { padding: 12px 14px; border: 1px solid var(--line-1); border-radius: 10px; background: var(--surface-0); }
+  .am-card h4 { margin: 0 0 8px; color: var(--fg-3); font-size: 10.5px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; }
+  .am-card p { margin: 0; color: var(--fg-2); font-size: 12.5px; line-height: 1.45; }
+  .am-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  .am-card li { color: var(--fg-2); font-size: 12.5px; line-height: 1.4; }
+  .am-card li::before { content: ''; display: inline-block; width: 5px; height: 5px; margin: 0 8px 2px 0; border-radius: 50%; background: var(--al-300); }
+  .am-goal b { display: block; color: var(--fg-1); font-size: 17px; font-weight: 600; letter-spacing: -.3px; }
+  .am-goal .bar { margin: 8px 0 7px; height: 4px; background: var(--al-50); }
+  .am-goal .bar i { background: var(--al-600); }
+  .am-queue { display: flex; align-items: center; gap: 6px; }
+  .am-queue .init { width: 22px; height: 22px; font-size: 8px; }
+  .am-queue p { margin-left: 4px; }
+  .am-foot { padding: 12px 22px 16px; border-top: 1px solid var(--line-1); }
+  .am-foot h4 { margin: 0 0 8px; color: var(--fg-3); font-size: 10.5px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; }
+  .am-log { list-style: none; margin: 0; padding: 0; display: flex; gap: 26px; overflow: hidden; }
+  .am-log li { min-width: 0; color: var(--fg-2); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .am-log time { margin-right: 8px; color: var(--fg-3); }
+  .am-log li.money { color: var(--fg-1); font-weight: 500; }
+  .am-close { margin-left: 4px; }
+  .am-compose { min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 20px; padding: 14px 16px 14px 14px; overflow: hidden; }
+  .render { display: flex; gap: 8px; height: 100%; min-height: 0; }
+  .vars-col { display: grid; grid-auto-rows: max-content; gap: 6px; align-content: start; }
+  .tile.preview { height: 100%; width: auto; aspect-ratio: 9 / 16; border-radius: 8px; box-shadow: 0 0 0 1px var(--line-2), 0 12px 30px rgba(0,0,0,0.45); }
+  .tile.preview.photo::after { display: none; }
+  .tile.preview.photo span { display: none; }
+  .post { min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+  .tile { position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 3px; display: flex; align-items: flex-end; padding: 8px; box-sizing: border-box; color: #ffffff; font-size: 11px; font-weight: 600; line-height: 1.25; letter-spacing: -.1px; transition: filter 1.2s ease; }
+  .tile span { position: relative; z-index: 1; }
+  .tile.g1 { background: radial-gradient(120% 80% at 80% 10%, #cfe9d8 0, transparent 60%), linear-gradient(160deg, #0f5d3c, #0a3f2a); }
+  .tile.g2 { background: linear-gradient(160deg, #eef5f1, #cfe3d8); color: #0a3f2a; }
+  .tile.g3 { background: linear-gradient(160deg, #182119, #0b110e); font-weight: 500; font-style: italic; }
+  .tile.g4 { background: linear-gradient(160deg, #2e7d52, #1f6a44); }
+  .tile.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .tile.photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0) 40%); }
+  .tile.photo span { font-size: 10px; font-weight: 500; }
+  .tile.var.photo span { display: none; }
+  .tile.gen { filter: blur(9px) saturate(1.4); }
+  .tile.new::before { content: ''; position: absolute; inset: 0; z-index: 2; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%); background-size: 250% 100%; animation: shimmer 1.6s linear infinite; opacity: 1; transition: opacity .6s; }
+  .tile.new:not(.gen)::before { opacity: 0; animation: none; }
+  .post { min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+  .tile.var { width: 54px; aspect-ratio: 9 / 16; padding: 0; border-radius: 4px; opacity: .5; }
+  .tile.var.pick { opacity: 1; box-shadow: 0 0 0 1.5px var(--accent); }
+  .tile.var.photo::after { display: none; }
+  .gen-label { display: inline-flex; align-items: center; gap: 7px; color: var(--fg-2); font-size: 12px; }
+  .gen-label i { width: 7px; height: 7px; border-radius: 50%; background: var(--warn); animation: tdot 1.2s infinite; }
+  .gen-label.ok i { background: var(--accent); animation: none; }
+  .cap { margin: 0; min-height: 20px; color: var(--fg-1); font-size: 13px; line-height: 1.5; }
+  .cap:empty::before { content: 'Caption'; color: var(--fg-3); }
+  .comments { flex: 1; padding: 8px 0 0; border-top: 1px solid var(--line-1); }
+  .comments .msg p { font-size: 12.5px; }
+
+  .msg.enter, .am-event.enter { animation: enter 260ms ease-out; }
+  .msg .dots { display: inline-flex; gap: 4px; align-items: center; height: 18px; }
+  .msg .dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--fg-3); animation: tdot 1.2s infinite; }
+  .msg .dots i:nth-child(2) { animation-delay: .2s; } .msg .dots i:nth-child(3) { animation-delay: .4s; }
+  .am-divider { position: relative; margin: 6px 0 2px; color: var(--fg-3); font-size: 11px; text-align: center; }
+  .am-divider::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line-1); z-index: -1; }
+  .am-divider { background: var(--surface-0); }
+  .am-thread { scroll-behavior: smooth; }
+
+
+  /* ===== Embedded inside index.html (1600x900 iframe) ===== */
+  .embedded .panel, .embedded .panel-toggle, .embedded .deck-arrows, .embedded .progress, .embedded .counter, .embedded .slide-header { display: none !important; }
+  .embedded .slide { padding: 24px; }
+  .embedded .content-wide { max-width: none; }
+  .embedded .shell, .embedded .selling-showcase { width: 100%; height: 852px; margin: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+
+  @media (max-width: 1100px) {
+    .pricing-recap { height: auto; grid-template-columns: 1fr; }
+    .pricing-investment { border-top: 1px solid var(--brand-200); border-left: 0; }
+    .brain-bottom { grid-template-columns: 1fr; }
+    .chain { grid-template-columns: 1fr; gap: 10px; }
+    .link { display: none; }
+  }
+
+  @media (max-width: 1020px) {
+    .panel, #panelToggle { display: none; }
+    .slide { align-items: flex-start; overflow-y: auto; padding: 64px 16px 90px; }
+    .slide-header { height: auto; min-height: 52px; }
+    .shell, .selling-showcase { height: auto; }
+    .shell-nav, .table-head, .inbox { display: none; }
+    .shell-body { grid-template-columns: 1fr; }
+    .shell-main { grid-template-rows: 52px auto; }
+    .screen { overflow: visible; }
+    .screen-head { flex-direction: column; align-items: flex-start; }
+    .steps, .sources, .kpis, .proj { grid-template-columns: 1fr 1fr; }
+    .converge { display: none; }
+    .brain-layout { grid-template-rows: auto auto; }
+    .row { grid-template-columns: 1fr; gap: 8px; }
+    .convo, .selling-showcase { grid-template-columns: 1fr; }
+    .phone-panel { max-width: 420px; justify-self: center; }
+    .url { display: none; }
+  }
+
+  @media (max-width: 580px) {
+    .pricing-included, .pricing-investment { padding: 28px 24px; }
+    .pricing-included h3 { font-size: 28px; }
+    .delivery-item { grid-template-columns: 1fr; gap: 8px; }
+    .owner-workload, .investment-summary { align-items: flex-start; flex-direction: column; gap: 8px; }
+    .investment-summary strong { text-align: left; }
+    .comparison-cost strong { font-size: 48px; }
+    .pricing-options { grid-template-columns: 1fr; align-items: start; }
+    .price-or { padding: 0; }
+    .price-option strong { font-size: 44px; }
+    .pricing-guarantee strong { font-size: 19px; }
+    .steps, .sources, .kpis { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<script>
+if (new URLSearchParams(location.search).has('embed')) document.documentElement.classList.add('embedded');
+</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 3a4 4 0 0 0-4 4v1a3 3 0 0 0-2 5 3 3 0 0 0 2 5v1a4 4 0 0 0 8 0v-1a3 3 0 0 0 2-5 3 3 0 0 0-2-5V7a4 4 0 0 0-4-4z"/><path d="M12 3v18"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l8.8 8.8 8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+  <symbol id="i-comment" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3a8.4 8.4 0 0 1 8.5 8.5z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2.5-6 4 12 2.5-6h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><path d="m21.4 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24"><path d="M11 5h10M11 12h7M11 19h4M6 5v14M3 16l3 3 3-3"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="panel collapsed" id="panel" aria-label="Slides"></aside>
+  <main class="deck" id="deck">
+    <button class="panel-toggle" id="panelToggle" type="button" aria-label="Toggle slide panel">
+      <span class="grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    </button>
+
+    <!-- ===== Slide 1: niches ===== -->
+    <section class="slide active" id="expertise-slide" role="group" aria-roledescription="slide" aria-labelledby="expertise-title">
+      <div class="content-wide">
+        <header class="slide-header">
+          <h1 class="h-lg rv" id="expertise-title">Your expertise becomes <span class="brand-text">three sellable niches.</span></h1>
+        </header>
+
+        <div class="shell" aria-label="Kodara app, niche analysis">
+          <div class="shell-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><div class="url"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg><span>app.kodara.ai/<b>innervitality/niches</b></span></div><span></span></div>
+          <div class="shell-body">
+            <nav class="shell-nav" aria-label="Product navigation">
+              <div class="nav-brand"><img src="assets/inner-vitality.svg" alt=""><div><strong>Inner Vitality</strong><span>Functional medicine</span></div><svg class="ico chev" aria-hidden="true"><use href="#i-chev"/></svg></div>
+              <div class="nav-group">Workspace</div>
+              <button class="nav-item" type="button" data-go-slide="1"><svg class="ico"><use href="#i-brain"/></svg>AI Brain<em title="1 source processing"></em></button>
+              <button class="nav-item active" type="button" data-go-slide="0" aria-current="page"><svg class="ico"><use href="#i-target"/></svg>Niches</button>
+              <button class="nav-item" type="button" data-go-slide="2"><svg class="ico"><use href="#i-chat"/></svg>Conversations<b>3</b></button>
+              <button class="nav-item" type="button" data-go-slide="5"><svg class="ico"><use href="#i-pulse"/></svg>Clinic<em class="live" title="12 open conversations"></em></button>
+              <button class="nav-item" type="button" data-go-slide="6"><svg class="ico"><use href="#i-users"/></svg>Team</button>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-book"/></svg>Programs</button>
+              <button class="nav-item" type="button" data-go-slide="3"><svg class="ico"><use href="#i-trend"/></svg>Growth</button>
+              <div class="nav-group">Account</div>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-sliders"/></svg>Settings</button>
+              <div class="nav-usage"><div><span>Conversations</span><b>312 / 500</b></div><div class="bar"><i style="width:62%"></i></div></div>
+              <div class="nav-foot"><img src="assets/dr-yang.jpg" alt=""><div><strong>Dr. Yang</strong><span>Owner, Pro plan</span></div></div>
+            </nav>
+            <div class="shell-main">
+              <header class="shell-head">
+                <div class="crumbs">Niches <i>›</i> <b>Chiropractor</b></div>
+                <div class="head-tools"><span class="sync">Synced 2 min ago</span><button class="icon-btn dot" data-count="3" type="button" aria-label="Notifications"><svg class="ico"><use href="#i-bell"/></svg></button><button class="icon-btn" type="button" aria-label="Help">?</button></div>
+              </header>
+              <div class="screen">
+                <div class="screen-head">
+                  <div><h2>Niche analysis</h2><p>Chiropractor · Austin, TX · Ran today 9:42 AM · 104,318 leads scanned · 3 niches passed</p></div>
+                  <div class="screen-actions"><button class="btn" type="button" data-toast="Re-running against 104,318 leads…">Re-run analysis</button><button class="btn primary" type="button" data-toast="Niche brief exported (PDF)">Export brief</button></div>
+                </div>
+                <div class="niche-grid">
+                  <div class="steps card" aria-label="Analysis steps">
+                    <div class="step"><i>✓</i><div><strong>Buyer language grouped</strong><span>9:42:07 · 6,118 phrases</span></div></div>
+                    <div class="step"><i>✓</i><div><strong>Offer patterns matched</strong><span>9:42:31 · 214 proven offers</span></div></div>
+                    <div class="step"><i>✓</i><div><strong>Niches ranked</strong><span>9:42:48 · 3 of 11 passed</span></div></div>
+                    <div class="step"><span class="spin" role="img" aria-label="In progress"></span><div><strong>Offer page copy</strong><span>Drafting for niche 01 · 68%</span><div class="bar pulse"><i style="width:68%"></i></div></div></div>
+                  </div>
+                  <div class="results card" aria-label="Ranked niches">
+                    <div class="table-head"><span>#</span><span>Audience</span><span>Hook</span><span>Evidence</span><span>Fit</span><span>Status</span></div>
+                    <div class="row selected">
+                      <b>01</b>
+                      <div><strong>Work-from-home professionals</strong><span class="sub">Remote desk workers, 28–45</span></div>
+                      <p>“Fix the back pain caused by sitting at a desk all day.”</p>
+                      <div class="ev"><strong>2,314 leads</strong><span class="sub">41% of desk-pain mentions</span></div>
+                      <div class="fit"><strong>92</strong><div class="bar"><i style="width:92%"></i></div></div>
+                      <span class="pill ok">Selected</span>
+                    </div>
+                    <div class="row">
+                      <b>02</b>
+                      <div><strong>Shift workers on their feet</strong><span class="sub">Nurses, warehouse, retail</span></div>
+                      <p>“Give us 30 days and we'll fix the back and foot pain from being on your feet all shift.”</p>
+                      <div class="ev"><strong>1,187 leads</strong><span class="sub">22% of standing-pain mentions</span></div>
+                      <div class="fit"><strong>81</strong><div class="bar"><i style="width:81%"></i></div></div>
+                      <span class="pill">Ready</span>
+                    </div>
+                    <div class="row">
+                      <b>03</b>
+                      <div><strong>New mothers</strong><span class="sub">0–18 months postpartum</span></div>
+                      <p>“Give us 30 days and we'll fix the back and hip pain you've had since carrying, nursing, and hauling a car seat around all day.”</p>
+                      <div class="ev"><strong>964 leads</strong><span class="sub">17% of hip-pain mentions</span></div>
+                      <div class="fit"><strong>77</strong><div class="bar"><i style="width:77%"></i></div></div>
+                      <span class="pill warn">Review wording</span>
+                    </div>
+                    <div class="table-foot"><span>Showing 3 of 11 niches · 8 below fit threshold (70)</span><b>Show all</b></div>
+                  </div>
+                  <section class="card" aria-label="Selected niche detail">
+                    <header><strong>01 · Work-from-home professionals</strong><div class="tags"><span class="pill ok">Selected</span><span class="pill warn">Offer page · drafting 68%</span></div></header>
+                    <div class="detail-cols">
+                      <div class="detail-col"><h4>Top buyer phrases</h4><div class="phrases">
+                        <div><span>“sitting all day”</span><b>1,102</b><div class="bar"><i style="width:100%"></i></div></div>
+                        <div><span>“hurts by the afternoon”</span><b>846</b><div class="bar"><i style="width:77%"></i></div></div>
+                        <div><span>“no time for the gym”</span><b>511</b><div class="bar"><i style="width:46%"></i></div></div>
+                        <div><span>“standing desk didn't help”</span><b>388</b><div class="bar"><i style="width:35%"></i></div></div>
+                      </div></div>
+                      <div class="detail-col"><h4>Proven offer pattern</h4><div class="facts">
+                        <div><span>Format</span><b>30-day fix program</b></div>
+                        <div><span>Price band</span><b>$397–$597</b></div>
+                        <div><span>Daily commitment</span><b>10 min at desk</b></div>
+                        <div><span>Matched offers</span><b>214</b></div>
+                        <div><span>Typical lead-to-buyer</span><b>16–19%</b></div>
+                      </div></div>
+                      <div class="detail-col"><h4>Offer page draft</h4><div class="draft">
+                        <div><label>Headline</label><p>Fix the back pain caused by sitting at a desk all day.</p></div>
+                        <div><label>Subhead</label><p class="sub">10 minutes a day, at your desk, for 30 days. With Dr. Yang, DC.</p></div>
+                        <div><label>Program name</label><p class="sub cursor">30-Day Work-From-Home Back Pain Program</p></div>
+                      </div></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="toast" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Slide 2: AI Brain ===== -->
+    <section class="slide" id="brain-slide" role="group" aria-roledescription="slide" aria-labelledby="brain-title">
+      <div class="content-wide">
+        <header class="slide-header">
+          <h2 class="h-lg rv" id="brain-title">We turn your business into an <span class="brand-text">AI Brain.</span></h2>
+        </header>
+
+        <div class="shell" aria-label="Kodara app, AI Brain">
+          <div class="shell-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><div class="url"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg><span>app.kodara.ai/<b>innervitality/brain</b></span></div><span></span></div>
+          <div class="shell-body">
+            <nav class="shell-nav" aria-label="Product navigation">
+              <div class="nav-brand"><img src="assets/inner-vitality.svg" alt=""><div><strong>Inner Vitality</strong><span>Functional medicine</span></div><svg class="ico chev" aria-hidden="true"><use href="#i-chev"/></svg></div>
+              <div class="nav-group">Workspace</div>
+              <button class="nav-item active" type="button" data-go-slide="1" aria-current="page"><svg class="ico"><use href="#i-brain"/></svg>AI Brain<em title="1 source processing"></em></button>
+              <button class="nav-item" type="button" data-go-slide="0"><svg class="ico"><use href="#i-target"/></svg>Niches</button>
+              <button class="nav-item" type="button" data-go-slide="2"><svg class="ico"><use href="#i-chat"/></svg>Conversations<b>3</b></button>
+              <button class="nav-item" type="button" data-go-slide="5"><svg class="ico"><use href="#i-pulse"/></svg>Clinic<em class="live" title="12 open conversations"></em></button>
+              <button class="nav-item" type="button" data-go-slide="6"><svg class="ico"><use href="#i-users"/></svg>Team</button>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-book"/></svg>Programs</button>
+              <button class="nav-item" type="button" data-go-slide="3"><svg class="ico"><use href="#i-trend"/></svg>Growth</button>
+              <div class="nav-group">Account</div>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-sliders"/></svg>Settings</button>
+              <div class="nav-usage"><div><span>Conversations</span><b>312 / 500</b></div><div class="bar"><i style="width:62%"></i></div></div>
+              <div class="nav-foot"><img src="assets/dr-yang.jpg" alt=""><div><strong>Dr. Yang</strong><span>Owner, Pro plan</span></div></div>
+            </nav>
+            <div class="shell-main">
+              <header class="shell-head">
+                <div class="crumbs">AI Brain <i>›</i> <b>Sources</b></div>
+                <div class="head-tools"><span class="sync">Syncing · 1 of 6</span><button class="icon-btn dot" data-count="3" type="button" aria-label="Notifications"><svg class="ico"><use href="#i-bell"/></svg></button><button class="icon-btn" type="button" aria-label="Help">?</button></div>
+              </header>
+              <div class="screen">
+                <div class="screen-head">
+                  <div><h2>AI Brain</h2><p>6 sources · 5 indexed · 1 processing · 1,982 facts extracted · Updated 9:12 AM</p></div>
+                  <div class="screen-actions"><span class="pill auto">Auto-sync on</span><button class="btn primary" type="button" data-toast="Upload a file, connect a folder, or link an app">Add source</button></div>
+                </div>
+                <div class="brain-layout">
+                  <div class="sources" aria-label="Knowledge sources">
+                    <article class="source card"><span class="file-ico">MOV</span><div><strong>Intake call.mov</strong><span class="meta">38 min · Sep 8</span></div><span class="pill ok">Indexed</span></article>
+                    <article class="source card"><span class="file-ico drive">DRIVE</span><div><strong>Patient education</strong><span class="meta">Drive folder · 23 files</span></div><span class="pill ok">Indexed</span></article>
+                    <article class="source card"><span class="file-ico mp3">MP3</span><div><strong>Patient FAQ.mp3</strong><span class="meta">1 h 04 min · Sep 6</span></div><span class="pill ok">Indexed</span></article>
+                    <article class="source card"><span class="file-ico doc">DOCX</span><div><strong>SpineWell SOPs.docx</strong><span class="meta">41 pages · Sep 5</span></div><span class="pill ok">Indexed</span></article>
+                    <article class="source card live"><span class="file-ico">MOV</span><div><strong>Founder Q&amp;A.mov</strong><span class="meta">52 min · today</span></div><span class="pill warn">Processing · 68%</span><div class="bar pulse"><i style="width:68%"></i></div></article>
+                    <article class="source card"><span class="file-ico hs">HS</span><div><strong>HubSpot CRM</strong><span class="meta">1,240 contacts · live</span></div><span class="pill ok">Connected</span></article>
+                  </div>
+                  <div class="converge" aria-hidden="true">
+                    <svg viewBox="0 0 1200 112" preserveAspectRatio="none">
+                      <path d="M100 0C100 70 600 50 600 112"/><path d="M300 0C300 70 600 50 600 112"/><path d="M500 0C500 70 600 50 600 112"/>
+                      <path d="M700 0C700 70 600 50 600 112"/><path d="M900 0C900 70 600 50 600 112"/><path d="M1100 0C1100 70 600 50 600 112"/>
+                    </svg>
+                    <div class="orb"><i></i><div><strong>SpineWell Brain</strong><span>Grounded in 5 of 6 sources · 1,982 facts</span></div></div>
+                  </div>
+                  <div class="brain-bottom">
+                    <section class="card ask" aria-label="Test your brain">
+                      <header><strong>Test your brain</strong><span class="meta">Every answer cites your sources</span></header>
+                      <div class="qa"><span>Q</span><p>What do you tell patients about standing desks?</p></div>
+                      <div class="qa answer"><span>A</span><div><p>“Standing desks help, but the real win is switching positions every 30–40 minutes. I have patients set a timer and do the two-minute hip-flexor reset between blocks. Standing all day just moves the pain to your feet.”</p><div class="cites"><span class="pill">SpineWell SOPs.docx · p.12</span><span class="pill">Intake call · 14:02</span><span class="pill">Patient FAQ · 0:41:10</span></div></div></div>
+                      <div class="qa"><span>Q</span><p>Do you take insurance for the 30-day program?</p></div>
+                      <div class="qa answer"><span>A</span><div><p>“The program is self-pay at $497. It isn't billed through insurance, but most patients use an HSA or FSA card, and I'll give you an itemized receipt for it.”</p><div class="cites"><span class="pill">Patient FAQ · 0:12:40</span><span class="pill">HubSpot · pricing note</span></div></div></div>
+                      <div class="composer"><span>Ask your brain anything…</span><b>Ask</b></div>
+                    </section>
+                    <aside class="card" aria-label="Delivered program example">
+                      <header><strong>Delivered program example</strong><span class="pill">Another Kodara client · Dr. Reyes</span></header>
+                      <div class="video">
+                        <iframe
+                          data-video-src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/dda7d6b54baa18b5487b73233648182b/iframe?muted=true&amp;preload=true&amp;loop=true&amp;autoplay=true&amp;controls=false&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fdda7d6b54baa18b5487b73233648182b%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D12s%26height%3D600&amp;title=Dr.+Reyes+Health+AI+Program+Demo"
+                          title="Dr. Reyes Health AI program demo"
+                          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                    </aside>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="toast" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Slide 3: conversations + buyer's view ===== -->
+    <section class="slide" id="selling-slide" role="group" aria-roledescription="slide" aria-labelledby="selling-title">
+      <div class="content-wide">
+        <header class="slide-header">
+          <h2 class="h-lg rv" id="selling-title">The system finds the lead, makes the sale, then <span class="brand-text">delivers the program.</span></h2>
+        </header>
+
+        <div class="selling-showcase">
+          <div class="shell" aria-label="Kodara app, conversation with Jordan Lee">
+            <div class="shell-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><div class="url"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg><span>app.kodara.ai/<b>innervitality/conversations/jordan-lee</b></span></div><span></span></div>
+            <div class="shell-body">
+              <nav class="shell-nav" aria-label="Product navigation">
+                <div class="nav-brand"><img src="assets/inner-vitality.svg" alt=""><div><strong>Inner Vitality</strong><span>Functional medicine</span></div><svg class="ico chev" aria-hidden="true"><use href="#i-chev"/></svg></div>
+                <div class="nav-group">Workspace</div>
+                <button class="nav-item" type="button" data-go-slide="1"><svg class="ico"><use href="#i-brain"/></svg>AI Brain<em title="1 source processing"></em></button>
+                <button class="nav-item" type="button" data-go-slide="0"><svg class="ico"><use href="#i-target"/></svg>Niches</button>
+                <button class="nav-item active" type="button" data-go-slide="2" aria-current="page"><svg class="ico"><use href="#i-chat"/></svg>Conversations<b>3</b></button>
+              <button class="nav-item" type="button" data-go-slide="5"><svg class="ico"><use href="#i-pulse"/></svg>Clinic<em class="live" title="12 open conversations"></em></button>
+              <button class="nav-item" type="button" data-go-slide="6"><svg class="ico"><use href="#i-users"/></svg>Team</button>
+                <button class="nav-item" type="button"><svg class="ico"><use href="#i-book"/></svg>Programs</button>
+                <button class="nav-item" type="button" data-go-slide="3"><svg class="ico"><use href="#i-trend"/></svg>Growth</button>
+                <div class="nav-group">Account</div>
+                <button class="nav-item" type="button"><svg class="ico"><use href="#i-sliders"/></svg>Settings</button>
+                <div class="nav-usage"><div><span>Conversations</span><b>312 / 500</b></div><div class="bar"><i style="width:62%"></i></div></div>
+              <div class="nav-foot"><img src="assets/dr-yang.jpg" alt=""><div><strong>Dr. Yang</strong><span>Owner, Pro plan</span></div></div>
+              </nav>
+              <div class="shell-main">
+                <header class="shell-head">
+                  <div class="crumbs">Conversations <i>›</i> <b>Jordan Lee</b></div>
+                  <div class="head-tools"><span class="sync">Live · Instagram connected</span><button class="icon-btn dot" data-count="3" type="button" aria-label="Notifications"><svg class="ico"><use href="#i-bell"/></svg></button><button class="icon-btn" type="button" aria-label="Help">?</button></div>
+                </header>
+                <div class="screen convo">
+                  <aside class="inbox card" aria-label="Inbox">
+                    <header><strong>Inbox</strong><span class="pill">3 open</span></header>
+                    <div class="search"><svg class="ico"><use href="#i-search"/></svg>Search</div>
+                    <div class="convo-item active"><img src="assets/jordan-lee.png" alt=""><div><strong>Jordan Lee</strong><span class="meta">Paid $497 · Program sent</span></div><time>4:19 PM</time></div>
+                    <div class="convo-item"><i class="init">PS</i><div><strong>Priya Shah</strong><span class="meta">Qualifying · shift work</span></div><time>3:51 PM</time><span class="unread"></span></div>
+                    <div class="convo-item"><i class="init">MT</i><div><strong>Marcus Tran</strong><span class="meta">Asked about pricing</span></div><time>2:08 PM</time><span class="unread"></span></div>
+                    <div class="convo-item"><i class="init">EO</i><div><strong>Elena Ortiz</strong><span class="meta">Paid $497 · Day 3</span></div><time>Yesterday</time></div>
+                    <div class="convo-item"><i class="init">DK</i><div><strong>Dev Kapoor</strong><span class="meta">Not a fit · referred out</span></div><time>Yesterday</time></div>
+                  </aside>
+
+                  <section class="thread card" aria-label="Conversation with Jordan Lee">
+                    <header class="thread-head">
+                      <img src="assets/jordan-lee.png" alt="">
+                      <div><strong>Jordan Lee</strong><span class="meta">Instagram DM · @jordan.builds</span></div>
+                      <div class="tags"><span class="pill ok">Matched: WFH back pain</span><span class="pill">From ad · niche 01</span></div>
+                    </header>
+                    <div class="stream">
+                      <div class="day">Today</div>
+                      <div class="turn"><img src="assets/jordan-lee.png" alt=""><div><div class="by"><strong>Jordan</strong><time>4:02 PM</time></div><p>Saw your ad about desk back pain. My back is fine in the morning, but by 4 PM it hurts after <mark>sitting all day</mark>.</p></div></div>
+                      <div class="turn"><span class="ava"><img src="assets/dr-yang.jpg" alt=""><b>AI</b></span><div><div class="by"><strong>Dr. Yang AI</strong><time>4:02 PM</time></div><p>That pattern is classic desk-related lower back pain, Jordan. The 30-day work-from-home program is built around exactly that. Quick check so I point you right: dull ache across the lower back, or sharp on one side?</p><span class="why">Matched from “sitting all day” · niche 01</span></div></div>
+                      <div class="turn"><img src="assets/jordan-lee.png" alt=""><div><div class="by"><strong>Jordan</strong><time>4:05 PM</time></div><p>Dull ache, both sides. How much is it? I don't want another gym thing I quit after a week.</p></div></div>
+                      <div class="turn"><span class="ava"><img src="assets/dr-yang.jpg" alt=""><b>AI</b></span><div><div class="by"><strong>Dr. Yang AI</strong><time>4:06 PM</time></div><p>$497, one payment, for the full 30 days. It's 10 minutes a day at your desk, no gym, and I check in with you personally on day 7. Here's your link: <a href="#" onclick="return false">spinewell.kodara.ai/wfh-30</a></p></div></div>
+                      <div class="event"><i>✓</i>Jordan paid <b>$497</b> · Stripe · 4:19 PM</div>
+                      <div class="event"><i>✓</i>Program access emailed to Jordan · 4:19 PM</div>
+                    </div>
+                    <div class="composer"><span>Reply as Dr. Yang AI…</span><em class="pill auto">Auto-reply on</em><b>Send</b></div>
+                  </section>
+
+                  <aside class="journey card" aria-label="Buyer journey">
+                    <header><strong>Buyer journey</strong><span class="pill auto">Auto · Kodara</span></header>
+                    <div class="matched"><span class="meta">Matched program</span><strong>30-Day Work-From-Home Back Pain Program</strong><span class="meta">$497 · 30 days · 10 min/day</span></div>
+                    <ol class="timeline">
+                      <li class="done"><i>✓</i><div><strong>Lead matched</strong><span>4:02 PM · Instagram ad, niche 01</span></div></li>
+                      <li class="done"><i>✓</i><div><strong>Offer presented</strong><span>4:06 PM · Price and link sent</span></div></li>
+                      <li class="done"><i>✓</i><div><strong>Purchase complete</strong><span>4:19 PM · $497 via Stripe</span></div></li>
+                      <li class="done"><i>✓</i><div><strong>Program delivered</strong><span>4:19 PM · Access email sent</span></div></li>
+                      <li class="next"><i>5</i><div><strong>Day-7 check-in</strong><span>Scheduled · Tue 9:00 AM · Dr. Yang</span></div></li>
+                    </ol>
+                    <div class="journey-foot"><span class="meta">Customer action</span><strong>Jordan can open the program now.</strong><button class="btn block" type="button" data-confirm-label="Link re-sent" data-toast="Access link re-sent to jordan.l•••@gmail.com">Re-send access link</button></div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+            <div class="toast" role="status" aria-live="polite"></div>
+          </div>
+
+          <aside class="phone-panel card" aria-label="What the buyer sees">
+            <header><strong>Buyer's view</strong><span class="meta">Instagram · sponsored post</span></header>
+            <div class="phone-wrap">
+              <div class="phone" aria-hidden="true">
+                <div class="phone-status"><span>9:41</span><i></i></div>
+                <div class="ig-head"><img src="assets/spinewell.svg" alt=""><div><strong>spinewellchiro</strong><span>Sponsored</span></div><b>···</b></div>
+                <div class="ig-media"><em>30-DAY PROGRAM</em><strong>10 minutes a day.<br>At your desk.</strong><span>With Dr. Yang, DC</span></div>
+                <div class="ig-cta">Learn more<i>›</i></div>
+                <div class="ig-actions"><svg class="ico"><use href="#i-heart"/></svg><svg class="ico"><use href="#i-comment"/></svg><svg class="ico"><use href="#i-send"/></svg></div>
+                <div class="ig-likes">1,204 likes</div>
+                <div class="ig-caption"><b>spinewellchiro</b> Fix the back pain caused by sitting at a desk all day. The 30-Day Work-From-Home Back Pain Program. <span>#deskpain #wfh #austin</span></div>
+                <div class="ig-dm">Send message</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Slide 4: growth ===== -->
+    <section class="slide" id="growth-slide" role="group" aria-roledescription="slide" aria-labelledby="growth-title">
+      <div class="content-wide">
+        <header class="slide-header">
+          <h2 class="h-lg rv" id="growth-title">Every buyer teaches the system <span class="brand-text">what to build next.</span></h2>
+        </header>
+
+        <div class="shell" aria-label="Kodara app, growth patterns">
+          <div class="shell-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><div class="url"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg><span>app.kodara.ai/<b>innervitality/growth/patterns</b></span></div><span></span></div>
+          <div class="shell-body">
+            <nav class="shell-nav" aria-label="Product navigation">
+              <div class="nav-brand"><img src="assets/inner-vitality.svg" alt=""><div><strong>Inner Vitality</strong><span>Functional medicine</span></div><svg class="ico chev" aria-hidden="true"><use href="#i-chev"/></svg></div>
+              <div class="nav-group">Workspace</div>
+              <button class="nav-item" type="button" data-go-slide="1"><svg class="ico"><use href="#i-brain"/></svg>AI Brain<em title="1 source processing"></em></button>
+              <button class="nav-item" type="button" data-go-slide="0"><svg class="ico"><use href="#i-target"/></svg>Niches</button>
+              <button class="nav-item" type="button" data-go-slide="2"><svg class="ico"><use href="#i-chat"/></svg>Conversations<b>3</b></button>
+              <button class="nav-item" type="button" data-go-slide="5"><svg class="ico"><use href="#i-pulse"/></svg>Clinic<em class="live" title="12 open conversations"></em></button>
+              <button class="nav-item" type="button" data-go-slide="6"><svg class="ico"><use href="#i-users"/></svg>Team</button>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-book"/></svg>Programs</button>
+              <button class="nav-item active" type="button" data-go-slide="3" aria-current="page"><svg class="ico"><use href="#i-trend"/></svg>Growth</button>
+              <div class="nav-group">Account</div>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-sliders"/></svg>Settings</button>
+              <div class="nav-usage"><div><span>Conversations</span><b>312 / 500</b></div><div class="bar"><i style="width:62%"></i></div></div>
+              <div class="nav-foot"><img src="assets/dr-yang.jpg" alt=""><div><strong>Dr. Yang</strong><span>Owner, Pro plan</span></div></div>
+            </nav>
+            <div class="shell-main">
+              <header class="shell-head">
+                <div class="crumbs">Growth <i>›</i> <b>Patterns</b></div>
+                <div class="head-tools"><span class="sync">Synced 2 min ago</span><button class="icon-btn dot" data-count="3" type="button" aria-label="Notifications"><svg class="ico"><use href="#i-bell"/></svg></button><button class="icon-btn" type="button" aria-label="Help">?</button></div>
+              </header>
+              <div class="screen">
+                <div class="screen-head">
+                  <div><h2>Patterns</h2><p>41 conversations · 17 buyers · 1 new pattern · Last 30 days</p></div>
+                  <div class="screen-actions"><button class="btn" type="button">Last 30 days ▾</button><button class="btn primary" type="button" data-toast="Weekly report scheduled · Mondays 8:00 AM">Schedule report</button></div>
+                </div>
+                <div class="growth-layout">
+                  <div class="kpis" aria-label="Last 30 days">
+                    <div class="kpi card"><span>Ad spend</span><strong>$2,140</strong><small>Meta · Google</small></div>
+                    <div class="kpi card"><span>Leads</span><strong>94</strong><small><b>$23</b> per lead</small></div>
+                    <div class="kpi card"><span>Buyers</span><strong>17</strong><small><b>18%</b> lead to buyer</small></div>
+                    <div class="kpi card"><span>Revenue</span><strong>$8,449</strong><small><b>3.9×</b> return on ad spend</small></div>
+                  </div>
+                  <div class="chain" aria-label="Pattern to program to projection">
+                    <article class="card stage">
+                      <span class="stage-label">Pattern detected · new</span>
+                      <h3>New mothers describe the same pain</h3>
+                      <div class="share"><div class="bar"><i style="width:29%"></i></div><span><b>12 of 41</b> conversations (29%) · up from 4 last month</span></div>
+                      <ul class="snips">
+                        <li><p>“Back and hip pain after carrying, nursing, and hauling a car seat.”</p><span>Priya S. · Sep 6</span></li>
+                        <li><p>“Since the baby my left hip locks up when I stand.”</p><span>Elena O. · Sep 3</span></li>
+                        <li><p>“Nursing hunched over is killing my mid-back.”</p><span>Tasha W. · Aug 29</span></li>
+                      </ul>
+                      <div class="share"><span><b>Where they came from</b> · Instagram 7 · Google 3 · Referral 2</span></div>
+                      <span class="meta">Matches niche 03 · New mothers · Fit 77</span>
+                    </article>
+                    <i class="link" aria-hidden="true">›</i>
+                    <article class="card stage focus">
+                      <span class="stage-label">Program drafted</span>
+                      <h3>30-Day Back &amp; Hip Relief for New Mothers</h3>
+                      <div class="share"><div class="bar pulse"><i style="width:75%"></i></div><span><b>3 of 4</b> modules drafted from your brain</span></div>
+                      <ul class="modules">
+                        <li><i>✓</i>Week 1 · Hip and pelvis reset</li>
+                        <li><i>✓</i>Week 2 · Core after birth</li>
+                        <li><i>✓</i>Week 3 · Carry, nurse, lift without pain</li>
+                        <li class="live"><i><span class="spin"></span></i>Week 4 · Keep it fixed<em>drafting…</em></li>
+                      </ul>
+                      <div class="tags"><span class="pill auto">Auto · Kodara · 12 min ago</span><span class="pill warn">Needs your approval</span></div>
+                      <button class="btn primary block" type="button" data-confirm-label="Draft opened" data-toast="Opening draft in Programs…">Review program draft</button>
+                    </article>
+                    <i class="link" aria-hidden="true">›</i>
+                    <article class="card stage">
+                      <span class="stage-label">Projection · based on last 30 days</span>
+                      <h3>Next 30 days</h3>
+                      <div class="proj">
+                        <div><span>Budget</span><strong>$4,200</strong></div>
+                        <div><span>Leads at $23</span><strong>180–196</strong></div>
+                        <div><span>Buyers at 18%</span><strong>32–36</strong></div>
+                        <div><span>Price</span><strong>$497</strong></div>
+                        <div class="hi"><span>Projected revenue</span><strong>$15.9K–$17.9K</strong></div>
+                      </div>
+                      <div class="compare">
+                        <div><span>Last 30 days</span><div class="bar soft"><i style="width:47%"></i></div><b>$8,449</b></div>
+                        <div><span>Projected</span><div class="bar"><i style="width:94%"></i></div><b>≈$16.9K</b></div>
+                      </div>
+                      <span class="meta">Assumes $23 per lead · 18% lead-to-buyer · $497 price · 2% refunds</span>
+                      <p class="disclaimer">Projection only. Extrapolates this account's last 30 days at the same cost per lead and conversion rate. Not a forecast or performance guarantee.</p>
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="toast" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Slide 5: pricing ===== -->
+    <section class="slide" id="pricing-slide" role="group" aria-roledescription="slide" aria-labelledby="pricing-title">
+      <div class="content-wide">
+        <header class="slide-header">
+          <h2 class="h-lg rv" id="pricing-title">Run the full system without the <span class="brand-text">$8K/month operating cost.</span></h2>
+        </header>
+
+        <div class="pricing-recap">
+          <section class="pricing-included" aria-labelledby="included-title">
+            <h3 id="included-title">Everything built for you.</h3>
+            <p>Your knowledge, marketing, and sales system are built as one connected operation.</p>
+            <div class="delivery-list">
+              <article class="delivery-item"><strong>DFY AI Brain</strong><p>Your CRM, documents, training videos, and interviews become one working knowledge base.</p></article>
+              <article class="delivery-item"><strong>DFY AI Marketing</strong><p>Niche positioning, lead generation, and buyer messaging are built around proven offer patterns.</p></article>
+              <article class="delivery-item"><strong>DFY AI Sales Team</strong><p>The AI qualifies leads, sells the right program, and opens customer access.</p></article>
+            </div>
+            <div class="owner-workload"><span>Work required on your end</span><strong>1 hour/week</strong></div>
+          </section>
+
+          <section class="pricing-investment" aria-labelledby="investment-title">
+            <h3 id="investment-title">Cost comparison</h3>
+            <div class="comparison-cost"><strong>$8,000/month</strong><span>To run this online properly</span></div>
+            <div class="pricing-choice">
+              <span>Your Kodara investment</span>
+              <div class="pricing-options">
+                <div class="price-option"><strong>$8,000</strong><span>per year</span></div>
+                <div class="price-or">or</div>
+                <div class="price-option"><strong>$15,000</strong><span>lifetime license</span></div>
+              </div>
+            </div>
+            <div class="pricing-guarantee">
+              <span>Launch guarantee</span>
+              <strong>We get you launched in less than 30 days and get your first 10 beta users, or you get a full refund.</strong>
+              <small>Full details are in our agreement.</small>
+            </div>
+            <div class="investment-summary"><span>Included</span><strong>AI Brain, Marketing, and Sales</strong></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Slide 6: telehealth clinic, live floor (dark) ===== -->
+    <section class="slide dark" id="clinic-slide" role="group" aria-roledescription="slide" aria-labelledby="clinic-title">
+      <div class="content-wide">
+        <header class="slide-header">
+          <h2 class="h-lg rv" id="clinic-title">It’s 2:14 AM. Your clinic is <span class="brand-text">full.</span></h2>
+        </header>
+
+        <div class="shell" aria-label="Kodara app, telehealth clinic">
+          <div class="shell-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><div class="url"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg><span>app.kodara.ai/<b>innervitality/clinic</b></span></div><span></span></div>
+          <div class="shell-body">
+            <nav class="shell-nav" aria-label="Product navigation">
+              <div class="nav-brand"><img src="assets/inner-vitality.svg" alt=""><div><strong>Inner Vitality</strong><span>Functional medicine</span></div><svg class="ico chev" aria-hidden="true"><use href="#i-chev"/></svg></div>
+              <div class="nav-group">Workspace</div>
+              <button class="nav-item" type="button" data-go-slide="1"><svg class="ico"><use href="#i-brain"/></svg>AI Brain<em title="1 source processing"></em></button>
+              <button class="nav-item" type="button" data-go-slide="0"><svg class="ico"><use href="#i-target"/></svg>Niches</button>
+              <button class="nav-item" type="button" data-go-slide="2"><svg class="ico"><use href="#i-chat"/></svg>Conversations<b>3</b></button>
+              <button class="nav-item active" type="button" data-go-slide="5" aria-current="page"><svg class="ico"><use href="#i-pulse"/></svg>Clinic<em class="live" title="12 open conversations"></em></button>
+              <button class="nav-item" type="button" data-go-slide="6"><svg class="ico"><use href="#i-users"/></svg>Team</button>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-book"/></svg>Programs</button>
+              <button class="nav-item" type="button" data-go-slide="3"><svg class="ico"><use href="#i-trend"/></svg>Growth</button>
+              <div class="nav-group">Account</div>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-sliders"/></svg>Settings</button>
+              <div class="nav-usage"><div><span>Conversations</span><b>312 / 500</b></div><div class="bar"><i style="width:62%"></i></div></div>
+              <div class="nav-foot"><img src="assets/dr-yang.jpg" alt=""><div><strong>Dr. Yang</strong><span>Owner, Pro plan</span></div></div>
+            </nav>
+            <div class="shell-main">
+              <header class="shell-head">
+                <div class="crumbs">Clinic <i>›</i> <b>Live floor</b></div>
+                <div class="head-tools"><span class="sync" id="clinic-sync">Live · 4s ago</span><button class="icon-btn dot" data-count="3" type="button" aria-label="Notifications"><svg class="ico"><use href="#i-bell"/></svg></button><button class="icon-btn" type="button" aria-label="Help">?</button></div>
+              </header>
+              <div class="screen clinic">
+                <div class="screen-head">
+                  <div><h2>Telehealth clinic</h2><p>SpineWell · <b id="open-count">12</b> open · 41 today · 10 states · Tue 2:14 AM CT</p></div>
+                  <div class="screen-actions"><button class="btn" type="button" data-toast="Intake paused · new leads will queue until you resume">Pause intake</button><button class="btn primary" type="button" data-go-slide="1">Open AI Brain</button></div>
+                </div>
+                <div class="toolbar">
+                  <div class="tabs" role="tablist"><button class="on" type="button" id="tab-all">All<b>12</b></button><button type="button" id="tab-q">Qualifying<b>3</b></button><button type="button">In program<b>5</b></button><button type="button">Follow-up<b>2</b></button><button type="button">Enrolled<b>2</b></button></div>
+                  <button class="btn tb-chip" type="button">30-Day WFH Back Pain<svg class="ico"><use href="#i-chev"/></svg></button>
+                  <div class="tb-right">
+                    <div class="tb-search"><svg class="ico"><use href="#i-search"/></svg><span>Search patients, cities…</span><kbd>⌘K</kbd></div>
+                    <button class="btn tb-chip" type="button"><svg class="ico"><use href="#i-sort"/></svg>Newest</button>
+                    <div class="seg"><button class="on" type="button" aria-label="Grid view"><svg class="ico"><use href="#i-grid"/></svg></button><button type="button" aria-label="List view"><svg class="ico"><use href="#i-list"/></svg></button></div>
+                  </div>
+                </div>
+                <div class="clinic-layout">
+                  <aside class="rail">
+                    <section class="card brain" aria-label="You and your AI Brain">
+                      <div class="brain-you"><span class="ring"><img src="assets/dr-yang.jpg" alt=""></span><div><strong>Dr. Yang</strong><span class="meta">You · offline since 10:40 PM</span><span class="pill ok">AI Brain · on · 14h 22m</span></div></div>
+                      <div class="spark"><div class="spark-head"><span>Messages · last 24h</span><b>41<small>peak 9 PM</small></b></div><div class="bars" aria-hidden="true"><i style="height:6%"></i><i style="height:6%"></i><i style="height:6%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:20%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:60%"></i><i style="height:40%"></i><i style="height:60%"></i><i style="height:80%"></i><i style="height:100%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:20%" class="now"></i></div><div class="axis"><span>3 AM</span><span>9 AM</span><span>3 PM</span><span>9 PM</span><span>now</span></div></div>
+                      <ul class="roles">
+                        <li><i><svg class="ico"><use href="#i-comment"/></svg></i><div><strong>AI front desk</strong><span>3 in intake</span></div><em>4s reply</em></li>
+                        <li><i><svg class="ico"><use href="#i-trend"/></svg></i><div><strong>AI marketing</strong><span>14 leads tonight</span></div><em>IG · Google</em></li>
+                        <li><i><svg class="ico"><use href="#i-check"/></svg></i><div><strong>AI sales</strong><span>7 enrolled</span></div><em>$3,479</em></li>
+                      </ul>
+                      <p class="brain-foot"><svg class="ico"><use href="#i-lock"/></svg>Your brain stays yours. Nobody gives notice.</p>
+                    </section>
+                    <section class="card" aria-label="Front desk intake">
+                      <header><strong>Front desk</strong><span class="pill ok" id="intake-count">3 in intake</span></header>
+                      <div>
+                        <div class="qrow" id="q-kevin"><span class="init c3">KP</span><div><strong>Kevin Park</strong><span class="meta">Boise, ID · Instagram ad</span></div><time data-s="42">0:42</time></div>
+                        <div class="qrow"><span class="init c4">DW</span><div><strong>Dana Whitfield</strong><span class="meta">Raleigh, NC · Google</span></div><time data-s="19">0:19</time></div>
+                        <div class="qrow"><span class="init c5">JL</span><div><strong>Jae Lin</strong><span class="meta">San Diego, CA · Instagram ad</span></div><time data-s="7">0:07</time></div>
+                      </div>
+                      <p class="qnote">Handled by your AI Brain. First reply in 4s. Nothing for you to do at 2am.</p>
+                    </section>
+                  </aside>
+                  <div class="floor-wrap">
+                    <div class="newpill" id="newpill" aria-live="polite">1 new conversation</div>
+                    <div class="floor" id="floor" aria-label="Open conversations">
+                      <article class="card pt"><div class="pt-head"><img src="assets/jordan-lee.png" alt=""><div><strong>Jordan Lee</strong><span class="meta">Austin, TX<svg class="ico"><use href="#i-camera"/></svg></span></div><time>1m</time></div><span class="st ok">Enrolled</span><p class="ask"><b>Jordan</b> Just paid. When does day 1 start?</p><div class="pt-foot"><span>AI · 6 replies</span><span class="hot">New</span></div></article>
+                      <article class="card pt" id="pt-live"><div class="pt-head"><span class="init c2">PN</span><div><strong>Priya Natarajan</strong><span class="meta">Denver, CO<svg class="ico"><use href="#i-camera"/></svg></span></div><time>3m</time></div><span class="st day">Day 6 of 30</span><p class="ask"><b>Priya</b> Is it normal to feel sore on day 3?</p><div class="typing" aria-hidden="true"><i></i><i></i><i></i><span>Kodara AI</span></div><p class="reply"><b>Kodara AI</b> Yes, mild soreness through day 4 is expected. Keep the 3-minute morning routine, skip the evening stretch tonight.</p><div class="pt-foot"><span>AI · 4 replies</span><span class="">Week 1 check-in</span></div></article>
+                      <article class="card pt unread"><div class="pt-head"><span class="init c3">MB</span><div><strong>Marcus Bell</strong><span class="meta">Miami, FL<svg class="ico"><use href="#i-search"/></svg></span></div><time>5m</time></div><span class="st">Qualifying</span><p class="ask"><b>Marcus</b> I sit 10 hrs a day, lower back mostly</p><div class="pt-foot"><span>AI · 3 replies</span><span class="hot">1 unread</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c4">HR</span><div><strong>Hannah Ruiz</strong><span class="meta">Seattle, WA<svg class="ico"><use href="#i-camera"/></svg></span></div><time>22m</time></div><span class="st warn">Follow-up due</span><p class="ask"><b>Hannah</b> Missed yesterday's routine, catching up</p><div class="pt-foot"><span>Nudge · 8:00 AM</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c5">DO</span><div><strong>Devin Okafor</strong><span class="meta">Phoenix, AZ<svg class="ico"><use href="#i-users"/></svg></span></div><time>27m</time></div><span class="st day">Day 14 of 30</span><p class="ask"><b>Devin</b> Pain down from 7 to 4 this week</p><div class="pt-foot"><span>Pain 7 → 4</span><span class="">Week 2 check-in</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c6">EM</span><div><strong>Elena Marsh</strong><span class="meta">Chicago, IL<svg class="ico"><use href="#i-search"/></svg></span></div><time>43m</time></div><span class="st">Qualifying</span><p class="ask"><b>Elena</b> Does this work with a standing desk?</p><div class="pt-foot"><span>AI · 2 replies</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c1">TW</span><div><strong>Tom Whitaker</strong><span class="meta">Boston, MA<svg class="ico"><use href="#i-camera"/></svg></span></div><time>1h</time></div><span class="st ok">Enrolled</span><p class="ask"><b>Tom</b> Ok, $497, sending now</p><div class="pt-foot"><span>Paid $497 · Stripe</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c2">GK</span><div><strong>Grace Kim</strong><span class="meta">Nashville, TN<svg class="ico"><use href="#i-camera"/></svg></span></div><time>1h</time></div><span class="st day">Day 2 of 30</span><p class="ask"><b>Grace</b> Video 3 won't load on my phone</p><div class="pt-foot"><span><svg class="ico"><use href="#i-clip"/></svg>video-3.mp4</span><span class="needs">Needs you</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c3">LH</span><div><strong>Luis Herrera</strong><span class="meta">Portland, OR<svg class="ico"><use href="#i-users"/></svg></span></div><time>2h</time></div><span class="st day">Day 22 of 30</span><p class="ask"><b>Luis</b> Can I keep going after 30 days?</p><div class="pt-foot"><span>Renewal offer sent</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c4">AB</span><div><strong>Aisha Bello</strong><span class="meta">Atlanta, GA<svg class="ico"><use href="#i-search"/></svg></span></div><time>2h</time></div><span class="st">Qualifying</span><p class="ask"><b>Aisha</b> How is this different from PT?</p><div class="pt-foot"><span>AI · 1 reply</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c5">RC</span><div><strong>Ryan Cole</strong><span class="meta">Tucson, AZ<svg class="ico"><use href="#i-camera"/></svg></span></div><time>3h</time></div><span class="st warn">Follow-up due</span><p class="ask"><b>Ryan</b> Haven't started yet, busy week</p><div class="pt-foot"><span>Nudge 2 of 3</span></div></article>
+                      <article class="card pt"><div class="pt-head"><span class="init c6">NF</span><div><strong>Nora Feldman</strong><span class="meta">Dallas, TX<svg class="ico"><use href="#i-camera"/></svg></span></div><time>4h</time></div><span class="st day">Day 9 of 30</span><p class="ask"><b>Nora</b> Morning routine done, felt good</p><div class="pt-foot"><span>Streak · 9 days</span></div></article>
+                      <article class="card skel" aria-hidden="true"><div class="row"><i></i><i style="width:60%"></i></div><i style="width:34%"></i><i></i><i style="width:78%"></i></article>
+                      <article class="card skel" aria-hidden="true"><div class="row"><i></i><i style="width:60%"></i></div><i style="width:34%"></i><i></i><i style="width:78%"></i></article>
+                      <article class="card skel" aria-hidden="true"><div class="row"><i></i><i style="width:60%"></i></div><i style="width:34%"></i><i></i><i style="width:78%"></i></article>
+                      <article class="card skel" aria-hidden="true"><div class="row"><i></i><i style="width:60%"></i></div><i style="width:34%"></i><i></i><i style="width:78%"></i></article>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="toast" role="status" aria-live="polite"></div>
+        </div>
+        <template id="kevin-card"><article class="card pt unread"><div class="pt-head"><span class="init c3">KP</span><div><strong>Kevin Park</strong><span class="meta">Boise, ID<svg class="ico"><use href="#i-camera"/></svg></span></div><time>now</time></div><span class="st">Qualifying</span><p class="ask"><b>Kevin</b> Hi, saw your Instagram ad about desk pain</p><div class="pt-foot"><span>AI · replying</span><span class="hot">New</span></div></article></template>
+      </div>
+    </section>
+
+    <!-- ===== Slide 7: team, org chart + activity (dark) ===== -->
+    <section class="slide dark" id="team-slide" role="group" aria-roledescription="slide" aria-labelledby="team-title">
+      <div class="content-wide">
+        <header class="slide-header">
+          <h2 class="h-lg rv" id="team-title">It's 2:14 AM. Your team <span class="brand-text">never went home.</span></h2>
+        </header>
+
+        <div class="shell" aria-label="Kodara app, team">
+          <div class="shell-bar"><span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span><div class="url"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg><span>app.kodara.ai/<b>innervitality/team</b></span></div><span></span></div>
+          <div class="shell-body">
+            <nav class="shell-nav" aria-label="Product navigation">
+              <div class="nav-brand"><img src="assets/inner-vitality.svg" alt=""><div><strong>Inner Vitality</strong><span>Functional medicine</span></div><svg class="ico chev" aria-hidden="true"><use href="#i-chev"/></svg></div>
+              <div class="nav-group">Workspace</div>
+              <button class="nav-item" type="button" data-go-slide="1"><svg class="ico"><use href="#i-brain"/></svg>AI Brain<em title="1 source processing"></em></button>
+              <button class="nav-item" type="button" data-go-slide="0"><svg class="ico"><use href="#i-target"/></svg>Niches</button>
+              <button class="nav-item" type="button" data-go-slide="2"><svg class="ico"><use href="#i-chat"/></svg>Conversations<b>3</b></button>
+              <button class="nav-item" type="button" data-go-slide="5"><svg class="ico"><use href="#i-pulse"/></svg>Clinic<em class="live" title="12 open conversations"></em></button>
+              <button class="nav-item active" type="button" data-go-slide="6" aria-current="page"><svg class="ico"><use href="#i-users"/></svg>Team</button>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-book"/></svg>Programs</button>
+              <button class="nav-item" type="button" data-go-slide="3"><svg class="ico"><use href="#i-trend"/></svg>Growth</button>
+              <div class="nav-group">Account</div>
+              <button class="nav-item" type="button"><svg class="ico"><use href="#i-sliders"/></svg>Settings</button>
+              <div class="nav-usage"><div><span>Conversations</span><b>312 / 500</b></div><div class="bar"><i style="width:62%"></i></div></div>
+              <div class="nav-foot"><img src="assets/dr-yang.jpg" alt=""><div><strong>Dr. Yang</strong><span>Owner, Pro plan</span></div></div>
+            </nav>
+            <div class="shell-main">
+              <header class="shell-head">
+                <div class="crumbs">Workspace <i>›</i> <b>Team</b></div>
+                <div class="head-tools"><span class="sync" id="team-sync">Synced 4s ago</span><button class="icon-btn dot" data-count="2" type="button" aria-label="Notifications"><svg class="ico"><use href="#i-bell"/></svg></button><button class="icon-btn" type="button" aria-label="Help">?</button></div>
+              </header>
+              <div class="screen team">
+                <div class="team-layout">
+                  <section class="card stream" aria-label="Activity">
+                    <header><strong>Activity</strong><span>Since 11:00 PM</span></header>
+                    <ul class="events" id="events">
+                          <li class="ev money"><time>2:13</time><i></i><strong>Jordan Lee paid $497</strong><span>Sales</span></li>
+                          <li class="ev"><time>2:12</time><i></i><strong>Retrying the story post at 2:20</strong><span>Stories</span></li>
+                          <li class="ev warn"><time>2:12</time><i></i><strong>Story post failed, Instagram 429</strong><span>Stories</span></li>
+                          <li class="ev"><time>2:11</time><i></i><strong>Answered Priya about the week-one dip</strong><span>Coach</span></li>
+                          <li class="ev"><time>2:09</time><i></i><strong>Kevin Park qualified from Instagram</strong><span>Intake</span></li>
+                          <li class="ev"><time>2:04</time><i></i><strong>Posted Day 4, brain fog and the busy season</strong><span>Content</span></li>
+                          <li class="ev"><time>1:58</time><i></i><strong>Replied to 6 comments</strong><span>Comments</span></li>
+                          <li class="ev"><time>1:57</time><i></i><strong>Replied to 2 comments</strong><span>Comments</span></li>
+                          <li class="ev"><time>1:57</time><i></i><strong>Replied to a comment</strong><span>Comments</span></li>
+                          <li class="ev"><time>1:22</time><i></i><strong>Paused the always-tired ad set</strong><span>Ads</span></li>
+                          <li class="ev"><time>1:22</time><i></i><strong>Moved $60 a day to the brain fog ad set</strong><span>Ads</span></li>
+                          <li class="ev money"><time>12:58</time><i></i><strong>Tom Whitaker paid $497</strong><span>Sales</span></li>
+                          <li class="ev"><time>12:40</time><i></i><strong>Flagged Grace Kim's video problem for Dr. Yang</strong><span>Coach</span></li>
+                          <li class="ev"><time>11:56</time><i></i><strong>Sent Luis Herrera the $397 renewal</strong><span>Renewals</span></li>
+                          <li class="ev"><time>11:31</time><i></i><strong>Drafted tomorrow's carousel</strong><span>Content</span></li>
+                    </ul>
+                  </section>
+                  <div class="org" aria-label="Team">
+                    <div class="card hero" aria-label="Last 24 hours">
+                      <div class="rev"><span>Revenue, last 24 hours</span><strong id="rev">$5,920</strong></div>
+                      <div class="chart"><span>Conversations, 41</span><div class="bars" aria-hidden="true"><i style="height:6%"></i><i style="height:6%"></i><i style="height:6%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:20%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:60%"></i><i style="height:40%"></i><i style="height:60%"></i><i style="height:80%"></i><i style="height:100%"></i><i style="height:40%"></i><i style="height:40%"></i><i style="height:20%"></i><i style="height:20%"></i><i style="height:20%" class="now"></i></div><div class="axis"><span>3 AM</span><span>3 PM</span><span>now</span></div></div>
+                      <div><span>Enrolled</span><strong id="enrolled">7</strong></div>
+                      <div><span>New leads</span><strong id="leads">22</strong></div>
+                      <div><span>Comment replies</span><strong>79</strong></div>
+                      <div><span>Reach</span><strong>4,095</strong></div>
+                    </div>
+                    <div class="lead-line">
+                      <span class="brain-ring"><img src="assets/dr-yang.jpg" alt=""><i class="orb-mini"><img src="assets/orbs/creative-9.png" alt=""></i></span>
+                      <div><strong>Dr. Yang</strong><span class="on">AI Brain on, 14h 22m</span></div>
+                    </div>
+                    <div class="org-v"></div>
+                    <div class="org-split"><span style="left: 15.85%"></span><span style="left: 50%"></span><span style="left: 84.15%"></span></div>
+                    <div class="org-depts">
+                      <section class="dept-col"><header><strong>Marketing</strong><span>2 agents</span></header>
+                        <div class="agents">
+                          <article class="card agent-card" id="ag-organic"><span class="agent-ava orb-img"><img src="assets/orbs/creative-8.png" alt=""><i class="pres"></i></span><div class="who"><strong>Organic</strong><span class="">Active 3h 12m<em class="task">, on this <time data-s="44">0:44</time></em></span></div><div class="rev-at"><b>$3,932</b><span>sourced</span></div><div class="win"><div class="win-title"><span class="where">Instagram</span><span class="with">comment from @dana_rw</span></div><ol class="steps chev"><li class="done"><i></i><span>Draft</span></li><li class="done"><i></i><span>Post</span></li><li class="on"><i></i><span>Reply</span></li></ol><p class="say talk"><span class="txt">"Normal TSH is one number, Dana. The full panel tells the story."</span><span class="caret"></span><span class="init to c5">DR</span></p></div><div class="conv"><div class="bar"><i style="width:75%"></i></div><p>9 of 12 leads goal, 75%</p></div></article>
+                          <article class="card agent-card" id="ag-ads"><span class="agent-ava orb-img"><img src="assets/orbs/creative-1.png" alt=""><i class="pres idle"></i></span><div class="who"><strong>Ads</strong><span class="idle">Paused until 6:00 AM</span></div><div class="rev-at"><b>$1,988</b><span>sourced</span></div><div class="win"><div class="win-title"><span class="where">Ad Manager</span><span class="with">brain fog set</span></div><ol class="steps chev"><li class="done"><i></i><span>Results</span></li><li class="done"><i></i><span>Compare</span></li><li class="on"><i></i><span>Adjust</span></li></ol><p class="say"><span class="txt">Moved $60 a day to the brain fog ad set</span><span class="caret"></span></p></div><div class="conv"><div class="bar"><i style="width:98%"></i></div><p>$118 of $120 daily cap, 98%</p></div></article>
+                        </div>
+                      </section>
+                      <section class="dept-col"><header><strong>Sales</strong><span>2 agents</span></header>
+                        <div class="agents">
+                          <article class="card agent-card is-hover" id="ag-setter"><span class="agent-ava orb-img"><img src="assets/orbs/creative-3.png" alt=""><i class="pres"></i></span><div class="who"><strong>Setter</strong><span class="">Active 41m<em class="task">, on this <time data-s="138">2:18</time></em></span></div><div class="rev-at"><b>$5,920</b><span>set</span></div><div class="win"><div class="win-title"><span class="where">Chat</span><span class="with">Kevin Park</span></div><ol class="steps chev"><li class="done"><i></i><span>Read</span></li><li class="done"><i></i><span>Qualify</span></li><li class="on"><i></i><span>Reply</span></li><li><i></i><span>Handoff</span></li></ol><p class="say talk"><span class="txt">"Quick one, Kevin. Any bloodwork in the last year?"</span><span class="caret"></span><span class="init to c3">KP</span></p></div><div class="conv"><div class="bar"><i style="width:41%"></i></div><p>9 of 22 qualified, 41%</p></div></article>
+                          <article class="card agent-card" id="ag-closer"><span class="agent-ava orb-img"><img src="assets/orbs/creative-5.png" alt=""><i class="pres"></i></span><div class="who"><strong>Closer</strong><span class="">Active 2h 50m<em class="task">, on this <time data-s="25">0:25</time></em></span></div><div class="rev-at"><b>$5,920</b><span>closed</span></div><div class="win"><div class="win-title"><span class="where">Chat</span><span class="with">Jordan Lee</span></div><ol class="steps chev"><li class="done"><i></i><span>Offer</span></li><li class="done"><i></i><span>Answer</span></li><li class="done"><i></i><span>Payment</span></li><li class="on"><i></i><span>Access</span></li></ol><p class="say talk"><span class="txt">"Your access link is in your inbox, Jordan."</span><span class="caret"></span><span class="init to c4">JL</span></p></div><div class="conv"><div class="bar"><i style="width:33%"></i></div><p>3 of 9 offers paid, 33%</p></div></article>
+                        </div>
+                      </section>
+                      <section class="dept-col"><header><strong>Delivery</strong><span>2 agents</span></header>
+                        <div class="agents">
+                          <article class="card agent-card" id="ag-coach"><span class="agent-ava orb-img"><img src="assets/orbs/agents-2.png" alt=""><i class="pres"></i></span><div class="who"><strong>Coach</strong><span class="">Active 2h 47m<em class="task">, on this <time data-s="305">5:05</time></em></span></div><div class="rev-at"><b>$5,920</b><span>protected</span></div><div class="win"><div class="win-title"><span class="where">Program</span><span class="with">Priya, day 6</span></div><ol class="steps chev"><li class="done"><i></i><span>Review</span></li><li class="on"><i></i><span>Message</span></li><li><i></i><span>Log</span></li></ol><p class="say talk"><span class="txt">"How was your energy this afternoon?"</span><span class="caret"></span><span class="init to c1">PN</span></p></div><div class="conv"><div class="bar"><i style="width:81%"></i></div><p>Day-7 completion, 81%</p></div></article>
+                          <article class="card agent-card" id="ag-ascension"><span class="agent-ava orb-img"><img src="assets/orbs/creative-4.png" alt=""><i class="pres"></i></span><div class="who"><strong>Ascension</strong><span class="">Active 2h 18m<em class="task">, on this <time data-s="71">1:11</time></em></span></div><div class="rev-at"><b>$397</b><span>pending</span></div><div class="win"><div class="win-title"><span class="where">Chat</span><span class="with">Luis Herrera</span></div><ol class="steps chev"><li class="done"><i></i><span>Review</span></li><li class="on"><i></i><span>Offer</span></li><li><i></i><span>Confirm</span></li></ol><p class="say talk"><span class="txt">"Day 22, Luis. Want to keep going after 30?"</span><span class="caret"></span><span class="init to c6">LH</span></p></div><div class="conv"><div class="bar"><i style="width:62%"></i></div><p>62% take the next program</p></div></article>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="toast" role="status" aria-live="polite"></div>
+          <div class="amodal" id="amodal" hidden><div class="amodal-back"></div><section class="amodal-panel" role="dialog" aria-modal="true" aria-label="Agent detail"></section></div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="deck-arrows" aria-label="Slide navigation">
+      <button class="panel-toggle" id="previousSlide" type="button" aria-label="Previous slide">‹</button>
+      <button class="panel-toggle" id="nextSlide" type="button" aria-label="Next slide">›</button>
+    </nav>
+  </main>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter"><span class="cur">01</span> / 05</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const panel = document.getElementById('panel');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const panelToggle = document.getElementById('panelToggle');
+  const previousSlide = document.getElementById('previousSlide');
+  const nextSlide = document.getElementById('nextSlide');
+  let current = 0;
+
+  slides.forEach((slide, index) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb' + (index === 0 ? ' active' : '');
+    thumb.dataset.thumb = String(index);
+    thumb.tabIndex = 0;
+    thumb.setAttribute('role', 'button');
+    thumb.setAttribute('aria-label', 'Go to slide ' + (index + 1));
+
+    const number = document.createElement('span');
+    number.className = 'thumb-num';
+    number.textContent = String(index + 1);
+
+    const box = document.createElement('div');
+    box.className = 'thumb-box';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'thumb-clone';
+    wrapper.setAttribute('aria-hidden', 'true');
+
+    const clone = slide.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+    clone.querySelectorAll('button, [tabindex]').forEach(element => element.tabIndex = -1);
+    wrapper.appendChild(clone);
+    box.appendChild(wrapper);
+    thumb.append(number, box);
+    panel.appendChild(thumb);
+  });
+
+  const thumbs = [...document.querySelectorAll('.thumb')];
+
+  function updateThumbScale() {
+    const box = document.querySelector('.thumb-box');
+    if (!box) return;
+    const scale = box.clientWidth / 1600;
+    document.querySelectorAll('.thumb-clone').forEach(clone => clone.style.setProperty('--thumb-scale', scale));
+  }
+
+  function syncUrl() {
+    if (window.location.protocol === 'file:') return;
+    const url = new URL(window.location.href);
+    url.searchParams.set('slide', String(current + 1));
+    history.replaceState(null, '', url);
+  }
+
+  function syncSlideVideo() {
+    slides.forEach((slide, slideIndex) => {
+      slide.querySelectorAll('iframe[data-video-src]').forEach(frame => {
+        if (slideIndex === current) {
+          if (!frame.hasAttribute('src')) frame.src = frame.dataset.videoSrc;
+        } else {
+          frame.removeAttribute('src');
+        }
+      });
+    });
+  }
+
+  function goTo(index) {
+    if (index < 0 || index >= slides.length) return;
+    slides[current].classList.remove('active');
+    thumbs[current].classList.remove('active');
+    current = index;
+    syncUrl();
+
+    const slide = slides[current];
+    void slide.offsetHeight;
+    slide.classList.add('active');
+    syncSlideVideo();
+    slides.forEach((candidate, slideIndex) => candidate.setAttribute('aria-hidden', slideIndex === current ? 'false' : 'true'));
+    thumbs[current].classList.add('active');
+    thumbs[current].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+    counter.innerHTML = '<span class="cur">' + String(current + 1).padStart(2, '0') + '</span> / ' + String(slides.length).padStart(2, '0');
+    previousSlide.disabled = current === 0;
+    nextSlide.disabled = current === slides.length - 1;
+  }
+
+  thumbs.forEach(thumb => {
+    const activate = () => goTo(Number(thumb.dataset.thumb));
+    thumb.addEventListener('click', activate);
+    thumb.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate();
+      }
+    });
+  });
+
+  panelToggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
+  previousSlide.addEventListener('click', () => goTo(current - 1));
+  nextSlide.addEventListener('click', () => goTo(current + 1));
+  slides.forEach(slide => {
+    slide.querySelectorAll('[data-go-slide]').forEach(button => button.addEventListener('click', () => goTo(Number(button.dataset.goSlide))));
+    slide.querySelectorAll('[data-confirm-label]').forEach(button => {
+      button.addEventListener('click', () => {
+        button.textContent = button.dataset.confirmLabel;
+        button.classList.add('confirmed');
+      });
+    });
+    slide.querySelectorAll('[data-toast]').forEach(button => button.addEventListener('click', () => {
+      const toast = button.closest('.shell').querySelector('.toast');
+      toast.textContent = button.dataset.toast;
+      toast.classList.add('show');
+      clearTimeout(toast.hideTimer);
+      toast.hideTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+    }));
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest('input,textarea,select,[contenteditable=true]')) return;
+    if (!document.getElementById('amodal').hidden) return;
+    if (document.documentElement.classList.contains('embedded')) {
+      if (['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', 'Home', 'End', 'Escape'].includes(event.key)) {
+        event.preventDefault();
+        parent.postMessage({ type: 'health-deck-key', key: event.key }, location.protocol === 'file:' ? '*' : location.origin);
+      }
+      return;
+    }
+    if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(document.activeElement?.tagName)) return;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') { event.preventDefault(); goTo(current + 1); }
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') { event.preventDefault(); goTo(current - 1); }
+    if (event.key === 'Home') { event.preventDefault(); goTo(0); }
+    if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1); }
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', event => { touchStartX = event.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', event => {
+    const delta = touchStartX - event.changedTouches[0].clientX;
+    if (Math.abs(delta) > 50) goTo(current + (delta > 0 ? 1 : -1));
+  }, { passive: true });
+
+  window.addEventListener('resize', updateThumbScale);
+  updateThumbScale();
+  const requestedSlide = Number(new URLSearchParams(window.location.search).get('slide') || 1);
+  goTo(Number.isFinite(requestedSlide) ? Math.min(Math.max(requestedSlide - 1, 0), slides.length - 1) : 0);
+  // Slide 6: live-floor behaviour (AI reply beat, intake to floor, ambient timers).
+  (() => {
+    const card = document.getElementById('pt-live');
+    if (!card) return;
+    const stamp = card.querySelector('time');
+    const beat = () => {
+      card.classList.remove('is-typing', 'is-replied'); stamp.textContent = '3m';
+      setTimeout(() => card.classList.add('is-typing'), 2600);
+      setTimeout(() => { card.classList.remove('is-typing'); card.classList.add('is-replied'); stamp.textContent = 'now'; }, 4800);
+    };
+    beat(); setInterval(beat, 11000);
+    const waits = [...document.querySelectorAll('.qrow time')];
+    setInterval(() => waits.forEach(el => { if (!el.isConnected) return; const s = Number(el.dataset.s || 0) + 1; el.dataset.s = s; el.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }), 1000);
+    const sync = document.getElementById('clinic-sync'); let n = 4;
+    setInterval(() => { n = n >= 9 ? 2 : n + 1; sync.textContent = 'Live · ' + n + 's ago'; }, 1000);
+    const floor = document.getElementById('floor'), pill = document.getElementById('newpill'), tpl = document.getElementById('kevin-card');
+    setTimeout(() => pill.classList.add('show'), 8000);
+    setTimeout(() => {
+      pill.classList.remove('show');
+      const node = tpl.content.firstElementChild.cloneNode(true); node.classList.add('enter'); floor.prepend(node);
+      const row = document.getElementById('q-kevin'); if (row) { row.classList.add('leave'); setTimeout(() => row.remove(), 260); }
+      document.getElementById('intake-count').textContent = '2 in intake';
+      document.getElementById('open-count').textContent = '13';
+      document.querySelector('#tab-all b').textContent = '13'; document.querySelector('#tab-q b').textContent = '4';
+    }, 9800);
+  })();
+  // Slide 7: activity stream, typewriter speech, task clocks, agent updates.
+  (() => {
+    const list = document.getElementById('events');
+    if (!list) return;
+    const fmt = s => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+    setInterval(() => document.querySelectorAll('.task time').forEach(el => { const s = Number(el.dataset.s || 0) + 1; el.dataset.s = s; el.textContent = fmt(s); }), 1000);
+    let busy = 0; const queue = [];
+    const pump = () => { while (busy < 2 && queue.length) { busy++; queue.shift()(() => { busy--; pump(); }); } };
+    const typeLine = (card, text, talk, to) => {
+      queue.push(done => {
+        const say = card.querySelector('.say'), txt = say.querySelector('.txt'); say.querySelector('.to')?.remove();
+        say.classList.toggle('talk', talk); card.classList.add('typing'); txt.textContent = '';
+        let i = 0;
+        const step = () => {
+          i += Math.random() < 0.3 ? 2 : 1; txt.textContent = text.slice(0, i);
+          if (i < text.length) return setTimeout(step, 22 + Math.random() * 38);
+          card.classList.remove('typing');
+          if (to) { const m = document.createElement('span'); m.className = 'init to ' + to[1]; m.textContent = to[0]; say.appendChild(m); }
+          done();
+        };
+        setTimeout(step, 300);
+      });
+      pump();
+    };
+    const retype = id => { const c = document.getElementById(id); const say = c.querySelector('.say'), to = say.querySelector('.to'); typeLine(c, say.querySelector('.txt').textContent, say.classList.contains('talk'), to ? [to.textContent, [...to.classList].find(x => /^c\d$/.test(x))] : null); };
+    setTimeout(() => retype('ag-organic'), 900); setTimeout(() => retype('ag-coach'), 2600);
+    const pool = [
+      ['2:14', 'Replied to @dana_rw', '', 'ag-organic', '"Two years is a pattern, Renee, not a season."', true, ['RK', 'c4'], ['Instagram', 'comment from @renee.k', 2], {}],
+      ['2:15', 'New lead, Sam Ortiz from Minneapolis', '', 'ag-setter', '"Hi Sam, thanks for reaching out. How long has the fatigue been going on?"', true, ['SO', 'c6'], ['Chat', 'Sam Ortiz', 1], {conv: {'ag-setter': '9 of 23 qualified, 39%', 'ag-organic': '10 of 12 leads goal, 83%'}, bar: {'ag-setter': 39, 'ag-organic': 83}, hero: {leads: '23'}}],
+      ['2:15', 'Replied to @renee.k', '', 'ag-organic', '"Sent, Jules. Check your DMs."', true, ['JK', 'c2'], ['Instagram', 'comment from @jules_k', 2], {}],
+      ['2:16', 'Day 14 check-in with Devin, energy up from 3 to 7', '', 'ag-coach', '"Up to a 7. That is the reset working, Devin."', true, ['DO', 'c5'], ['Program', 'Devin, day 14', 1], {}],
+      ['2:17', 'Marcus Bell paid $497', 'money', 'ag-closer', '"Welcome aboard, Marcus. Your access link is on its way."', true, ['MB', 'c3'], ['Chat', 'Marcus Bell', 3], {rev: {'ag-closer': '$6,417', 'ag-setter': '$6,417', 'ag-coach': '$6,417', 'ag-ads': '$2,485'}, conv: {'ag-closer': '4 of 9 offers paid, 44%'}, bar: {'ag-closer': 44}, hero: {rev: '$6,417', enrolled: '8'}}],
+      ['2:20', 'Luis Herrera renewed, $397', 'money', 'ag-ascension', '"Welcome to month two, Luis. Same routine, new goals."', true, ['LH', 'c6'], ['Chat', 'Luis Herrera', 2], {rev: {'ag-ascension': '$397'}, verb: {'ag-ascension': 'renewed'}, conv: {'ag-ascension': '63% take the next program'}, bar: {'ag-ascension': 63}, hero: {rev: '$6,814'}}]
+    ];
+    let k = 0;
+    const tick = () => {
+      if (k >= pool.length) return;
+      const [t, title, kind, aid, say, talk, to, win, fx] = pool[k++];
+      const li = document.createElement('li'); li.className = 'ev enter' + (kind ? ' ' + kind : '');
+      li.innerHTML = '<time>' + t + '</time><i></i><strong>' + title + '</strong>';
+      list.prepend(li);
+      const ag = document.getElementById(aid);
+      if (ag) {
+        const clockEl = ag.querySelector('.task time'); if (clockEl) { clockEl.dataset.s = 0; clockEl.textContent = '0:00'; }
+        ag.querySelector('.win-title .where').textContent = win[0]; ag.querySelector('.win-title .with').textContent = win[1];
+        [...ag.querySelectorAll('.steps li')].forEach((li, x) => li.className = x < win[2] ? 'done' : x === win[2] ? 'on' : '');
+        typeLine(ag, say, talk, to);
+      }
+      Object.entries(fx.rev || {}).forEach(([id, v]) => document.querySelector('#' + id + ' .rev-at b').textContent = v);
+      Object.entries(fx.verb || {}).forEach(([id, v]) => document.querySelector('#' + id + ' .rev-at span').textContent = v);
+      Object.entries(fx.conv || {}).forEach(([id, v]) => document.querySelector('#' + id + ' .conv p').textContent = v);
+      Object.entries(fx.bar || {}).forEach(([id, pct]) => document.querySelector('#' + id + ' .conv .bar i').style.width = pct + '%');
+      Object.entries(fx.hero || {}).forEach(([id, v]) => document.getElementById(id).textContent = v);
+    };
+    setTimeout(tick, 5000); setInterval(tick, 7000);
+    const sync = document.getElementById('team-sync'); let n = 4;
+    setInterval(() => { n = n >= 9 ? 2 : n + 1; sync.textContent = 'Synced ' + n + 's ago'; }, 1000);
+  })();
+  // Slide 7: agent detail modal.
+  (() => {
+    const AG = {"organic": {"name": "Organic", "dept": "Marketing agent", "img": "creative-8", "rev": "$3,932", "verb": "sourced, last 24 hours", "where": "Instagram", "with": "Day 4, brain fog", "ctx": "Post 4 of 7 this week, 4,120 followers", "steps": [["Draft", "done", "1:58 AM", "Three captions from the Day 4 script, kept the shortest"], ["Image", "on", "Now", "Rendering variation 3 of 4"], ["Post", "", "Next", "Scheduled for 2:14 AM"], ["Reply", "", "Next", "Answers comments as they land"]], "goal": ["12 leads from tonight's post by 8 AM", "9 of 12", 75], "rules": ["No diagnosis in comments, no lab interpretation in public", "Replies in Dr. Yang's voice, never as a bot", "VITALITY comments get the DM, not a link in public"], "uses": ["Day 4 script, brain fog", "Dr. Yang interview 2, the colleague story", "Tone guide"], "queue": [["RK", "c4"], ["JK", "c2"]], "queue_text": "@renee.k, @jules_k, 2 more", "log": [["11:31", "Drafted Day 5 caption", ""], ["1:58", "Wrote captions for Day 4", ""], ["2:04", "Rendered 4 variations", ""], ["2:09", "Kevin Park came in from Day 3", ""], ["2:12", "Replying to @dana_rw", ""]], "variations": [{"t": "photo", "src": "assets/organic/post-1.jpg"}, {"t": "photo", "src": "assets/organic/post-3.jpg"}, {"t": "photo", "src": "assets/organic/post-4.jpg"}, {"t": "photo", "src": "assets/organic/post-5.jpg"}], "caption": "You blame the busy season. The fog doesn't lift in the quiet season either. That's the tell most people miss. Busy explains a bad week. It doesn't explain a bad year. Comment VITALITY and I'll send you the pattern profile that separates the two.", "live": [["reveal", 3600], ["step", {"1": "done", "2": "on"}, {"1": "2:13 AM", "2": "Now"}], ["caption", 300], ["event", "Posted to Instagram", "2:14 AM", 700], ["label", "Posted 2:14 AM"], ["step", {"2": "done", "3": "on"}, {"2": "2:14 AM", "3": "Now"}], ["u", "DR", "c5", "@dana_rw", "Does this apply if my TSH came back normal?", 3600], ["a", "Normal TSH is one number, Dana. The full panel tells the story. Comment VITALITY and I will send it.", 1500], ["u", "RK", "c4", "@renee.k", "Two years of busy season here. Following.", 4600], ["a", "That is the tell, Renee. Busy explains a week, not a year.", 1500], ["u", "JK", "c2", "@jules_k", "VITALITY", 3800], ["a", "Sent, Jules. Check your DMs.", 1200], ["event", "New lead from this post, Jules K", "2:15 AM", 1200], ["goal", "10 of 12", 83]], "render": "assets/organic/post-4.jpg"}, "ads": {"name": "Ads", "dept": "Marketing agent", "img": "creative-1", "rev": "$1,988", "verb": "sourced, last 24 hours", "where": "Ad Manager", "with": "brain fog set", "ctx": "Meta, $60 a day, resumes 6:00 AM", "steps": [["Results", "done", "1:20 AM", "Pulled overnight numbers, both sets"], ["Compare", "done", "1:21 AM", "Always tired at $41 a lead, brain fog at $24"], ["Adjust", "on", "1:22 AM", "Paused always tired, moved $60 a day. Checks again at 6:00 AM"]], "table": [["Ad set", "Spent", "Leads", "Per lead", "Status"], ["Brain fog", "$118", "5", "$24", "Active, $60 a day"], ["Always tired", "$82", "2", "$41", "Paused 1:22 AM"], ["Hashimoto's, test", "$20", "1", "$20", "Active, $10 a day"]], "goal": ["Keep cost per lead under $30", "$24 a lead", 80], "rules": ["Daily cap $120, never raised without Dr. Yang", "Pauses any set over $35 a lead for two hours", "No health claims in ad copy"], "uses": ["Niche 01 brief, tired professionals", "Winning hooks, 214 proven offers"], "queue": [], "queue_text": "Check results at 6:00 AM", "log": [["11:02", "Pulled evening results", ""], ["11:05", "Nothing to change", ""], ["1:20", "Pulled overnight results", ""], ["1:22", "Paused the always-tired set", ""], ["1:22", "Moved $60 a day to brain fog", ""]]}, "setter": {"name": "Setter", "dept": "Sales agent", "img": "creative-3", "rev": "$5,920", "verb": "set, last 24 hours", "where": "Chat", "with": "Kevin Park", "ctx": "Instagram lead, 2:09 AM, Boise, ID", "steps": [["Read", "done", "2:09 AM", "Read Kevin's message and the post he came from"], ["Qualify", "done", "2:09 AM", "A year of fatigue, frequent colds. Bloodwork not asked yet"], ["Reply", "on", "Now", "Second question"], ["Handoff", "", "Next", "To Closer once bloodwork history is clear"]], "thread": [["u", "KP", "c3", "Kevin Park", "2:09 AM", "Saw your post about brain fog. I catch every cold going around and I am wiped by 3."], ["a", null, null, "Setter", "2:09 AM", "Hi Kevin, thanks for reaching out. How long has this been going on, and how is your sleep?"], ["u", "KP", "c3", "Kevin Park", "2:11 AM", "About a year. Sleep is fine, seven hours, still tired."], ["a", null, null, "Setter", "typing", "\"Quick one, Kevin. Any bloodwork in the last year?\""]], "goal": ["Qualify 12 leads by 8 AM", "9 of 12", 75], "rules": ["Escalates anything acute or new to Dr. Yang", "Never quotes below $497", "Hands off after four answers, or on a price question"], "uses": ["Qualifying questions, SOP p.12", "Dr. Yang interview 1, who the reset is for"], "queue": [["SO", "c6"], ["DW", "c2"]], "queue_text": "Sam Ortiz, Dana Whitfield", "log": [["11:56", "Qualified Tom Whitaker", ""], ["1:31", "Elena Marsh asked about supplements", ""], ["2:09", "Read Kevin Park's message", ""], ["2:09", "Qualified Kevin, a year of fatigue", ""], ["2:11", "Replied to Kevin", ""]], "live": [["u", "KP", "c3", "Kevin Park", "Last spring. They said everything was normal.", 4200], ["a", "Normal on paper and normal are different things. Two more questions and I will point you the right way. Was that a full thyroid panel, or just TSH?", 1600], ["u", "KP", "c3", "Kevin Park", "Just TSH, I think.", 5200], ["a", "Got it. Last one. Is this something you would put ten minutes a day into for 30 days?", 1800], ["u", "KP", "c3", "Kevin Park", "Yeah, ten minutes I can do.", 4600], ["step", {"2": "done", "3": "on"}, {"2": "2:16 AM", "3": "Now"}], ["a", "Perfect. I am handing you to Closer, who sets you up with Dr. Yang's 30-day Immune Reset. One second.", 1200], ["event", "Handed off to Closer", "2:16 AM", 2200], ["switch", {"with": "Sam Ortiz", "ctx": "Instagram lead, 2:15 AM, Minneapolis, MN", "steps": [["Read", "done", "2:16 AM", "Read Sam's comment on the post"], ["Qualify", "on", "Now", "First question"], ["Reply", "", "Next", ""], ["Handoff", "", "Next", "To Closer once history is clear"]], "next": "Dana Whitfield, 1 more"}], ["u", "SO", "c6", "Sam Ortiz", "Hi, saw the post. I have had Hashimoto's for three years and I am still exhausted. Does this help?", 2600], ["a", "Hi Sam, thanks for reaching out. It is built for exactly that. Are you on medication now, and when was your last full panel?", 1800], ["u", "SO", "c6", "Sam Ortiz", "Levothyroxine. Panel in March.", 5400], ["a", "Ok. How is your energy by mid afternoon?", 1600], ["u", "SO", "c6", "Sam Ortiz", "Gone by 2.", 4800], ["a", "Good to know. One more. Any gut symptoms along with it?", 1400]]}, "closer": {"name": "Closer", "dept": "Sales agent", "img": "creative-5", "rev": "$5,920", "verb": "closed, last 24 hours", "where": "Chat", "with": "Jordan Lee", "ctx": "Qualified by Setter 1:52 AM, Austin, TX", "steps": [["Offer", "done", "1:55 AM", "Sent the $497 Immune Reset, one payment"], ["Answer", "done", "2:02 AM", "Two questions, refunds and time per day"], ["Payment", "done", "2:13 AM", "Stripe, $497"], ["Access", "on", "Now", "Sending the program link and day 1"]], "thread": [["u", "JL", "c4", "Jordan Lee", "1:58 AM", "Is there a refund if it does not work for me?"], ["a", null, null, "Closer", "2:02 AM", "Yes. Finish week one, and if you do not feel a difference you get it back."], ["u", "JL", "c4", "Jordan Lee", "2:12 AM", "Ok, paying now."], ["e", null, null, "", "2:13 AM", "Jordan Lee paid $497, Stripe"], ["a", null, null, "Closer", "typing", "\"Your access link is in your inbox, Jordan. Day 1 takes ten minutes.\""]], "goal": ["Close 4 by 8 AM", "3 of 4", 75], "rules": ["One offer, one price, $497", "Refund terms word for word from the agreement", "Never promises a diagnosis or a cure"], "uses": ["Pricing SOP p.4", "Refund policy", "Program welcome email"], "queue": [["MB", "c3"]], "queue_text": "Marcus Bell, offer out", "log": [["12:58", "Tom Whitaker paid $497", "money"], ["1:55", "Offer sent to Jordan Lee", ""], ["2:02", "Answered Jordan's refund question", ""], ["2:13", "Jordan Lee paid $497", "money"], ["2:13", "Sending access", ""]], "live": [["event", "Program access sent to Jordan Lee", "2:14 AM", 2600], ["u", "JL", "c4", "Jordan Lee", "Got it, thanks. Starting tomorrow morning.", 4200], ["a", "Perfect. Day 1 is ten minutes before breakfast. I will check in on day 7.", 1600], ["switch", {"with": "Marcus Bell", "ctx": "Qualified by Setter 2:15 AM, Miami, FL", "steps": [["Offer", "on", "Now", "Sending the $497 Immune Reset"], ["Answer", "", "Next", ""], ["Payment", "", "Next", ""], ["Access", "", "Next", ""]], "next": "Elena Marsh, qualifying"}], ["a", "Hi Marcus, Setter filled me in. A year of fatigue and every cold going around. Dr. Yang's 30-day Immune Reset is $497, one payment, ten minutes a day.", 2000], ["u", "MB", "c3", "Marcus Bell", "How is this different from just taking vitamin D?", 5200], ["step", {"0": "done", "1": "on"}, {"0": "2:15 AM", "1": "Now"}], ["a", "A supplement treats one number. The reset finds the pattern behind it, food, sleep, stress, and changes the routine around it. Most people feel the afternoon lift by day 5.", 2000], ["u", "MB", "c3", "Marcus Bell", "Ok. And if it does not work?", 4800], ["a", "Finish week one and if it is not helping, you get the $497 back. Here is the link.", 1600], ["u", "MB", "c3", "Marcus Bell", "Paying now.", 6200], ["step", {"1": "done", "2": "done", "3": "on"}, {"1": "2:16 AM", "2": "2:17 AM", "3": "Now"}], ["event", "Marcus Bell paid $497, Stripe", "2:17 AM", 1200], ["a", "Welcome aboard, Marcus. Your access link is on its way.", 1400]]}, "coach": {"name": "Coach", "dept": "Delivery agent", "img": "agents-2", "rev": "$5,920", "verb": "protected, last 24 hours", "where": "Program", "with": "Priya Natarajan, day 6", "ctx": "Enrolled Sep 9, routine done 5 of 6 days", "steps": [["Review", "done", "2:05 AM", "Day 6 done, energy dip noted"], ["Message", "on", "Now", "Checking in on the dip"], ["Log", "", "Next", "Logs her answer to the file"]], "thread": [["u", "PN", "c1", "Priya Natarajan", "2:06 AM", "Tired this morning but I did it."], ["a", null, null, "Coach", "2:11 AM", "A dip in days 3 to 5 is normal as the sugar comes out. Keep the morning routine, and get to bed thirty minutes earlier tonight."], ["u", "PN", "c1", "Priya Natarajan", "2:12 AM", "Ok, will do."], ["a", null, null, "Coach", "typing", "\"How was your energy this afternoon?\""]], "goal": ["Day-7 completion above 80%", "81%", 81], "rules": ["Routine coaching only, no medical advice", "Anything new, or a symptom over 7 of 10, goes to Dr. Yang", "Nobody hears from me more than twice a day"], "uses": ["Immune Reset, week 1", "Dr. Yang interview 2, the week-one dip", "Check-in script"], "queue": [["DO", "c5"], ["NF", "c4"]], "queue_text": "Devin Okafor, day 14. Nora Feldman, day 9", "log": [["12:40", "Flagged Grace Kim's video problem for Dr. Yang", ""], ["1:40", "Booked Devin's day-7 call, Tuesday 9:00 AM", ""], ["2:05", "Reviewed Priya, day 6", ""], ["2:11", "Answered Priya about the dip", ""]], "live": [["u", "PN", "c1", "Priya Natarajan", "Better than yesterday. Made it to 4 without the crash.", 4400], ["a", "That is day 6 doing its job. Tomorrow is day 7, the first check-in with Dr. Yang's video. Ten minutes, same time.", 1800], ["u", "PN", "c1", "Priya Natarajan", "Will do. Thanks.", 4600], ["step", {"1": "done", "2": "on"}, {"1": "2:14 AM", "2": "Now"}], ["event", "Logged, day 6 done, energy steadier", "2:15 AM", 1800], ["switch", {"with": "Devin Okafor, day 14", "ctx": "Enrolled Sep 1, energy 3 to 7", "steps": [["Review", "done", "2:15 AM", "Day 14, routine done 13 of 14 days"], ["Message", "on", "Now", "Two week check-in"], ["Log", "", "Next", "Logs his answer to the file"]], "next": "Nora Feldman, day 9"}], ["a", "Day 14, Devin. Two weeks in. Your log says energy went from a 3 to a 7. How does the afternoon feel now?", 2000], ["u", "DO", "c5", "Devin Okafor", "Honestly I forget to check until about 5 now.", 5600], ["a", "That is the goal. Week 3 adds the sleep work. Keep the ten minutes, lights out by 10:30 three nights this week.", 1800], ["u", "DO", "c5", "Devin Okafor", "Got it.", 4000], ["step", {"1": "done", "2": "on"}, {"1": "2:17 AM", "2": "Now"}], ["event", "Logged, day 14, energy 7", "2:17 AM", 1600]]}, "ascension": {"name": "Ascension", "dept": "Delivery agent", "img": "creative-4", "rev": "$397", "verb": "pending, Luis Herrera", "where": "Chat", "with": "Luis Herrera", "ctx": "Day 22 of 30, renewal opens Friday", "steps": [["Review", "done", "1:50 AM", "Day 22, 19 of 22 days done, energy 3 to 7"], ["Offer", "on", "Now", "Month two, $397"], ["Confirm", "", "Next", "Payment link if he says yes"]], "thread": [["a", null, null, "Ascension", "11:56 PM", "Day 22, Luis. Nineteen of twenty two days done, and your energy went from a 3 to a 7."], ["u", "LH", "c6", "Luis Herrera", "12:10 AM", "Yeah, it has been good. What happens after 30?"], ["a", null, null, "Ascension", "typing", "\"Want to keep going after 30, Luis? Month two is $397. Same routine, new goals.\""]], "goal": ["60% take the next program", "62%", 62], "rules": ["Offers once, then waits", "Never before day 20", "No discount, the price is the price"], "uses": ["Month two outline", "Offers p.2"], "queue": [["DO", "c5"], ["NF", "c4"], ["GK", "c3"]], "queue_text": "3 due Friday, $1,191", "log": [["11:20", "Reviewed 3 members near day 20", ""], ["11:56", "Sent Luis Herrera the $397 renewal", ""], ["12:10", "Luis asked what happens after 30", ""]], "live": [["u", "LH", "c6", "Luis Herrera", "What is different in month two?", 4600], ["a", "Same ten minutes, but we add the food work so it holds without the routine. New goals every week.", 1800], ["u", "LH", "c6", "Luis Herrera", "Ok, I am in.", 5000], ["step", {"1": "done", "2": "on"}, {"1": "2:19 AM", "2": "Now"}], ["a", "Here is the link, $397. Month two starts the day after 30.", 1400], ["u", "LH", "c6", "Luis Herrera", "Done.", 5600], ["event", "Luis Herrera renewed, $397, Stripe", "2:20 AM", 1400], ["a", "Welcome to month two, Luis. Same routine, new goals.", 1400], ["switch", {"with": "Hannah Ruiz, day 26", "ctx": "Missed 3 days this week, renewal opens Monday", "steps": [["Review", "on", "Now", "Day 26, 19 of 26 days done"], ["Offer", "", "Next", "Month two, $397"], ["Confirm", "", "Next", "Payment link if she says yes"]], "next": "2 due Friday, $794"}], ["a", "Day 26, Hannah. You missed three this week. Before I ask about month two, how is the energy?", 2200], ["u", "HR", "c2", "Hannah Ruiz", "Better, honestly. I just got busy.", 6200], ["a", "Then let us finish strong. Four days left. I will ask about month two on day 29.", 1800]]}};
+    const modal = document.getElementById('amodal');
+    if (!modal) return;
+    const panel = modal.querySelector('.amodal-panel');
+    let typer = null;
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const init = (t, c) => '<span class="init ' + c + '">' + t + '</span>';
+    const open = id => {
+      const a = AG[id]; if (!a) return;
+      const card = document.getElementById('ag-' + id);
+      const pres = card.querySelector('.who span').innerHTML;
+      const presDot = card.querySelector('.pres').className;
+      const steps = a.steps.map(([l, st, t, note]) => '<li class="' + st + '"><span>' + l + '</span><small><b>' + t + '</b>' + esc(note) + '</small></li>').join('');
+      let body = '';
+      const tile = (x, cls) => x.t === 'photo'
+        ? '<div class="tile photo ' + (cls || '') + '"><img src="' + x.src + '" alt=""><span>' + esc(x.cap || '') + '</span></div>'
+        : '<div class="tile ' + x.bg + ' ' + (cls || '') + '"><span>' + esc(x.txt) + '</span></div>';
+      if (a.render) {
+        body = '<div class="am-compose">' +
+          '<div class="render"><div class="vars-col">' + a.variations.map((v, k) => tile(v, 'var' + (k === 2 ? ' pick' : ''))).join('') + '</div>' +
+          '<div class="tile photo preview new gen"><img src="' + a.render + '" alt=""></div></div>' +
+          '<div class="post"><div class="gen-label"><i></i>Rendering, variation 3 of 4</div>' +
+          '<p class="cap"><span class="txt"></span></p>' +
+          '<div class="am-thread comments"></div></div></div>';
+      } else if (a.table) {
+        const [head, ...rows] = a.table;
+        body = '<div class="am-table"><table><thead><tr>' + head.map(h => '<th>' + h + '</th>').join('') + '</tr></thead><tbody>' + rows.map(r => '<tr>' + r.map(c => '<td>' + esc(c) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>';
+      } else {
+        body = '<div class="am-thread">' + a.thread.map(([kind, ini, col, who, t, text]) => {
+          if (kind === 'e') return '<div class="am-event">' + esc(text) + '<time>' + t + '</time></div>';
+          const ava = kind === 'a' ? '<img src="assets/orbs/' + a.img + '.png" alt="">' : init(ini, col);
+          const typing = t === 'typing';
+          return '<div class="msg' + (kind === 'a' ? ' agent' : '') + (typing ? ' is-typing' : '') + '"' + (typing ? ' data-text="' + esc(text).replace(/"/g, '&quot;') + '"' : '') + '>' + ava + '<div><div class="by"><strong>' + who + '</strong><time>' + (typing ? 'now' : t) + '</time></div><p>' + (typing ? '<span class="txt"></span><span class="caret"></span>' : esc(text)) + '</p></div></div>';
+        }).join('') + '</div>';
+      }
+      panel.innerHTML =
+        '<header class="am-head"><span class="agent-ava orb-img"><img src="assets/orbs/' + a.img + '.png" alt=""><i class="' + presDot + '"></i></span>' +
+        '<div><strong>' + a.name + '</strong><span class="sub">' + a.dept + ', ' + pres + '</span></div>' +
+        '<div class="am-rev"><b>' + a.rev + '</b><span>' + a.verb + '</span></div>' +
+        '<div class="am-actions"><button class="btn" type="button" data-toast="' + a.name + ' paused. Nothing goes out until you resume.">Pause agent</button><button class="btn" type="button" data-toast="Workflow editor is on the roadmap">Edit workflow</button><button class="icon-btn am-close" type="button" aria-label="Close">\u2715</button></div></header>' +
+        '<div class="am-body"><div class="am-win"><div class="am-title"><span class="where">' + a.where + '</span><span class="with">' + a.with + '</span><span class="ctx">' + esc(a.ctx) + '</span></div><ol class="am-steps">' + steps + '</ol>' + body + '</div>' +
+        '<aside class="am-side"><div class="am-card am-goal"><h4>Goal</h4><b>' + a.goal[1] + '</b><div class="bar"><i style="width:' + a.goal[2] + '%"></i></div><p>' + esc(a.goal[0]) + '</p></div>' +
+        '<div class="am-card"><h4>Rules</h4><ul>' + a.rules.map(r => '<li>' + esc(r) + '</li>').join('') + '</ul></div>' +
+        '<div class="am-card"><h4>Uses</h4><ul>' + a.uses.map(r => '<li>' + esc(r) + '</li>').join('') + '</ul></div>' +
+        '<div class="am-card"><h4>Next</h4><div class="am-queue">' + a.queue.map(([t, c]) => init(t, c)).join('') + '<p>' + esc(a.queue_text) + '</p></div></div></aside></div>' +
+        '<footer class="am-foot"><h4>Tonight</h4><ul class="am-log">' + a.log.map(([t, s, k]) => '<li class="' + k + '"><time>' + t + '</time>' + esc(s) + '</li>').join('') + '</ul></footer>';
+      modal.hidden = false;
+      panel.querySelectorAll('[data-toast]').forEach(b => b.addEventListener('click', () => { const toast = modal.closest('.shell').querySelector('.toast'); toast.textContent = b.dataset.toast; toast.classList.add('show'); clearTimeout(toast.hideTimer); toast.hideTimer = setTimeout(() => toast.classList.remove('show'), 2600); }));
+      panel.querySelector('.am-close').addEventListener('click', close);
+      const t = panel.querySelector('.msg.is-typing'); if (t) { const full = t.dataset.text, txt = t.querySelector('.txt'); let i = 0; clearInterval(typer); typer = setInterval(() => { i += Math.random() < 0.3 ? 2 : 1; txt.textContent = full.slice(0, i); if (i >= full.length) { clearInterval(typer); t.querySelector('.caret')?.remove(); t.classList.remove('is-typing'); if (a.live) runLive(a, ++liveToken); } }, 34); } else if (a.live) runLive(a, ++liveToken);
+      const th = panel.querySelector('.am-thread'); if (th) th.scrollTop = th.scrollHeight;
+    };
+    let liveToken = 0;
+    const scrollDown = () => { const th = panel.querySelector('.am-thread'); if (th) th.scrollTop = th.scrollHeight; };
+    const addMsg = (a, kind, ini, col, who, t, text) => {
+      const th = panel.querySelector('.am-thread'); if (!th) return null;
+      const ava = kind === 'a' ? '<img src="assets/orbs/' + a.img + '.png" alt="">' : init(ini, col);
+      const el = document.createElement('div'); el.className = 'msg' + (kind === 'a' ? ' agent' : '') + ' enter';
+      el.innerHTML = ava + '<div><div class="by"><strong>' + who + '</strong><time>' + t + '</time></div><p>' + (text === null ? '<span class="dots"><i></i><i></i><i></i></span>' : '<span class="txt"></span><span class="caret"></span>') + '</p></div>';
+      th.appendChild(el); scrollDown(); return el;
+    };
+    const typeInto = (el, text, token, done) => { const txt = el.querySelector('.txt'); let i = 0; const step = () => { if (token !== liveToken) return; i += Math.random() < 0.3 ? 2 : 1; txt.textContent = text.slice(0, i); scrollDown(); if (i < text.length) setTimeout(step, 26 + Math.random() * 30); else { el.querySelector('.caret')?.remove(); done(); } }; step(); };
+    const runLive = (a, token) => {
+      const turns = a.live; let k = 0;
+      const nextTurn = () => {
+        if (token !== liveToken || k >= turns.length) return;
+        const turn = turns[k++]; const kind = turn[0];
+        if (kind === 'u') { const [, ini, col, who, text, wait] = turn; setTimeout(() => { if (token !== liveToken) return; const el = addMsg(a, 'u', ini, col, who, 'typing', null); setTimeout(() => { if (token !== liveToken) return; el.querySelector('time').textContent = 'now'; el.querySelector('p').textContent = text; scrollDown(); setTimeout(nextTurn, 600); }, 1400 + Math.min(text.length * 18, 2200)); }, wait); }
+        else if (kind === 'a') { const [, text, wait] = turn; setTimeout(() => { if (token !== liveToken) return; const el = addMsg(a, 'a', null, null, a.name, 'now', ''); typeInto(el, text, token, () => setTimeout(nextTurn, 500)); }, wait); }
+        else if (kind === 'event') { const [, text, t, wait] = turn; setTimeout(() => { if (token !== liveToken) return; const th = panel.querySelector('.am-thread'); const ev = document.createElement('div'); ev.className = 'am-event enter'; ev.innerHTML = esc(text) + '<time>' + t + '</time>'; th.appendChild(ev); scrollDown(); nextTurn(); }, wait); }
+        else if (kind === 'step') { const [, states, times] = turn; const lis = panel.querySelectorAll('.am-steps li'); Object.entries(states).forEach(([i, st]) => { lis[i].className = st; }); Object.entries(times).forEach(([i, t]) => { const b = lis[i].querySelector('small b'); if (b) b.textContent = t; }); nextTurn(); }
+        else if (kind === 'reveal') { const [, wait] = turn; setTimeout(() => { if (token !== liveToken) return; panel.querySelectorAll('.gen').forEach(el => el.classList.remove('gen')); const l = panel.querySelector('.gen-label'); if (l) { l.classList.add('ok'); l.innerHTML = '<i></i>Posting'; } nextTurn(); }, wait); }
+        else if (kind === 'label') { const [, text] = turn; const l = panel.querySelector('.gen-label'); if (l) l.innerHTML = '<i></i>' + esc(text); nextTurn(); }
+        else if (kind === 'caption') { const [, wait] = turn; setTimeout(() => { if (token !== liveToken) return; const cap = panel.querySelector('.cap'); if (!cap) return nextTurn(); cap.classList.add('typing'); cap.innerHTML = '<span class="txt"></span><span class="caret"></span>'; typeInto(cap, a.caption, token, () => { cap.classList.remove('typing'); setTimeout(nextTurn, 400); }); }, wait); }
+        else if (kind === 'goal') { const [, v, pct] = turn; const g = panel.querySelector('.am-goal'); if (g) { g.querySelector('b').textContent = v; g.querySelector('.bar i').style.width = pct + '%'; } nextTurn(); }
+        else if (kind === 'switch') { const [, s] = turn; panel.querySelector('.am-title .with').textContent = s.with; panel.querySelector('.am-title .ctx').textContent = s.ctx; panel.querySelector('.am-steps').innerHTML = s.steps.map(([l, st, t, note]) => '<li class="' + st + '"><span>' + l + '</span><small><b>' + t + '</b>' + esc(note) + '</small></li>').join(''); const nx = panel.querySelector('.am-queue p'); if (nx) nx.textContent = s.next; const th = panel.querySelector('.am-thread'); const dv = document.createElement('div'); dv.className = 'am-divider'; dv.textContent = 'New conversation, ' + s.with; th.appendChild(dv); scrollDown(); setTimeout(nextTurn, 900); }
+      };
+      setTimeout(nextTurn, 1800);
+    };
+    const close = () => { modal.hidden = true; clearInterval(typer); liveToken++; };
+    modal.querySelector('.amodal-back').addEventListener('click', close);
+    document.querySelectorAll('#team-slide .agent-card').forEach(c => c.addEventListener('click', e => { if (e.target.closest('button')) return; open(c.id.replace('ag-', '')); }));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) { close(); e.stopImmediatePropagation(); e.preventDefault(); } }, true);
+    const deep = new URLSearchParams(location.hash.slice(1)).get('agent'); if (deep && AG[deep]) setTimeout(() => open(deep), 400);
+  })();
+</script>
+</body>
+</html>
