@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Kodara — Full webinar preview</title>
   <link rel="icon" href="/mockups-v2/slides/futuristic-webinar/brand/favicon-192.png">
-  <script type="module" crossorigin src="/mockups-v2/slides/futuristic-webinar/assets/webinar-BBFdor2i.js"></script>
+  <script type="module" crossorigin src="/mockups-v2/slides/futuristic-webinar/assets/webinar-t1lGtNHe.js"></script>
   <link rel="modulepreload" crossorigin href="/mockups-v2/slides/futuristic-webinar/assets/modulepreload-polyfill-P2Xu9kJm.js">
-  <link rel="stylesheet" crossorigin href="/mockups-v2/slides/futuristic-webinar/assets/webinar-Dxd9aeyA.css">
+  <link rel="stylesheet" crossorigin href="/mockups-v2/slides/futuristic-webinar/assets/webinar-DO4tDRdl.css">
 </head>
-<body class="full-webinar" data-presenter="full-webinar-presenter.html">
+<body class="full-webinar player-shell" data-presenter="full-webinar-presenter.html">
   <main id="presentation" aria-label="Kodara full webinar">
+    <button id="panel-toggle" class="panel-toggle" aria-label="Open slide panel" aria-controls="slide-panel" aria-expanded="false">Slides</button>
+    <nav id="slide-panel" class="slide-panel" aria-label="Slide thumbnails" hidden></nav>
     <div id="viewport">
       <div id="stage">
         <div id="backdrop" aria-hidden="true"><img id="fallback" src="/mockups-v2/slides/futuristic-webinar/stills/halo.png" alt=""><div id="canvas-host"></div></div>
@@ -412,10 +414,9 @@
     </div>
     <nav class="controls" aria-label="Presentation controls">
       <div class="transport"><button id="previous" aria-label="Previous slide">←</button><output id="position" aria-live="polite">1 / 24</output><button id="next" aria-label="Next slide">→</button></div>
-      <label class="slide-picker-label">Slide <select id="slide-picker" aria-label="Choose slide"></select></label>
       <div class="utilities"><button id="presenter-button">Presenter notes</button><button id="motion" aria-pressed="false">Pause motion</button><button id="fullscreen">Fullscreen</button></div>
     </nav>
-    <p class="review-note" id="review-note">Original 24-slide webinar · Arrow keys to advance · P for presenter notes</p>
+    <p class="review-note" id="review-note" role="status"></p>
   </main>
 </body>
 </html>
