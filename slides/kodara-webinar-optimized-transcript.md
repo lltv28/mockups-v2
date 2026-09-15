@@ -78,7 +78,7 @@ AI should remove work from your plate. If it creates another full-time job, it h
 
 We’re going to work through three things.
 
-First, find the health questions people are already searching for. Then see how your expertise could become an online offer. Then see how AI can help market, sell, and deliver it.
+First, find the health questions people are already searching for. Then see how your expertise could become a “telehealth AI clinic”. Then see how AI can help market, sell, and deliver it.
 
 The keyword demonstration is the first step in planning your “telehealth AI clinic.” We need to understand who it could help and what those people are looking for.
 
@@ -110,7 +110,7 @@ Now I want to explain why I brought that work into health and wellness.
 
 ### Slide 9: Michelle’s story
 
-My girlfriend Michelle was diagnosed with Graves Disease.
+My girlfriend Michelle was diagnosed with Graves’ disease.
 
 There were weeks when she had almost no energy, felt sick, dealt with severe joint pain, and spent an enormous amount of time driving to appointments around Southern California.
 
