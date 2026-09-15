@@ -313,7 +313,7 @@
   .ai-preview > div { display: grid; justify-items: center; }
   .ai-preview h2, .ai-demonstration h2 { max-width: 1500px; }
   .ai-preview h2 { font-size: var(--fs-h2-sm); }
-  .ai-preview .lede { margin-top: 20px; }
+  .ai-preview .lede { margin-top: 20px; max-width: 1500px; font-size: var(--fs-body); }
   .ai-video-shell, .ai-preview-frame { position: relative; width: 680px; max-width: 100%; aspect-ratio: 1; margin: 0; background: #080808; }
   .ai-video-shell iframe, .ai-preview-frame iframe, .thumbnail-media-poster { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; object-fit: cover; }
 
@@ -537,6 +537,28 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* Three comparison frames use native navigation so audience and presenter stay synchronized. */
+  .title-scope { margin-top: 24px; font-size: var(--fs-body); color: var(--ink-soft); }
+  .clinic-comparison { gap: 24px; }
+  .clinic-source { display: flex; align-items: center; justify-content: center; gap: 22px; min-height: 90px; font-size: var(--fs-h4); }
+  .clinic-source > span { font-size: var(--fs-h2-sm); }
+  .clinic-models { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 26px; }
+  .clinic-models::before { content: ''; position: absolute; left: 25%; right: 25%; top: -26px; height: 20px; border: 2px solid var(--line-strong); border-bottom: 0; border-radius: var(--radius) var(--radius) 0 0; }
+  .clinic-model { min-width: 0; text-align: center; }
+  .clinic-model h3 { font-size: var(--fs-h3); }
+  .clinic-model-ai h3 { color: var(--brand-dark); }
+  .clinic-scope { margin-top: 14px; }
+  .clinic-journey { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; list-style: none; margin-top: 20px; }
+  .clinic-journey li { position: relative; }
+  .clinic-journey li + li::before { content: '→'; position: absolute; left: -28px; top: 50px; color: var(--ink-faint); font-size: var(--fs-h4); }
+  .clinic-emoji { display: block; height: 146px; font-size: var(--fs-display); line-height: 1.3; font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; }
+  .clinic-journey h4 { min-height: 80px; display: grid; align-content: start; }
+  .clinic-journey p { min-height: 70px; margin-top: 10px; }
+  .clinic-growth { margin-top: 18px; padding-top: 18px; border-top: 2px solid var(--line); font-size: var(--fs-h4); font-weight: var(--w-heading); line-height: 1.2; }
+  .clinic-model-ai .clinic-growth { color: var(--brand-dark); border-color: var(--brand-mid); }
+  .clinic-concealed { visibility: hidden; }
+  .clinic-comparison .proof-disclosure { margin-top: auto; }
 </style>
 </head>
 <body>
@@ -546,21 +568,22 @@
     <span class="grid-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
   </button>
   <main class="deck" id="deck">
-    <section class="slide active" id="webinar-title" data-act="1" data-title="How to build the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="webinar-title-heading">
+    <section class="slide active" id="webinar-title" data-act="1" data-title="How to scale your health business with AI" role="group" aria-roledescription="slide" aria-labelledby="webinar-title-heading">
       <div class="act-label">A Kodara webinar for established health and wellness experts</div>
       <div class="content title-slide">
         <img class="brand-wordmark" src="health/assets/kodara-wordmark.svg" alt="Kodara">
-        <h1 id="webinar-title-heading">How To Build The <span class="brand">“AI Version Of You”</span> That Can Sell Itself To Clients &amp; Patients Online</h1>
-        <p class="lede">You bring the knowledge and approval. Kodara builds the system that answers questions and guides people to the right next step.</p>
+        <h1 id="webinar-title-heading">How to scale your health and wellness business <span class="brand">with AI.</span></h1>
+        <p class="lede">Build your own “telehealth AI clinic” around your expertise.</p>
+        <p class="title-scope">AI marketing, AI sales, and online education and programs.</p>
       </div>
     </section>
 
-    <section class="slide" id="ai-preview" data-act="1" data-title="Preview the AI version of you" role="group" aria-roledescription="slide" aria-labelledby="ai-preview-title">
+    <section class="slide" id="ai-preview" data-act="1" data-title="Meet Sandra AI" role="group" aria-roledescription="slide" aria-labelledby="ai-preview-title">
       <div class="act-label"><span>01</span>The opportunity</div>
       <div class="content ai-preview">
         <div>
-          <h2 id="ai-preview-title">Here is what the AI version of you can actually look like.</h2>
-          <p class="lede">This is Sandra AI. Later, we’ll watch the full customer journey.</p>
+          <h2 id="ai-preview-title">Meet Sandra AI.</h2>
+          <p class="lede">One part of Sandra’s online business. Later, we’ll connect the marketing, conversation, and program.</p>
         </div>
         <figure class="ai-preview-frame">
           <iframe src="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/iframe?controls=true&amp;muted=true&amp;preload=true&amp;poster=https%3A%2F%2Fcustomer-nguqf0yqc9xf45px.cloudflarestream.com%2Fefec3e7459738b6bdddbbb49f3f9b0b8%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D10s%26height%3D600" title="Sandra AI preview" aria-label="Sandra AI preview" loading="eager" data-thumbnail-poster="https://customer-nguqf0yqc9xf45px.cloudflarestream.com/efec3e7459738b6bdddbbb49f3f9b0b8/thumbnails/thumbnail.jpg?time=10s&amp;height=720" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
@@ -625,13 +648,13 @@
         <h2 id="online-models-title">How to scale your health and wellness business with AI.</h2>
         <div class="agenda">
           <div class="agenda-list">
-            <div class="agenda-row"><span>01</span><strong>See the health questions people are already searching for answers to.</strong></div>
-            <div class="agenda-row"><span>02</span><strong>Find where your expertise could help them get what they want.</strong></div>
-            <div class="agenda-row"><span>03</span><strong>See how to test an online offer before building a whole business around it.</strong></div>
+            <div class="agenda-row"><span>01</span><strong>Find the health questions people are already searching for.</strong></div>
+            <div class="agenda-row"><span>02</span><strong>See how your expertise could become an online offer.</strong></div>
+            <div class="agenda-row"><span>03</span><strong>See how AI can help market, sell, and deliver it.</strong></div>
           </div>
           <aside class="agenda-side">
             <strong>At the end</strong>
-            <p>At the end, I’ll show you what working with Kodara looks like and the next step if you want our help.</p>
+            <p>At the end, I’ll show you what Kodara builds for your “telehealth AI clinic” and the next step if you want our help.</p>
           </aside>
         </div>
       </div>
@@ -772,7 +795,7 @@
           <article><span class="label">Organic</span><h3>Create answers people can find.</h3><p>Use the questions we found to shape useful articles, videos, and search pages.</p><p class="path-result">Search or content brings them to your offer.</p></article>
           <article><span class="label">Paid</span><h3>Test messages against that demand.</h3><p>Use the same language to shape ads and landing pages, then measure the response.</p><p class="path-result">An ad brings them to your offer.</p></article>
         </div>
-        <p class="demo-cue">The next question: what happens after someone clicks?</p>
+        <p class="demo-cue">Now people can find you. What happens when they want your help?</p>
         <p class="proof-disclosure">Both paths require testing. Paid ads involve spend; search interest does not guarantee sales.</p>
       </div>
     </section>
@@ -794,32 +817,82 @@
       </div>
     </section>
 
-    <section class="slide" id="definition" data-act="3" data-title="The AI customer path" role="group" aria-roledescription="slide" aria-labelledby="definition-title">
-      <div class="act-label"><span>03</span>The AI version of you</div>
-      <div class="content stack">
-        <h2 id="definition-title">The AI is the <span class="brand">customer path</span> around your expertise.</h2>
-        <div class="definition-grid">
-          <div class="definition-main is-emphasis">
-            <strong>Your knowledge becomes something people can use online.</strong>
-            <p>Your approved knowledge can answer questions, understand context, guide people to the right next step, and know when to bring in a human.</p>
-          </div>
-          <div class="definition-list">
-            <div>Built from your source material</div>
-            <div>Tested and corrected by you</div>
-            <div>Connected to the programs you approve</div>
-            <div>Bounded by when a human must take over</div>
-          </div>
+    <section class="slide" id="clinic-in-person" data-act="3" data-title="Your in-person clinic" role="group" aria-roledescription="slide" aria-labelledby="clinic-in-person-title">
+      <div class="act-label"><span>03</span>Your telehealth AI clinic</div>
+      <div class="content stack dense clinic-comparison">
+        <h2 id="clinic-in-person-title">Grow beyond your clinic <span class="brand">with AI.</span></h2>
+        <div class="clinic-source"><span aria-hidden="true">🧠</span><strong>Your expertise</strong></div>
+        <div class="clinic-models">
+          <article class="clinic-model">
+            <h3><span aria-hidden="true">🏥</span> Your in-person clinic</h3>
+            <p class="clinic-scope">People come to your location.</p>
+            <ol class="clinic-journey"><li><span class="clinic-emoji" aria-hidden="true">🏘️</span><h4>Reach nearby people</h4><p>Your local service area</p></li><li><span class="clinic-emoji" aria-hidden="true">📅</span><h4>Book an appointment</h4><p>Reception and scheduling</p></li><li><span class="clinic-emoji" aria-hidden="true">🧑‍⚕️</span><h4>Help them in person</h4><p>You and your care team</p></li></ol>
+            <p class="clinic-growth clinic-concealed" aria-hidden="true">Grow with more appointments,<br>staff, and space.</p>
+          </article>
+          <article class="clinic-model clinic-model-ai clinic-concealed" aria-hidden="true">
+            <h3><span aria-hidden="true">💻</span> Your “telehealth AI clinic”</h3>
+            <p class="clinic-scope">Education, guidance, and programs.</p>
+            <ol class="clinic-journey"><li><span class="clinic-emoji" aria-hidden="true">📣</span><h4>Reach people online</h4><p>AI marketing content and ads</p></li><li><span class="clinic-emoji" aria-hidden="true">💬</span><h4>AI answers and enrolls</h4><p>Your AI salesperson</p></li><li><span class="clinic-emoji" aria-hidden="true">📱</span><h4>Deliver education and programs</h4><p>Your knowledge, with AI</p></li></ol>
+            <p class="clinic-growth clinic-concealed" aria-hidden="true">Let more people benefit<br>from what you know.</p>
+          </article>
         </div>
+        <p class="proof-disclosure">Your expertise and oversight guide both businesses. The online clinic delivers education, guidance, and programs.</p>
       </div>
     </section>
 
-    <section class="slide" id="ai-business-flow" data-act="3" data-title="How the Sandra AI customer path can work." role="group" aria-roledescription="slide" aria-labelledby="ai-business-flow-title">
-      <div class="act-label"><span>03</span>The AI version of you</div>
+    <section class="slide" id="clinic-ai" data-act="3" data-title="Your telehealth AI clinic" role="group" aria-roledescription="slide" aria-labelledby="clinic-ai-title">
+      <div class="act-label"><span>03</span>Your telehealth AI clinic</div>
+      <div class="content stack dense clinic-comparison">
+        <h2 id="clinic-ai-title">Grow beyond your clinic <span class="brand">with AI.</span></h2>
+        <div class="clinic-source"><span aria-hidden="true">🧠</span><strong>Your expertise</strong></div>
+        <div class="clinic-models">
+          <article class="clinic-model">
+            <h3><span aria-hidden="true">🏥</span> Your in-person clinic</h3>
+            <p class="clinic-scope">People come to your location.</p>
+            <ol class="clinic-journey"><li><span class="clinic-emoji" aria-hidden="true">🏘️</span><h4>Reach nearby people</h4><p>Your local service area</p></li><li><span class="clinic-emoji" aria-hidden="true">📅</span><h4>Book an appointment</h4><p>Reception and scheduling</p></li><li><span class="clinic-emoji" aria-hidden="true">🧑‍⚕️</span><h4>Help them in person</h4><p>You and your care team</p></li></ol>
+            <p class="clinic-growth clinic-concealed" aria-hidden="true">Grow with more appointments,<br>staff, and space.</p>
+          </article>
+          <article class="clinic-model clinic-model-ai">
+            <h3><span aria-hidden="true">💻</span> Your “telehealth AI clinic”</h3>
+            <p class="clinic-scope">Education, guidance, and programs.</p>
+            <ol class="clinic-journey"><li><span class="clinic-emoji" aria-hidden="true">📣</span><h4>Reach people online</h4><p>AI marketing content and ads</p></li><li><span class="clinic-emoji" aria-hidden="true">💬</span><h4>AI answers and enrolls</h4><p>Your AI salesperson</p></li><li><span class="clinic-emoji" aria-hidden="true">📱</span><h4>Deliver education and programs</h4><p>Your knowledge, with AI</p></li></ol>
+            <p class="clinic-growth clinic-concealed" aria-hidden="true">Let more people benefit<br>from what you know.</p>
+          </article>
+        </div>
+        <p class="proof-disclosure">Your expertise and oversight guide both businesses. The online clinic delivers education, guidance, and programs.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="clinic-growth" data-act="3" data-title="Two ways to grow" role="group" aria-roledescription="slide" aria-labelledby="clinic-growth-title">
+      <div class="act-label"><span>03</span>Your telehealth AI clinic</div>
+      <div class="content stack dense clinic-comparison">
+        <h2 id="clinic-growth-title">Grow beyond your clinic <span class="brand">with AI.</span></h2>
+        <div class="clinic-source"><span aria-hidden="true">🧠</span><strong>Your expertise</strong></div>
+        <div class="clinic-models">
+          <article class="clinic-model">
+            <h3><span aria-hidden="true">🏥</span> Your in-person clinic</h3>
+            <p class="clinic-scope">People come to your location.</p>
+            <ol class="clinic-journey"><li><span class="clinic-emoji" aria-hidden="true">🏘️</span><h4>Reach nearby people</h4><p>Your local service area</p></li><li><span class="clinic-emoji" aria-hidden="true">📅</span><h4>Book an appointment</h4><p>Reception and scheduling</p></li><li><span class="clinic-emoji" aria-hidden="true">🧑‍⚕️</span><h4>Help them in person</h4><p>You and your care team</p></li></ol>
+            <p class="clinic-growth">Grow with more appointments,<br>staff, and space.</p>
+          </article>
+          <article class="clinic-model clinic-model-ai">
+            <h3><span aria-hidden="true">💻</span> Your “telehealth AI clinic”</h3>
+            <p class="clinic-scope">Education, guidance, and programs.</p>
+            <ol class="clinic-journey"><li><span class="clinic-emoji" aria-hidden="true">📣</span><h4>Reach people online</h4><p>AI marketing content and ads</p></li><li><span class="clinic-emoji" aria-hidden="true">💬</span><h4>AI answers and enrolls</h4><p>Your AI salesperson</p></li><li><span class="clinic-emoji" aria-hidden="true">📱</span><h4>Deliver education and programs</h4><p>Your knowledge, with AI</p></li></ol>
+            <p class="clinic-growth">Let more people benefit<br>from what you know.</p>
+          </article>
+        </div>
+        <p class="proof-disclosure">Your expertise and oversight guide both businesses. The online clinic delivers education, guidance, and programs.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="ai-business-flow" data-act="3" data-title="Three jobs inside your “telehealth AI clinic”." role="group" aria-roledescription="slide" aria-labelledby="ai-business-flow-title">
+      <div class="act-label"><span>03</span>Your telehealth AI clinic</div>
       <div class="content stack dense">
-        <h2 id="ai-business-flow-title">How the Sandra AI customer path can work.</h2>
+        <h2 id="ai-business-flow-title">Three jobs inside your “telehealth AI clinic”.</h2>
         <ol class="ai-flow" aria-label="AI marketer, then AI salesperson, then AI program">
           <li><span class="label">Attract</span><h3>AI marketer</h3><p>Creates content and ads around Sandra’s approved expertise.</p><strong>Someone clicks.</strong></li>
-          <li><span class="label">Convert</span><h3>AI salesperson</h3><p>Meets the person, asks questions, and explains the approved offer.</p><strong>The person chooses whether to buy.</strong></li>
+          <li><span class="label">Enroll</span><h3>AI salesperson</h3><p>Meets the person, asks questions, and explains the approved offer.</p><strong>The person chooses whether to buy.</strong></li>
           <li><span class="label">Deliver</span><h3>AI program</h3><p>Guides the client through Sandra’s approved program and knowledge.</p><strong>The client gets guidance.</strong></li>
         </ol>
         <p class="flow-oversight">Sandra’s knowledge and approval guide every stage. Bring in a human when needed.</p>
@@ -828,7 +901,7 @@
     </section>
 
     <section class="slide" id="ai-demonstration" data-act="3" data-title="Sandra AI in action" role="group" aria-roledescription="slide" aria-labelledby="ai-demonstration-title">
-      <div class="act-label"><span>03</span>The AI version of you</div>
+      <div class="act-label"><span>03</span>Your telehealth AI clinic</div>
       <div class="content ai-demonstration">
         <h2 id="ai-demonstration-title">Here is <span class="brand">Sandra AI</span> in action.</h2>
         <div class="ai-video-shell">
@@ -837,37 +910,37 @@
       </div>
     </section>
 
-    <section class="slide" id="kodara-build" data-act="4" data-title="Here is what Kodara builds for you." role="group" aria-roledescription="slide" aria-labelledby="kodara-build-title">
+    <section class="slide" id="kodara-build" data-act="4" data-title="Here’s what we build for your “telehealth AI clinic”." role="group" aria-roledescription="slide" aria-labelledby="kodara-build-title">
       <div class="act-label"><span>04</span>Working with Kodara</div>
       <div class="content stack dense">
-        <h2 id="kodara-build-title">Here is what Kodara builds for you.</h2>
+        <h2 id="kodara-build-title">Here’s what we build for your “telehealth AI clinic”.</h2>
         <div class="offer-columns">
           <ul>
             <li>Demand research and positioning</li>
-            <li>Focused interviews to capture your expertise</li>
-            <li>Your approved AI knowledge system</li>
+            <li>Your offer and customer journey</li>
+            <li>Your website and brand</li>
             <li>Your AI marketing content and ads</li>
             <li>Your AI sales conversations</li>
-            <li>Your AI program and delivery experience</li>
+            <li>Launch setup and acquisition path</li>
           </ul>
           <ul>
-            <li>Your website and brand</li>
-            <li>Your offer and customer journey</li>
+            <li>Focused interviews to capture your expertise</li>
+            <li>Your approved AI knowledge system</li>
+            <li>Your AI program and delivery experience</li>
             <li>Connections to your approved programs</li>
             <li>Professional boundaries and human handoffs</li>
             <li>Testing, correction, and expert review</li>
-            <li>Launch setup and acquisition path</li>
           </ul>
         </div>
-        <p class="flow-oversight">You bring the expertise, review, and approval. Kodara builds the system around it.</p>
+        <p class="flow-oversight">You bring the expertise, review, and approval. Kodara builds your online business around it.</p>
         <p class="proof-disclosure">Professional judgment and ongoing oversight stay with you. No revenue or client outcome is guaranteed.</p>
       </div>
     </section>
 
-    <section class="slide" id="license-options" data-act="4" data-title="Choose how you want to own the system." role="group" aria-roledescription="slide" aria-labelledby="license-options-title">
+    <section class="slide" id="license-options" data-act="4" data-title="Choose your license." role="group" aria-roledescription="slide" aria-labelledby="license-options-title">
       <div class="act-label"><span>04</span>Working with Kodara</div>
       <div class="content stack">
-        <h2 id="license-options-title">Choose how you want to own the system.</h2>
+        <h2 id="license-options-title">Choose your license.</h2>
         <div class="license-options">
           <article><span class="label">Annual subscription</span><p class="license-price">$8,000<span>per year</span></p><h3>A recurring yearly subscription.</h3></article>
           <article class="founding-license"><span class="label">Founding license</span><p class="license-price">$15,000<span>one time</span></p><h3>Pay once. Own it forever.</h3></article>
@@ -879,7 +952,7 @@
       <div class="act-label"><span>05</span>Your next step</div>
       <div class="content final-cta">
         <img class="brand-wordmark" src="health/assets/kodara-wordmark.svg" alt="Kodara">
-        <h2 id="webinar-cta-title">See if Kodara can build this for you.</h2>
+        <h2 id="webinar-cta-title">See if Kodara can build your “telehealth AI clinic”.</h2>
         <a class="final-cta-url" href="https://kodarahealth.com/webinar/" target="_blank" rel="noopener">KodaraHealth.com/webinar</a>
       </div>
     </section>

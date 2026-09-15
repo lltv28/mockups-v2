@@ -1,104 +1,48 @@
-# Kodara Webinar Optimized Live Script
+# Kodara Webinar Live Script
 
-Use with `kodara-webinar.html`.
-
-- Target presentation time: 40 to 43 minutes
-- Target Q&A time: 10 minutes
-- Total target runtime: 50 to 55 minutes
-- Primary action: Book a fit conversation at `KodaraHealth.com/webinar`
+Aligned with the 24-slide audience deck. This replaces the older 43-slide draft.
 
 ## Messaging spine
 
-**Big idea:** Your health and wellness expertise should be able to answer questions, guide people, and create value online without every step depending on another hour from you.
+**Big idea:** Use AI to build an online extension of your health business, so more people can benefit from your expertise without every interaction needing your time.
 
-**Core emotion:** Relief and possibility.
+**Business name:** “Telehealth AI clinic.” In this presentation, the business delivers education, guidance, and programs. “AI version of you” is a supporting explanation of the knowledge behind it.
 
-**Primary benefit:** Build another responsible way for people to access your expertise without building and operating an entire second business yourself.
+**Belief sequence:** People already search for help; your expertise can power marketing, enrollment, and online programs; Kodara builds those pieces around your knowledge and approval.
 
-**Primary proof narrative:** Michelle's experience revealed the gap between people looking for answers and credible independent expertise. Sandra AI shows what a controlled online path can look like.
+## Presentation cues
 
-**Belief sequence:**
-
-1. People are already looking online for help, but most experts still deliver their knowledge one person and one appointment at a time.
-2. The right solution starts with a specific problem people already express in their own language, then turns approved expertise into a controlled digital system.
-3. Kodara can research, build, test, and launch that system with the expert's input and approval.
-
-## Zoom-safe production plan
-
-### Before attendees enter
-
-- Join from a wired connection when possible. Keep a phone hotspot ready as backup.
-- Open one browser window containing the deck, the prepared keyword-research tab, and nothing private.
-- Share that browser window once. Switch tabs inside it instead of stopping and restarting screen share.
-- Preload slide 2, slide 20, and the keyword results used in the live demonstration.
-- Keep a static screenshot of the keyword results available in the same browser window.
-- Ask a producer or co-host to watch Q&A, post the CTA link, and tell you privately if sound or video fails.
-- Turn off desktop notifications.
-- Record locally in addition to any cloud recording.
-
-### Live operating rules
-
-- Perform one audio and screen check before the presentation begins. Do not keep asking the audience for ones.
-- Check Q&A only at the end of each major section.
-- Cap the keyword demonstration at six minutes.
-- If the Sandra video stutters, pause it and narrate the visible frame. Do not troubleshoot it live.
-- If the screen freezes, say the recovery line once, reconnect, and resume from the last slide.
-
-**Recovery line:** "It looks like the video paused. I am going to keep moving so we do not lose the thread, and everyone who registered will receive the replay."
-
-## Claim lock
-
-Do not reintroduce these statements unless current substantiation and approved wording are available:
-
-- The AI can fully replace the expert.
-- The AI is 95% or 99% as good as the expert.
-- Keyword research guarantees demand, clients, sales, or revenue.
-- A certain number of searches should produce a certain amount of revenue.
-- Every acquired lead will be monetized.
-- The Gallup result directly proves demand for independent providers.
-- Kodara, every program, or every use case is automatically HIPAA compliant.
-- A client is the number-one provider in a country without objective support for that ranking.
-- A launch, user, revenue, or refund guarantee before the complete written terms are supplied.
+- Keyword demonstration: leave after slide 14, return to slide 15.
+- Clinic comparison: slides 17, 18, and 19 are three consecutive reveals using normal slide navigation.
+- Sandra: short preview on slide 2, longer demonstration on slide 21. Describe only behavior shown in the footage.
+- Offer, pricing, and CTA: slides 22, 23, and 24.
+- Prepare the keyword results and media before presenting. Share the audience window, not private presenter notes.
+- Proof pictures on slides 7, 8, and 9 and the additional healthcare screenshot remain to be supplied.
+- Pricing remains $8,000/year or $15,000 one time, own it forever. Do not add bonuses or unconfirmed commercial terms.
+- Client experiences and search estimates do not guarantee results. Expert judgment, review, and human handoffs remain part of the model.
+- Browser-saved presenter notes are separate from this file. Review them against this script; unchanged slide IDs retain existing notes.
 
 ## Speaker script
 
-### 0:00 to 2:30 | The promise
+### Slide 1: How to scale your health business with AI
 
-#### Slide 1: How to build the AI version of you
+If you have spent years building health and wellness expertise, you probably want that expertise to help more people. But growing the business can also mean more appointments, more staff, and more things that need your attention.
 
-If you have spent years building real health and wellness knowledge, that knowledge should be able to help more than one person at a time.
+Today, I want to show you another way to build around what you know: your own “telehealth AI clinic.”
 
-It should not stop working because your calendar is full.
+For this webinar, that means an online business delivering education, guidance, and programs. Your expertise powers the marketing, the sales conversation, and the program people use afterward. I call the knowledge behind it the AI version of you.
 
-And you should not have to build an entire second business just to make it available online.
+You bring the knowledge, review, and approval. Kodara builds the online business around it. Your judgment and ongoing oversight remain part of that business.
 
-Give our team focused interview time, usually about one hour per week during the build, and we turn the knowledge that already exists in your head, your methods, and your business into a controlled AI system that can answer questions and guide people to the right next step online. Your review, launch decisions, and ongoing oversight still require additional time.
+### Slide 2: Meet Sandra AI
 
-I call that the AI version of you.
+This is Sandra AI. It’s one part of an online business built around Sandra’s knowledge. Later, I’ll show you how the marketing, the conversation, and the program connect.
 
-And when I say it can sell itself, I mean it can explain the problem, ask qualifying questions, recommend an approved offer, and present the next step without requiring you to take the first call. It does not mean clients or revenue appear automatically.
+[Play a short preview. Describe only what is visible in the footage. Save the longer walkthrough for slide 21.]
 
-It is not a clone. It does not replace your professional judgment. And it is not an open-ended chatbot giving people random health advice.
+First, let’s look at where the people who could use your expertise are already looking for help.
 
-It is a business and delivery system built around information you approve, programs you approve, and boundaries you approve.
-
-By the end of this webinar, you will understand how to choose the right problem, how to find the language people already use when they search for help, and how that becomes an AI product people can use without needing another appointment on your calendar every time.
-
-#### Slide 2: Preview Sandra AI
-
-This is a quick preview of what that can look like.
-
-This is Sandra AI. Sandra helps people change their relationship with alcohol. Her AI can meet someone online, ask a focused set of questions, understand what kind of help the person is looking for, and guide that person toward an appropriate next step.
-
-The person knows they are interacting with AI. The point is not to fool anyone.
-
-The point is to make Sandra's approved knowledge easier to reach while keeping Sandra in control of what the system says and where it must stop.
-
-I will show you the full experience later. First, we need to understand why this opportunity exists and why so many attempts to go online create more work instead of less.
-
-### 2:30 to 6:30 | The opportunity and the failed vehicles
-
-#### Slide 3: Health and wellness interest is moving online
+### Slide 3: Health and wellness interest online
 
 Your audience is already online.
 
@@ -114,7 +58,7 @@ That is a much more useful starting point than saying, "I know a lot about hormo
 
 Your topic tells us what you know. Their search tells us what they want today.
 
-#### Slide 4: You have heard this before
+### Slide 4: Why taking expertise online can become more work
 
 Now, you have probably heard some version of this before.
 
@@ -130,21 +74,17 @@ You already have a real business to run. A second business is not freedom. It is
 
 AI should remove work from your plate. If it creates another full-time job, it has missed the point.
 
-#### Slide 5: What we will cover
+### Slide 5: What we will build toward
 
-So we are going to answer three questions today.
+We’re going to work through three things.
 
-First, is taking your expertise online even the right direction for you?
+First, find the health questions people are already searching for. Then see how your expertise could become an online offer. Then see how AI can help market, sell, and deliver it.
 
-Second, how do you find an angle connected to something people are already searching for?
+The keyword demonstration is the first step in planning your “telehealth AI clinic.” We need to understand who it could help and what those people are looking for.
 
-Third, how can that angle become an AI product without you having to build and run the entire system yourself?
+At the end, I’ll show you what Kodara builds and the next step if you want our help.
 
-At the end, I will show you what Kodara builds, who it is for, who it is not for, and the next step if you want us to look at your business.
-
-### 6:30 to 12:00 | Why I built Kodara
-
-#### Slide 6: Why you should listen to me
+### Slide 6: Why you should listen to Lucas
 
 My name is Lucas Tyson. I am the founder and CEO of Kodara.
 
@@ -156,7 +96,19 @@ So my background is not medicine. My background is finding people online who alr
 
 But the reason I focused that experience on health and wellness became personal.
 
-#### Slide 7: Michelle's story
+### Slide 7: A closer look at the work
+
+[Show the first supplied proof picture. Identify what it shows, the relevant context, and which claim it supports. The asset remains to be supplied. Do not invent a result to fill this space.]
+
+The reason I’m showing you this is to connect the work you can see with the experience behind what I’m teaching today.
+
+### Slide 8: What clients have shared
+
+[Show the second supplied proof picture. Use the client’s actual words and distinguish their experience from an expected result for attendees. The asset remains to be supplied.]
+
+Now I want to explain why I brought that work into health and wellness.
+
+### Slide 9: Michelle’s story
 
 My girlfriend Michelle was diagnosed with Graves Disease.
 
@@ -170,7 +122,7 @@ The lesson I took from it was not that every doctor or every hospital was failin
 
 The lesson was that people with complicated problems can spend months moving through a system while still searching for explanations, options, and people who understand what they are experiencing.
 
-#### Slide 8: Why I built Kodara
+### Slide 10: Why Lucas built Kodara
 
 Then I heard about someone with a similar experience who found a wellness expert online.
 
@@ -184,7 +136,7 @@ So I focused the business on health and wellness and built the team behind Kodar
 
 The goal became straightforward: help qualified experts take what they already know and make it easier for the right people to access online.
 
-#### Slide 9: What clients have built
+### Slide 11: What clients have built
 
 We have seen different versions of that with our clients.
 
@@ -198,7 +150,7 @@ These are individual experiences. They are not promises about what will happen i
 
 The useful pattern is that each person began with real expertise and a real problem. The technology came after that.
 
-#### Slide 10: Independent-provider opportunity
+### Slide 12: Healthcare context
 
 Gallup reported that Americans' view of healthcare quality fell to a 24-year low.
 
@@ -210,461 +162,114 @@ When people are dissatisfied or cannot find a clear path through the traditional
 
 That creates an opportunity for independent experts, but only if the expert can be found, understood, and trusted.
 
-### 12:00 to 13:00 | Direction before technology
+### Slide 13: Start with what people want
 
-#### Slide 11: Decide whether this direction fits
+The first step in planning your online clinic is understanding what people already want help with.
 
-Before we talk about AI, decide whether you even want this direction.
+What are they asking? Are people searching for it? And is it something your expertise can help them understand or work through?
 
-Do you want another way for people to access your expertise without booking your personal time every time?
+Search activity gives us a starting point. It does not tell us that someone will buy. We still need to connect the problem, the offer, and the way we reach people.
 
-Do you want to build something that can answer common questions, guide someone through an approved first step, or connect the right person to the right program?
+### Slide 14: Live keyword research
 
-If the answer is no, that is useful to know.
+Let’s choose a problem your expertise can help address, explore related searches, and look at the language people use.
 
-If the answer is yes, then the first question is not which AI tool to use.
+We’ll separate people learning about a problem from people comparing ways to get help. Then we’ll consider search estimates, competition, and the fit with your expertise.
 
-The first question is what problem the system should help with.
+[Leave the deck for the keyword tool. Keep the same shared browser window. Use a real example prepared with the sales manager.]
 
-### 13:00 to 20:00 | The angle lesson and live screen share
+Start with the broad topic, then choose a more specific search. Explain what the search tells us and what it leaves uncertain. These are estimates of activity, not proof of buyers.
 
-#### Slide 12: A topic is not a search
+[Write down the audience, the problem, the phrase they use, and a possible education or program offer. Clearly label the offer as an example to test. Do not invent search figures.]
 
-A topic shows what you know. A search shows what they want.
+Now we have a starting point for the online clinic: a person we could help, a problem they are looking into, and an offer we could test.
 
-For example, hormone health is a topic. You may understand it better than almost anyone in the room.
+[Return to slide 15.]
 
-But a person rarely wakes up and says, "Today I need hormone-health expertise."
+### Slide 15: Two ways to reach people
 
-They say, "Why am I still exhausted after changing my diet?"
+The research can inform two ways of reaching people.
 
-Now we can see the problem in their language.
+For organic marketing, we can turn those questions into useful articles, videos, or search pages. For paid marketing, we can use that language in ads and landing pages, then measure the response.
 
-We can see what they have already tried. We can see the frustration. And we can make a more informed guess about the next question they will ask.
+Both lead toward an offer. Both need testing, and paid ads involve spend.
 
-That is the difference between starting with your curriculum and starting with their problem.
+So now you can see how people could find you. But what happens when they do?
 
-#### Slide 13: The webinar title is an angle
+### Slide 16: The calendar bottleneck
 
-The title of this webinar is an angle.
+If helping more people means filling more appointments, you still need more of your time or more people on your team.
 
-The generic idea is, "Take your health and wellness knowledge online."
+More people raise their hand, but the same number of hours remain available. Better marketing can increase the pressure on your calendar.
 
-That is accurate, but it is familiar. It sounds like every course, coaching, and marketing offer people have already seen.
+Let me show you how the online version could work.
 
-The angle is, "Build the AI version of you that can sell itself to clients and patients online."
+### Slide 17: Your in-person clinic
 
-The expertise did not change. The frame changed.
+[First comparison frame: only the physical clinic journey is visible.]
 
-The new frame makes the mechanism easier to see. Instead of building more live delivery around your calendar, you are building a digital version of your approved knowledge and a customer path around it.
+Your in-person clinic can be a great business. People in your service area find you, your front desk helps them book, and you or your care team help them in person.
 
-Notice what the angle does not do. It does not add a revenue number. It does not promise a timeline. It does not promise a client result.
+Your expertise is at the center. The delivery depends on people, appointments, and a physical location.
 
-It makes the same real idea more specific and easier to understand.
+### Slide 18: Your telehealth AI clinic
 
-#### Screen share: keyword research
+[Advance once to reveal the online model alongside the physical clinic.]
 
-Now I want to show you how to begin finding an angle for your own expertise.
+The same expertise can also power your “telehealth AI clinic.” People discover your content or ads online. An AI salesperson answers questions and explains the approved offer. Then the AI program delivers education and guides people through the material you approve.
 
-[Open the prepared keyword-research tab in the same shared browser window.]
+You decide what it can help with, test what it says, and define when a person needs to take over. This is education, guidance, and programs. It does not replace clinical care.
 
-I am starting with a broad topic. A broad topic gives the tool somewhere to begin, but it is not where we finish.
+### Slide 19: Two ways to grow
 
-[Enter the prepared topic.]
+[Advance once to reveal the growth comparison.]
 
-The tool gives us variations of the phrases people search. These numbers are estimates. They do not guarantee buyers, and they do not tell us whether an offer will work.
+On the physical side, increasing capacity can mean more appointments, staff, and space.
 
-What they can do is show us the language people use and where interest may be moving.
+On the online side, more people can access your education and programs without every interaction becoming another appointment.
 
-I am looking for three things.
+You still direct the business and review what represents you. The opportunity is to let more people benefit from what you know through another delivery model.
 
-First, specificity. Does the phrase describe a recognizable problem, symptom, failed attempt, or desired change?
+### Slide 20: Three jobs inside the online clinic
 
-Second, intent. Does the person appear to be casually learning, actively comparing approaches, or looking for help?
+There are three jobs we need to connect.
 
-Third, fit. Is this a problem the expert is qualified to address responsibly?
+The AI marketer helps people find you through content and ads based on your approved expertise. The AI salesperson meets someone, asks questions, and explains the offer. The AI program guides the person through your approved education and program material.
 
-[Choose one broad phrase and one specific phrase from the prepared results.]
+We’re using Sandra as the example here. This diagram illustrates how the three jobs can connect; it is not a claim that the video demonstrates all three. Sandra’s approval and the human handoffs guide the experience.
 
-Compare these two phrases.
+### Slide 21: Sandra AI demonstration
 
-The broad phrase may have more searches, but we know less about the person behind it.
+Now let’s watch Sandra AI in action.
 
-The specific phrase may have fewer searches, but it can tell us what the person wants, what they have already tried, and what conversation should happen next.
+[Play the existing Sandra video. Point out the steps actually visible. Distinguish demonstrated behavior from the proposed marketing, sales, and delivery architecture.]
 
-That is often the better starting point for a smaller expert-led business.
+What matters is how the experience connects Sandra’s knowledge to what the person is asking and the next step they can take. That is one part of the “telehealth AI clinic” we’ve been discussing.
 
-You do not need to win the biggest topic on the internet. You need to find a specific group of people with a specific problem, then build something genuinely useful for them.
+### Slide 22: What Kodara builds
 
-[Write the four-part note on screen: person, problem, language, first useful step.]
+Here’s what we build for your “telehealth AI clinic.”
 
-At the end of this research, I want one page that says:
+We begin with the demand research, offer, website, and brand. We build the AI marketing content and ads, the AI sales conversations, and the setup for launch and acquisition.
 
-- who the person is;
-- what problem they are trying to solve;
-- how they describe it in their own words;
-- and what responsible first progress we can help them make.
+Then there is the expertise and delivery side. We use focused interviews to capture your knowledge, build the approved AI knowledge system, create the program experience, and connect it to the programs you approve.
 
-That is enough to create an initial angle.
+Testing, correction, your review, and clear human handoffs are part of the build.
 
-It is not enough to guarantee a business. We still have to build the right delivery around it.
+You bring the expertise, review, and approval. Kodara builds the online business around it. Your professional judgment and ongoing oversight remain part of the business.
 
-[Return to the deck at slide 14.]
+### Slide 23: Choose your license
 
-### 20:00 to 24:00 | The calendar bottleneck
+You have two license options.
 
-#### Slide 14: A strong angle can still build the wrong business
+The annual subscription is $8,000 per year. The founding license is $15,000 one time. With the founding license, you pay once and own it forever.
 
-This is where many online offers go wrong.
+[Use the confirmed ownership wording. Do not add bonuses, support commitments, included operating costs, or other terms that have not been supplied.]
 
-You can have a strong angle, good marketing, and plenty of interested people, but still build the wrong business.
+### Slide 24: Your next step
 
-If every answer, every sale, and every client result still needs your direct time, you have built yourself another job.
+If you want to see whether Kodara can build your “telehealth AI clinic,” book a session at KodaraHealth.com/webinar.
 
-#### Slide 15: The calendar is the bottleneck
+That’s the next step if you want our help turning your expertise into this online business.
 
-A full calendar proves that people value what you do.
-
-But the calendar also creates a hard ceiling.
-
-If every new dollar needs another appointment, growth means more hours. If every client needs the same explanation from you, impact means repeating yourself. And if you stop showing up, the system stops moving.
-
-#### Slide 16: The reverse funnel
-
-I think of this as a reverse funnel.
-
-At the top, there may be thousands of people looking for an answer.
-
-Then the group narrows to people who find you, people ready to trust you, people who can get onto your calendar, people who can attend at that exact time, and people who can afford your direct access.
-
-By the time someone reaches the bottom, your calendar has filtered out most of the market.
-
-A virtual business creates another responsible path for people who do not need, cannot access, or are not yet ready for your one-to-one service.
-
-#### Slide 17: More leads can make the bottleneck worse
-
-This is why more leads alone may not solve the problem.
-
-More people raise their hand, but your hours stay the same.
-
-Now you have more follow-up, more calls, more questions, and more people waiting on the same person: you.
-
-#### Slide 18: Why common options fall short
-
-More appointments fill the calendar again.
-
-A course you build yourself creates another offer to create, market, support, and manage.
-
-More social content may create attention, but it can also create a full-time content job.
-
-And another marketing agency may create more leads without changing what happens after the lead arrives.
-
-Each option can work. None removes you as the bottleneck by itself.
-
-### 24:00 to 29:00 | What the AI version of you means
-
-#### Slide 19: Definition
-
-So what does an AI version of you actually mean?
-
-It is not a clone, and it is not a promise that AI can replace everything you do.
-
-It is a controlled system built from your knowledge.
-
-We use your interviews, your methods, your documents, your existing programs, and other materials you approve as the source.
-
-Then you test it. You correct it. You decide which questions it can answer, which programs it can discuss, and when it must stop or bring in a human.
-
-The system should make approved knowledge easier to access. It should not invent expertise you never supplied.
-
-#### Slide 20: Sandra AI demonstration
-
-Now let me show you Sandra AI in action.
-
-[Play the embedded video. Do not switch sharing sources.]
-
-What you are seeing is a short version of the customer journey.
-
-Someone first sees a message connected to a problem they already recognize.
-
-They enter a conversation that is clearly identified as AI.
-
-The system asks focused questions, gathers enough information to understand what kind of help the person is looking for, and guides them toward an appropriate option.
-
-The important part is not the avatar. The important part is the path behind it.
-
-The questions, the answers, the boundaries, the programs, and the handoffs all have to be designed around Sandra's real business.
-
-### 29:00 to 36:30 | How Kodara builds it
-
-#### Slide 21: The mechanism
-
-The mechanism has two sides.
-
-You supply the expertise and the approval.
-
-Kodara builds the virtual business around it.
-
-That means the knowledge, the safety boundaries, the programs, the website, the customer path, and the launch all have to connect.
-
-If any one of those pieces is missing, the model breaks.
-
-#### Slide 22: The three-step build
-
-The whole build comes down to three steps.
-
-First, you share what you know.
-
-Second, you review what we build.
-
-Third, we launch the approved version and onboard users so we can learn what the first version needs next.
-
-#### Slide 23: Select the problem
-
-We begin with one problem you are qualified to help solve.
-
-One problem. One audience. One responsible promise.
-
-The system needs to know who it helps, what it can help with, and when it must stop or involve a human.
-
-Trying to make the first version answer every question for every person usually makes it harder to build, harder to explain, and harder to trust.
-
-#### Slide 24: Extract the expertise
-
-Then we pull your expertise out of your head and into the system.
-
-We conduct focused interviews, usually around one hour per week during the build, depending on what the project requires.
-
-We organize the documents, frameworks, training, examples, and existing material you choose to provide.
-
-We also need context about your audience, your offers, the questions people ask, and the boundaries you already use in your work.
-
-We need how you think, not just what you have posted online.
-
-And you decide what becomes source material.
-
-#### Slide 25: Build the knowledge system
-
-That knowledge becomes a system you can test.
-
-The goal is not to upload a pile of files and hope the AI figures it out.
-
-The goal is to organize the source material so answers can be traced, corrected, and updated.
-
-#### Slide 26: Build the virtual business
-
-Then we build the business around that knowledge.
-
-That can include the website and brand, digital programs built around the selected problem, and a customer journey from the first question to the right program or human handoff.
-
-The exact path depends on the expert, the use case, and what can be delivered responsibly.
-
-#### Slide 27: Test and approve
-
-Before the AI represents you, you test it.
-
-Ask the questions a real customer would ask. Ask the difficult questions. Ask questions outside its scope.
-
-When an answer is wrong or unclear, we fix the source, the answer, the next step, or the boundary.
-
-Then you approve what can go live.
-
-Approval is not a ceremonial checkbox. It is how the system becomes yours.
-
-#### Slide 28: Launch and discover clients
-
-Once the first version is approved, we connect it to defined ways people can find it.
-
-You should know the traffic source, what it costs, what kind of intent we are targeting, and why the system chooses each next step.
-
-Customers do not appear automatically because we used AI.
-
-The discovery path still has to be named, measured, and improved.
-
-#### Slide 29: What the system should prove
-
-Before you trust the system, you should be able to watch the whole journey.
-
-A real person asks a real question.
-
-The AI gathers only what it needs.
-
-The answer points back to approved material.
-
-The person reaches a relevant program or a responsible human next step.
-
-You can review what happened, correct the system, and approve the change.
-
-And when a question is unsafe, uncertain, or outside scope, the system stops or escalates.
-
-That is the standard.
-
-### 36:30 to 40:00 | Safety, fit, and what Kodara does
-
-#### Slide 30: Safety and control
-
-Approved source material does not mean every answer will always be right.
-
-That is why boundaries are part of the product.
-
-What information can the AI use? When must a licensed professional take over? What happens when the AI is uncertain? Who collects, stores, shares, and deletes the data?
-
-Privacy, consent, licensing, health claims, and escalation need to match the specific business and use case.
-
-There is no honest one-size-fits-all answer here.
-
-#### Slide 31: Why Kodara
-
-Kodara builds the virtual business around your approved expertise.
-
-During the build, we interview you for approximately one hour per week, depending on what the project requires.
-
-That is the raw material we need from you.
-
-But done for you does not mean done without you. Review, launch, updates, and ongoing oversight take additional time.
-
-Your expertise and judgment remain part of the system.
-
-#### Slide 32: Who this is for
-
-This tends to fit experts who already know how to solve a real problem, whose income, impact, or freedom is constrained by personal delivery, and who are willing to review and maintain what represents them.
-
-It also requires someone who takes professional and regulatory boundaries seriously.
-
-#### Slide 33: Who this is not for
-
-This is not passive income with you removed from the business.
-
-It is not a fit when there is no proven expertise to build from, when someone is unwilling to review the system, when the proposed use is unsafe or misleading, or when the expectation is guaranteed revenue or profit.
-
-A digital program does not replace medical care when medical care is needed.
-
-#### Slide 34: What Kodara builds
-
-You bring the expertise.
-
-Our team connects the rest.
-
-We organize your knowledge, build the controlled AI system, create the digital programs, build the website and brand, create the testing and approval workflow, and set up the launch path.
-
-The value is not one isolated chatbot or one course.
-
-The value is that one team connects the pieces into one customer journey.
-
-### 40:00 to 43:00 | Terms, objections, and next step
-
-#### Slide 35: What makes a guarantee real
-
-I also want to be direct about guarantees.
-
-A guarantee is only real when every term is in writing.
-
-It needs to define who qualifies, when the timeline starts, what each milestone means, what you are responsible for, and how any refund process works.
-
-Until those complete terms are supplied to you, treat this as no guarantee.
-
-And even a launch promise would not automatically be a revenue or paying-customer guarantee.
-
-#### Slide 36: What must be clear before deciding
-
-You should also see every cost and ownership term before you decide.
-
-That includes the setup price, recurring costs, software, hosting, usage charges, traffic costs, and payment processing.
-
-You should know what you own, including the website, customer list, programs, data, source materials, and AI configuration.
-
-And you should know what happens after launch.
-
-If those answers are not clear and in writing, you are not ready to decide.
-
-#### Slide 37: Can AI represent me accurately?
-
-The first objection is accuracy.
-
-Can an AI actually represent how you think and work?
-
-It can only represent what we successfully extract, organize, test, and approve.
-
-That is why we begin with your material, interview you, test the difficult questions, and keep clear boundaries around uncertainty.
-
-The goal is not perfection. The goal is a controlled system you can inspect and improve.
-
-#### Slide 38: Do I need an audience or more time?
-
-You do not need a huge social following.
-
-But you do need a named acquisition channel, a clear budget, and a real plan for how people will find the system. AI does not remove customer acquisition.
-
-And on time, plan on approximately one hour per week for interviews during the build, depending on the project. Review, launch, updates, and oversight take additional time.
-
-You should see the full workload before you sign anything.
-
-#### Slide 39: How is this different?
-
-A course packages your knowledge, but you may still have to build, market, explain, support, and manage the whole thing.
-
-An agency may create demand, but it may not change how your expertise is delivered after a lead arrives.
-
-The Kodara model connects approved knowledge to an interactive AI, digital programs, a customer journey, and a launch setup in one build.
-
-That is the difference.
-
-#### Slide 40: Questions that matter
-
-Before you apply or decide, ask these questions.
-
-How do the first users work? What will this cost in total? What do I own? How is data protected? What happens when the AI is wrong? What support continues after launch? And which results, if any, are actually guaranteed in writing?
-
-Those are not objections to hide from. Those are the questions a responsible expert should ask.
-
-#### Slide 41: Normalize uncertainty
-
-You should have questions.
-
-You are putting your expertise, your reputation, and potentially sensitive information into a new system.
-
-The next step is not about forcing a fit.
-
-It is about finding out whether this can be built responsibly for your business.
-
-#### Slide 42: See if you qualify
-
-If this direction makes sense to you, complete the short fit assessment.
-
-We will look at the problem you solve, the people you help, the knowledge and materials you can build from, and the boundaries the first version would need.
-
-Not every applicant qualifies, and that is intentional.
-
-#### Slide 43: Book your session
-
-If you want us to look at your business and show you what this could look like for you, go to:
-
-KodaraHealth.com/webinar
-
-Book a conversation with the team.
-
-We will look at your expertise, your angle, the use case, and whether there is a responsible first version worth building.
-
-Before you make any decision, ask for the complete process, costs, workload, ownership terms, and any applicable written guarantee.
-
-KodaraHealth.com/webinar.
-
-### 43:00 to 53:00 | Q&A
-
-I am going to spend the next ten minutes answering questions.
-
-Please put one question at a time into Q&A. If your question is specific to your business or includes private details, keep it general here and bring the specifics to the fit conversation.
-
-[Answer questions in this order: safety and scope, fit, implementation, time, acquisition, cost and ownership. Keep each answer under two minutes.]
-
-#### Final close after Q&A
-
-Thank you for spending this time with me.
-
-The one idea I want you to leave with is this: your expertise should not stop working when your calendar fills.
-
-The first step is choosing the right problem and the language people already use to describe it.
-
-The second step is building a controlled system around your approved knowledge.
-
-And if you want Kodara to look at whether we can build that system for you, go to KodaraHealth.com/webinar and book a conversation.
+[Leave the URL visible during questions. Explain the session only using the confirmed booking process.]

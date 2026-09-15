@@ -1,6 +1,6 @@
 # Kodara Webinar Project Handoff
 
-This document hands off the current Kodara health and wellness webinar deck, its presenter controls, speaker script, tests, and GitHub Pages deployment. The September 14 content revision was deployed. Check the latest successful GitHub Pages run for the currently deployed commit. The main unfinished task is bringing the long speaker script back into alignment with the condensed 22-slide deck.
+This document hands off the current Kodara health and wellness webinar deck, its presenter controls, speaker script, tests, and GitHub Pages deployment. The earlier September 14 content revision was deployed. The latest local revision introduces the “telehealth AI clinic” throughout the deck and aligns the speaker script with 24 slides. Check the latest successful GitHub Pages run before treating local changes as deployed.
 
 ## Current state
 
@@ -11,7 +11,7 @@ This document hands off the current Kodara health and wellness webinar deck, its
 - Primary CTA: `KodaraHealth.com/webinar`
 - Git branch: `master`
 - Deployment status: inspect the latest successful `pages-build-deployment` run on `master`.
-- Current deck length: 22 slides
+- Current deck length: 24 slides
 - Authored stage: 1920 by 1080
 
 This repository contains other prototypes. Treat the files named `kodara-webinar*` and the supporting assets under `slides/health/assets/` as the scope of this handoff.
@@ -24,8 +24,9 @@ This repository contains other prototypes. Treat the files named `kodara-webinar
 | `slides/tests/kodara-webinar.test.mjs` | Contract for slide count, order, required copy, claims, media, controls, and 16:9 scaling | Primary verification source |
 | `slides/kodara-webinar-presenter.html` | Private presenter window with current and next slide previews, timer, notes, and remote navigation | Primary source for presenter behavior |
 | `slides/tests/kodara-webinar-presenter.test.mjs` | Contract for presenter synchronization, notes, timer, and controls | Primary verification source |
-| `slides/kodara-webinar-optimized-transcript.md` | Long-form speaker script and Zoom operating notes | Useful draft, but currently out of sync with the 22-slide deck |
-| `slides/docs/superpowers/specs/2026-09-14-kodara-demand-and-offer.md` | Current revision scope, confirmed pricing, draft choices, and verification results | Current revision brief |
+| `slides/kodara-webinar-optimized-transcript.md` | Long-form speaker script and Zoom operating notes | Aligned draft for the current 24-slide deck |
+| `slides/docs/superpowers/specs/2026-09-14-kodara-clinic-throughline.md` | Current clinic framing, comparison sequence, script alignment, and verification | Current revision brief |
+| `slides/docs/superpowers/specs/2026-09-14-kodara-demand-and-offer.md` | Previous demand/offer revision and confirmed pricing | Background |
 | `slides/docs/superpowers/specs/2026-09-08-kodara-*.md` | Historical product and narrative decisions | Background only. Several documents refer to older 43-slide or 50-slide versions |
 
 When a historical spec conflicts with the current HTML or tests, follow the current HTML and tests.
@@ -34,11 +35,11 @@ When a historical spec conflicts with the current HTML or tests, follow the curr
 
 ### Act 1 Opportunity, authority, and proof
 
-1. How to build the AI version of you
-2. Preview the AI version of you
+1. How to scale your health and wellness business with AI; introduce your “telehealth AI clinic”
+2. Meet Sandra AI as one part of the online business
 3. Health and wellness interest is moving online
 4. The vehicle decides whether this works
-5. How to scale your health and wellness business with AI: health searches, expertise fit, and testing an online offer
+5. Find health questions, connect expertise to an online offer, and see how AI helps market, sell, and deliver it
 6. Why you should listen to Lucas
 7. A closer look at the work: proof image space
 8. What clients have shared: proof image space
@@ -56,22 +57,26 @@ When a historical spec conflicts with the current HTML or tests, follow the curr
 
 Leave the deck after slide 14 for the live keyword-tool demonstration. Return to slide 15 to explain how those searches can inform organic content and paid ads. Tool estimates show search activity; they do not prove buying intent or guarantee customers.
 
-### Act 3 AI mechanism and demonstration
+### Act 3 Your telehealth AI clinic
 
-17. The AI customer path around approved expertise
-18. AI marketer, AI salesperson, AI program: an illustrative connected flow
-19. Sandra AI demonstration
+17. In-person clinic: the first emoji comparison frame
+18. Telehealth AI clinic: reveal the online journey beside the physical clinic
+19. Two ways to grow: reveal the growth comparison
+20. AI marketer, AI salesperson, AI program: an illustrative connected flow
+21. Sandra AI demonstration
+
+These three comparison frames replace the former definition slide. They use normal navigation, URLs, thumbnails, and presenter synchronization. Each frame has a new stable ID so notes for the retired definition do not attach to it.
 
 ### Act 4 Offer and ownership
 
-20. One two-column list of the done-for-you build
-21. Annual subscription: $8,000 per year. Founding license: $15,000 one time, own it forever. No bonuses listed.
+22. Two-column done-for-you inclusion list, ordered around acquisition/enrollment and expertise/delivery
+23. Annual subscription: $8,000 per year. Founding license: $15,000 one time, own it forever. No bonuses listed.
 
 ### Act 5 Call to action
 
-22. Book your session at `KodaraHealth.com/webinar`
+24. Book your session at `KodaraHealth.com/webinar`
 
-The September 14 revision is specified in `slides/docs/superpowers/specs/2026-09-14-kodara-demand-and-offer.md`. Two new proof slides and one pricing slide replace space recovered by consolidating the four-slide offer section. The total remains 22.
+The current local revision brief is `slides/docs/superpowers/specs/2026-09-14-kodara-clinic-throughline.md`. The earlier demand/offer brief is historical background for the previous 22-slide version.
 
 ## Audience deck controls
 
@@ -107,10 +112,10 @@ Serve both files from the same origin. Share only the audience window or browser
 
 ## Sandra video behavior
 
-- Slides 2 and 19 share one 680px square media frame. The source video is 1:1, so a 16:9 frame would letterbox it.
+- Slides 2 and 21 share one 680px square media frame. The source video is 1:1, so a 16:9 frame would letterbox it.
 - Both embeds use the same Cloudflare video. The poster is the 10-second frame, which shows the Sandra AI chat instead of the opening ad copy.
 - Slide 2 loads eagerly and exposes play, seek, mute, settings, picture-in-picture, and fullscreen controls.
-- Slide 19 loads lazily.
+- Slide 21 loads lazily.
 - The slide selector replaces video iframes with static poster images so thumbnail rendering does not create extra players.
 - Two playable Sandra embeds are now intentional. This supersedes the older spec that called for a static opening preview and one playable embed.
 - Playback depends on Cloudflare Stream and an internet connection. The older `slides/health/assets/sandra-video-poster.jpg` and `slides/health/assets/sandra-client-story.mp4` belong to a client testimonial, not this AI demonstration. Prepare an approved static AI-demo fallback separately.
@@ -144,7 +149,7 @@ Before shipping a change, also inspect the affected slide in a real browser at i
 
 The tests below inspect source text. They do not execute navigation, notes, or cross-window synchronization; browser checks are required for those behaviors. Static contracts cover:
 
-- the 22-slide order;
+- the 24-slide order;
 - required audience copy and disclosures;
 - removal of outdated slides and unsupported claims;
 - 1920 by 1080 scaling;
@@ -184,6 +189,8 @@ The checked-in `.github/workflows/deploy.yml` listens for pushes to `main`, whil
 - Keep audience slides sparse enough to support Lucas on camera rather than repeat his full script.
 - Keep stable slide IDs for unchanged subjects because presenter notes depend on them. Slide URLs and navigation use numeric positions, so reordering changes numeric deep links.
 - Apply the Lucas writing style to all new audience-visible marketing copy.
+- Use “telehealth AI clinic” as the business name, defined as education, guidance, and programs. “AI version of you” is a supporting explanation of the knowledge.
+- Native emojis are intentionally used for the three comparison frames; their appearance varies by platform.
 - Keep the offer framed as done for you, with the expert providing knowledge, review, approval, professional judgment, and oversight.
 
 ## Claims and compliance boundaries
@@ -202,10 +209,10 @@ Do not reintroduce claims that AI fully replaces an expert, achieves a stated pe
 ## Known issues and handoff risks
 
 - Proof image spaces still need user assets: two founder proof images, three Michelle images, and one healthcare screenshot.
-- The keyword lesson is a draft for refinement with the sales manager. The speaker transcript and saved notes need review against the new order and copy.
+- The keyword lesson remains a draft for refinement with the sales manager. The speaker transcript matches the 24-slide order; browser-saved notes are separate and need review.
 - Founding ownership wording and both prices are user-confirmed. No bonus, ongoing support, or third-party operating-cost terms were supplied or invented.
 
-1. **Speaker script mismatch:** `kodara-webinar-optimized-transcript.md` still describes a 43-slide version. Its production advice and claim lock remain useful, but its slide numbers and much of its second half no longer match the live 22-slide deck.
+1. **Saved presenter notes:** The revised transcript matches the 24-slide deck. Existing browser-saved notes were not overwritten and may still contain older wording. Check them before presenting.
 2. **Historical specs are stale:** Several September 8 specs refer to 43-slide or 50-slide versions. They explain intent but should not drive current slide count or order.
 3. **Deployment workflow mismatch:** `.github/workflows/deploy.yml` targets `main`; active Pages deployment comes from `master` through the branch-based Pages workflow.
 4. **Presenter view needs same-origin windows:** Opening files directly with `file://` can break the intended cross-window setup. Use a local HTTP server or the live site.
@@ -215,7 +222,7 @@ Do not reintroduce claims that AI fully replaces an expert, achieves a stated pe
 
 ## Recommended next work
 
-1. Rewrite the optimized speaker script against the current 22-slide order and remove all references to deleted slides.
+1. Rehearse the revised 24-slide script and update browser-saved notes as needed.
 2. Rehearse the audience deck, presenter window, Sandra playback, and keyword screen share in the exact Zoom sharing setup.
 3. Prepare one static Sandra fallback and one static keyword-research fallback in the same shared browser window.
 4. Decide whether to repair or remove the unused `main`-branch deployment workflow.

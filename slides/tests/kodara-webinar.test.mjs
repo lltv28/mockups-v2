@@ -12,24 +12,24 @@ const visibleText = html
 
 const slides = html.match(/<section class="slide(?: |")/g) || [];
 
-assert.equal(slides.length, 22, 'webinar should contain the focused 22-slide story');
-assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 22);
-assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 22);
+assert.equal(slides.length, 24, 'webinar should contain the focused 24-slide story');
+assert.equal((html.match(/aria-roledescription="slide"/g) || []).length, 24);
+assert.equal((html.match(/data-act="[1-5]"/g) || []).length, 24);
 
 for (const requiredCopy of [
   'Health and wellness interest is already moving online.',
-  'Here is what the AI version of you can actually look like.',
-  'This is Sandra AI. Later, we’ll watch the full customer journey.',
+  'Meet Sandra AI.',
+  'One part of Sandra’s online business. Later, we’ll connect the marketing, conversation, and program.',
   'People are looking for answers, explanations, and next steps from their phones and computers.',
   'You have probably heard this before: take what you know and put it online.',
   'High-ticket coaching',
   'But most people on this webinar have not seen massive success with those models.',
   'The offer, content, funnel, sales, technology, support, and delivery become an entire second business.',
   'How to scale your health and wellness business with AI.',
-  'See the health questions people are already searching for answers to.',
-  'Find where your expertise could help them get what they want.',
-  'See how to test an online offer before building a whole business around it.',
-  'At the end, I’ll show you what working with Kodara looks like and the next step if you want our help.',
+  'Find the health questions people are already searching for.',
+  'See how your expertise could become an online offer.',
+  'See how AI can help market, sell, and deliver it.',
+  'At the end, I’ll show you what Kodara builds for your “telehealth AI clinic” and the next step if you want our help.',
   'My name is Lucas Tyson. I’m the founder and CEO of Kodara.',
   '$50M+',
   'Online marketing agency built by age 25.',
@@ -52,7 +52,8 @@ for (const requiredCopy of [
   'These are individual client experiences. Results vary, and no specific outcome is guaranteed.',
   'This is one reason independent providers are in demand.',
   'Gallup measures public views of U.S. healthcare quality. It does not measure demand for independent providers directly.',
-  'How To Build The “AI Version Of You” That Can Sell Itself To Clients & Patients Online',
+  'Build your own “telehealth AI clinic” around your expertise.',
+  'AI marketing, AI sales, and online education and programs.',
   'Start with evidence of what people already want.',
   'Illustrative estimates for teaching only.',
   'One problem can lead us to a whole set of searches.',
@@ -62,16 +63,17 @@ for (const requiredCopy of [
   'Search activity is a demand signal. It does not prove willingness to pay or guarantee clients.',
   'Better marketing can make the calendar bottleneck worse.',
   'The calendar is the bottleneck.',
-  'The AI is the customer path around your expertise.',
-  'Your approved knowledge can answer questions, understand context, guide people to the right next step, and know when to bring in a human.',
+  'Grow beyond your clinic with AI.',
+  'Your expertise and oversight guide both businesses.',
+  'Education, guidance, and programs.',
   'Here is Sandra AI in action.',
-  'How the Sandra AI customer path can work.',
+  'Three jobs inside your “telehealth AI clinic”.',
   'AI marketer',
   'AI salesperson',
   'AI program',
   'Bring in a human when needed',
-  'You bring the expertise, review, and approval. Kodara builds the system around it.',
-  'Here is what Kodara builds for you.',
+  'You bring the expertise, review, and approval. Kodara builds your online business around it.',
+  'Here’s what we build for your “telehealth AI clinic”.',
   'Your approved AI knowledge system',
   'Your website and brand',
   'Launch setup and acquisition path',
@@ -81,7 +83,7 @@ for (const requiredCopy of [
   'Pay once. Own it forever.',
   'A recurring yearly subscription.',
   'No revenue or client outcome is guaranteed.',
-  'See if Kodara can build this for you.',
+  'See if Kodara can build your “telehealth AI clinic”.',
   'KodaraHealth.com/webinar',
 ]) {
   assert.ok(visibleText.includes(requiredCopy), `missing required webinar copy: ${requiredCopy}`);
@@ -103,8 +105,10 @@ for (const [earlier, later] of [
   ['id="demand-signals"', 'id="keyword-research"'],
   ['id="keyword-research"', 'id="demand-acquisition"'],
   ['id="demand-acquisition"', 'id="calendar-bottleneck"'],
-  ['id="calendar-bottleneck"', 'id="definition"'],
-  ['id="definition"', 'id="ai-business-flow"'],
+  ['id="calendar-bottleneck"', 'id="clinic-in-person"'],
+  ['id="clinic-in-person"', 'id="clinic-ai"'],
+  ['id="clinic-ai"', 'id="clinic-growth"'],
+  ['id="clinic-growth"', 'id="ai-business-flow"'],
   ['id="ai-business-flow"', 'id="ai-demonstration"'],
   ['id="ai-demonstration"', 'id="kodara-build"'],
   ['id="kodara-build"', 'id="license-options"'],
@@ -149,6 +153,7 @@ assert.ok(html.includes('id="leanne-proof"'), 'proof slide should retain its pre
 assert.equal((html.match(/class="proof-client(?:\s[^"]*)?"/g) || []).length, 3, 'opening proof should show three clients');
 assert.equal((html.match(/id="leanne-proof"/g) || []).length, 1, 'client proof should appear only once');
 for (const removedSlideId of [
+  'definition',
   'ai-customer-path',
   'topic-vs-search',
   'angle-example',
