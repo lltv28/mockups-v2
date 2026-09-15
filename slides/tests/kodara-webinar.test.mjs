@@ -134,6 +134,7 @@ assert.equal((slideMarkup('kodara-build').match(/<ul>/g) || []).length, 2, 'offe
 assert.match(slideMarkup('license-options'), /\$8,000<span>per year<\/span>/);
 assert.match(slideMarkup('license-options'), /\$15,000<span>one time<\/span>/);
 
+assert.ok(html.includes('health/assets/kodara-ai-team.png'));
 assert.ok(html.includes('health/assets/lucas-tyson-speaking.jpg'));
 assert.ok((html.match(/health\/assets\/kodara-wordmark\.svg/g) || []).length >= 2);
 assert.ok(html.includes('health/assets/dr-mike-poster.jpg'));

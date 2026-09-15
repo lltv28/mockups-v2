@@ -62,7 +62,7 @@ Leave the deck after slide 14 for the live keyword-tool demonstration. Return to
 17. In-person clinic: the first emoji comparison frame
 18. Telehealth AI clinic: reveal the online journey beside the physical clinic
 19. Two ways to grow: reveal the growth comparison
-20. AI marketer, AI salesperson, AI program: an illustrative connected flow
+20. Illustrated AI team: your expertise branches into AI marketer, AI salesperson, and AI program guide (`health/assets/kodara-ai-team.png`). The image is accompanied by equivalent accessible text.
 21. Sandra AI demonstration
 
 These three comparison frames replace the former definition slide. They use normal navigation, URLs, thumbnails, and presenter synchronization. Each frame has a new stable ID so notes for the retired definition do not attach to it.

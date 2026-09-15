@@ -559,6 +559,11 @@
   .clinic-model-ai .clinic-growth { color: var(--brand-dark); border-color: var(--brand-mid); }
   .clinic-concealed { visibility: hidden; }
   .clinic-comparison .proof-disclosure { margin-top: auto; }
+
+  .ai-team-slide { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 20px; min-height: 0; }
+  .ai-team-image { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+  .ai-team-slide .proof-disclosure { margin-top: 0; }
+  .ai-team-transcript { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -888,15 +893,19 @@
 
     <section class="slide" id="ai-business-flow" data-act="3" data-title="Three jobs inside your “telehealth AI clinic”." role="group" aria-roledescription="slide" aria-labelledby="ai-business-flow-title">
       <div class="act-label"><span>03</span>Your telehealth AI clinic</div>
-      <div class="content stack dense">
-        <h2 id="ai-business-flow-title">Three jobs inside your “telehealth AI clinic”.</h2>
-        <ol class="ai-flow" aria-label="AI marketer, then AI salesperson, then AI program">
-          <li><span class="label">Attract</span><h3>AI marketer</h3><p>Creates content and ads around Sandra’s approved expertise.</p><strong>Someone clicks.</strong></li>
-          <li><span class="label">Enroll</span><h3>AI salesperson</h3><p>Meets the person, asks questions, and explains the approved offer.</p><strong>The person chooses whether to buy.</strong></li>
-          <li><span class="label">Deliver</span><h3>AI program</h3><p>Guides the client through Sandra’s approved program and knowledge.</p><strong>The client gets guidance.</strong></li>
-        </ol>
-        <p class="flow-oversight">Sandra’s knowledge and approval guide every stage. Bring in a human when needed.</p>
-        <p class="proof-disclosure">Illustrative customer journey. AI does not replace professional judgment or guarantee sales or health outcomes.</p>
+      <div class="content ai-team-slide">
+        <div class="ai-team-transcript">
+          <h2 id="ai-business-flow-title">Three jobs inside your “telehealth AI clinic”.</h2>
+          <p>Your expertise powers three AI team members.</p>
+          <ul>
+            <li>AI marketer: I help people find you.</li>
+            <li>AI salesperson: I explain how you can help.</li>
+            <li>AI program guide: I guide them through your program.</li>
+          </ul>
+          <p>Your knowledge and approval guide all three.</p>
+        </div>
+        <img class="ai-team-image" src="health/assets/kodara-ai-team.png" alt="" aria-hidden="true" width="1672" height="941">
+        <p class="proof-disclosure">Illustrative AI team. Bring in a human when needed. AI does not replace professional judgment or guarantee sales or health outcomes.</p>
       </div>
     </section>
 

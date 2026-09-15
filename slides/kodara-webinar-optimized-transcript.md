@@ -236,7 +236,11 @@ There are three jobs we need to connect.
 
 The AI marketer helps people find you through content and ads based on your approved expertise. The AI salesperson meets someone, asks questions, and explains the offer. The AI program guides the person through your approved education and program material.
 
-We’re using Sandra as the example here. This diagram illustrates how the three jobs can connect; it is not a claim that the video demonstrates all three. Sandra’s approval and the human handoffs guide the experience.
+[Point to your expertise at the top, then walk through the three illustrated team members from left to right.]
+
+Your knowledge and approval guide all three. The marketer helps people find you. The salesperson explains how you can help. The program guide helps them work through your program.
+
+This is an illustration of the roles, not a claim that the following Sandra video demonstrates all three. Bring in a human when needed.
 
 ### Slide 21: Sandra AI demonstration
 
